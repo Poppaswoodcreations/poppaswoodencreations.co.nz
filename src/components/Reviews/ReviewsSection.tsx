@@ -21,6 +21,26 @@ interface ReviewsSectionProps {
 const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddReview = true }) => {
   const [reviews, setReviews] = useState<Review[]>([
     {
+      id: '9',
+      customerName: 'bradley spraggen',
+      rating: 5,
+      title: 'Absolutely brilliant chopping boards',
+      comment: 'Absolutely brilliant chopping boards, will look good with some cheese on them!!',
+      date: '2024-11-22',
+      verified: true,
+      helpful: 0
+    },
+    {
+      id: '10',
+      customerName: 'Anna Cardy',
+      rating: 5,
+      title: 'Beautiful, high-quality wooden toys',
+      comment: 'Beautiful, high-quality wooden toys and gifts. Perfect for any occasion!',
+      date: '2024-11-22',
+      verified: true,
+      helpful: 0
+    },
+    {
       id: '5',
       customerName: 'Donna Bradford',
       rating: 5,
