@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Critical loading styles */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Force all images to be visible with fallbacks */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth image loading */
+.mobile-product-image {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  min-height: 192px;
+  object-fit: cover;
+}
+
+/* Product card images */
+.product-card img {
+  transition: opacity 0.3s ease;
+}
+
+.product-card img[src=""] {
+  opacity: 0;
+}
+
+/* Loading states */
+.loading-placeholder {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Prevent layout shift */
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image-container::before {
+  content: '';
+  display: block;
+  padding-top: 75%; /* 4:3 aspect ratio */
+}

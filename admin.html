@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Poppa's Wooden Creations</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #333; background: #f9fafb; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .admin-header { background: #d97706; color: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .admin-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .btn { background: #d97706; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; margin: 8px; }
+        .btn:hover { background: #b45309; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>🔐 Admin Dashboard</h1>
+            <p>Manage your wooden toy business</p>
+        </div>
+
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3>📦 Product Management</h3>
+                <p>Add, edit, and manage your wooden toy products</p>
+                <button class="btn" onclick="window.location.href='/'">Manage Products</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>📊 Order Management</h3>
+                <p>View and manage customer orders</p>
+                <button class="btn" onclick="alert('Order management available in main app')">View Orders</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>🖼️ Image Management</h3>
+                <p>Upload and manage product images</p>
+                <button class="btn" onclick="alert('Image management available in main app')">Manage Images</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>💾 Database Sync</h3>
+                <p>Sync products with Supabase database</p>
+                <button class="btn" onclick="alert('Database sync available in main app')">Sync Database</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>📧 Email Settings</h3>
+                <p>Configure order notification emails</p>
+                <button class="btn" onclick="alert('Email settings available in main app')">Email Settings</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>🚛 Shipping Settings</h3>
+                <p>Configure shipping rates and zones</p>
+                <button class="btn" onclick="alert('Shipping settings available in main app')">Shipping Settings</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <p style="color: #6b7280;">Admin Password: Adrianbar1?</p>
+            <p style="color: #6b7280;">For full admin access, use the main React application</p>
+        </div>
+    </div>
+</body>
+</html>

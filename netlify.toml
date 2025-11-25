@@ -1,0 +1,82 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# Environment variables for production
+[build.environment]
+  NODE_ENV = "production"
+  VITE_NODE_ENV = "production"
+
+# Netlify redirects for React SPA - CRITICAL for proper routing
+[[redirects]]
+  from = "/about"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/reviews"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/shipping"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/products/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/wooden-*"
+  to = "/index.html"
+  status = 200
+
+# SPA fallback for all other routes - MUST be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers with proper CSP for production
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https: *.ibb.co *.pexels.com *.unsplash.com; script-src 'self' 'unsafe-inline' https: *.supabase.co; style-src 'self' 'unsafe-inline' https:; font-src 'self' data: https:; connect-src 'self' https: wss: *.supabase.co *.formspree.io; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
