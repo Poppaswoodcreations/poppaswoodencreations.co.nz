@@ -1,7 +1,3 @@
-[build]
-  publish = "dist"
-  command = "npm install && npm run build"
-
 # Environment variables for production
 [build.environment]
   NODE_ENV = "production"
