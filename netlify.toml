@@ -1,4 +1,18 @@
 # Netlify redirects for React SPA - CRITICAL for proper routing
+
+# Serve static files directly (NOT through React)
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = false
+
 [[redirects]]
   from = "/about"
   to = "/index.html"
@@ -45,7 +59,7 @@
   to = "/index.html"
   status = 200
 
-# Security headers with proper CSP for production
+# Security headers with proper CSP for production + PRECONNECT
 [[headers]]
   for = "/*"
   [headers.values]
@@ -56,6 +70,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Link = "<https://hfirnolwhesjkxshidxo.supabase.co>; rel=preconnect; crossorigin, <https://i.ibb.co>; rel=preconnect; crossorigin"
 
 [[headers]]
   for = "/assets/*"
