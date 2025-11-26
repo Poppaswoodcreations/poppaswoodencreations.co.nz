@@ -1,0 +1,6 @@
+# robots.txt for Poppa's Wooden Creations
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
