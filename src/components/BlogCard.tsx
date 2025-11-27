@@ -1,6 +1,5 @@
 // src/components/BlogCard.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { BlogPost } from '../pages/blog/blogData';
 
 interface BlogCardProps {
@@ -11,16 +10,14 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Featured Image */}
-      <Link to={`/blog/${post.slug}`}>
-        <div className="aspect-video overflow-hidden">
-          <img
-            src={post.featuredImage}
-            alt={post.imageAlt}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-          />
-        </div>
-      </Link>
+      <div className="aspect-video overflow-hidden">
+        <img
+          src={post.featuredImage}
+          alt={post.imageAlt}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+      </div>
 
       {/* Content */}
       <div className="p-6">
@@ -33,11 +30,9 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         </div>
 
         {/* Title */}
-        <Link to={`/blog/${post.slug}`}>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3 hover:text-amber-600 transition-colors">
-            {post.title}
-          </h2>
-        </Link>
+        <h2 className="text-2xl font-bold text-gray-900 mb-3 hover:text-amber-600 transition-colors">
+          {post.title}
+        </h2>
 
         {/* Excerpt */}
         <p className="text-gray-700 mb-4 line-clamp-3">
@@ -53,12 +48,9 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
               day: 'numeric'
             })}
           </time>
-          <Link
-            to={`/blog/${post.slug}`}
-            className="text-amber-600 hover:text-amber-700 font-semibold hover:underline"
-          >
+          <span className="text-amber-600 hover:text-amber-700 font-semibold hover:underline">
             Read More →
-          </Link>
+          </span>
         </div>
       </div>
     </article>
