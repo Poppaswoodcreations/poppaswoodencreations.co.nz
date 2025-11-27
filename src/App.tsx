@@ -15,6 +15,11 @@ import Cart from './components/Cart/Cart';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import SEO from './components/SEO';
 import ErrorBoundary from './components/ErrorBoundary';
+// BLOG IMPORTS - ADD THESE
+import { BlogListView } from './pages/blog/BlogListView';
+import { BlogPostView } from './pages/blog/BlogPostView';
+// END BLOG IMPORTS
+
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
 import { categories } from './data/products';
@@ -24,6 +29,9 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
   const [showCart, setShowCart] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  // BLOG STATE - ADD THIS
+  const [blogPostSlug, setBlogPostSlug] = useState<string | null>(null);
+  // END BLOG STATE
   
   const { products, loading, error, loadProducts } = useProducts();
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
@@ -31,6 +39,7 @@ const App: React.FC = () => {
 
   const handleCategorySelect = (category: string) => {
     setCurrentView(category);
+    setBlogPostSlug(null); // Reset blog post when changing views
   };
 
   const handleProductSelect = (product: Product) => {
@@ -40,6 +49,13 @@ const App: React.FC = () => {
   const handleAddToCart = (product: Product) => {
     addToCart(product);
   };
+
+  // BLOG NAVIGATION HANDLER - ADD THIS
+  const handleBlogPostSelect = (slug: string) => {
+    setBlogPostSlug(slug);
+    setCurrentView('blog-post');
+  };
+  // END BLOG HANDLER
 
   const filteredProducts = currentView === 'home' 
     ? products.filter(p => p.featured).slice(0, 8)
@@ -102,6 +118,12 @@ const App: React.FC = () => {
         return <TermsOfService />;
       case 'reviews':
         return <ReviewsSection />;
+      // BLOG CASES - ADD THESE
+      case 'blog':
+        return <BlogListView onPostSelect={handleBlogPostSelect} onNavigate={handleCategorySelect} />;
+      case 'blog-post':
+        return <BlogPostView slug={blogPostSlug} onNavigate={handleCategorySelect} onPostSelect={handleBlogPostSelect} />;
+      // END BLOG CASES
       default:
         return (
           <ProductGrid 
