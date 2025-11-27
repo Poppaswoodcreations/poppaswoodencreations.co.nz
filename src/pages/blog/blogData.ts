@@ -29,7 +29,7 @@ export const blogPosts: BlogPost[] = [
     tags: ['wooden toys', 'child development', 'parenting tips', 'educational toys'],
     featuredImage: '/images/blog/wooden-toys-benefits.jpg',
     imageAlt: 'Child playing with wooden blocks',
-    content: null // Will be filled with JSX content below
+    content: null
   },
   {
     slug: 'baby-toy-cars-handcrafted-new-zealand',
@@ -57,6 +57,20 @@ export const blogPosts: BlogPost[] = [
     tags: ['sensory toys', 'baby development', 'infant toys', 'sensory play'],
     featuredImage: '/images/blog/sensory-toys-babies.jpg',
     imageAlt: 'Baby exploring wooden sensory toy',
+    content: null
+  },
+  {
+    slug: 'how-to-clean-wooden-toys-naturally',
+    title: 'How to Clean Wooden Toys Naturally: A Simple Step-by-Step Guide',
+    metaDescription: 'Learn how to clean wooden toys naturally using kitchen staples like vinegar and lemon. Safe, effective, and eco-friendly cleaning tips for parents.',
+    excerpt: 'Keep your wooden toys safe and clean using natural ingredients you already have. A complete guide to gentle, effective cleaning without harsh chemicals.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2024-11-27',
+    readTime: '8 min read',
+    category: 'Care & Maintenance',
+    tags: ['cleaning', 'natural cleaning', 'toy care', 'maintenance'],
+    featuredImage: '/images/blog/cleaning-wooden-toys.jpg',
+    imageAlt: 'Natural cleaning supplies for wooden toys',
     content: null
   },
 ];
