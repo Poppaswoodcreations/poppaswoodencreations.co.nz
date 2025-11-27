@@ -116,6 +116,14 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             >
               Shipping
             </button>
+            {/* BLOG BUTTON - ADDED */}
+            <button
+              onClick={() => onCategorySelect('blog')}
+              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
+            >
+              Blog
+            </button>
+            {/* END BLOG BUTTON */}
           </nav>
 
           {/* Right Side Icons */}
@@ -184,6 +192,9 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
               <button onClick={() => onCategorySelect('contact')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact Us</button>
               <button onClick={() => onCategorySelect('reviews')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Customer Reviews</button>
               <button onClick={() => onCategorySelect('shipping')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Shipping Info</button>
+              {/* BLOG BUTTON - ADDED */}
+              <button onClick={() => onCategorySelect('blog')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</button>
+              {/* END BLOG BUTTON */}
               <button onClick={() => onCategorySelect('privacy')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Privacy Policy</button>
               <button onClick={() => onCategorySelect('terms')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Terms of Service</button>
             </div>
