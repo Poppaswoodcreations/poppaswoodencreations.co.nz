@@ -2,7 +2,6 @@
 import React from 'react';
 
 // This file contains the actual content for each blog post
-// Add your blog post content as JSX here
 // Note: Links in content are simplified since we're not using React Router
 
 export const getBlogContent = (slug: string): React.ReactNode => {
@@ -15,6 +14,9 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     
     case 'sensory-wooden-toys-babies':
       return <SensoryToysContent />;
+    
+    case 'how-to-clean-wooden-toys-naturally':
+      return <CleanWoodenToysContent />;
     
     default:
       return <p>Content coming soon...</p>;
@@ -566,6 +568,246 @@ const SensoryToysContent: React.FC = () => (
     <p className="mb-6">
       Ready to explore sensory play with your baby? Browse our 
       <span className="text-amber-600 font-semibold">handcrafted collection</span> today.
+    </p>
+  </>
+);
+
+// ==========================================
+// BLOG POST: How to Clean Wooden Toys
+// ==========================================
+const CleanWoodenToysContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      Wooden toys bring warmth and nostalgia to playtime, but they also pick up dirt, germs, and the 
+      occasional sticky jam smudge. Unlike plastic, wood needs a gentler touch—harsh chemicals can 
+      strip the finish or warp the grain. So, how do you keep those handcrafted treasures safe, clean, 
+      and ready for endless adventures?
+    </p>
+
+    <p className="mb-6">
+      The secret lies in natural, everyday ingredients you already have in your kitchen: warm water, 
+      white vinegar, a splash of lemon, and a dab of food‑grade oil. This simple routine disinfects 
+      without toxins, protects the wood's integrity, and leaves behind a fresh scent that kids actually 
+      enjoy.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Choose Natural Cleaners for Wooden Toys?
+    </h2>
+
+    <p className="mb-6">
+      Most store‑bought cleaners are loaded with synthetic surfactants, artificial fragrances, and 
+      preservatives. While they might work on plastic, they're overkill for wood. A strong chemical 
+      spray can soak into the grain, leaving residues that toddlers later put in their mouths.
+    </p>
+
+    <p className="mb-6">
+      Natural cleaners, by contrast, rely on simple acids (like vinegar and lemon) that break down 
+      grime and kill surface bacteria. These ingredients are food‑grade, meaning they're safe if a 
+      little bit ends up on a child's hands—or even in their mouth during a teething episode.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Benefits at a glance:
+    </h3>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li><strong>Non‑toxic:</strong> No harsh chemicals that linger on toy surfaces.</li>
+      <li><strong>Wood‑friendly:</strong> Mild acids preserve the finish instead of stripping it.</li>
+      <li><strong>Cost‑effective:</strong> White vinegar, lemon juice, and dish soap are kitchen staples.</li>
+      <li><strong>Eco‑conscious:</strong> Biodegradable, no plastic bottles to toss.</li>
+      <li><strong>Pleasant scent:</strong> A hint of citrus instead of chemical fumes.</li>
+    </ul>
+
+    <p className="mb-6">
+      Think about it: if you're already wiping down the kitchen counter with vinegar, why not extend 
+      that same gentle power to your kids' toys?
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Step 1: Gather Your Natural Cleaning Supplies
+    </h2>
+
+    <p className="mb-6">
+      Before you start scrubbing, let's round up the essentials. The good news? Most of these items 
+      are sitting in your pantry right now.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      What you'll need:
+    </h3>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li><strong>Warm water:</strong> Lukewarm is ideal—hot water can warp thin wooden pieces.</li>
+      <li><strong>White distilled vinegar:</strong> A natural disinfectant that cuts through grime without harsh fumes.</li>
+      <li><strong>Lemon juice (fresh or bottled):</strong> Adds citric acid and a fresh scent.</li>
+      <li><strong>Mild dish soap:</strong> Just a tiny squirt—look for a plant‑based formula if you have it.</li>
+      <li><strong>Microfiber cloths (2‑3):</strong> Soft, lint‑free, and gentle on wood grain.</li>
+      <li><strong>A small bowl or spray bottle:</strong> For mixing your solution.</li>
+      <li><strong>Food‑grade mineral oil or coconut oil:</strong> To restore shine after cleaning.</li>
+      <li><strong>Optional: A soft‑bristle toothbrush:</strong> Great for carved details or puzzle grooves.</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Step 2: Mix Your Natural Cleaning Solution
+    </h2>
+
+    <p className="mb-6">
+      This is where the magic happens. You're creating a gentle yet effective cleaner that respects 
+      wood's natural texture while zapping germs and grime.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      The recipe:
+    </h3>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-2">
+      <li>Pour 1 cup of lukewarm water into your bowl or spray bottle.</li>
+      <li>Add 1 tablespoon of white distilled vinegar.</li>
+      <li>Squeeze in 1 tablespoon of fresh lemon juice (about half a small lemon).</li>
+      <li>Drop in 1 teaspoon of mild dish soap—just enough to create a light foam.</li>
+      <li>Swirl gently until everything blends. You'll see a slight cloudiness; that's normal.</li>
+    </ol>
+
+    <p className="mb-6">
+      Why this combo? The vinegar's acetic acid neutralizes bacteria, lemon adds extra cleaning power 
+      and a fresh scent, and the soap lifts dirt without leaving a greasy film.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Step 3: Wipe Down Each Toy Gently
+    </h2>
+
+    <p className="mb-6">
+      Now comes the hands‑on part. Grab your first toy—maybe that adorable wooden train or a puzzle 
+      your toddler chews on daily—and let's get it clean.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      The technique:
+    </h3>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-3">
+      <li>
+        <strong>Dip and wring:</strong> Soak a microfiber cloth in your cleaning solution, then wring 
+        it out until it's just damp—not dripping.
+      </li>
+      <li>
+        <strong>Gentle strokes:</strong> Wipe each surface with smooth, even motions. Follow the wood 
+        grain if you can see it.
+      </li>
+      <li>
+        <strong>Pay attention to grooves:</strong> Use a soft‑bristle toothbrush dipped lightly in the 
+        solution for carved details.
+      </li>
+      <li>
+        <strong>Don't soak:</strong> Never submerge a wooden toy in water or let it sit in a puddle.
+      </li>
+    </ol>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Step 4: Rinse and Disinfect with Care
+    </h2>
+
+    <p className="mb-6">
+      After you've wiped down the toy, there's still a thin layer of soap and vinegar on the surface. 
+      A quick rinse removes any lingering residue and leaves the wood feeling clean, not sticky.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      How to rinse properly:
+    </h3>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-2">
+      <li>Grab a second microfiber cloth and dampen it with plain lukewarm water.</li>
+      <li>Wring it out well—again, damp, not wet.</li>
+      <li>Wipe over the toy's surface to lift away the cleaning solution.</li>
+      <li>If you feel any soap film, go over it one more time with a freshly dampened cloth.</li>
+    </ol>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Step 5: Dry, Store, and Maintain
+    </h2>
+
+    <p className="mb-6">
+      Now that the toys are clean and disinfected, the next mission is getting them completely dry so 
+      the wood stays happy. Moisture that lingers in the grain can cause swelling, warping, or even mold.
+    </p>
+
+    <p className="mb-6">
+      Grab a clean, lint‑free towel and lay each piece flat on a dry surface. Pat gently; don't 
+      rub harshly. A sunny windowsill works wonders, but keep the toys out of direct, scorching heat.
+    </p>
+
+    <div className="bg-amber-50 border-l-4 border-amber-500 p-6 my-8">
+      <h3 className="text-lg font-bold text-gray-900 mb-2">Quick Storage Checklist:</h3>
+      <ul className="list-disc pl-6 space-y-2">
+        <li>All pieces are completely dry</li>
+        <li>No residual soap or vinegar</li>
+        <li>Container is breathable, not airtight</li>
+        <li>Moisture absorbers are in place</li>
+        <li>Optional scent sachet is fresh</li>
+      </ul>
+    </div>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      FAQ
+    </h2>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      How often should I clean wooden toys naturally?
+    </h3>
+
+    <p className="mb-6">
+      Most parents find a monthly rhythm works well – it's enough to keep grime and germs at bay 
+      without over‑doing it. If your kids are especially messy, a quick spot‑clean after each play 
+      session helps.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Can I use regular kitchen vinegar for cleaning?
+    </h3>
+
+    <p className="mb-6">
+      Yes, plain white distilled vinegar is perfect. Mix one part vinegar with four parts lukewarm 
+      water and add a splash of mild dish soap.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      What's the safest natural oil for conditioning wooden toys?
+    </h3>
+
+    <p className="mb-6">
+      Food‑grade mineral oil or a dab of coconut oil works wonders. Both are odorless, non‑toxic, 
+      and create a thin barrier that seals the grain.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Is it okay to put wooden toys in the dishwasher?
+    </h3>
+
+    <p className="mb-6">
+      Definitely not. Dishwashers expose wood to high heat, aggressive water pressure, and harsh 
+      detergents that can strip the finish and cause warping.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Conclusion
+    </h2>
+
+    <p className="mb-6">
+      We've been through the whole routine, from gathering kitchen staples to giving each piece a 
+      final polish, and you now have a clear roadmap for how to clean wooden toys naturally.
+    </p>
+
+    <p className="mb-6">
+      The biggest win? You're using things you already have—warm water, a splash of vinegar, a dab 
+      of lemon, and a bit of food‑grade oil—so there's no extra cost or chemicals to worry about.
+    </p>
+
+    <p className="mb-6">
+      Ready to make cleaning a quick, stress‑free habit? Dive into your next play session knowing 
+      the toys are safe, spotless, and ready for endless imagination.
     </p>
   </>
 );
