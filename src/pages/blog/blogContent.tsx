@@ -1,9 +1,9 @@
 // src/pages/blog/blogContent.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 // This file contains the actual content for each blog post
 // Add your blog post content as JSX here
+// Note: Links in content are simplified since we're not using React Router
 
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
@@ -127,7 +127,7 @@ const BenefitsWoodenToysContent: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      Our <Link to="/shop/blocks" className="text-amber-600 hover:underline">Rainbow Stacking Blocks</Link> are 
+      Our <span className="text-amber-600 font-semibold">Rainbow Stacking Blocks</span> are 
       a perfect example. Children might start by simply stacking them, then use them as pretend food, 
       then as building materials for a castle. The same toy grows with them.
     </p>
@@ -267,8 +267,8 @@ const BenefitsWoodenToysContent: React.FC = () => (
 
     <p className="mb-6">
       Ready to explore wooden toys for your child? 
-      Browse our <Link to="/shop" className="text-amber-600 hover:underline font-semibold">
-      handcrafted collection</Link> and discover the difference that quality, locally-made wooden 
+      Browse our <span className="text-amber-600 hover:underline font-semibold">
+      handcrafted collection</span> and discover the difference that quality, locally-made wooden 
       toys can make.
     </p>
   </>
@@ -358,7 +358,7 @@ const BabyToyCarsContent: React.FC = () => (
     </h2>
 
     <p className="mb-6">
-      Our <Link to="/shop/cars/baby-toys" className="text-amber-600 hover:underline">baby toy car collection</Link> includes 
+      Our <span className="text-amber-600 font-semibold">baby toy car collection</span> includes 
       a variety of designs, from simple streamlined racers to charming vintage-inspired vehicles. Each 
       piece celebrates the natural beauty of wood grain, with some featuring subtle variations in color 
       and texture that make every toy truly one-of-a-kind.
@@ -393,7 +393,7 @@ const BabyToyCarsContent: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      Visit our <Link to="/shop" className="text-amber-600 hover:underline">online shop</Link> to 
+      Visit our <span className="text-amber-600 font-semibold">online shop</span> to 
       discover our full collection and bring home a piece of New Zealand craftsmanship that will be 
       treasured for generations to come.
     </p>
@@ -532,7 +532,7 @@ const SensoryToysContent: React.FC = () => (
     </ul>
 
     <p className="mb-6">
-      Explore our <Link to="/shop/baby-toys" className="text-amber-600 hover:underline">complete collection</Link> of 
+      Explore our <span className="text-amber-600 font-semibold">complete collection</span> of 
       sensory wooden toys designed specifically for New Zealand babies.
     </p>
 
@@ -565,7 +565,7 @@ const SensoryToysContent: React.FC = () => (
 
     <p className="mb-6">
       Ready to explore sensory play with your baby? Browse our 
-      <Link to="/shop" className="text-amber-600 hover:underline"> handcrafted collection</Link> today.
+      <span className="text-amber-600 font-semibold">handcrafted collection</span> today.
     </p>
   </>
 );
