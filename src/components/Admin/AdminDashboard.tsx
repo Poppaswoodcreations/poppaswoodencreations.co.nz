@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Save, Eye } from 'lucide-react';
+import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Save, Eye, FileEdit } from 'lucide-react';
 import { Product } from '../../types';
 import { saveProductsToStorage } from '../../utils/productStorage';
 import ProductForm from './ProductForm';
@@ -12,6 +12,7 @@ import SupabaseSync from './SupabaseSync';
 import EmailManager from './EmailManager';
 import OrderManager from './OrderManager';
 import FooterEditor from './FooterEditor';
+import { BlogAdmin } from '../BlogAdmin/BlogAdmin';
 import { useProducts } from '../../hooks/useProducts';
 
 interface AdminDashboardProps {
@@ -28,6 +29,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [activeTab, setActiveTab] = useState('products');
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [showBlogAdmin, setShowBlogAdmin] = useState(false);
   const [heroData, setHeroData] = useState({
     title: "Premium Wooden Toys Made with Love",
     subtitle: "Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire creativity and last for generations.",
@@ -40,6 +42,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const tabs = [
     { id: 'products', label: '📦 Product Manager', icon: Package },
+    { id: 'blog-admin', label: '📝 Blog Manager', icon: FileEdit },
     { id: 'orders', label: '📋 Orders', icon: BarChart3 },
     { id: 'hero-editor', label: '🎨 Edit Hero', icon: Edit3 },
     { id: 'footer-editor', label: '📄 Edit Footer', icon: Settings },
@@ -251,6 +254,57 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'blog-admin':
+        return (
+          <div className="space-y-6">
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+              <h3 className="text-2xl font-bold text-purple-900 mb-3">📝 Blog Post Manager</h3>
+              <p className="text-purple-700 mb-4">
+                Create new blog posts easily! Fill out a simple form, paste your HTML content, 
+                and get ready-to-use code for your blog.
+              </p>
+              <button
+                onClick={() => setShowBlogAdmin(true)}
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold flex items-center space-x-2"
+              >
+                <FileEdit size={20} />
+                <span>Create New Blog Post</span>
+              </button>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Current Blog Posts:</h4>
+              <ul className="space-y-2 text-gray-700">
+                <li>✅ 5 Benefits of Wooden Toys for Child Development</li>
+                <li>✅ Discovering Magic in Every Grain: Baby Toy Cars</li>
+                <li>✅ Best Sensory Wooden Toys for Babies</li>
+                <li>✅ How to Clean Wooden Toys Naturally</li>
+              </ul>
+              <a 
+                href="https://poppaswoodencreations.co.nz"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open('https://poppaswoodencreations.co.nz', '_blank');
+                }}
+                className="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
+              >
+                View Blog →
+              </a>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="font-medium text-blue-900 mb-2">💡 How It Works:</h4>
+              <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+                <li>Click "Create New Blog Post" above</li>
+                <li>Fill out the form with title, description, and content</li>
+                <li>Click "Generate Code"</li>
+                <li>Copy the code and paste into your blog files</li>
+                <li>Commit to GitHub and deploy!</li>
+              </ol>
+            </div>
+          </div>
+        );
+
       case 'products':
         return (
           <div className="space-y-6">
@@ -656,6 +710,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             setEditingProduct(null);
           }}
         />
+      )}
+
+      {/* Blog Admin Modal */}
+      {showBlogAdmin && (
+        <BlogAdmin onClose={() => setShowBlogAdmin(false)} />
       )}
     </div>
   );
