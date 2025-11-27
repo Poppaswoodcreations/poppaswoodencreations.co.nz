@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, User, Search } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 
@@ -13,6 +14,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // ✅ ADDED: React Router navigation
   
   // Check if Supabase is connected
   const { isSupabaseConnected } = useProducts();
@@ -48,8 +50,33 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
     }
   };
 
+  // ✅ FIXED: Now uses navigate() to actually change the URL
   const handleCategoryClick = (categorySlug: string) => {
     console.log('🔄 Header: Navigating to category:', categorySlug);
+    
+    // Navigate to the proper URL
+    if (categorySlug === 'home') {
+      navigate('/');
+    } else if (categorySlug === 'about') {
+      navigate('/about');
+    } else if (categorySlug === 'contact') {
+      navigate('/contact');
+    } else if (categorySlug === 'reviews') {
+      navigate('/reviews');
+    } else if (categorySlug === 'shipping') {
+      navigate('/shipping');
+    } else if (categorySlug === 'blog') {
+      navigate('/blog');
+    } else if (categorySlug === 'privacy') {
+      navigate('/privacy');
+    } else if (categorySlug === 'terms') {
+      navigate('/terms');
+    } else {
+      // Product categories
+      navigate(`/${categorySlug}`);
+    }
+    
+    // Also call the original callback for state management
     onCategorySelect(categorySlug);
     setIsMenuOpen(false);
   };
@@ -60,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div 
-            onClick={() => onCategorySelect('home')}
+            onClick={() => handleCategoryClick('home')}
             className="flex items-center space-x-2 cursor-pointer"
           >
             <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
@@ -75,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
           {/* Desktop Navigation - Simple Buttons */}
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             <button
-              onClick={() => onCategorySelect('home')}
+              onClick={() => handleCategoryClick('home')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               Home
@@ -93,37 +120,36 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             ))}
             
             <button
-              onClick={() => onCategorySelect('about')}
+              onClick={() => handleCategoryClick('about')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               About
             </button>
             <button
-              onClick={() => onCategorySelect('contact')}
+              onClick={() => handleCategoryClick('contact')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               Contact
             </button>
             <button
-              onClick={() => onCategorySelect('reviews')}
+              onClick={() => handleCategoryClick('reviews')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               Reviews
             </button>
             <button
-              onClick={() => onCategorySelect('shipping')}
+              onClick={() => handleCategoryClick('shipping')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               Shipping
             </button>
-            {/* BLOG BUTTON - ADDED */}
+            {/* BLOG BUTTON */}
             <button
-              onClick={() => onCategorySelect('blog')}
+              onClick={() => handleCategoryClick('blog')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
             >
               Blog
             </button>
-            {/* END BLOG BUTTON */}
           </nav>
 
           {/* Right Side Icons */}
@@ -166,7 +192,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
               <button 
-                onClick={() => onCategorySelect('home')} 
+                onClick={() => handleCategoryClick('home')} 
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
               >
                 Home
@@ -188,15 +214,13 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
                 </div>
               </div>
               
-              <button onClick={() => onCategorySelect('about')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">About Us</button>
-              <button onClick={() => onCategorySelect('contact')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact Us</button>
-              <button onClick={() => onCategorySelect('reviews')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Customer Reviews</button>
-              <button onClick={() => onCategorySelect('shipping')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Shipping Info</button>
-              {/* BLOG BUTTON - ADDED */}
-              <button onClick={() => onCategorySelect('blog')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</button>
-              {/* END BLOG BUTTON */}
-              <button onClick={() => onCategorySelect('privacy')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Privacy Policy</button>
-              <button onClick={() => onCategorySelect('terms')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Terms of Service</button>
+              <button onClick={() => handleCategoryClick('about')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">About Us</button>
+              <button onClick={() => handleCategoryClick('contact')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact Us</button>
+              <button onClick={() => handleCategoryClick('reviews')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Customer Reviews</button>
+              <button onClick={() => handleCategoryClick('shipping')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Shipping Info</button>
+              <button onClick={() => handleCategoryClick('blog')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</button>
+              <button onClick={() => handleCategoryClick('privacy')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Privacy Policy</button>
+              <button onClick={() => handleCategoryClick('terms')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Terms of Service</button>
             </div>
           </div>
         )}
