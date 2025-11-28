@@ -51,15 +51,23 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold text-lg">{companyName}</h3>
-                <p className="text-xs text-gray-400">{tagline}</p>
+                <p className="text-xs text-gray-300">{tagline}</p>
               </div>
             </div>
-            <p className="text-gray-400 text-sm">{description}</p>
+            <p className="text-gray-300 text-sm">{description}</p>
             <div className="flex space-x-4">
-              <a href={footerData?.socialMedia?.facebook || "#"} className="text-gray-400 hover:text-amber-400 transition-colors">
+              <a 
+                href={footerData?.socialMedia?.facebook || "https://www.facebook.com/poppas.wooden.creations"} 
+                className="text-gray-300 hover:text-amber-400 transition-colors"
+                aria-label="Visit our Facebook page"
+              >
                 <Facebook size={20} />
               </a>
-              <a href={footerData?.socialMedia?.instagram || "#"} className="text-gray-400 hover:text-amber-400 transition-colors">
+              <a 
+                href={footerData?.socialMedia?.instagram || "https://www.instagram.com/poppas_wooden_creations"} 
+                className="text-gray-300 hover:text-amber-400 transition-colors"
+                aria-label="Visit our Instagram page"
+              >
                 <Instagram size={20} />
               </a>
             </div>
@@ -69,13 +77,13 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Home</a></li>
-              <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/wooden-trains" className="text-gray-400 hover:text-white transition-colors">All Products</a></li>
-              <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="/shipping" className="text-gray-400 hover:text-white transition-colors">Shipping & Returns</a></li>
-              <li><a href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="/" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
+              <li><a href="/about" className="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+              <li><a href="/wooden-trains" className="text-gray-300 hover:text-white transition-colors">All Products</a></li>
+              <li><a href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+              <li><a href="/shipping" className="text-gray-300 hover:text-white transition-colors">Shipping & Returns</a></li>
+              <li><a href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
             </ul>
           </div>
 
@@ -83,11 +91,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold mb-4">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/wooden-trains" className="text-gray-400 hover:text-white transition-colors">Wooden Trains</a></li>
-              <li><a href="/wooden-baby-toys" className="text-gray-400 hover:text-white transition-colors">Baby Toys</a></li>
-              <li><a href="/wooden-tractors-boats" className="text-gray-400 hover:text-white transition-colors">Tractors & Boats</a></li>
-              <li><a href="/wooden-kitchenware" className="text-gray-400 hover:text-white transition-colors">Kitchenware</a></li>
-              <li><a href="/wooden-planes-helicopters" className="text-gray-400 hover:text-white transition-colors">Planes & Helicopters</a></li>
+              <li><a href="/wooden-trains" className="text-gray-300 hover:text-white transition-colors">Wooden Trains</a></li>
+              <li><a href="/wooden-baby-toys" className="text-gray-300 hover:text-white transition-colors">Baby Toys</a></li>
+              <li><a href="/wooden-tractors-boats" className="text-gray-300 hover:text-white transition-colors">Tractors & Boats</a></li>
+              <li><a href="/wooden-kitchenware" className="text-gray-300 hover:text-white transition-colors">Kitchenware</a></li>
+              <li><a href="/wooden-planes-helicopters" className="text-gray-300 hover:text-white transition-colors">Planes & Helicopters</a></li>
             </ul>
           </div>
 
@@ -97,7 +105,7 @@ const Footer: React.FC = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-start space-x-2">
                 <MapPin size={16} className="text-amber-400 mt-0.5" />
-                <div className="text-gray-400">
+                <div className="text-gray-300">
                   <div>102 Kiripaka Rd</div>
                   <div>Whangarei, Northland 0110</div>
                   <div>New Zealand</div>
@@ -105,19 +113,19 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="text-amber-400" />
-                <span className="text-gray-400">+64 21 022 8166</span>
+                <span className="text-gray-300">+64 21 022 8166</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={16} className="text-amber-400" />
-                <span className="text-gray-400">poppas.wooden.creations@gmail.com</span>
+                <span className="text-gray-300">poppas.wooden.creations@gmail.com</span>
               </div>
               <div className="flex items-start space-x-2">
                 <div className="w-4 h-4 bg-amber-400 rounded-full mt-1"></div>
-                <div className="text-gray-400 text-sm">
+                <div className="text-gray-300 text-sm">
                   <div>Mon-Fri: 9AM-3PM NZST</div>
                   <div>Saturday: Closed</div>
                   <div>Sunday: Closed</div>
-                  <div className="text-xs text-gray-500 mt-1">Established 2015 • NZ Registered Business</div>
+                  <div className="text-xs text-gray-400 mt-1 font-medium">Established 2015 • NZ Registered Business</div>
                 </div>
               </div>
             </div>
@@ -126,12 +134,12 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <div className="space-y-3">
-            <p className="text-gray-400 text-sm flex items-center justify-center space-x-1">
+            <p className="text-gray-300 text-sm flex items-center justify-center space-x-1">
               <span>© 2024 {companyName}. Made with</span>
               <Heart size={16} className="text-red-500" />
               <span>in New Zealand</span>
             </p>
-            <div className="text-gray-500 text-xs space-y-1">
+            <div className="text-gray-400 text-xs space-y-1 font-medium">
               <p>Secure SSL Encrypted • GDPR Compliant • Privacy Protected</p>
               <p>Registered Business • Established 2015 • New Zealand Made</p>
               <p>Workshop: 102 Kiripaka Rd, Whangarei, Northland 0110, New Zealand</p>
