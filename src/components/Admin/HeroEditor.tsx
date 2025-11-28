@@ -11,7 +11,7 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
     subtitle: "Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire creativity and last for generations.",
     ctaText: "Shop Baby Toys",
     secondaryCtaText: "Learn More",
-    backgroundImage: "https://i.ibb.co/20BWnH7J/Messenger-creation-9-D5326-FA-08-DE-471-A-BAB1-6-E385-C838-D90-2-optimized.webp",
+    backgroundImage: "https://i.ibb.co/20BWhH7J/Messenger-creation-9-D5326-FA-08-DE-471-A-BAB1-6-E385-C838-D90-2-optimized.webp",
     badges: {
       topRight: "Made in NZ 🇳🇿",
       bottomLeft: "🚛 Premium Wooden Toys"
