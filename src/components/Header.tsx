@@ -14,9 +14,8 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // ✅ ADDED: React Router navigation
+  const navigate = useNavigate();
   
-  // Check if Supabase is connected
   const { isSupabaseConnected } = useProducts();
 
   const productCategories = [
@@ -50,11 +49,9 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
     }
   };
 
-  // ✅ FIXED: Now uses navigate() to actually change the URL
   const handleCategoryClick = (categorySlug: string) => {
     console.log('🔄 Header: Navigating to category:', categorySlug);
     
-    // Navigate to the proper URL
     if (categorySlug === 'home') {
       navigate('/');
     } else if (categorySlug === 'about') {
@@ -72,11 +69,9 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
     } else if (categorySlug === 'terms') {
       navigate('/terms');
     } else {
-      // Product categories
       navigate(`/${categorySlug}`);
     }
     
-    // Also call the original callback for state management
     onCategorySelect(categorySlug);
     setIsMenuOpen(false);
   };
@@ -99,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             </div>
           </div>
 
-          {/* Desktop Navigation - Simple Buttons */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             <button
               onClick={() => handleCategoryClick('home')}
@@ -108,7 +103,6 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
               Home
             </button>
             
-            {/* Product Category Buttons */}
             {productCategories.map((category) => (
               <button
                 key={category.slug}
@@ -143,7 +137,6 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             >
               Shipping
             </button>
-            {/* BLOG BUTTON */}
             <button
               onClick={() => handleCategoryClick('blog')}
               className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
@@ -152,14 +145,18 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             </button>
           </nav>
 
-          {/* Right Side Icons */}
+          {/* Right Side Icons - FIXED: Added aria-labels */}
           <div className="flex items-center space-x-4">
-            <button className="p-2 text-gray-700 hover:text-amber-600 transition-colors">
+            <button 
+              className="p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label="Search products"
+            >
               <Search size={20} />
             </button>
             <button
               onClick={onShowCart}
               className="relative p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label={`Shopping cart with ${cartItemCount} items`}
             >
               <ShoppingCart size={20} />
               {cartItemCount > 0 && (
@@ -171,7 +168,8 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             <button
               onClick={handleAdminClick}
               className="p-2 text-gray-700 hover:text-amber-600 transition-colors relative bg-amber-50 border-2 border-amber-300 rounded-lg"
-              title="🔐 ADMIN ACCESS - Full Dashboard Available!"
+              title="Admin access"
+              aria-label="Open admin dashboard"
             >
               <User size={20} />
               <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold animate-pulse">
@@ -181,6 +179,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -198,7 +197,6 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
                 Home
               </button>
               
-              {/* Mobile Product Categories */}
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Product Categories</div>
                 <div className="pl-4 space-y-1">
@@ -239,6 +237,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent mb-4"
                 autoFocus
+                aria-label="Admin password"
               />
               <div className="flex space-x-3">
                 <button
