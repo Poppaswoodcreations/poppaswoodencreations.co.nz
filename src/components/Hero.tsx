@@ -8,59 +8,26 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
-  const [heroImage, setHeroImage] = useState('');
-  const [showImageEditor, setShowImageEditor] = useState(false);
+  const [heroData, setHeroData] = useState({
+    title: "Premium Wooden Toys Made with Love",
+    subtitle: "Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire creativity and last for generations.",
+    backgroundImage: "https://i.ibb.co/20BWhH7J/Messenger-creation-9-D5326-FA-08-DE-471-A-BAB1-6-E385-C838-D90-2-optimized.webp",
+    ctaText: "Shop Baby Toys"
+  });
 
-  // Load saved hero image
+  // Load saved hero data from the SAME key the editor uses
   useEffect(() => {
     try {
-      // Try multiple storage keys for hero image
-      const savedHeroImage = localStorage.getItem('poppas-hero-image') || 
-                            localStorage.getItem('hero-image') ||
-                            localStorage.getItem('main-image');
-      
-      if (savedHeroImage) {
-        console.log('🖼️ HERO: Found saved hero image');
-        setHeroImage(savedHeroImage);
-      } else {
-        console.log('🖼️ HERO: No saved image, using default truck image');
-        setHeroImage('https://i.ibb.co/dw3x0Kmm/image.jpg');
+      const saved = localStorage.getItem('poppas-hero-settings');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setHeroData(prev => ({ ...prev, ...parsed }));
+        console.log('🎨 HERO: Loaded saved hero data:', parsed);
       }
     } catch (error) {
-      console.error('Error loading hero image:', error);
-      setHeroImage('https://i.ibb.co/dw3x0Kmm/image.jpg');
+      console.error('Error loading hero data:', error);
     }
   }, []);
-
-  const handleSaveHeroImage = () => {
-    try {
-      console.log('💾 HERO: Saving hero image:', heroImage.substring(0, 100) + '...');
-      
-      // Save to localStorage
-      localStorage.setItem('poppas-hero-image', heroImage);
-      
-      // Force update the state to trigger re-render
-      setHeroImage(heroImage);
-      
-      // Verify save
-      const verification = localStorage.getItem('poppas-hero-image');
-      if (verification === heroImage) {
-        console.log('✅ HERO: Image saved successfully');
-        setShowImageEditor(false);
-        alert('Hero image updated successfully! Refresh the page to see the change.');
-        
-        // Force page refresh to show the new image
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      } else {
-        throw new Error('Save verification failed');
-      }
-    } catch (error) {
-      console.error('❌ HERO: Failed to save hero image:', error);
-      alert('Failed to save hero image. Please try again.');
-    }
-  };
 
   return (
     <section className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 overflow-hidden">
@@ -82,15 +49,11 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
               </div>
               
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Premium Wooden Toys
-                <span className="block text-amber-600">Made with Love</span>
+                {heroData.title}
               </h1>
               
               <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
-                Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. 
-                Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire 
-                creativity and last for generations. Our toys are not just playthings – they're heirloom pieces 
-                that grow with your child and can be passed down through families.
+                {heroData.subtitle}
               </p>
 
               <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
@@ -139,7 +102,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                 onClick={() => onCategorySelect('wooden-baby-toys')}
                 className="bg-amber-600 text-white px-6 sm:px-8 py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors flex items-center justify-center space-x-2 group"
               >
-                <span>Shop Baby Toys</span>
+                <span>{heroData.ctaText}</span>
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -171,20 +134,10 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
 
           {/* Hero Image */}
           <div className="relative">
-            {/* Edit Button - Always visible */}
-            <button
-              onClick={() => setShowImageEditor(true)}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 z-30 bg-amber-600 hover:bg-amber-700 text-white p-2 sm:p-3 rounded-full shadow-lg transition-all"
-              title="Edit hero image"
-              style={{ zIndex: 30 }}
-            >
-              <Edit size={16} className="sm:w-5 sm:h-5" />
-            </button>
-            
             <div className="aspect-square bg-white rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden w-full">
               <img
-                src={heroImage || 'https://i.ibb.co/FkkjBShk/image.jpg'}
-                alt="Handcrafted wooden truck toys - Premium quality wooden toys from Poppa's Wooden Creations made in New Zealand"
+                src={heroData.backgroundImage}
+                alt="Handcrafted wooden toys - Premium quality wooden toys from Poppa's Wooden Creations made in New Zealand"
                 className="w-full h-full object-cover product-image"
                 loading="eager"
                 onError={(e) => {
@@ -193,7 +146,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                   target.src = 'https://i.ibb.co/FkkjBShk/image.jpg';
                 }}
                 onLoad={() => {
-                  console.log('✅ HERO: Image loaded successfully');
+                  console.log('✅ HERO: Image loaded successfully:', heroData.backgroundImage.substring(0, 50));
                 }}
               />
             </div>
