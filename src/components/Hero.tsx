@@ -70,7 +70,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                   <Star className="text-green-600" size={20} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Premium Quality</h3>
+                  <h4 className="font-semibold text-gray-900">Premium Quality</h4>
                   <p className="text-sm text-gray-600">Hand-selected NZ timber</p>
                 </div>
               </div>
@@ -80,7 +80,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                   <Award className="text-blue-600" size={20} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Child Safe</h3>
+                  <h4 className="font-semibold text-gray-900">Child Safe</h4>
                   <p className="text-sm text-gray-600">Non-toxic finishes</p>
                 </div>
               </div>
@@ -90,7 +90,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                   <Truck className="text-purple-600" size={20} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Free Shipping</h3>
+                  <h4 className="font-semibold text-gray-900">Free Shipping</h4>
                   <p className="text-sm text-gray-600">Orders over $1000</p>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => onCategorySelect('wooden-baby-toys')}
-                className="bg-amber-600 text-white px-6 sm:px-8 py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors flex items-center justify-center space-x-2 group"
+                className="bg-amber-800 text-white px-6 sm:px-8 py-4 rounded-lg font-bold hover:bg-amber-900 transition-colors flex items-center justify-center space-x-2 group shadow-md"
               >
                 <span>{heroData.ctaText}</span>
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -151,12 +151,12 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
               />
             </div>
             
-            {/* Floating Elements */}
-            <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 bg-green-500 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-lg">
+            {/* Floating Elements - FIXED: Better contrast */}
+            <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 bg-green-700 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg">
               Made in NZ 🇳🇿
             </div>
             
-            <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 bg-amber-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-lg">
+            <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 bg-amber-800 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg">
               🚛 Premium Wooden Toys
             </div>
           </div>
