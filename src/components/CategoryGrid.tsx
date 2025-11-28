@@ -18,7 +18,6 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categories, onCategorySelec
             Explore our handcrafted wooden toys organized by category
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category) => (
             <div
@@ -40,7 +39,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categories, onCategorySelec
               
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-amber-600 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-amber-700 transition-colors">
                     {category.name}
                   </h3>
                 </div>
@@ -50,7 +49,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categories, onCategorySelec
                 </p>
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-amber-600 font-medium">
+                  <span className="text-sm text-amber-800 font-semibold">
                     {category.productCount} products
                   </span>
                 </div>
