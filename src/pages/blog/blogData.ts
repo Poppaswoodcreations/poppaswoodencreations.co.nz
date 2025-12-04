@@ -73,7 +73,23 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Natural cleaning supplies for wooden toys',
     content: null
   },
+
+  {
+    slug: 'tractor-exquisite',
+    title: 'Tractor Exquisite',
+    metaDescription: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
+    excerpt: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-04',
+    readTime: '6 min read',
+    category: 'Product Spotlight',
+    tags: ['kauri toys', 'wooden toys', 'Whangarei', 'handcrafted', 'NZ made'],
+    featuredImage: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
+    imageAlt: 'Handcrafted kauri tractor toy from Whangarei',
+    content: null
+  }
 ];
+
 
 // Template for adding new blog posts:
 /*
