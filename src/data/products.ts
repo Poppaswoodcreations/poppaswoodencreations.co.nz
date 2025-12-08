@@ -22,7 +22,7 @@ export const categories: Category[] = [
     name: 'Wooden Trucks',
     slug: 'wooden-trucks',
     description: 'Heavy-duty wooden trucks for construction play',
-    image: 'https://i.ibb.co/209M763M/2e2d05ab4ec0.webp',
+    image: 'https://i.ibb.co/SXV6hSsd/e4a17e89fcce.webp',
     productCount: 8
   },
   {
@@ -62,7 +62,7 @@ export const categories: Category[] = [
     name: 'Other Wooden Toys',
     slug: 'wooden-other-toys',
     description: 'Unique wooden toys and educational games',
-    image: 'https://i.ibb.co/tp3vVXjf/facadd4d194a.webp',
+    image: 'https://i.ibb.co/7xHCC6Wp/505d0b6682cd.webp',
     productCount: 6
   }
 ];
