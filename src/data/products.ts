@@ -6,7 +6,7 @@ export const categories: Category[] = [
     name: 'Wooden Trains',
     slug: 'wooden-trains',
     description: 'Handcrafted wooden train sets and railway accessories',
-    image: 'https://i.ibb.co/fzTbMqLs/Messenger-creation-123-FD858-057-C-4-BB0-AE05-A648607-E31-DC-1-optimized.webp',
+    image: 'https://i.ibb.co/v4L77Cwn/1649a53a0d72.webp',
     productCount: 2
   },
   {
@@ -14,7 +14,7 @@ export const categories: Category[] = [
     name: 'Wooden Baby Toys',
     slug: 'wooden-baby-toys',
     description: 'Safe, natural wooden toys for babies and toddlers',
-    image: 'https://i.ibb.co/tT1h57DD/20201218-105144-optimized.webp',
+    image: 'https://i.ibb.co/bMc2sf5f/ae159904ff48.webp',
     productCount: 2
   },
   {
@@ -22,7 +22,7 @@ export const categories: Category[] = [
     name: 'Wooden Trucks',
     slug: 'wooden-trucks',
     description: 'Heavy-duty wooden trucks for construction play',
-    image: 'https://i.ibb.co/Q3B0k3vs/166834389-1003153473424487-7993501529931213173-n-1-optimized-1.webp',
+    image: 'https://i.ibb.co/209M763M/2e2d05ab4ec0.webp',
     productCount: 8
   },
   {
@@ -30,7 +30,7 @@ export const categories: Category[] = [
     name: 'Wooden Cars',
     slug: 'wooden-cars',
     description: 'Fast and fun wooden cars for racing adventures',
-    image: 'https://i.ibb.co/qLJF4LnT/FB-IMG-1640834552989-2-optimized.webp',
+    image: 'https://i.ibb.co/sJt3SPv7/70e3df4cdc5d.webp',
     productCount: 25
   },
   {
@@ -38,7 +38,7 @@ export const categories: Category[] = [
     name: 'Wooden Planes & Helicopters',
     slug: 'wooden-planes-helicopters',
     description: 'Take flight with wooden aircraft and helicopters',
-    image: 'https://i.ibb.co/RT0022Y5/received-649542706226495-2-optimized.webp',
+    image: 'https://i.ibb.co/Ng7Y442z/0a4e2978c131.webp',
     productCount: 4
   },
   {
@@ -46,7 +46,7 @@ export const categories: Category[] = [
     name: 'Wooden Kitchenware',
     slug: 'wooden-kitchenware',
     description: 'Beautiful and functional wooden kitchen tools',
-    image: 'https://i.ibb.co/zH7qHB0N/Messenger-creation-EDD2-DF53-8-E6-B-4-F23-89-DB-12-C030-D74-C43-1-optimized.webp',
+    image: 'https://i.ibb.co/jZ3pySpt/e7af5ed802b8.webp',
     productCount: 12
   },
   {
@@ -54,7 +54,7 @@ export const categories: Category[] = [
     name: 'Wooden Tractors & Boats',
     slug: 'wooden-tractors-boats',
     description: 'Farm tractors and sailing boats for adventure play',
-    image: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
+    image: 'https://i.ibb.co/nNc2v93N/bb7e68c9550f.webp',
     productCount: 4
   },
   {
@@ -62,7 +62,7 @@ export const categories: Category[] = [
     name: 'Other Wooden Toys',
     slug: 'wooden-other-toys',
     description: 'Unique wooden toys and educational games',
-    image: 'https://i.ibb.co/KpZMSVm0/FB-IMG-1641578276716-optimized.webp',
+    image: 'https://i.ibb.co/tp3vVXjf/facadd4d194a.webp',
     productCount: 6
   }
 ];
