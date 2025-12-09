@@ -88,7 +88,23 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Handcrafted kauri tractor toy from Whangarei',
     content: null
   }
-];
+
+    },
+  {
+    slug: 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b',
+    title: 'Choosing the Best Wooden Toy Cars for Toddlers: A Practical Buying Guide',
+    metaDescription: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits from Poppa\'s Wooden Creations.',
+    excerpt: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-10',
+    readTime: '7 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toy cars', 'toddler toys', 'buying guide', 'toy safety', 'wooden vehicles'],
+    featuredImage:https://i.ibb.co/pBSjPBgJ/f9f6fe0634ff.webp
+    imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
+    content: null
+  }
+]; 
 
 
 // Template for adding new blog posts:
