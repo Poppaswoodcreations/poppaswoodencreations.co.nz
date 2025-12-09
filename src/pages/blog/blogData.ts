@@ -73,7 +73,6 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Natural cleaning supplies for wooden toys',
     content: null
   },
-
   {
     slug: 'tractor-exquisite',
     title: 'Tractor Exquisite',
@@ -87,9 +86,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
     imageAlt: 'Handcrafted kauri tractor toy from Whangarei',
     content: null
-  }
-
-    },
+  },
   {
     slug: 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b',
     title: 'Choosing the Best Wooden Toy Cars for Toddlers: A Practical Buying Guide',
@@ -100,12 +97,11 @@ export const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Buying Guide',
     tags: ['wooden toy cars', 'toddler toys', 'buying guide', 'toy safety', 'wooden vehicles'],
-    featuredImage:https://i.ibb.co/pBSjPBgJ/f9f6fe0634ff.webp
+    featuredImage: 'https://i.ibb.co/pBSjPBgJ/f9f6fe0634ff.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
     content: null
   }
-]; 
-
+];
 
 // Template for adding new blog posts:
 /*
