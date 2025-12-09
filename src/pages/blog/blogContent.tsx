@@ -24,10 +24,7 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     case 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b':
       return <ChoosingBestWoodenToyCarsContent />;
     
-    default:
-      return <p>Content coming soon...</p>;
-  }
-};
+ 
     
     default:
       return <p>Content coming soon...</p>;
