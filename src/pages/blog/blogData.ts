@@ -100,9 +100,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
     content: null
-     
-  },
-    },
  {
  {
   slug: 'teething-ring',
@@ -118,7 +115,7 @@ export const blogPosts: BlogPost[] = [
   imageAlt: 'Handcrafted rimu teething ring with wooden beads',
   content: null
 
-  }
+  },
 ];
 
 // Template for adding new blog posts:
