@@ -97,7 +97,7 @@ export const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Buying Guide',
     tags: ['wooden toy cars', 'toddler toys', 'buying guide', 'toy safety', 'wooden vehicles'],
-    featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
+    featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
     content: null
  },
