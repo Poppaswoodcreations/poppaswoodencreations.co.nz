@@ -100,8 +100,8 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
     content: null
- {
- {
+ },
+  {
   slug: 'teething-ring',
   title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
   metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
