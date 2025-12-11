@@ -116,6 +116,20 @@ export const blogPosts: BlogPost[] = [
   content: null
 
   },
+  {
+    slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
+    title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
+    metaDescription: 'Handcrafted Wooden rubbish truck from exquisite kauri with smooth wheels and sturdy construction. Built to last and inspire imaginative play. Made with love ...',
+    excerpt: 'Wooden rubbish truck made from  Kauri and macrocarpa',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-11',
+    readTime: '8 min read',
+    category: 'Products',
+    tags: ['wooden toys', 'handcrafted', 'NZ made', 'baby toys', 'natural toys'],
+    featuredImage: 'https://i.ibb.co/bgTnCW9d/13c0ec8a8ded.webp',
+    imageAlt: 'handmade wooden toys by poppawoodencreations.co.nz',
+    content: null
+  },
 ];
 
 // Template for adding new blog posts:
