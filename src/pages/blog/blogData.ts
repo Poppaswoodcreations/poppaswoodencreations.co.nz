@@ -104,19 +104,19 @@ export const blogPosts: BlogPost[] = [
   },
     },
  {
-   slug: 'teething-ring',
-   title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
-   metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
-   excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
-   author: 'Poppa\'s Wooden Creations',
-   date: '2025-12-12',
-   readTime: '5 min read',
-   category: 'Baby Toys',
-   tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
-   featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
-   imageAlt: 'Handcrafted rimu teething ring with wooden beads',
-   content: `Hello from Poppa's Wooden Creations! Poppa here, and today I want to share a glimpse into one of our most treasured pieces for the littlest members of your whānau: our Rimu Teething Rings.
-
+ {
+  slug: 'teething-ring',
+  title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
+  metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
+  excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
+  author: 'Poppa\'s Wooden Creations',
+  date: '2025-12-12',
+  readTime: '5 min read',
+  category: 'Baby Toys',
+  tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
+  featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
+  imageAlt: 'Handcrafted rimu teething ring with wooden beads',
+  content: null
 
   }
 ];
