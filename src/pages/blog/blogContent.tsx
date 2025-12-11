@@ -1201,3 +1201,33 @@ const ChoosingBestWoodenToyCarsContent: React.FC = () => (
     </p>
   </>
 );
+    // ==========================================
+    // BLOG POST: TEETHING RING
+    // ==========================================
+      const TeethingRingContent: React.FC = () => (
+  <>
+    <p>
+      Hello from Poppa's Wooden Creations! Poppa here, and today I want to share a glimpse into one of our most treasured pieces for the littlest members of your whānau: our Rimu Teething Rings.
+    </p>
+
+    <p>
+      Looking at this image, you see a collection of these beautiful rings, each one a testament to the natural beauty of New Zealand rimu. The warm, inviting tones of the wood are immediately apparent. Inside each smooth, perfectly circular ring, you'll spot one or two small wooden beads, nestled on a little dowel. They're designed to be just right for tiny hands to grasp, exploring both the smooth surface and the gentle rattle of the beads.
+    </p>
+
+    <p>
+      Rimu, for us, isn't just wood; it's a piece of New Zealand's heritage. This native timber is renowned for its strength, its stunning grain patterns, and its natural properties that make it wonderfully suited for baby toys. It's naturally durable and possesses a subtle, natural antibacterial quality, giving you peace of mind. We hand-select each piece of rimu, ensuring it's of the highest quality for your precious little one.
+    </p>
+
+    <p>
+      The magic truly happens right here in our workshop in Whangarei. Every single teething ring is lovingly handcrafted. We take our time, shaping and sanding each piece until it's absolutely silky smooth. There are no sharp edges, no splinters – just pure, natural wood, safe for delicate gums and curious mouths. This isn't mass production; it's a labour of love, from our hands to your family.
+    </p>
+
+    <p>
+      We pour our hearts into creating something more than just a toy. These rimu teething rings are designed to be a treasured keepsake, a small piece of New Zealand artistry that can be passed down. They're a natural choice for soothing sore gums and encouraging early sensory development, all while connecting your child to the beauty of our native timber. We believe in crafting products that are not only beautiful and functional but also hold a special place in your family's story.
+    </p>
+
+    <p>
+      Take a closer look at our handcrafted Rimu Teething Rings and discover the natural warmth and care in every piece.
+    </p>
+  </>
+);
