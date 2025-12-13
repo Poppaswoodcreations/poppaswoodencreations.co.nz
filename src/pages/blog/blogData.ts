@@ -33,7 +33,33 @@ export const blogPosts: BlogPost[] = [
     tags: ['wooden toys', 'child development', 'parenting tips', 'educational toys'],
     featuredImage: '/images/blog/wooden-toys-benefits.jpg',
     imageAlt: 'Child playing with wooden blocks',
-    content: null
+    content: null,
+    faqs: [
+      {
+        question: "What age are wooden toys best for?",
+        answer: "Wooden toys are suitable for all ages from newborn onwards. For babies 0-6 months, choose smooth teething rings and simple rattles. Toddlers 1-3 years benefit from stacking toys, push toys, and simple vehicles. Preschoolers 3-5 years can enjoy more complex puzzles, building blocks, and imaginative play toys. Our handcrafted wooden toys are designed with age-appropriate features and safety standards."
+      },
+      {
+        question: "Are wooden toys safer than plastic toys?",
+        answer: "Yes, quality wooden toys are generally safer than plastic alternatives. They contain no harmful chemicals like BPA, phthalates, or PVC found in many plastic toys. Our toys are made from natural New Zealand native timbers (Kauri, Rimu, Macrocarpa) finished with food-safe, non-toxic oils. They're also more durable and won't break into sharp pieces like plastic can."
+      },
+      {
+        question: "How do wooden toys help with motor skills development?",
+        answer: "Wooden toys support motor skills through their natural weight, texture, and construction. The slightly heavier weight helps babies and toddlers develop hand strength and grip control. The varied textures of different wood grains provide sensory feedback. Activities like stacking, pushing, and manipulating wooden toys build fine and gross motor coordination essential for later skills like writing and sports."
+      },
+      {
+        question: "Do wooden toys last longer than plastic toys?",
+        answer: "Absolutely. Quality handcrafted wooden toys can last for generations when properly cared for. Unlike plastic toys that crack, fade, and break, wooden toys become family heirlooms. Our toys are crafted from durable native timbers that withstand years of play. With simple cleaning and occasional re-oiling, they maintain their beauty and functionality indefinitely."
+      },
+      {
+        question: "Why are wooden toys better for the environment?",
+        answer: "Wooden toys are sustainable and biodegradable, unlike plastic toys that contribute to landfill waste for hundreds of years. We source our timber from sustainably managed New Zealand forests. Wood is a renewable resource that stores carbon rather than releasing it. When a wooden toy eventually reaches end of life, it naturally decomposes without releasing harmful chemicals into the environment."
+      },
+      {
+        question: "Are wooden toys worth the higher price?",
+        answer: "Yes, wooden toys offer exceptional value despite higher upfront costs. They last decades rather than months, often becoming family heirlooms passed down through generations. Their durability means you won't need replacements. Wooden toys also hold their resale value well. Most importantly, they provide superior developmental benefits and safety compared to mass-produced plastic alternatives."
+      }
+    ]
   },
   {
     slug: 'baby-toy-cars-handcrafted-new-zealand',
@@ -104,21 +130,20 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers',
     content: null
- },
+  },
   {
-  slug: 'teething-ring',
-  title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
-  metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
-  excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
-  author: 'Poppa\'s Wooden Creations',
-  date: '2025-12-12',
-  readTime: '5 min read',
-  category: 'Baby Toys',
-  tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
-  featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
-  imageAlt: 'Handcrafted rimu teething ring with wooden beads',
-  content: null
-
+    slug: 'teething-ring',
+    title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
+    metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
+    excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-12',
+    readTime: '5 min read',
+    category: 'Baby Toys',
+    tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
+    featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
+    imageAlt: 'Handcrafted rimu teething ring with wooden beads',
+    content: null
   },
   {
     slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
