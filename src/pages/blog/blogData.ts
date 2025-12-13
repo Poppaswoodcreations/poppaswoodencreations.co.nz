@@ -14,6 +14,10 @@ export interface BlogPost {
   featuredImage: string;
   imageAlt: string;
   content: React.ReactNode;
+  faqs?: Array<{
+    question: string;
+    answer: string;
+  }>;
 }
 
 export const blogPosts: BlogPost[] = [
