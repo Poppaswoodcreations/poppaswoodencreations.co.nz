@@ -22,6 +22,39 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
+    title: 'Poppa\'s Wooden Creations: Handmade Wooden Pine Trolley and Blocks',
+    metaDescription: 'Discover the magic of Poppa\'s Wooden Creations, handcrafted wooden toys made from New Zealand\'s native timbers. Learn about our Wooden Pine Trolley and Blocks.',
+    excerpt: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability, safety and quality.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-14',
+    readTime: '2 min read',
+    category: 'Baby Toys',
+    tags: ['Handmade Toys', 'Wooden Toys', 'Sustainability', 'Child Safety', 'New Zealand'],
+    featuredImage: 'https://i.ibb.co/R8myyxx/05f82f2aa051.webp',
+    imageAlt: 'Handmade wooden pine trolley and blocks',
+    content: null,
+    faqs: [
+      {
+        question: "What types of wood does Poppa\'s Wooden Creations use?",
+        answer: "Poppa\'s Wooden Creations uses native New Zealand timbers like Kauri, Rimu, and Macrocarpa to create our toys. These woods are not only beautiful but also sustainable."
+      },
+      {
+        question: "Why choose wooden toys over plastic ones?",
+        answer: "Wooden toys offer a unique sensory experience for children. The texture, weight, and natural variations provide a rich, engaging play experience that plastic toys can\'t match. Plus, they\'re more environmentally friendly."
+      },
+      {
+        question: "Are the toys from Poppa\'s Wooden Creations safe for children?",
+        answer: "Absolutely! All of our toys are designed with safety in mind. They are smooth and well-rounded to prevent injuries, and our trolleys are sturdy and balanced to avoid tipping. We also use non-toxic finishes on all our toys."
+      },
+      {
+        question: "How does Poppa\'s Wooden Creations contribute to sustainability?",
+        answer: "We believe in creating toys that are gentle on our planet. We use sustainable timbers and incorporate eco-friendly practices in our workshop. This way, we\'re doing our part to preserve New Zealand\'s beautiful native forests for future generations."
+      }
+    ]
+  },
+
+  {
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover why wooden toys are better for your child\'s development. Learn how they enhance motor skills, creativity, and more from New Zealand\'s wooden toy experts.',
