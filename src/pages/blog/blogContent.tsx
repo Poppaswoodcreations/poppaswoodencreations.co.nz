@@ -33,6 +33,9 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     case 'best-handmade-wooden-toys-from-whangarei-new-zealand':
       return <BestHandmadeWoodenToysFromWhangareiNewZealandContent />;
 
+        case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
+      return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
+
     default:
       return <p>Content coming soon...</p>;
   }
@@ -41,6 +44,53 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 // ==========================================
 // BLOG POST: Benefits of Wooden Toys
 // ==========================================
+// ==========================================
+// BLOG POST: Poppa's Wooden Creations: Handmade Wooden Pine Trolley and Blocks
+// ==========================================
+const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC = () => (
+  <>
+    <h2>Introducing Poppa's Wooden Creations</h2><p>Deep in the heart of Whangarei, Northland, New Zealand, Poppa's Wooden Creations is busy handcrafting wooden toys from native timbers. Using Kauri, Rimu, and Macrocarpa, we are committed to providing children with toys that not only entertain but also educate.</p><h2>Our Handmade Wooden Pine Trolley and Blocks</h2><p>One of our most beloved creations is the handmade wooden pine trolley and blocks. These toys are more than just playthings. They are an expression of our love for New Zealand's native timbers and our commitment to sustainability, quality, and safety.</p><h2>The Benefits of Natural Materials</h2><p>When you choose our wooden toys, you're choosing natural, sustainable materials. Wood is not only eco-friendly, but it also offers a unique sensory experience for children. The texture, the weight, the natural variations in colour and grain – all these contribute to a rich, engaging play experience that plastic toys can't match.</p><h3>Safety First</h3><p>All of our toys, including the wooden pine trolley and blocks, are designed with safety in mind. The blocks are smooth and well-rounded to prevent injuries, and the trolley is sturdy and balanced to prevent tipping. We use non-toxic finishes to ensure that our toys are safe for your little ones.</p><h2>A Commitment to Sustainability</h2><p>At Poppa's Wooden Creations, we believe in creating toys that are not only fun but also gentle on our planet. That's why we choose sustainable timbers and use eco-friendly practices in our workshop. With every toy we make, we're doing our part to preserve New Zealand's beautiful native forests for future generations.</p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Frequently Asked Questions
+    </h2>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      What types of wood does Poppa\'s Wooden Creations use?
+    </h3>
+
+    <p className="mb-6">
+      Poppa\'s Wooden Creations uses native New Zealand timbers like Kauri, Rimu, and Macrocarpa to create our toys. These woods are not only beautiful but also sustainable.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Why choose wooden toys over plastic ones?
+    </h3>
+
+    <p className="mb-6">
+      Wooden toys offer a unique sensory experience for children. The texture, weight, and natural variations provide a rich, engaging play experience that plastic toys can\'t match. Plus, they\'re more environmentally friendly.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Are the toys from Poppa\'s Wooden Creations safe for children?
+    </h3>
+
+    <p className="mb-6">
+      Absolutely! All of our toys are designed with safety in mind. They are smooth and well-rounded to prevent injuries, and our trolleys are sturdy and balanced to avoid tipping. We also use non-toxic finishes on all our toys.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      How does Poppa\'s Wooden Creations contribute to sustainability?
+    </h3>
+
+    <p className="mb-6">
+      We believe in creating toys that are gentle on our planet. We use sustainable timbers and incorporate eco-friendly practices in our workshop. This way, we\'re doing our part to preserve New Zealand\'s beautiful native forests for future generations.
+    </p>
+
+
+  </>
+);
+
 const BenefitsWoodenToysContent: React.FC = () => (
   <>
     <div className="bg-amber-50 border-l-4 border-amber-500 p-6 my-8">
