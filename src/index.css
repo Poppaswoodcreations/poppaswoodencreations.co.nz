@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CRITICAL PERFORMANCE CSS - MUST BE AT TOP */
+* {
+  font-display: swap;
+}
+
+html {
+  font-display: swap;
+}
+
+body {
+  font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-display: swap;
+}
+
+p {
+  font-display: swap;
+}
+
+/* Optimize above-the-fold rendering */
+.hero-section,
+.hero-section * {
+  font-display: swap;
+}
+
+/* Prevent layout shift during image loading */
+img {
+  content-visibility: auto;
+}
+
+/* END CRITICAL PERFORMANCE CSS */
+
 /* Critical loading styles */
 body {
   margin: 0;
