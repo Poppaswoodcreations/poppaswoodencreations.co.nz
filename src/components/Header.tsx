@@ -25,8 +25,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
     { slug: 'wooden-cars', name: 'Cars' },
     { slug: 'wooden-planes-helicopters', name: 'Planes' },
     { slug: 'wooden-kitchenware', name: 'Kitchen' },
-    { slug: 'wooden-tractors-boats', name: 'Tractors & Boats' },
-    { slug: 'wooden-other-toys', name: 'Other' }
+    { slug: 'wooden-tractors-boats', name: 'Tractors & Boats' }
   ];
 
   const handleAdminClick = () => {
