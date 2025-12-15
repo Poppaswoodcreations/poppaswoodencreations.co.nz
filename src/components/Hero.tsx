@@ -48,15 +48,15 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                 <span className="text-sm font-medium uppercase tracking-wide">Handcrafted in New Zealand</span>
               </div>
               
-              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight" style={{ fontDisplay: 'swap' }}>
                 {heroData.title}
               </h1>
               
-              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
+              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl" style={{ fontDisplay: 'swap' }}>
                 {heroData.subtitle}
               </p>
 
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed" style={{ fontDisplay: 'swap' }}>
                 From our workshop in Whangarei, we create toys that encourage imaginative play, develop fine motor 
                 skills, and provide endless hours of screen-free entertainment. Every toy is hand-sanded to a 
                 silky smooth finish and finished with child-safe, non-toxic materials.
@@ -132,7 +132,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
             </div>
           </div>
 
-          {/* Hero Image */}
+          {/* Hero Image - OPTIMIZED FOR PERFORMANCE */}
           <div className="relative">
             <div className="aspect-square bg-white rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden w-full">
               <img
@@ -140,6 +140,10 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products = [] }) => {
                 alt="Handcrafted wooden toys - Premium quality wooden toys from Poppa's Wooden Creations made in New Zealand"
                 className="w-full h-full object-cover product-image"
                 loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="600"
+                height="600"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   console.log('❌ HERO: Image failed to load, using fallback');
