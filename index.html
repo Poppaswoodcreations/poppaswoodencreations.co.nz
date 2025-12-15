@@ -1,113 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Preconnect to improve performance -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="preconnect" href="https://i.ibb.co">
-    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="dns-prefetch" href="https://i.ibb.co">
-    
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys Made in Whangarei, New Zealand</title>
-    <meta name="description" content="Discover premium handcrafted wooden toys made in Whangarei, New Zealand from native timbers including Kauri, Rimu, and Macrocarpa. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $1000." />
-    <meta name="keywords" content="wooden toys, handcrafted toys, New Zealand toys, Whangarei toys, educational toys, safe toys, children toys, wooden blocks, teething rings, native timber toys, Kauri toys, Rimu toys" />
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://poppaswoodencreations.co.nz/" />
-    <meta property="og:title" content="Poppa's Wooden Creations - Premium Handcrafted Wooden Toys from Whangarei, NZ" />
-    <meta property="og:description" content="Discover premium handcrafted wooden toys made in Whangarei, New Zealand from native timbers. Safe, durable, and educational toys for children of all ages." />
-    <meta property="og:image" content="https://i.ibb.co/dw3x0Kmm/image.jpg" />
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Local Business Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "@id": "https://poppaswoodencreations.co.nz/#business",
-      "name": "Poppa's Wooden Creations",
-      "image": "https://i.ibb.co/dw3x0Kmm/image.jpg",
-      "description": "Premium handcrafted wooden toys and kitchenware made from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Family business established in 2015, based in Whangarei, Northland.",
-      "url": "https://poppaswoodencreations.co.nz",
-      "telephone": "+64-21-022-8166",
-      "email": "poppas.wooden.creations@gmail.com",
-      "priceRange": "$$",
-      "foundingDate": "2015",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "102 Kiripaka Rd",
-        "addressLocality": "Whangarei",
-        "addressRegion": "Northland",
-        "postalCode": "0110",
-        "addressCountry": "NZ"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -35.7275,
-        "longitude": 174.3166
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "15:00"
-        }
-      ],
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=61566675594686"
-      ],
-      "paymentAccepted": "Credit Card, Debit Card, PayPal",
-      "currenciesAccepted": "NZD",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "150",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "New Zealand"
-      }
-    }
+    <!-- DNS prefetch for GTM (we'll load it later) -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    
+    <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys from Whangarei, NZ</title>
+    <meta name="description" content="Discover premium handcrafted wooden toys made from native NZ timbers in Whangarei. Eco-friendly, safe, and built to last. Shop unique Kiwi-made toys today." />
+    
+    <!-- Critical CSS - inline the above-the-fold styles -->
+    <style>
+      /* Critical styles for initial render */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: system-ui, -apple-system, sans-serif; }
+      .hero-section { min-height: 60vh; display: flex; align-items: center; }
+      .text-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+      h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; }
+      .hero-text { font-size: 1.125rem; color: #4b5563; line-height: 1.75; max-width: 42rem; }
+    </style>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="/assets/index-Fal9JqNP.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/index-Fal9JqNP.css"></noscript>
+    
+    <!-- Defer GTM - load after page is interactive -->
+    <script>
+      // Load GTM after page load
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-NQG3DNXR');
+        }, 1000); // Load GTM 1 second after page load
+      });
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
+    <!-- GTM noscript - moved to body -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQG3DNXR"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Deferred Google Analytics -->
-    <script>
-      window.addEventListener('load', function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QRFRTF9W2K';
-        document.head.appendChild(script);
-        
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-QRFRTF9W2K');
-      });
-    </script>
-    
-    <!-- Deferred Google Tag Manager -->
-    <script>
-      window.addEventListener('load', function() {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NQG3DNXR');
-      });
-    </script>
   </body>
 </html>
