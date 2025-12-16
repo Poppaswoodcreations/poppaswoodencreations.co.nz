@@ -201,7 +201,7 @@ export const blogPosts: BlogPost[] = [
     date: '2025-12-16',
     readTime: '3 min read',
     category: 'Products',
-    tags: ['wooden train toy', 'handcrafted train', 'toy train NZ', 'handcrafted toys NZ', 'handmade wooden products', 'New Zealand wooden toys', 'Poppa's Wooden Creations'],
+    tags: ['wooden train toy', 'handcrafted train', 'toy train NZ', 'handcrafted toys NZ', 'handmade wooden products', 'New Zealand wooden toys', 'Poppa\'s Wooden Creations'],
     featuredImage: 'https://i.ibb.co/p673PM37/8443ece5600c.webp',
     imageAlt: 'handmade wooden train by poppas wooden creations',
     content: null
