@@ -1,4 +1,4 @@
-// src/pages/blog/blogContent.tsx
+
 import React from 'react';
 
 // This file contains the actual content for each blog post
@@ -35,6 +35,9 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 
         case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
       return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
+
+    case 'happy-go-luck-train':
+      return <HappyGoLuckTrainContent />;
 
     default:
       return <p>Content coming soon...</p>;
@@ -1338,5 +1341,14 @@ const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
     <p>At Poppa's Wooden Creations, we craft each rubbish truck with the same care and attention to detail, but no two are exactly alike. The natural variations in timber grain, the subtle color differences between pieces of Kauri or Macrocarpa, and the individual character of each truck make every one special.</p>
     <p>When selecting a wooden toy for your child or grandchild, trust your instincts. Hold it in your hands, feel the weight and smoothness, examine the craftsmanship. A quality wooden truck should feel substantial but not unwieldy, with wheels that roll smoothly and a finish that invites touch.</p>
     <p>Most importantly, imagine the play possibilities it offers and the values it represents. A handcrafted wooden rubbish truck from native New Zealand timbers isn't just a toy—it's an invitation to creativity, a connection to nature, and a small but meaningful stand for quality, sustainability, and the enduring value of things made with skill and care.</p>
+  </>
+);
+
+// ==========================================
+// BLOG POST: Happy-go-luck-train
+// ==========================================
+const HappyGoLuckTrainContent: React.FC = () => (
+  <>
+    <h1>Happy-go-luck-train: Premium Handcrafted Wooden Train Set from New Zealand</h1><p>In a world filled with plastic toys and digital distractions, there's something magical about the timeless appeal of a beautifully crafted wooden train set. The Happy-go-luck-train from Poppa's Wooden Creations represents the finest tradition of New Zealand craftsmanship, bringing joy and imagination to children's playtime while creating memories that last a lifetime.</p><h2>Exceptional Craftsmanship in Premium New Zealand Pine</h2><p>This stunning handcrafted wooden train set showcases the natural beauty of sustainably sourced New Zealand pine. Each piece displays the characteristic light blonde wood grain that makes NZ pine so prized for quality toy making. The smooth, carefully sanded surfaces reveal meticulous attention to detail, while the natural wood finish highlights the organic beauty of the timber. Every component has been lovingly shaped and assembled by skilled artisans in Whangarei, ensuring each Happy-go-luck-train meets the highest standards of quality and safety.</p><h2>Thoughtful Design for Endless Adventures</h2><p>The Happy-go-luck-train features a charming four-piece design that captures the classic appeal of traditional toy trains. The locomotive leads with its distinctive funnel and engineer's cabin, followed by a tender car, passenger carriage, and goods wagon. Each car connects seamlessly to the next, allowing children to create their own railway adventures. The generous proportions make the train easy for small hands to grasp and maneuver, while the sturdy construction ensures it can withstand years of enthusiastic play. Windows and doors are carefully cut to add realistic detail without compromising safety.</p><h2>Sustainable New Zealand Manufacturing</h2><p>Choosing the Happy-go-luck-train means supporting sustainable toy manufacturing right here in New Zealand. Poppa's Wooden Creations sources timber from responsibly managed forests, ensuring that each wooden toy contributes to environmental stewardship rather than harm. The use of local New Zealand pine reduces transportation emissions while supporting our domestic timber industry. This commitment to sustainability means parents can feel good about their purchase, knowing they're investing in both their child's development and the planet's future.</p><h2>Educational Benefits of Wooden Train Play</h2><p>Beyond pure entertainment, this handcrafted wooden train set offers numerous developmental benefits. As children push, pull, and arrange the train cars, they develop fine motor skills and hand-eye coordination. The open-ended nature of train play encourages storytelling, problem-solving, and creative thinking. Unlike battery-operated toys, wooden trains rely entirely on a child's imagination to bring them to life, fostering independence and self-directed play. The tactile experience of natural wood also provides sensory stimulation that plastic alternatives simply cannot match.</p><h2>A Timeless Gift That Creates Lasting Memories</h2><p>The Happy-go-luck-train isn't just a toy – it's an heirloom piece that can be treasured for generations. The durable New Zealand pine construction ensures this handmade train set will maintain its beauty and functionality through years of play. Many parents find that wooden toys like this become cherished childhood memories, often passed down to the next generation. The natural aging of wood only adds to its character, making each Happy-go-luck-train more beautiful with time.</p><p>Give your child the gift of imagination with the Happy-go-luck-train from Poppa's Wooden Creations. This premium handcrafted wooden train set combines traditional New Zealand craftsmanship with sustainable materials to create a toy that's as meaningful as it is fun. Order your Happy-go-luck-train today and watch as your child embarks on countless adventures with this beautiful piece of Kiwi craftsmanship.</p>
   </>
 );
