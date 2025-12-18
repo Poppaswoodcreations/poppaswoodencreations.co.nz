@@ -86,7 +86,6 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header 
-        onCategorySelect={handleCategorySelect}
         onShowAdmin={() => setShowAdmin(true)}
         onShowCart={() => setShowCart(true)}
         cartItemCount={getCartItemCount()}
