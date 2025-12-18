@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
 import ProductGrid from './components/ProductGrid';
-import ProductDetail from './pages/ProductDetail.tsx';
+import ProductDetail from './components/ProductDetail';
 import AboutSection from './components/AboutSection';
 import ContactForm from './components/ContactForm';
 import ShippingInfo from './components/ShippingInfo';
