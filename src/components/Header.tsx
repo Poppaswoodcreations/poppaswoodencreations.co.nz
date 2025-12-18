@@ -4,13 +4,12 @@ import { Menu, X, ShoppingCart, User, Search } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 
 interface HeaderProps {
-  onCategorySelect: (category: string) => void;
   onShowAdmin: () => void;
   onShowCart: () => void;
   cartItemCount: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCart, cartItemCount }) => {
+const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState('');
@@ -71,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
       navigate(`/${categorySlug}`);
     }
     
-    onCategorySelect(categorySlug);
+    // REMOVED: onCategorySelect(categorySlug); - This was causing double navigation
     setIsMenuOpen(false);
   };
 
@@ -144,7 +143,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onShowAdmin, onShowCa
             </button>
           </nav>
 
-          {/* Right Side Icons - FIXED: Added aria-labels */}
+          {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
             <button 
               className="p-2 text-gray-700 hover:text-amber-600 transition-colors"
