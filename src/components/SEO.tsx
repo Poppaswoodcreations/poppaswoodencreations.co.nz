@@ -1,134 +1,122 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
   title?: string;
   description?: string;
   keywords?: string;
-  currentPage?: string;
+  image?: string;
+  type?: string;
 }
 
 const SEO: React.FC<SEOProps> = ({ 
-  title = "Poppa's Wooden Creations - Handcrafted Wooden Toys NZ",
-  description = "Discover premium handcrafted wooden toys and kitchenware made with love in New Zealand. Safe, sustainable, and built to last. Free shipping over $150 NZD.",
-  keywords = "wooden toys, handcrafted toys, New Zealand made, sustainable toys, children toys, wooden kitchenware, safe toys, eco-friendly toys",
-  currentPage = "home"
+  title, 
+  description, 
+  keywords,
+  image = 'https://poppaswoodencreations.co.nz/FB_IMG_1640827671355.jpg',
+  type = 'website'
 }) => {
-  // Get the actual current URL from the browser
-  const getCanonicalUrl = () => {
-    // Use window.location for the actual URL
-    const currentPath = window.location.pathname;
-    const baseUrl = 'https://poppaswoodencreations.co.nz';
-    
-    // Homepage
-    if (currentPath === '/' || currentPath === '') {
-      return baseUrl;
-    }
-    
-    // Remove trailing slash and construct canonical URL
-    const cleanPath = currentPath.replace(/\/$/, '');
-    return `${baseUrl}${cleanPath}`;
-  };
-  
-  const canonicalUrl = getCanonicalUrl();
-  
-  // Generate page-specific titles based on current page
-  const getPageTitle = () => {
-    if (currentPage === 'home' || currentPage === '') {
-      return title;
-    }
-    
-    // Category page titles
-    const categoryTitles: { [key: string]: string } = {
-      'wooden-trains': 'Wooden Train Sets | Handcrafted in NZ | Poppa\'s Wooden Creations',
-      'wooden-baby-toys': 'Safe Wooden Baby Toys | Made in NZ | Poppa\'s Wooden Creations',
-      'wooden-trucks': 'Wooden Toy Trucks | Handcrafted in NZ | Poppa\'s Wooden Creations',
-      'wooden-cars': 'Wooden Toy Cars | Handcrafted in NZ | Poppa\'s Wooden Creations',
-      'wooden-planes-helicopters': 'Wooden Planes & Helicopters | Made in NZ | Poppa\'s Wooden Creations',
-      'wooden-kitchenware': 'Wooden Kitchenware | Handcrafted in NZ | Poppa\'s Wooden Creations',
-      'wooden-tractors-boats': 'Wooden Tractors & Boats | Made in NZ | Poppa\'s Wooden Creations',
-      'wooden-other-toys': 'Unique Wooden Toys | Handcrafted in NZ | Poppa\'s Wooden Creations',
-      'about': 'About Us | Poppa\'s Wooden Creations',
-      'contact': 'Contact Us | Poppa\'s Wooden Creations',
-      'shipping': 'Shipping Information | Poppa\'s Wooden Creations',
-      'privacy': 'Privacy Policy | Poppa\'s Wooden Creations',
-      'terms': 'Terms of Service | Poppa\'s Wooden Creations',
-      'reviews': 'Customer Reviews | Poppa\'s Wooden Creations',
-      'blog': 'Blog | Poppa\'s Wooden Creations'
+  const location = useLocation();
+  const baseUrl = 'https://poppaswoodencreations.co.nz';
+  const canonicalUrl = `${baseUrl}${location.pathname}`;
+
+  // Default meta data
+  const defaultTitle = 'Poppa\'s Wooden Creations | Handcrafted Wooden Toys & Kitchen Utensils | Whangarei, NZ';
+  const defaultDescription = 'Premium handcrafted wooden toys and kitchen utensils made in Whangarei, New Zealand. Using native timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.';
+  const defaultKeywords = 'wooden toys New Zealand, handcrafted toys, Montessori toys, wooden kitchen utensils, native timber, Kauri, Rimu, Macrocarpa, Whangarei';
+
+  const pageTitle = title || defaultTitle;
+  const pageDescription = description || defaultDescription;
+  const pageKeywords = keywords || defaultKeywords;
+
+  // Get page-specific schema based on route
+  const getSchemaMarkup = () => {
+    const baseSchema = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Poppa's Wooden Creations",
+      "image": image,
+      "description": pageDescription,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102 Kiripaka Road",
+        "addressLocality": "Whangarei",
+        "addressRegion": "Northland",
+        "addressCountry": "NZ"
+      },
+      "url": canonicalUrl,
+      "telephone": "+64-9-430-4321",
+      "priceRange": "$$",
+      "openingHours": "Mo-Fr 09:00-17:00"
     };
-    
-    return categoryTitles[currentPage] || title;
+
+    // Add breadcrumb for non-home pages
+    if (location.pathname !== '/') {
+      const pathSegments = location.pathname.split('/').filter(Boolean);
+      const breadcrumbList = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": baseUrl
+          },
+          ...pathSegments.map((segment, index) => ({
+            "@type": "ListItem",
+            "position": index + 2,
+            "name": segment.split('-').map(word => 
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' '),
+            "item": `${baseUrl}/${pathSegments.slice(0, index + 1).join('/')}`
+          }))
+        ]
+      };
+
+      return [baseSchema, breadcrumbList];
+    }
+
+    return baseSchema;
   };
-  
-  const pageTitle = getPageTitle();
-  
+
   return (
     <Helmet>
+      {/* Basic Meta Tags */}
       <title>{pageTitle}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
+      <meta name="description" content={pageDescription} />
+      <meta name="keywords" content={pageKeywords} />
+      
+      {/* Canonical URL - CRITICAL FOR SEO */}
       <link rel="canonical" href={canonicalUrl} />
       
-      {/* Open Graph */}
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={description} />
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:type" content="website" />
-      <meta property="og:image" content="https://poppaswoodencreations.co.nz/images/image copy copy copy copy copy copy.png" />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Handcrafted wooden toys by Poppa's Wooden Creations" />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={pageDescription} />
+      <meta property="og:image" content={image} />
+      <meta property="og:site_name" content="Poppa's Wooden Creations" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="https://poppaswoodencreations.co.nz/images/image copy copy copy copy copy copy.png" />
-      <meta name="twitter:image:alt" content="Handcrafted wooden toys by Poppa's Wooden Creations" />
+      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:image" content={image} />
       
-      {/* Structured Data */}
+      {/* Additional Meta Tags */}
+      <meta name="robots" content="index, follow" />
+      <meta name="author" content="Poppa's Wooden Creations" />
+      <meta name="geo.region" content="NZ-NTL" />
+      <meta name="geo.placename" content="Whangarei" />
+      <meta name="geo.position" content="-35.7252;174.3183" />
+      <meta name="ICBM" content="-35.7252, 174.3183" />
+      
+      {/* Schema.org Structured Data */}
       <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "Poppa's Wooden Creations",
-          "description": "Premium handcrafted wooden toys and kitchenware made in New Zealand",
-          "url": "https://poppaswoodencreations.co.nz",
-          "logo": "https://poppaswoodencreations.co.nz/images/image copy copy copy copy copy copy.png",
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+64-21-022-8166",
-            "contactType": "customer service",
-            "email": "poppas.wooden.creations@gmail.com"
-          },
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "102 Kiripaka Rd",
-            "addressLocality": "Whangarei",
-            "addressRegion": "Northland",
-            "postalCode": "0110",
-            "addressCountry": "NZ"
-          },
-          "areaServed": [
-            {
-              "@type": "Country",
-              "name": "New Zealand"
-            },
-            {
-              "@type": "Country", 
-              "name": "Australia"
-            },
-            {
-              "@type": "Country",
-              "name": "United States"
-            }
-          ],
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "150"
-          }
-        })}
+        {JSON.stringify(getSchemaMarkup())}
       </script>
     </Helmet>
   );
