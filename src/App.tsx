@@ -114,7 +114,7 @@ const AppContent: React.FC = () => {
             />
           } />
 
-          {/* Category Pages */}
+          {/* Category Pages - Main Categories */}
           <Route path="/wooden-vehicles" element={
             <ProductGrid 
               products={products.filter(p => p.category === 'wooden-vehicles')} 
@@ -166,6 +166,88 @@ const AppContent: React.FC = () => {
               onProductSelect={handleProductSelect}
               onAddToCart={handleAddToCart}
               category="wooden-serving-boards"
+            />
+          } />
+
+          {/* Additional Category Routes - Added for database categories */}
+          <Route path="/trucks" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-trucks')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-trucks"
+            />
+          } />
+
+          <Route path="/wooden-trucks" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-trucks')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-trucks"
+            />
+          } />
+
+          <Route path="/cars" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-cars')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-cars"
+            />
+          } />
+
+          <Route path="/wooden-cars" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-cars')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-cars"
+            />
+          } />
+
+          <Route path="/planes" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-planes-helicopters"
+            />
+          } />
+
+          <Route path="/kitchen" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-kitchenware')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-kitchenware"
+            />
+          } />
+
+          <Route path="/wooden-kitchenware" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-kitchenware')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-kitchenware"
+            />
+          } />
+
+          <Route path="/trains" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-trains')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-trains"
+            />
+          } />
+
+          <Route path="/wooden-trains" element={
+            <ProductGrid 
+              products={products.filter(p => p.category === 'wooden-trains')} 
+              onProductSelect={handleProductSelect}
+              onAddToCart={handleAddToCart}
+              category="wooden-trains"
             />
           } />
 
