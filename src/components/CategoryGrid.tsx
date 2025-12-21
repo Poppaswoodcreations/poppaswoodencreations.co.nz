@@ -1,5 +1,6 @@
 import React from 'react';
 import { Category } from '../types';
+import LazyImage from './LazyImage';
 
 interface CategoryGridProps {
   categories: Category[];
@@ -18,6 +19,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categories, onCategorySelec
             Explore our handcrafted wooden toys organized by category
           </p>
         </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category) => (
             <div
@@ -26,14 +28,12 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categories, onCategorySelec
               className="group cursor-pointer bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="aspect-w-16 aspect-h-12 overflow-hidden rounded-t-lg">
-                <img
+                <LazyImage
                   src={category.image}
                   alt={category.name}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://i.ibb.co/FkkjBShk/image.jpg';
-                  }}
+                  width="300"
+                  height="192"
                 />
               </div>
               
