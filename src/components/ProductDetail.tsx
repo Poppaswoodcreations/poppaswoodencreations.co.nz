@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { Product } from '../types';
+import LazyImage from './LazyImage';
 
 interface ProductDetailProps {
   products: Product[];
@@ -108,17 +109,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Product Images */}
+            {/* Product Images - OPTIMIZED WITH LAZY LOADING */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
-                <img
+                <LazyImage
                   src={productImage}
                   alt={`${product.name} - Handcrafted wooden toy by Poppa's Wooden Creations`}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = '/FB_IMG_1640827671355.jpg';
-                  }}
+                  width="600"
+                  height="600"
+                  priority={true}
                 />
               </div>
               
@@ -126,14 +126,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                 <div className="grid grid-cols-4 gap-2">
                   {product.images.slice(1, 5).map((image, index) => (
                     <div key={index} className="aspect-square bg-white rounded-lg shadow overflow-hidden">
-                      <img
+                      <LazyImage
                         src={image}
                         alt={`${product.name} view ${index + 2}`}
                         className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = '/FB_IMG_1640827671355.jpg';
-                        }}
+                        width="150"
+                        height="150"
                       />
                     </div>
                   ))}
