@@ -47,6 +47,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSelect, on
           <link rel="canonical" href={`https://poppaswoodencreations.co.nz/${category}`} />
         </Helmet>
       )}
+      
       <div className="container mx-auto px-4 bg-white min-h-screen w-full">
         {category && (
           <div className="mb-8 pt-8">
