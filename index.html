@@ -1,193 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin />
+    <!-- Preconnect to critical origins -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://i.ibb.co">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Preload hero image -->
-    <link rel="preload" as="image" href="https://i.ibb.co/20BWhH7J/Messenger-creation-9-D5326-FA-08-DE-471-A-BAB1-6-E385-C838-D90-2-optimized.webp" fetchpriority="high" />
-    
-    <!-- DNS prefetch -->
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="dns-prefetch" href="https://i.ibb.co" />
-    
-    <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys from Whangarei, NZ</title>
-    <meta name="description" content="Discover premium handcrafted wooden toys made from native NZ timbers in Whangarei. Eco-friendly, safe, and built to last. Shop unique Kiwi-made toys today." />
-    
-    <!-- Critical inline CSS -->
+    <!-- Critical CSS - prevents render blocking -->
     <style>
-      /* Instant hero styles */
-      #instant-hero {
-        min-height: 60vh;
-        background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 1rem;
-        position: relative;
-        overflow: hidden;
-      }
-      
-      #instant-hero-content {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-        text-align: left;
-      }
-      
-      #instant-hero h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        line-height: 1.2;
-        font-weight: 700;
-        color: #111827;
-        margin-bottom: 1rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      
-      #instant-hero p {
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        color: #4b5563;
-        line-height: 1.75;
-        max-width: 42rem;
-        margin-bottom: 1rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      
-      #instant-hero .badge {
-        display: inline-flex;
-        align-items: center;
-        color: #d97706;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 1rem;
-      }
-      
-      /* Base styles */
-      *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
+      /* Critical above-the-fold styles */
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       
-      #root {
+      /* Prevent layout shift during load */
+      .min-h-screen {
         min-height: 100vh;
       }
       
-      /* Hide instant hero when React loads */
-      .react-loaded #instant-hero {
-        display: none !important;
+      /* Loading state to prevent blank screen */
+      #root:empty::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(to bottom right, #fffbeb, #ffedd5, #fecaca);
       }
     </style>
+    
+    <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys Made in New Zealand</title>
+    <meta name="description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150.">
+    
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="/assets/index-DQ9XILKm.js">
   </head>
   <body>
-    <!-- GTM noscript -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQG3DNXR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    
-    <!-- INSTANT HERO - Shows immediately, 0ms delay -->
-    <div id="instant-hero">
-      <div id="instant-hero-content">
-        <div class="badge">
-          ⭐ Handcrafted in New Zealand
-        </div>
-        <h1>Premium Wooden Toys Made with Love</h1>
-        <p>
-          Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. 
-          Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire 
-          creativity and last for generations.
-        </p>
-        <p style="font-size: 1rem; margin-top: 1rem;">
-          From our workshop in Whangarei, we create toys that encourage imaginative play, develop fine motor 
-          skills, and provide endless hours of screen-free entertainment.
-        </p>
-      </div>
-    </div>
-    
-    <!-- React app -->
     <div id="root"></div>
-    
-    <!-- Hide instant hero when React loads -->
-    <script>
-      (function() {
-        // Hide instant hero after a short delay to let React render
-        function hideInstantHero() {
-          var instantHero = document.getElementById('instant-hero');
-          if (instantHero) {
-            document.body.classList.add('react-loaded');
-          }
-        }
-        
-        // Hide when React is ready
-        if (document.readyState === 'complete') {
-          setTimeout(hideInstantHero, 100);
-        } else {
-          window.addEventListener('load', function() {
-            setTimeout(hideInstantHero, 100);
-          });
-        }
-        
-        // Also check periodically in case React loaded
-        var checkInterval = setInterval(function() {
-          var root = document.getElementById('root');
-          if (root && root.children.length > 0) {
-            hideInstantHero();
-            clearInterval(checkInterval);
-          }
-        }, 50);
-        
-        // Stop checking after 3 seconds
-        setTimeout(function() {
-          clearInterval(checkInterval);
-        }, 3000);
-      })();
-    </script>
-    
-    <!-- Load main app -->
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Super-deferred GTM -->
+    <!-- Google Tag Manager - Deferred -->
     <script>
-      function loadGTM() {
-        if (window.gtmLoaded) return;
-        window.gtmLoaded = true;
-        
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NQG3DNXR');
-      }
-      
-      var loadTriggered = false;
-      function triggerGTM() {
-        if (loadTriggered) return;
-        loadTriggered = true;
-        if (document.readyState === 'complete') {
-          setTimeout(loadGTM, 1000);
-        } else {
-          window.addEventListener('load', function() {
-            setTimeout(loadGTM, 1000);
-          });
-        }
-      }
-      
-      ['scroll', 'mousemove', 'touchstart', 'click'].forEach(function(event) {
-        window.addEventListener(event, triggerGTM, { once: true, passive: true });
+      // Defer GTM to after page load
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-NQG3DNXR');
+        }, 2000);
       });
-      
-      setTimeout(triggerGTM, 3000);
     </script>
   </body>
 </html>
