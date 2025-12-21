@@ -1,6 +1,8 @@
 import React from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ShoppingCart, Star } from 'lucide-react';
 import { Product } from '../types';
+import LazyImage from './LazyImage';
 
 interface ProductCardProps {
   product: Product;
@@ -9,92 +11,80 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart }) => {
-  // Get the first image from the product's images array
-  const getProductImage = () => {
-    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
-      const firstImage = product.images[0];
-      if (firstImage && firstImage.trim() !== '') {
-        return firstImage;
-      }
-    }
-    return 'https://i.ibb.co/dw3x0Kmm/image.jpg';
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/products/${product.id}`);
   };
 
-  const productImage = getProductImage();
-
-  const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onAddToCart(product);
-  };
-
-  const handleProductClick = () => {
     onAddToCart(product);
   };
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
-      onClick={handleProductClick}
+      onClick={handleCardClick}
+      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group overflow-hidden"
     >
-      <div className="relative h-48 bg-gradient-to-br from-amber-100 to-amber-200 overflow-hidden">
-        <img
-          src={productImage}
-          alt={`${product.name} - Handcrafted wooden toy by Poppa's Wooden Creations`}
-          className="w-full h-48 object-cover"
-          loading="lazy"
+      {/* Product Image - OPTIMIZED WITH LAZY LOADING */}
+      <div className="relative aspect-square overflow-hidden bg-gray-100">
+        <LazyImage
+          src={product.images?.[0] || '/FB_IMG_1640827671355.jpg'}
+          alt={product.name}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          width="300"
+          height="300"
         />
         
         {product.featured && (
-          <div className="absolute top-2 left-2 bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+          <div className="absolute top-2 right-2 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
             Featured
           </div>
         )}
+        
         {!product.inStock && (
-          <div className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
-            Out of Stock
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <span className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
+              Out of Stock
+            </span>
           </div>
         )}
       </div>
-      
+
+      {/* Product Info */}
       <div className="p-4">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-amber-700 transition-colors line-clamp-2">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-amber-700 transition-colors">
           {product.name}
         </h3>
         
-        <p className="text-gray-600 mb-3 text-sm line-clamp-2">
-          {product.description.length > 100 ? `${product.description.substring(0, 100)}...` : product.description}
+        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+          {product.description}
         </p>
         
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xl font-bold text-amber-700">
-            ${product.price.toFixed(2)} NZD
-          </span>
-          <div className="text-right">
-            {product.inStock ? (
-              <div>
-                <span className="text-green-700 text-xs font-semibold">In Stock</span>
-                {product.stockQuantity && (
-                  <div className="text-gray-600 text-xs font-medium">
-                    {product.stockQuantity} available
-                  </div>
-                )}
-              </div>
-            ) : (
-              <span className="text-red-700 text-xs font-semibold">Out of Stock</span>
-            )}
+        <div className="flex items-center mb-3">
+          <div className="flex items-center space-x-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={14} className="text-yellow-400 fill-current" />
+            ))}
           </div>
+          <span className="text-xs text-gray-500 ml-2">(150+)</span>
         </div>
         
-        <button
-          onClick={handleAddToCartClick}
-          disabled={!product.inStock}
-          className="w-full bg-amber-700 text-white py-3 rounded-lg hover:bg-amber-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 font-medium shadow-sm"
-          aria-label={`Add ${product.name} to cart`}
-        >
-          <ShoppingCart size={16} />
-          <span>Add to Cart</span>
-        </button>
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-amber-600">
+            ${product.price.toFixed(2)}
+          </span>
+          
+          <button
+            onClick={handleAddToCart}
+            disabled={!product.inStock}
+            className="bg-amber-600 text-white p-2 rounded-lg hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            title="Add to cart"
+          >
+            <ShoppingCart size={18} />
+          </button>
+        </div>
       </div>
     </div>
   );
