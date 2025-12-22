@@ -432,7 +432,7 @@ const BenefitsWoodenToysContent: React.FC = () => (
     <p className="mb-4">
       As New Zealand parents, we're rightfully concerned about toy safety. Wooden toys offer several 
       safety advantages over plastic alternatives.
-    </h2>
+    </p>
 
     <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
       Non-toxic and chemical-free:
