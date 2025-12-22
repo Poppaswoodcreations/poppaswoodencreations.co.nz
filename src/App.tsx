@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -22,6 +22,21 @@ import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
 import { categories } from './data/products';
 import { Product } from './types';
+
+// Blog Post Wrapper Component - Gets slug from URL
+const BlogPostWrapper: React.FC<{
+  onNavigate: (view: string) => void;
+  onPostSelect: (slug: string) => void;
+}> = ({ onNavigate, onPostSelect }) => {
+  const { slug } = useParams();
+  return (
+    <BlogPostView 
+      slug={slug || null}
+      onNavigate={onNavigate} 
+      onPostSelect={onPostSelect} 
+    />
+  );
+};
 
 // Main App Content Component
 const AppContent: React.FC = () => {
@@ -268,8 +283,7 @@ const AppContent: React.FC = () => {
           } />
           
           <Route path="/blog/:slug" element={
-            <BlogPostView 
-              slug={null}
+            <BlogPostWrapper 
               onNavigate={handleCategorySelect} 
               onPostSelect={handleBlogPostSelect} 
             />
