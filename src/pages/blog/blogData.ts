@@ -22,6 +22,21 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'wooden-vs-plastic-toys',
+    title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
+    metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
+    excerpt: 'Handcrafted Wooden car Tuckster from exquisite kauri with smooth wheels and sturdy construction. Built to last and inspire imaginative play. Made with love',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-22',
+    readTime: '6 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys', 'vs plastic', 'buying guide', 'safety', 'sustainability'],
+    featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
+    imageAlt: 'Wooden car tuckster style perfect | Kauri | Poppa\'s',
+    content: null
+  },
+
+  {
     slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
     title: 'Poppa\'s Wooden Creations: Handmade Wooden Pine Trolley and Blocks',
     metaDescription: 'Discover the magic of Poppa\'s Wooden Creations, handcrafted wooden toys made from New Zealand\'s native timbers. Learn about our Wooden Pine Trolley and Blocks.',
