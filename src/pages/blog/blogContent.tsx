@@ -5,6 +5,9 @@ import React from 'react';
 
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'wooden-toys-by-age-the-complete-guide-for-0-5-years-2025':
+      return <WoodenToysByAgeCompleteGuide05Years2025Content />;
+
     case 'wooden-vs-plastic-toys':
       return <WoodenVsPlasticToysContent />;
 
@@ -1576,5 +1579,269 @@ const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
 const HappyGoLuckTrainContent: React.FC = () => (
   <>
     <h1>Happy-go-luck-train: Premium Handcrafted Wooden Train Set from New Zealand</h1><p>In a world filled with plastic toys and digital distractions, there's something magical about the timeless appeal of a beautifully crafted wooden train set. The Happy-go-luck-train from Poppa's Wooden Creations represents the finest tradition of New Zealand craftsmanship, bringing joy and imagination to children's playtime while creating memories that last a lifetime.</p><h2>Exceptional Craftsmanship in Premium New Zealand Pine</h2><p>This stunning handcrafted wooden train set showcases the natural beauty of sustainably sourced New Zealand pine. Each piece displays the characteristic light blonde wood grain that makes NZ pine so prized for quality toy making. The smooth, carefully sanded surfaces reveal meticulous attention to detail, while the natural wood finish highlights the organic beauty of the timber. Every component has been lovingly shaped and assembled by skilled artisans in Whangarei, ensuring each Happy-go-luck-train meets the highest standards of quality and safety.</p><h2>Thoughtful Design for Endless Adventures</h2><p>The Happy-go-luck-train features a charming four-piece design that captures the classic appeal of traditional toy trains. The locomotive leads with its distinctive funnel and engineer's cabin, followed by a tender car, passenger carriage, and goods wagon. Each car connects seamlessly to the next, allowing children to create their own railway adventures. The generous proportions make the train easy for small hands to grasp and maneuver, while the sturdy construction ensures it can withstand years of enthusiastic play. Windows and doors are carefully cut to add realistic detail without compromising safety.</p><h2>Sustainable New Zealand Manufacturing</h2><p>Choosing the Happy-go-luck-train means supporting sustainable toy manufacturing right here in New Zealand. Poppa's Wooden Creations sources timber from responsibly managed forests, ensuring that each wooden toy contributes to environmental stewardship rather than harm. The use of local New Zealand pine reduces transportation emissions while supporting our domestic timber industry. This commitment to sustainability means parents can feel good about their purchase, knowing they're investing in both their child's development and the planet's future.</p><h2>Educational Benefits of Wooden Train Play</h2><p>Beyond pure entertainment, this handcrafted wooden train set offers numerous developmental benefits. As children push, pull, and arrange the train cars, they develop fine motor skills and hand-eye coordination. The open-ended nature of train play encourages storytelling, problem-solving, and creative thinking. Unlike battery-operated toys, wooden trains rely entirely on a child's imagination to bring them to life, fostering independence and self-directed play. The tactile experience of natural wood also provides sensory stimulation that plastic alternatives simply cannot match.</p><h2>A Timeless Gift That Creates Lasting Memories</h2><p>The Happy-go-luck-train isn't just a toy – it's an heirloom piece that can be treasured for generations. The durable New Zealand pine construction ensures this handmade train set will maintain its beauty and functionality through years of play. Many parents find that wooden toys like this become cherished childhood memories, often passed down to the next generation. The natural aging of wood only adds to its character, making each Happy-go-luck-train more beautiful with time.</p><p>Give your child the gift of imagination with the Happy-go-luck-train from Poppa's Wooden Creations. This premium handcrafted wooden train set combines traditional New Zealand craftsmanship with sustainable materials to create a toy that's as meaningful as it is fun. Order your Happy-go-luck-train today and watch as your child embarks on countless adventures with this beautiful piece of Kiwi craftsmanship.</p>
+  </>
+);
+
+// ==========================================
+// BLOG POST: Wooden Toys by Age: The Complete Guide for 0-5 Years (2025)
+// ==========================================
+
+const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
+  <>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Wooden Toys by Age: The Complete Guide for 0-5 Years (2025)
+    </h2>
+
+    <p className="mb-6">
+      Choosing the right wooden toy for your child's developmental stage makes all the difference. As a Whangarei-based craftsman specialising in handcrafted wooden toys from native New Zealand timbers, I've watched countless children grow with toys perfectly matched to their abilities. This guide breaks down exactly which wooden toys support your child's development at each stage from birth to five years.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      0-6 Months: Sensory Exploration Begins
+    </h2>
+
+    <p className="mb-6">
+      During the first six months, babies explore the world through touch, taste, and sound. Wooden toys for this age prioritise safety and sensory stimulation.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Wooden Teething Rings
+    </h2>
+
+    <p className="mb-6">
+      Your baby's first wooden toy should be a teething ring crafted from food-safe timber like Kauri or Rimu. These native New Zealand woods are naturally antimicrobial and safe for constant mouthing. Look for smooth, rounded edges and a finish using only food-grade oils. The natural wood texture provides gentle gum relief while the weight helps babies develop grip strength.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Natural Wooden Rattles
+    </h2>
+
+    <p className="mb-6">
+      Unlike plastic alternatives, wooden rattles produce a softer, more organic sound that won't startle young ears. The gentle weight encourages muscle development as babies learn to grasp and shake. Choose rattles with securely enclosed elements—loose beads or wooden balls should never be accessible.
+    </p>
+
+    <p className="mb-6 font-semibold">
+      Safety First: All toys for this age must be large enough to prevent choking (at least 45mm in diameter), splinter-free, and finished with non-toxic, food-safe oils.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      6-12 Months: Movement and Coordination
+    </h2>
+
+    <p className="mb-6">
+      As babies become mobile, their toys should encourage crawling, reaching, and hand-eye coordination.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Simple Wooden Vehicles
+    </h2>
+
+    <p className="mb-6">
+      Chunky wooden cars and trucks with smooth, rounded edges are perfect first vehicles. Look for designs without small wheels that could detach—the best options for this age have wheels that are carved as part of the solid body or securely fixed. These toys encourage push-and-chase games that motivate crawling.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Grasping Toys
+    </h3>
+
+    <p className="mb-6">
+      Wooden toys with multiple graspable parts—like simple wooden keys on a ring or textured blocks—help develop the pincer grasp essential for self-feeding. Native timber varieties offer different textures and weights, providing varied sensory experiences.
+    </p>
+
+    <p className="mb-6 font-semibold">
+      Developmental Tip: At this stage, choose toys that make simple cause-and-effect connections clear—push the car, it rolls; shake the rattle, it makes sound.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      1-2 Years: Independent Exploration
+    </h2>
+
+    <p className="mb-6">
+      Toddlers at this stage are walking, climbing, and asserting independence. Their toys should support gross motor skills and early problem-solving.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Push Toys
+    </h3>
+
+    <p className="mb-6">
+      Wooden push toys provide stability for early walkers while encouraging movement. Look for sturdy construction with a low center of gravity to prevent tipping. Push-along vehicles or toys that make gentle sounds as they roll are particularly engaging.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Wooden Stackers
+    </h3>
+
+    <p className="mb-6">
+      Simple stacking toys teach size relationships, hand-eye coordination, and problem-solving. Rainbow stackers or wooden rings teach colour recognition while developing fine motor skills. Choose designs with large, easy-to-grasp pieces.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Simple Wooden Cars
+    </h2>
+
+    <p className="mb-6">
+      Toddlers love vehicles they can easily grasp and push. Chunky wooden cars, fire engines, or tractors in solid native timber withstand the rough play typical of this age. The simple design without complex mechanisms means fewer breakable parts and more focus on imaginative play.
+    </p>
+
+    <p className="mb-6">
+      Why Wooden Toys Excel: At this destructive age, wooden toys outlast plastic alternatives. A well-crafted wooden car can survive being thrown, chewed, and used as a building block—and it will still look beautiful.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      2-3 Years: Imagination Takes Flight
+    </h2>
+
+    <p className="mb-6">
+      Preschoolers develop complex imaginative play and begin creating their own narratives with toys.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Vehicle Collections
+    </h2>
+
+    <p className="mb-6">
+      This is when children start collecting vehicles and creating scenarios. A set including cars, trucks, tractors, and emergency vehicles supports elaborate pretend play. Look for vehicles scaled to work together—all fitting in the same toy garage or travelling the same wooden roads.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Wooden Trains
+    </h3>
+
+    <p className="mb-6">
+      Train sets encourage spatial reasoning as children figure out how to connect tracks. Choose sets with simple magnetic or wooden peg connections rather than complex coupling mechanisms. Kauri or Rimu trains develop a beautiful patina over time, making them family heirlooms.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Wooden Planes
+    </h3>
+
+    <p className="mb-6">
+      Simple wooden planes and helicopters expand the vehicle collection into three-dimensional thinking. Look for designs with smooth, rounded edges that are safe for enthusiastic "flying" around the house.
+    </p>
+
+    <p className="mb-6 font-semibold">
+      Storage Tip: A wooden toy box or basket keeps the growing collection organised while teaching cleanup routines.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      3-5 Years: Complex Play and Life Skills
+    </h2>
+
+    <p className="mb-6">
+      Kindergarten-age children engage in elaborate pretend play and begin developing real-world skills through play.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Complex Wooden Sets
+    </h2>
+
+    <p className="mb-6">
+      Multi-piece sets like wooden garages, farms, or airports allow children to create detailed scenarios. Look for sets that can expand over time—adding animals, people, or additional buildings keeps the toy engaging for years.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Wooden Kitchen Items
+    </h2>
+
+    <p className="mb-6">
+      Play kitchens stocked with wooden food, utensils, and cookware teach life skills while encouraging pretend play. Native New Zealand timber kitchen sets are particularly beautiful—wooden cutting boards, bowls, and utensils that look like miniature versions of real kitchenware. These toys often transition from playroom to actual kitchen as children grow and want to help with real cooking.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Wooden Tractors and Construction Vehicles
+    </h2>
+
+    <p className="mb-6">
+      Detailed wooden tractors, diggers, and construction vehicles appeal to this age group's interest in how things work. Look for moving parts like scoops that lift, trailers that detach, or wheels that turn independently. These toys support fine motor development and mechanical understanding.
+    </p>
+
+    <p className="mb-6 font-semibold">
+      Educational Value: At this age, wooden toys become tools for learning measurement (how many blocks fit in the truck?), counting (setting the table with wooden plates), and sequencing (building complex train track layouts).
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Choose Wooden Toys from Native NZ Timber?
+    </h2>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Throughout every developmental stage, wooden toys crafted from native New Zealand timbers like Kauri, Rimu, and Macrocarpa offer unique benefits:
+    </h2>
+
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li><strong>Durability:</strong> These hardwoods withstand years of play, often becoming family heirlooms passed to younger siblings or future generations.</li>
+      <li><strong>Safety:</strong> Natural antimicrobial properties make them ideal for mouthing and messy play. Finished with food-safe oils, they're safer than painted plastics.</li>
+      <li><strong>Sensory Experience:</strong> Different timber varieties offer varied weights, textures, and natural grain patterns that stimulate developing senses.</li>
+      <li><strong>Environmental Responsibility:</strong> Sustainably sourced native timbers support eco-conscious parenting values while teaching children to value quality over quantity.</li>
+      <li><strong>Aesthetic Beauty:</strong> Unlike garish plastic toys, natural wooden toys complement your home while developing your child's appreciation for natural materials and craftsmanship.</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Making the Right Choice for Your Child
+    </h2>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      When selecting wooden toys for any age, consider these factors:
+    </h2>
+
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li><strong>Safety Standards:</strong> Ensure toys meet New Zealand safety standards with smooth finishes, secure construction, and age-appropriate sizing.</li>
+      <li><strong>Growth Potential:</strong> Choose toys that can grow with your child—a simple wooden car entertains a one-year-old differently than a four-year-old, but both find value in it.</li>
+      <li><strong>Open-Ended Play:</strong> The best wooden toys support imagination rather than dictating how to play. A wooden block becomes a phone, a car, or a building—whatever your child imagines.</li>
+      <li><strong>Quality Craftsmanship:</strong> Hand-crafted wooden toys from local artisans ensure attention to detail, safety, and beauty that mass-produced alternatives can't match.</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Creating a Developmental Toy Collection
+    </h2>
+
+    <p className="mb-6">
+      You don't need dozens of toys at each stage. A thoughtfully curated collection of high-quality wooden toys serves your child better than a room full of plastic alternatives:
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Birth to 1 Year: 2-3 teething toys, 1-2 rattles, 2-3 simple vehicles or grasping toys
+    </h2>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      1-2 Years: 3-4 vehicles, 1 push toy, 1 stacking toy, basic wooden blocks
+    </h2>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      2-3 Years: Expanded vehicle collection (6-8 pieces), simple train set, wooden blocks
+    </h2>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      3-5 Years: Complex play sets (kitchen, farm, or garage), diverse vehicle collection, construction toys
+    </h2>
+
+    <p className="mb-6">
+      Each toy should earn its place through durability, safety, and developmental value.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Whangarei Difference
+    </h2>
+
+    <p className="mb-6">
+      Here in Whangarei, we have access to some of New Zealand's finest native timbers. Each piece is crafted with attention to the wood's natural character—the rich grain of Rimu, the golden warmth of Kauri, the robust beauty of Macrocarpa. When you choose locally crafted wooden toys, you're supporting sustainable forestry practices and local craftsmanship while giving your child toys that tell a story of place and care.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Final Thoughts
+    </h3>
+
+    <p className="mb-6">
+      The right wooden toy at the right developmental stage does more than entertain—it supports learning, builds skills, and creates memories. From that first teething ring to elaborate pretend play kitchens, wooden toys grow alongside your child, adapting to new ways of playing while maintaining their beauty and function.
+    </p>
+
+    <p className="mb-6">
+      Invest in quality wooden toys crafted from native New Zealand timbers, and you're not just buying toys—you're creating heirlooms that may someday delight your grandchildren.
+    </p>
+
+    <p className="mb-6">
+      What age-appropriate wooden toys are you looking for? Browse our collection of handcrafted toys made right here in Whangarei from sustainably sourced native New Zealand timbers.
+    </p>
+
   </>
 );
