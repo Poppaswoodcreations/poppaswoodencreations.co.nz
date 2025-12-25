@@ -243,6 +243,21 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'handmade wooden train by poppas wooden creations',
     content: null
   },
+
+  {
+    slug: 'wooden-toys-by-age-the-complete-guide-for-0-5-years-2025',
+    title: 'Wooden Toys by Age: The Complete Guide for 0-5 Years (2025)',
+    metaDescription: 'Complete guide to choosing wooden toys by age from 0-5 years. Expert advice on safe, developmental toys from native NZ timber for every stage.',
+    excerpt: 'Discover the perfect wooden toys for each developmental stage from birth to 5 years. Expert guide to choosing safe, engaging toys from native New Zealand timber.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-25',
+    readTime: '7 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys', 'handcrafted', 'NZ made'],
+    featuredImage: 'https://i.ibb.co/wh5GjzgJ/bcc2e0763a5d.webp',
+    imageAlt: 'handmade wooden toys',
+    content: null
+  },
 ];
 
 // Template for adding new blog posts:
