@@ -2,6 +2,9 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { MultiSchema } from './schema/SchemaMarkup';
+import { ProductFAQ } from './schema/AdditionalSchemas';
+import { useProductPageSchema } from '../hooks/useSchemaData';
 import { Product } from '../types';
 import LazyImage from './LazyImage';
 
@@ -15,6 +18,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const navigate = useNavigate();
   
   const product = products.find(p => p.id === productId);
+  
+  // Generate schema automatically from product data!
+  const schemas = useProductPageSchema(product);
   
   if (!product) {
     return (
@@ -46,6 +52,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
 
   return (
     <>
+      {/* Schema Markup - Automatically generated from product data! */}
+      {schemas.length > 0 && <MultiSchema schemas={schemas} />}
+      
+      {/* FAQ Schema for better SEO */}
+      <ProductFAQ productName={product.name} />
+
       <Helmet>
         <title>{product.seoTitle || `${product.name} | Handcrafted Wooden Toy | Poppa's Wooden Creations`}</title>
         <meta name="description" content={product.seoDescription || `${product.description.substring(0, 160)}...`} />
@@ -58,38 +70,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
         <meta property="og:image" content={productImage} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="product" />
-        
-        {/* Product Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "name": product.name,
-            "description": product.description,
-            "image": productImage,
-            "url": canonicalUrl,
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "Offer",
-              "price": product.price,
-              "priceCurrency": "NZD",
-              "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-              "seller": {
-                "@type": "Organization",
-                "name": "Poppa's Wooden Creations"
-              }
-            },
-            "category": product.category,
-            "weight": {
-              "@type": "QuantitativeValue",
-              "value": product.weight || 0.5,
-              "unitCode": "KGM"
-            }
-          })}
-        </script>
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">
