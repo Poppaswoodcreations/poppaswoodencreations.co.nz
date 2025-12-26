@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { Helmet } from 'react-helmet-async';
 import { ShoppingCart, ArrowLeft, Shield, Award, Truck } from 'lucide-react';
-import { toast } from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 
 interface Product {
@@ -151,7 +150,6 @@ export default function ProductDetail() {
       setProduct(data);
     } catch (error) {
       console.error('Error fetching product:', error);
-      toast.error('Product not found');
       navigate('/');
     } finally {
       setLoading(false);
