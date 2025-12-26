@@ -1,6 +1,7 @@
 // src/pages/blog/BlogPostView.tsx
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { MultiSchema } from '../../components/schema/SchemaMarkup';
 import { blogPosts } from './blogData';
 import { getBlogContent } from './blogContent';
 
@@ -34,8 +35,55 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onNavigate, on
   const encodedTitle = encodeURIComponent(post.title);
   const encodedText = encodeURIComponent(`${post.title} - Check out this article from Poppa's Wooden Creations!`);
 
+  // Full image URL
+  const fullImageUrl = post.featuredImage.startsWith('http') 
+    ? post.featuredImage 
+    : `https://poppaswoodencreations.co.nz${post.featuredImage}`;
+
+  // Schema markup for blog post
+  const articleSchema = {
+    headline: post.title,
+    description: post.metaDescription,
+    image: [fullImageUrl],
+    datePublished: post.date,
+    dateModified: post.date, // You can add a separate modifiedDate field if you track updates
+    author: {
+      name: post.author,
+      url: "https://poppaswoodencreations.co.nz/about"
+    },
+    publisher: {
+      name: "Poppa's Wooden Creations",
+      logo: "https://poppaswoodencreations.co.nz/logo.png" // TODO: Update with your actual logo URL
+    }
+  };
+
+  const breadcrumbSchema = {
+    items: [
+      {
+        name: "Home",
+        url: "https://poppaswoodencreations.co.nz"
+      },
+      {
+        name: "Blog",
+        url: "https://poppaswoodencreations.co.nz/blog"
+      },
+      {
+        name: post.title,
+        url: currentUrl
+      }
+    ]
+  };
+
   return (
     <>
+      {/* Schema Markup */}
+      <MultiSchema
+        schemas={[
+          { type: 'article' as const, data: articleSchema },
+          { type: 'breadcrumb' as const, data: breadcrumbSchema }
+        ]}
+      />
+
       {/* SEO Meta Tags */}
       <Helmet>
         <title>{post.title} | Poppa's Wooden Creations Blog</title>
@@ -47,7 +95,7 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onNavigate, on
         <meta property="og:description" content={post.metaDescription} />
         <meta property="og:url" content={currentUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content={post.featuredImage.startsWith('http') ? post.featuredImage : `https://poppaswoodencreations.co.nz${post.featuredImage}`} />
+        <meta property="og:image" content={fullImageUrl} />
         <meta property="article:published_time" content={post.date} />
         <meta property="article:author" content={post.author} />
         {post.tags.map(tag => (
@@ -58,7 +106,7 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onNavigate, on
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.metaDescription} />
-        <meta name="twitter:image" content={post.featuredImage.startsWith('http') ? post.featuredImage : `https://poppaswoodencreations.co.nz${post.featuredImage}`} />
+        <meta name="twitter:image" content={fullImageUrl} />
       </Helmet>
 
       <article className="min-h-screen bg-gray-50">
