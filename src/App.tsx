@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -322,7 +323,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <AppContent />
+      <HelmetProvider>
+        <AppContent />
+      </HelmetProvider>
     </ErrorBoundary>
   );
 };
