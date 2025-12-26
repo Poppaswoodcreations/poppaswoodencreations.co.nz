@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
+    assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -23,15 +24,23 @@ export default defineConfig({
         drop_debugger: true,
         passes: 2,
         pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        booleans_as_integers: true,
+        keep_fargs: false,
       },
       mangle: {
         safari10: true,
+      },
+      format: {
+        comments: false,
       },
     },
     target: 'es2015',
     sourcemap: false,
     chunkSizeWarningLimit: 500,
     cssCodeSplit: true,
+    modulePreload: {
+      polyfill: true,
+    },
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
