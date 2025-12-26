@@ -2,9 +2,6 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import { MultiSchema } from './schema/SchemaMarkup';
-import { ProductFAQ } from './schema/AdditionalSchemas';
-import { useProductPageSchema } from '../hooks/useSchemaData';
 import { Product } from '../types';
 import LazyImage from './LazyImage';
 
@@ -18,9 +15,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const navigate = useNavigate();
   
   const product = products.find(p => p.id === productId);
-  
-  // Generate schema automatically from product data!
-  const schemas = useProductPageSchema(product);
   
   if (!product) {
     return (
@@ -50,18 +44,64 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
+  // Generate Product Schema
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.description,
+    "image": product.images || [productImage],
+    "sku": product.id,
+    "brand": {
+      "@type": "Brand",
+      "name": "Poppa's Wooden Creations"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": canonicalUrl,
+      "priceCurrency": "NZD",
+      "price": product.price,
+      "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Poppa's Wooden Creations"
+      }
+    },
+    "category": product.category
+  };
+
+  // Generate Breadcrumb Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://poppaswoodencreations.co.nz"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": product.category.replace('-', ' '),
+        "item": `https://poppaswoodencreations.co.nz/${product.category}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": product.name,
+        "item": canonicalUrl
+      }
+    ]
+  };
+
   return (
     <>
-      {/* Schema Markup - Automatically generated from product data! */}
-      {schemas.length > 0 && <MultiSchema schemas={schemas} />}
-      
-      {/* FAQ Schema for better SEO */}
-      <ProductFAQ productName={product.name} />
-
       <Helmet>
-        <title>{product.seoTitle || `${product.name} | Handcrafted Wooden Toy | Poppa's Wooden Creations`}</title>
-        <meta name="description" content={product.seoDescription || `${product.description.substring(0, 160)}...`} />
-        <meta name="keywords" content={product.seoKeywords || `${product.name}, wooden toy, handcrafted, New Zealand made`} />
+        <title>{product.name} | Handcrafted Wooden Toy | Poppa's Wooden Creations</title>
+        <meta name="description" content={`${product.description.substring(0, 160)}...`} />
+        <meta name="keywords" content={`${product.name}, wooden toy, handcrafted, New Zealand made`} />
         <link rel="canonical" href={canonicalUrl} />
         
         {/* Open Graph */}
@@ -70,6 +110,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
         <meta property="og:image" content={productImage} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="product" />
+        
+        {/* Product Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(productSchema)}
+        </script>
+
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">
@@ -89,7 +139,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Product Images - OPTIMIZED WITH LAZY LOADING */}
+            {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
                 <LazyImage
@@ -184,10 +234,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Weight:</span>
-                    <span className="font-medium text-gray-900 ml-2">{product.weight || 0.5}kg</span>
-                  </div>
-                  <div>
                     <span className="text-gray-600">Stock:</span>
                     <span className={`font-medium ml-2 ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
                       {product.inStock ? 'In Stock' : 'Out of Stock'}
@@ -196,6 +242,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                   <div>
                     <span className="text-gray-600">SKU:</span>
                     <span className="font-medium text-gray-900 ml-2">{product.id}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Material:</span>
+                    <span className="font-medium text-gray-900 ml-2">Premium NZ Timber</span>
                   </div>
                 </div>
               </div>
