@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <base href="/" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,8 +11,9 @@
     <link rel="preconnect" href="https://i.ibb.co" crossorigin>
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical CSS -->
+    <!-- Critical CSS - prevents render blocking -->
     <style>
+      /* Critical above-the-fold styles */
       * {
         margin: 0;
         padding: 0;
@@ -26,10 +28,12 @@
         -moz-osx-font-smoothing: grayscale;
       }
       
+      /* Prevent layout shift during load */
       .min-h-screen {
         min-height: 100vh;
       }
       
+      /* Loading state to prevent blank screen */
       #root:empty::before {
         content: '';
         display: block;
@@ -110,6 +114,7 @@
     
     <!-- Google Tag Manager - Deferred -->
     <script>
+      // Defer GTM to after page load
       window.addEventListener('load', function() {
         setTimeout(function() {
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
