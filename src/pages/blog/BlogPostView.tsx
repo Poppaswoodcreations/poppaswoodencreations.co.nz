@@ -1,7 +1,6 @@
 // src/pages/blog/BlogPostView.tsx
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MultiSchema } from '../../components/schema/SchemaMarkup';
 import { blogPosts } from './blogData';
 import { getBlogContent } from './blogContent';
 
@@ -40,50 +39,58 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onNavigate, on
     ? post.featuredImage 
     : `https://poppaswoodencreations.co.nz${post.featuredImage}`;
 
-  // Schema markup for blog post
+  // Article Schema
   const articleSchema = {
-    headline: post.title,
-    description: post.metaDescription,
-    image: [fullImageUrl],
-    datePublished: post.date,
-    dateModified: post.date, // You can add a separate modifiedDate field if you track updates
-    author: {
-      name: post.author,
-      url: "https://poppaswoodencreations.co.nz/about"
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.metaDescription,
+    "image": [fullImageUrl],
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://poppaswoodencreations.co.nz/about"
     },
-    publisher: {
-      name: "Poppa's Wooden Creations",
-      logo: "https://poppaswoodencreations.co.nz/logo.png" // TODO: Update with your actual logo URL
+    "publisher": {
+      "@type": "Organization",
+      "name": "Poppa's Wooden Creations",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://poppaswoodencreations.co.nz/logo.png"
+      }
     }
   };
 
+  // Breadcrumb Schema
   const breadcrumbSchema = {
-    items: [
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
       {
-        name: "Home",
-        url: "https://poppaswoodencreations.co.nz"
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://poppaswoodencreations.co.nz"
       },
       {
-        name: "Blog",
-        url: "https://poppaswoodencreations.co.nz/blog"
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://poppaswoodencreations.co.nz/blog"
       },
       {
-        name: post.title,
-        url: currentUrl
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": currentUrl
       }
     ]
   };
 
   return (
     <>
-      {/* Schema Markup */}
-      <MultiSchema
-        schemas={[
-          { type: 'article' as const, data: articleSchema },
-          { type: 'breadcrumb' as const, data: breadcrumbSchema }
-        ]}
-      />
-
       {/* SEO Meta Tags */}
       <Helmet>
         <title>{post.title} | Poppa's Wooden Creations Blog</title>
@@ -107,6 +114,16 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onNavigate, on
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.metaDescription} />
         <meta name="twitter:image" content={fullImageUrl} />
+
+        {/* Article Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
+
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
       </Helmet>
 
       <article className="min-h-screen bg-gray-50">
