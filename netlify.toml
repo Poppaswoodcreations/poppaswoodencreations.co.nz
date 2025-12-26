@@ -1,4 +1,4 @@
-# Build settings
+# Build settings - MUST BE FIRST
 [build]
   publish = "dist"
   command = "npm run build"
@@ -87,5 +87,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-  force = false
-  conditions = {Role = ["public"]}
