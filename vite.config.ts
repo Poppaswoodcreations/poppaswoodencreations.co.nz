@@ -13,8 +13,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           // Split Supabase
           'supabase-vendor': ['@supabase/supabase-js'],
-          // ADDED: Split UI libraries to reduce main bundle
-          'ui-vendor': ['lucide-react', 'react-hot-toast'],
+          // REMOVED: ui-vendor chunk since react-hot-toast isn't installed
         },
         // Better file naming for caching
         chunkFileNames: 'assets/[name]-[hash].js',
