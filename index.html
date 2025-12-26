@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
     <base href="/" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,9 +10,8 @@
     <link rel="preconnect" href="https://i.ibb.co" crossorigin>
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical CSS - prevents render blocking -->
+    <!-- Critical CSS -->
     <style>
-      /* Critical above-the-fold styles */
       * {
         margin: 0;
         padding: 0;
@@ -28,12 +26,10 @@
         -moz-osx-font-smoothing: grayscale;
       }
       
-      /* Prevent layout shift during load */
       .min-h-screen {
         min-height: 100vh;
       }
       
-      /* Loading state to prevent blank screen */
       #root:empty::before {
         content: '';
         display: block;
@@ -45,6 +41,68 @@
     
     <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys Made in New Zealand</title>
     <meta name="description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150.">
+    
+    <!-- STATIC SCHEMA MARKUP - Always present for SEO -->
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Poppa's Wooden Creations",
+      "image": "https://poppaswoodencreations.co.nz/logo.png",
+      "@id": "https://poppaswoodencreations.co.nz",
+      "url": "https://poppaswoodencreations.co.nz",
+      "telephone": "+64210228166",
+      "email": "poppas.wooden.creations@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102 Kiripaka Rd",
+        "addressLocality": "Whangarei",
+        "addressRegion": "Northland",
+        "postalCode": "0110",
+        "addressCountry": "NZ"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -35.7334,
+        "longitude": 174.3234
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "15:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100051923245827",
+        "https://www.instagram.com/poppas.wooden.creations",
+        "https://www.tiktok.com/@poppaswoodencreations"
+      ],
+      "priceRange": "$5 - $500",
+      "description": "Handcrafted wooden toys made in Whangarei, New Zealand. Premium quality toys crafted from native NZ timbers including Kauri, Rimu, and Macrocarpa."
+    }
+    </script>
+
+    <!-- WebSite Schema for Search Box -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Poppa's Wooden Creations",
+      "url": "https://poppaswoodencreations.co.nz",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://poppaswoodencreations.co.nz/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -52,7 +110,6 @@
     
     <!-- Google Tag Manager - Deferred -->
     <script>
-      // Defer GTM to after page load
       window.addEventListener('load', function() {
         setTimeout(function() {
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
