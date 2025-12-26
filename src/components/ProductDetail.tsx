@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import { ShoppingCart, ArrowLeft, Shield, Award, Truck } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { Product } from '../types';
+import LazyImage from './LazyImage';
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  category: string;
-  stock_quantity: number;
-  is_featured: boolean;
-  sku: string;
-  material?: string;
+interface ProductDetailProps {
+  products: Product[];
+  onAddToCart: (product: Product) => void;
 }
 
 // REAL CUSTOMER REVIEWS DATA
@@ -126,76 +118,58 @@ const PRODUCT_FAQS = [
   }
 ];
 
-export default function ProductDetail() {
-  const { id } = useParams<{ id: string }>();
+const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) => {
+  const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchProduct();
-  }, [id]);
-
-  const fetchProduct = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) throw error;
-      setProduct(data);
-    } catch (error) {
-      console.error('Error fetching product:', error);
-      navigate('/');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddToCart = () => {
-    if (product) {
-      addToCart(product);
-    }
-  };
-
-  if (loading) {
+  
+  const product = products.find(p => p.id === productId);
+  
+  if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
-      </div>
+      <>
+        <Helmet>
+          <title>Product Not Found | Poppa's Wooden Creations</title>
+          <meta name="description" content="The product you're looking for is not available. Browse our collection of handcrafted wooden toys." />
+          <link rel="canonical" href={`https://poppaswoodencreations.co.nz/products/${productId}`} />
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+            <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
+            <button
+              onClick={() => navigate('/')}
+              className="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </>
     );
   }
 
-  if (!product) {
-    return null;
-  }
+  const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
+  const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
-  const categorySlug = product.category.toLowerCase().replace(/\s+/g, '-');
-  const productUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
-  const categoryUrl = `https://poppaswoodencreations.co.nz/${categorySlug}`;
-
-  // Product Schema with REVIEWS
+  // Generate Product Schema WITH REVIEWS
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
     "description": product.description,
-    "image": [product.image_url],
-    "sku": product.sku,
+    "image": product.images || [productImage],
+    "sku": product.id,
     "brand": {
       "@type": "Brand",
       "name": "Poppa's Wooden Creations"
     },
     "offers": {
       "@type": "Offer",
-      "url": productUrl,
+      "url": canonicalUrl,
       "priceCurrency": "NZD",
       "price": product.price,
-      "availability": product.stock_quantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
         "name": "Poppa's Wooden Creations"
@@ -227,7 +201,7 @@ export default function ProductDetail() {
     "category": product.category
   };
 
-  // Breadcrumb Schema
+  // Generate Breadcrumb Schema
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -241,14 +215,14 @@ export default function ProductDetail() {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": product.category,
-        "item": categoryUrl
+        "name": product.category.replace('-', ' '),
+        "item": `https://poppaswoodencreations.co.nz/${product.category}`
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": product.name,
-        "item": productUrl
+        "item": canonicalUrl
       }
     ]
   };
@@ -271,22 +245,22 @@ export default function ProductDetail() {
     <>
       <Helmet>
         <title>{product.name} | Handcrafted Wooden Toy | Poppa's Wooden Creations</title>
-        <meta name="description" content={`${product.description}...`} />
+        <meta name="description" content={`${product.description.substring(0, 160)}...`} />
         <meta name="keywords" content={`${product.name}, wooden toy, handcrafted, New Zealand made`} />
-        <link rel="canonical" href={productUrl} />
+        <link rel="canonical" href={canonicalUrl} />
         
         {/* Open Graph */}
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={product.image_url} />
-        <meta property="og:url" content={productUrl} />
+        <meta property="og:image" content={productImage} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="product" />
         
-        {/* Product Schema with Reviews */}
+        {/* Product Schema */}
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
         </script>
-        
+
         {/* Breadcrumb Schema */}
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
@@ -302,85 +276,77 @@ export default function ProductDetail() {
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-            <button onClick={() => navigate('/')} className="hover:text-amber-600">
-              Home
-            </button>
+            <button onClick={() => navigate('/')} className="hover:text-amber-600">Home</button>
             <span>/</span>
-            <button onClick={() => navigate(`/${categorySlug}`)} className="hover:text-amber-600 capitalize">
-              {product.category}
+            <button 
+              onClick={() => navigate(`/${product.category}`)} 
+              className="hover:text-amber-600 capitalize"
+            >
+              {product.category.replace('-', ' ')}
             </button>
             <span>/</span>
             <span className="text-gray-900">{product.name}</span>
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Product Image */}
+            {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
-                <div className="relative w-full h-full object-cover">
-                  <img
-                    src={product.image_url}
-                    alt={`${product.name} - Handcrafted wooden toy by Poppa's Wooden Creations`}
-                    width="600"
-                    height="600"
-                    loading="eager"
-                    decoding="async"
-                    onLoad={() => setImageLoaded(true)}
-                    className={`transition-opacity duration-300 ${
-                      imageLoaded ? 'opacity-100' : 'opacity-0'
-                    } w-full h-full object-cover`}
-                  />
-                </div>
+                <LazyImage
+                  src={productImage}
+                  alt={`${product.name} - Handcrafted wooden toy by Poppa's Wooden Creations`}
+                  className="w-full h-full object-cover"
+                  width="600"
+                  height="600"
+                  priority={true}
+                />
               </div>
+              
+              {product.images && product.images.length > 1 && (
+                <div className="grid grid-cols-4 gap-2">
+                  {product.images.slice(1, 5).map((image, index) => (
+                    <div key={index} className="aspect-square bg-white rounded-lg shadow overflow-hidden">
+                      <LazyImage
+                        src={image}
+                        alt={`${product.name} view ${index + 2}`}
+                        className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                        width="150"
+                        height="150"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info */}
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
-                
                 <div className="flex items-center space-x-4 mb-4">
-                  <span className="text-3xl font-bold text-amber-600">
-                    ${product.price.toFixed(2)} NZD
-                  </span>
-                  {product.is_featured && (
+                  <span className="text-3xl font-bold text-amber-600">${product.price.toFixed(2)} NZD</span>
+                  {product.featured && (
                     <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
                       Featured
                     </span>
                   )}
                 </div>
-
-                {/* Star Rating Display */}
+                
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-yellow-400 fill-current"
-                      >
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                      </svg>
+                      <Star key={i} size={16} className="text-yellow-400 fill-current" />
                     ))}
                     <span className="text-sm text-gray-600 ml-2">4.9/5 (150+ reviews)</span>
                   </div>
                 </div>
               </div>
 
-              {/* Description */}
               <div className="prose prose-gray max-w-none">
                 <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </div>
 
-              {/* Features */}
+              {/* Product Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
                   <Shield className="text-green-600" size={20} />
@@ -389,6 +355,7 @@ export default function ProductDetail() {
                     <div className="text-sm text-gray-600">Non-toxic finish</div>
                   </div>
                 </div>
+                
                 <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
                   <Award className="text-blue-600" size={20} />
                   <div>
@@ -396,6 +363,7 @@ export default function ProductDetail() {
                     <div className="text-sm text-gray-600">Made in NZ</div>
                   </div>
                 </div>
+                
                 <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
                   <Truck className="text-purple-600" size={20} />
                   <div>
@@ -412,40 +380,37 @@ export default function ProductDetail() {
                   <div>
                     <span className="text-gray-600">Category:</span>
                     <span className="font-medium text-gray-900 ml-2 capitalize">
-                      {product.category}
+                      {product.category.replace('-', ' ')}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Stock:</span>
-                    <span className={`font-medium ml-2 ${
-                      product.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
+                    <span className={`font-medium ml-2 ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+                      {product.inStock ? 'In Stock' : 'Out of Stock'}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-600">SKU:</span>
-                    <span className="font-medium text-gray-900 ml-2">{product.sku}</span>
+                    <span className="font-medium text-gray-900 ml-2">{product.id}</span>
                   </div>
                   <div>
                     <span className="text-gray-600">Material:</span>
-                    <span className="font-medium text-gray-900 ml-2">
-                      {product.material || 'Premium NZ Timber'}
-                    </span>
+                    <span className="font-medium text-gray-900 ml-2">Premium NZ Timber</span>
                   </div>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Add to Cart */}
               <div className="space-y-4">
                 <button
-                  onClick={handleAddToCart}
-                  disabled={product.stock_quantity === 0}
+                  onClick={() => onAddToCart(product)}
+                  disabled={!product.inStock}
                   className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
                   <ShoppingCart size={20} />
-                  <span>Add to Cart</span>
+                  <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
                 </button>
+                
                 <button
                   onClick={() => navigate(-1)}
                   className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
@@ -486,4 +451,6 @@ export default function ProductDetail() {
       </div>
     </>
   );
-}
+};
+
+export default ProductDetail;
