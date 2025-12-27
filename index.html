@@ -1,77 +1,138 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    // Inline small assets to reduce requests
-    assetsInlineLimit: 4096,
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <base href="/" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    // ENHANCED: Better chunk splitting to reduce unused JavaScript
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // Split React libraries
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // Split Supabase
-          'supabase-vendor': ['@supabase/supabase-js'],
-          // Split UI libraries (lucide-react IS installed)
-          'ui-vendor': ['lucide-react'],
-        },
-        // Better file naming for caching
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
+    <!-- Preconnect to critical origins -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co">
+    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
+    <link rel="preconnect" href="https://i.ibb.co">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    
+    <!-- Critical CSS -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      .min-h-screen {
+        min-height: 100vh;
+      }
+      
+      #root:empty::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(to bottom right, #fffbeb, #ffedd5, #fecaca);
+      }
+      
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+    
+    <title>Poppa's Wooden Creations - Premium Handcrafted Wooden Toys Made in New Zealand</title>
+    <meta name="description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150.">
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Poppa's Wooden Creations",
+      "image": "https://poppaswoodencreations.co.nz/logo.png",
+      "@id": "https://poppaswoodencreations.co.nz",
+      "url": "https://poppaswoodencreations.co.nz",
+      "telephone": "+64210228166",
+      "email": "poppas.wooden.creations@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102 Kiripaka Rd",
+        "addressLocality": "Whangarei",
+        "addressRegion": "Northland",
+        "postalCode": "0110",
+        "addressCountry": "NZ"
       },
-    },
-    // Improve build performance
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
-        drop_debugger: true,
-        // ADDED: More aggressive compression
-        passes: 2,
-        pure_funcs: ['console.log', 'console.info', 'console.debug'],
-        // Additional optimizations
-        booleans_as_integers: true,
-        keep_fargs: false,
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -35.7334,
+        "longitude": 174.3234
       },
-      mangle: {
-        safari10: true,
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "15:00"
       },
-      format: {
-        comments: false,
-      },
-    },
-    // Target modern browsers for smaller bundle
-    target: 'es2015',
-    // Source maps disabled for smaller build
-    sourcemap: false,
-    // ADDED: Chunk size warnings
-    chunkSizeWarningLimit: 500,
-    // ADDED: CSS code splitting
-    cssCodeSplit: true,
-    // Better module preloading
-    modulePreload: {
-      polyfill: true,
-    },
-  },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
-    // ADDED: Exclude heavy dependencies from optimization
-    exclude: ['@supabase/supabase-js'],
-  },
-  // ADDED: Server configuration for development
-  server: {
-    port: 5173,
-    strictPort: true,
-  },
-  // ADDED: Preview configuration
-  preview: {
-    port: 4173,
-    strictPort: true,
-  },
-});
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=100051923245827",
+        "https://www.instagram.com/poppas.wooden.creations",
+        "https://www.tiktok.com/@poppaswoodencreations"
+      ],
+      "priceRange": "$5 - $500",
+      "description": "Handcrafted wooden toys made in Whangarei, New Zealand. Premium quality toys crafted from native NZ timbers including Kauri, Rimu, and Macrocarpa."
+    }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Poppa's Wooden Creations",
+      "url": "https://poppaswoodencreations.co.nz",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://poppaswoodencreations.co.nz/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Google Tag Manager -->
+    <script>
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function() {
+          loadGTM();
+        });
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadGTM, 3000);
+        });
+      }
+      
+      function loadGTM() {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NQG3DNXR');
+      }
+    </script>
+  </body>
+</html>
