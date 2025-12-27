@@ -12,15 +12,19 @@ export default defineConfig({
         },
       },
     },
-    cssCodeSplit: true,
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        passes: 2,
+        passes: 3,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
+        unsafe: true,
+        unsafe_comps: true,
+        unsafe_math: true,
       },
+      mangle: true,
     },
-    assetsInlineLimit: 10000, // Inline assets under 10KB (including CSS)
+    target: 'es2020',
   },
 });
