@@ -12,13 +12,15 @@ export default defineConfig({
         },
       },
     },
-    cssCodeSplit: false, // Inline CSS to prevent render blocking
+    cssCodeSplit: true,
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
+        passes: 2,
       },
     },
+    assetsInlineLimit: 10000, // Inline assets under 10KB (including CSS)
   },
 });
