@@ -26,15 +26,15 @@
     <meta property="twitter:description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150." />
     <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/logo.png" />
     
-    <!-- Preconnect to critical origins with crossorigin -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin>
+    <!-- FIXED: Preconnect with proper crossorigin attribute -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous">
     <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="preconnect" href="https://i.ibb.co" crossorigin>
+    <link rel="preconnect" href="https://i.ibb.co" crossorigin="anonymous">
     <link rel="dns-prefetch" href="https://i.ibb.co">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical CSS Inlined -->
+    <!-- Critical CSS Inlined - EXPANDED -->
     <style>
       * {
         margin: 0;
@@ -54,13 +54,14 @@
           'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
           sans-serif;
         margin: 0;
+        background: rgb(249 250 251);
       }
       
       .min-h-screen {
         min-height: 100vh;
       }
       
-      /* Loading state for better perceived performance */
+      /* Loading state */
       #root:empty::before {
         content: '';
         display: block;
@@ -81,12 +82,34 @@
         display: block;
       }
       
-      /* Above-the-fold critical styles */
+      /* Critical above-the-fold styles */
       .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
       .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+      .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+      .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+      .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
       .text-gray-600 { color: rgb(75 85 99); }
+      .text-gray-900 { color: rgb(17 24 39); }
+      .text-white { color: rgb(255 255 255); }
       .leading-relaxed { line-height: 1.625; }
       .max-w-2xl { max-width: 42rem; }
+      .max-w-7xl { max-width: 80rem; }
+      .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+      .from-amber-50 { --tw-gradient-from: #fffbeb; --tw-gradient-to: rgb(255 251 235 / 0); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+      .via-orange-50 { --tw-gradient-to: rgb(255 247 237 / 0); --tw-gradient-stops: var(--tw-gradient-from), #fff7ed, var(--tw-gradient-to); }
+      .to-red-50 { --tw-gradient-to: #fef2f2; }
+      .flex { display: flex; }
+      .items-center { align-items: center; }
+      .justify-center { justify-content: center; }
+      .text-center { text-align: center; }
+      .mb-2 { margin-bottom: 0.5rem; }
+      .mb-3 { margin-bottom: 0.75rem; }
+      .mb-4 { margin-bottom: 1rem; }
+      .mb-6 { margin-bottom: 1.5rem; }
+      .mb-8 { margin-bottom: 2rem; }
+      .p-4 { padding: 1rem; }
+      .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
       
       @media (min-width: 640px) {
         .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
@@ -161,9 +184,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Load non-critical CSS asynchronously -->
-    <link rel="preload" href="/assets/index-qcr9_aEC.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/assets/index-qcr9_aEC.css"></noscript>
+    <!-- REMOVED: async CSS loading - let it load normally since it's small -->
     
     <!-- Google Tag Manager - Deferred -->
     <script>
