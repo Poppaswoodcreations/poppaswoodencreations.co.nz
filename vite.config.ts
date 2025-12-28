@@ -12,6 +12,9 @@ export default defineConfig({
         },
       },
     },
+    // Optimize chunk size
+    chunkSizeWarningLimit: 600,
+    // Enable minification
     minify: 'terser',
     terserOptions: {
       compress: {
@@ -24,7 +27,24 @@ export default defineConfig({
         unsafe_math: true,
       },
       mangle: true,
+      format: {
+        comments: false, // Remove all comments
+      },
     },
     target: 'es2020',
+    // Enable CSS code splitting
+    cssCodeSplit: true,
+    // Generate source maps for production debugging (optional - disable for smaller builds)
+    sourcemap: false,
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js'],
+  },
+  // Server settings for dev (optional, but helpful)
+  server: {
+    port: 3000,
+    strictPort: false,
+    host: true,
   },
 });
