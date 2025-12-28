@@ -3,6 +3,13 @@
   publish = "dist"
   command = "npm run build"
 
+# Remove trailing slashes - MUST BE BEFORE OTHER REDIRECTS
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
+  force = true
+
 # FIXED: Proper header configuration to prevent MIME type errors
 [[headers]]
   for = "/*"
@@ -71,7 +78,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# FIXED: Ensure proper routing without forcing redirects
+# Static file redirects
 [[redirects]]
   from = "/robots.txt"
   to = "/robots.txt"
