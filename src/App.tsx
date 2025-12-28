@@ -1,28 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+
+// Components that are needed immediately (above the fold)
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
-import ProductGrid from './components/ProductGrid';
-import ProductDetail from './components/ProductDetail';
-import AboutSection from './components/AboutSection';
-import ContactForm from './components/ContactForm';
-import ShippingInfo from './components/ShippingInfo';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import TermsOfService from './components/TermsOfService';
-import ReviewsSection from './components/Reviews/ReviewsSection';
-import Cart from './components/Cart/Cart';
-import AdminDashboard from './components/Admin/AdminDashboard';
 import ErrorBoundary from './components/ErrorBoundary';
-import { BlogListView } from './pages/blog/BlogListView';
-import { BlogPostView } from './pages/blog/BlogPostView';
+
+// Lazy load components that aren't needed for initial render
+const ProductGrid = lazy(() => import('./components/ProductGrid'));
+const ProductDetail = lazy(() => import('./components/ProductDetail'));
+const AboutSection = lazy(() => import('./components/AboutSection'));
+const ContactForm = lazy(() => import('./components/ContactForm'));
+const ShippingInfo = lazy(() => import('./components/ShippingInfo'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./components/TermsOfService'));
+const ReviewsSection = lazy(() => import('./components/Reviews/ReviewsSection'));
+const Cart = lazy(() => import('./components/Cart/Cart'));
+const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
+const BlogListView = lazy(() => import('./pages/blog/BlogListView').then(module => ({ default: module.BlogListView })));
+const BlogPostView = lazy(() => import('./pages/blog/BlogPostView').then(module => ({ default: module.BlogPostView })));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
 import { categories } from './data/products';
 import { Product } from './types';
+
+// Loading component for lazy-loaded routes
+const LoadingFallback: React.FC = () => (
+  <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center">
+    <div className="text-center">
+      <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-600 mt-4">Loading...</p>
+    </div>
+  </div>
+);
+
+// Smaller loading component for modals
+const ModalLoadingFallback: React.FC = () => (
+  <div className="flex items-center justify-center p-8">
+    <div className="inline-block w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 // Blog Post Wrapper Component - Gets slug from URL
 const BlogPostWrapper: React.FC<{
@@ -31,11 +52,13 @@ const BlogPostWrapper: React.FC<{
 }> = ({ onNavigate, onPostSelect }) => {
   const { slug } = useParams();
   return (
-    <BlogPostView 
-      slug={slug || null}
-      onNavigate={onNavigate} 
-      onPostSelect={onPostSelect} 
-    />
+    <Suspense fallback={<LoadingFallback />}>
+      <BlogPostView 
+        slug={slug || null}
+        onNavigate={onNavigate} 
+        onPostSelect={onPostSelect} 
+      />
+    </Suspense>
   );
 };
 
@@ -108,212 +131,218 @@ const AppContent: React.FC = () => {
       />
       
       <main>
-        <Routes>
-          {/* Home Page */}
-          <Route path="/" element={
-            <>
-              <Hero onCategorySelect={handleCategorySelect} products={products} />
-              <CategoryGrid categories={categories} onCategorySelect={handleCategorySelect} />
-              <ProductGrid 
-                products={featuredProducts} 
-                onProductSelect={handleProductSelect}
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            {/* Home Page */}
+            <Route path="/" element={
+              <>
+                <Hero onCategorySelect={handleCategorySelect} products={products} />
+                <CategoryGrid categories={categories} onCategorySelect={handleCategorySelect} />
+                <ProductGrid 
+                  products={featuredProducts} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                />
+              </>
+            } />
+
+            {/* Individual Product Pages */}
+            <Route path="/products/:productId" element={
+              <ProductDetail 
+                products={products}
                 onAddToCart={handleAddToCart}
               />
-            </>
-          } />
+            } />
 
-          {/* Individual Product Pages */}
-          <Route path="/products/:productId" element={
-            <ProductDetail 
-              products={products}
-              onAddToCart={handleAddToCart}
-            />
-          } />
+            {/* Category Pages - Main Categories */}
+            <Route path="/wooden-vehicles" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-vehicles')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-vehicles"
+              />
+            } />
 
-          {/* Category Pages - Main Categories */}
-          <Route path="/wooden-vehicles" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-vehicles')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-vehicles"
-            />
-          } />
+            <Route path="/wooden-planes-helicopters" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-planes-helicopters"
+              />
+            } />
 
-          <Route path="/wooden-planes-helicopters" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-planes-helicopters"
-            />
-          } />
+            <Route path="/wooden-tractors-boats" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-tractors-boats')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-tractors-boats"
+              />
+            } />
 
-          <Route path="/wooden-tractors-boats" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-tractors-boats')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-tractors-boats"
-            />
-          } />
+            <Route path="/wooden-baby-toys" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-baby-toys')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-baby-toys"
+              />
+            } />
 
-          <Route path="/wooden-baby-toys" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-baby-toys')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-baby-toys"
-            />
-          } />
+            <Route path="/wooden-kitchen-utensils" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-kitchen-utensils')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-kitchen-utensils"
+              />
+            } />
 
-          <Route path="/wooden-kitchen-utensils" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-kitchen-utensils')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-kitchen-utensils"
-            />
-          } />
+            <Route path="/wooden-serving-boards" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-serving-boards')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-serving-boards"
+              />
+            } />
 
-          <Route path="/wooden-serving-boards" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-serving-boards')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-serving-boards"
-            />
-          } />
+            {/* Additional Category Routes - Added for database categories */}
+            <Route path="/trucks" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-trucks')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-trucks"
+              />
+            } />
 
-          {/* Additional Category Routes - Added for database categories */}
-          <Route path="/trucks" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-trucks')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-trucks"
-            />
-          } />
+            <Route path="/wooden-trucks" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-trucks')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-trucks"
+              />
+            } />
 
-          <Route path="/wooden-trucks" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-trucks')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-trucks"
-            />
-          } />
+            <Route path="/cars" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-cars')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-cars"
+              />
+            } />
 
-          <Route path="/cars" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-cars')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-cars"
-            />
-          } />
+            <Route path="/wooden-cars" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-cars')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-cars"
+              />
+            } />
 
-          <Route path="/wooden-cars" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-cars')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-cars"
-            />
-          } />
+            <Route path="/planes" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-planes-helicopters"
+              />
+            } />
 
-          <Route path="/planes" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-planes-helicopters"
-            />
-          } />
+            <Route path="/kitchen" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-kitchenware')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-kitchenware"
+              />
+            } />
 
-          <Route path="/kitchen" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-kitchenware')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-kitchenware"
-            />
-          } />
+            <Route path="/wooden-kitchenware" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-kitchenware')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-kitchenware"
+              />
+            } />
 
-          <Route path="/wooden-kitchenware" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-kitchenware')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-kitchenware"
-            />
-          } />
+            <Route path="/trains" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-trains')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-trains"
+              />
+            } />
 
-          <Route path="/trains" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-trains')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-trains"
-            />
-          } />
+            <Route path="/wooden-trains" element={
+              <ProductGrid 
+                products={products.filter(p => p.category === 'wooden-trains')} 
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+                category="wooden-trains"
+              />
+            } />
 
-          <Route path="/wooden-trains" element={
-            <ProductGrid 
-              products={products.filter(p => p.category === 'wooden-trains')} 
-              onProductSelect={handleProductSelect}
-              onAddToCart={handleAddToCart}
-              category="wooden-trains"
-            />
-          } />
+            {/* Info Pages */}
+            <Route path="/about" element={<AboutSection />} />
+            <Route path="/contact" element={<ContactForm />} />
+            <Route path="/shipping" element={<ShippingInfo />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/reviews" element={<ReviewsSection />} />
 
-          {/* Info Pages */}
-          <Route path="/about" element={<AboutSection />} />
-          <Route path="/contact" element={<ContactForm />} />
-          <Route path="/shipping" element={<ShippingInfo />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/reviews" element={<ReviewsSection />} />
-
-          {/* Blog Pages */}
-          <Route path="/blog" element={
-            <BlogListView 
-              onPostSelect={handleBlogPostSelect} 
-              onNavigate={handleCategorySelect} 
-            />
-          } />
-          
-          <Route path="/blog/:slug" element={
-            <BlogPostWrapper 
-              onNavigate={handleCategorySelect} 
-              onPostSelect={handleBlogPostSelect} 
-            />
-          } />
-        </Routes>
+            {/* Blog Pages */}
+            <Route path="/blog" element={
+              <BlogListView 
+                onPostSelect={handleBlogPostSelect} 
+                onNavigate={handleCategorySelect} 
+              />
+            } />
+            
+            <Route path="/blog/:slug" element={
+              <BlogPostWrapper 
+                onNavigate={handleCategorySelect} 
+                onPostSelect={handleBlogPostSelect} 
+              />
+            } />
+          </Routes>
+        </Suspense>
       </main>
       
       <Footer />
       
       {/* Cart Modal */}
       {showCart && (
-        <Cart
-          items={cart}
-          onClose={() => setShowCart(false)}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeFromCart}
-        />
+        <Suspense fallback={<ModalLoadingFallback />}>
+          <Cart
+            items={cart}
+            onClose={() => setShowCart(false)}
+            onUpdateQuantity={updateQuantity}
+            onRemoveItem={removeFromCart}
+          />
+        </Suspense>
       )}
       
       {/* Admin Dashboard Modal */}
       {showAdmin && (
         <div className="fixed inset-0 bg-black bg-opacity-75 z-50" style={{ zIndex: 9999 }}>
-          <AdminDashboard
-            products={products}
-            onProductsUpdate={async () => {
-              await loadProducts();
-            }}
-            onClose={() => setShowAdmin(false)}
-          />
+          <Suspense fallback={<ModalLoadingFallback />}>
+            <AdminDashboard
+              products={products}
+              onProductsUpdate={async () => {
+                await loadProducts();
+              }}
+              onClose={() => setShowAdmin(false)}
+            />
+          </Suspense>
         </div>
       )}
     </div>
