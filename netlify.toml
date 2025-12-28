@@ -3,13 +3,6 @@
   publish = "dist"
   command = "npm run build"
 
-# Remove trailing slashes - MUST BE BEFORE OTHER REDIRECTS
-[[redirects]]
-  from = "/*/"
-  to = "/:splat"
-  status = 301
-  force = true
-
 # FIXED: Proper header configuration to prevent MIME type errors
 [[headers]]
   for = "/*"
