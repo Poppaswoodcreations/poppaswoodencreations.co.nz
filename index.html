@@ -26,7 +26,7 @@
     <meta property="twitter:description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150." />
     <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/logo.png" />
     
-    <!-- Preconnect to critical origins - FIXED with crossorigin -->
+    <!-- Preconnect to critical origins with crossorigin -->
     <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin>
     <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
     <link rel="preconnect" href="https://i.ibb.co" crossorigin>
@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical CSS -->
+    <!-- Critical CSS Inlined -->
     <style>
       * {
         margin: 0;
@@ -42,29 +42,54 @@
         box-sizing: border-box;
       }
       
+      html {
+        -webkit-text-size-adjust: 100%;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
           'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
           sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        margin: 0;
       }
       
       .min-h-screen {
         min-height: 100vh;
       }
       
+      /* Loading state for better perceived performance */
       #root:empty::before {
         content: '';
         display: block;
         width: 100%;
         height: 100vh;
-        background: linear-gradient(to bottom right, #fffbeb, #ffedd5, #fecaca);
+        background: linear-gradient(135deg, #fffbeb 0%, #ffedd5 50%, #fecaca 100%);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
       }
       
       img {
         max-width: 100%;
         height: auto;
+        display: block;
+      }
+      
+      /* Above-the-fold critical styles */
+      .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+      .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+      .text-gray-600 { color: rgb(75 85 99); }
+      .leading-relaxed { line-height: 1.625; }
+      .max-w-2xl { max-width: 42rem; }
+      
+      @media (min-width: 640px) {
+        .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
       }
     </style>
     
@@ -136,7 +161,11 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Google Tag Manager -->
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="/assets/index-qcr9_aEC.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/index-qcr9_aEC.css"></noscript>
+    
+    <!-- Google Tag Manager - Deferred -->
     <script>
       if (window.requestIdleCallback) {
         requestIdleCallback(function() {
