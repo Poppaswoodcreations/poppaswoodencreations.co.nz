@@ -258,6 +258,20 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'handmade wooden toys',
     content: null
   },
+  {
+    slug: 'why-rimu-wood-makes-the-best-kitchen-utensils',
+    title: 'Why Rimu Wood Makes the Best Kitchen Utensils',
+    metaDescription: 'Discover why rimu wood makes exceptional kitchen utensils. Handcrafted in Whangarei, NZ from native timber - durable, beautiful, and sustainably sourced.',
+    excerpt: 'Handcrafted rimu spatulas showcase natural warmth and quality. Discover why this native NZ timber is the perfect choice for kitchen utensils.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-29',
+    readTime: '3 min read',
+    category: 'Products',
+    tags: ['rimu wood', 'kitchen utensils', 'wooden spatulas', 'handcrafted kitchenware', 'NZ made'],
+    featuredImage: 'https://i.ibb.co/rRTH8z2c/FB-IMG-1641578366807-optimized.webp',
+    imageAlt: 'Handcrafted rimu wood spatulas  in Whangarei  - Poppa\'s Wooden Creations',
+    content: null
+  },
 ];
 
 // Template for adding new blog posts:
