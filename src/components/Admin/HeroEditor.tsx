@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Upload, Image as ImageIcon, RefreshCw, Eye } from 'lucide-react';
+import { Save, Upload, RefreshCw } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface HeroEditorProps {
   onSave: (heroData: any) => void;
@@ -7,33 +8,49 @@ interface HeroEditorProps {
 
 const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
   const [heroData, setHeroData] = useState({
-    title: "Premium Wooden Toys Made with Love",
-    subtitle: "Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand. Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire creativity and last for generations.",
-    ctaText: "Shop Baby Toys",
-    secondaryCtaText: "Learn More",
-    backgroundImage: "https://i.ibb.co/20BWhH7J/Messenger-creation-9-D5326-FA-08-DE-471-A-BAB1-6-E385-C838-D90-2-optimized.webp",
-    badges: {
-      topRight: "Made in NZ 🇳🇿",
-      bottomLeft: "🚛 Premium Wooden Toys"
-    }
+    hero_title: "Premium Wooden Toys",
+    hero_subtitle: "Made with Love",
+    hero_cta_text: "Shop Collection",
+    hero_cta_link: "#products",
+    hero_bg_image: ""
   });
 
   const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
-  // Load saved hero data
+  // Load hero data from Supabase
   useEffect(() => {
+    loadHeroData();
+  }, []);
+
+  const loadHeroData = async () => {
     try {
-      const saved = localStorage.getItem('poppas-hero-settings');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setHeroData({ ...heroData, ...parsed });
-        console.log('🎨 Loaded saved hero data');
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .single();
+
+      if (error) {
+        console.error('Error loading hero data:', error);
+        return;
+      }
+
+      if (data) {
+        setHeroData({
+          hero_title: data.hero_title || "Premium Wooden Toys",
+          hero_subtitle: data.hero_subtitle || "Made with Love",
+          hero_cta_text: data.hero_cta_text || "Shop Collection",
+          hero_cta_link: data.hero_cta_link || "#products",
+          hero_bg_image: data.hero_bg_image || ""
+        });
+        console.log('✅ Loaded hero data from Supabase');
       }
     } catch (error) {
       console.error('Error loading hero data:', error);
     }
-  }, []);
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -57,27 +74,33 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
     try {
       // Create a unique filename
       const timestamp = Date.now();
-      const sanitizedName = file.name.replace(/[^a-zA-Z0-9.]/g, '-');
-      const filename = `hero-${timestamp}-${sanitizedName}`;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `hero-${timestamp}.${fileExt}`;
 
-      // Convert to WebP for optimization
-      const webpBlob = await convertToWebP(file);
-      
-      // Create form data
-      const formData = new FormData();
-      formData.append('image', webpBlob, filename.replace(/\.[^.]+$/, '.webp'));
+      // Upload to Supabase Storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-      // Upload to your Netlify images folder
-      // Note: You'll need to have an upload endpoint set up
-      // For now, we'll use a simple approach with base64
-      const base64 = await fileToBase64(webpBlob);
-      
-      // Store the image as a data URL temporarily
-      // In production, you'd upload this to Netlify's images folder
-      setHeroData({ ...heroData, backgroundImage: base64 });
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(fileName);
+
+      const publicUrl = urlData.publicUrl;
+
+      // Update hero data with new image URL
+      setHeroData({ ...heroData, hero_bg_image: publicUrl });
       
       console.log('✅ Hero image uploaded successfully');
-      alert('Image uploaded! Remember to save your changes.');
+      setSaveMessage('Image uploaded! Remember to click "Save Hero Changes".');
       
     } catch (error) {
       console.error('❌ Upload failed:', error);
@@ -87,62 +110,40 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
     }
   };
 
-  // Convert image to WebP format for optimization
-  const convertToWebP = (file: File): Promise<Blob> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const reader = new FileReader();
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveMessage(null);
+    setUploadError(null);
 
-      reader.onload = (e) => {
-        img.src = e.target?.result as string;
-      };
-
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size (max width 1920px for hero images)
-        const maxWidth = 1920;
-        const scale = Math.min(maxWidth / img.width, 1);
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        canvas.toBlob((blob) => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            reject(new Error('Failed to convert image'));
-          }
-        }, 'image/webp', 0.85);
-      };
-
-      img.onerror = () => reject(new Error('Failed to load image'));
-      reader.onerror = () => reject(new Error('Failed to read file'));
-      reader.readAsDataURL(file);
-    });
-  };
-
-  // Convert file to base64
-  const fileToBase64 = (blob: Blob): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  };
-
-  const handleSave = () => {
     try {
-      localStorage.setItem('poppas-hero-settings', JSON.stringify(heroData));
-      console.log('💾 Hero settings saved:', heroData);
+      // Update site_settings in Supabase
+      const { error } = await supabase
+        .from('site_settings')
+        .update({
+          hero_title: heroData.hero_title,
+          hero_subtitle: heroData.hero_subtitle,
+          hero_cta_text: heroData.hero_cta_text,
+          hero_cta_link: heroData.hero_cta_link,
+          hero_bg_image: heroData.hero_bg_image
+        })
+        .eq('id', (await supabase.from('site_settings').select('id').single()).data?.id);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('✅ Hero settings saved to Supabase');
+      setSaveMessage('Hero section updated successfully! Changes are live.');
       onSave(heroData);
-      alert('Hero section updated successfully!');
+
+      // Auto-clear success message after 3 seconds
+      setTimeout(() => setSaveMessage(null), 3000);
+      
     } catch (error) {
       console.error('❌ Failed to save hero settings:', error);
-      alert('Failed to save hero settings. Please try again.');
+      setUploadError('Failed to save hero settings. Please try again.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -152,12 +153,35 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
         <h3 className="text-2xl font-bold text-gray-900">Hero Section Editor</h3>
         <button
           onClick={handleSave}
-          className="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2"
+          disabled={saving}
+          className="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save size={16} />
-          <span>Save Hero Changes</span>
+          {saving ? (
+            <>
+              <RefreshCw size={16} className="animate-spin" />
+              <span>Saving...</span>
+            </>
+          ) : (
+            <>
+              <Save size={16} />
+              <span>Save Hero Changes</span>
+            </>
+          )}
         </button>
       </div>
+
+      {/* Success/Error Messages */}
+      {saveMessage && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+          {saveMessage}
+        </div>
+      )}
+      
+      {uploadError && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          {uploadError}
+        </div>
+      )}
 
       <div className="bg-white p-6 rounded-lg border border-gray-200">
         <h4 className="font-semibold text-gray-900 mb-4">Hero Content</h4>
@@ -167,39 +191,43 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
             <label className="block text-sm font-medium text-gray-700 mb-2">Main Title</label>
             <input
               type="text"
-              value={heroData.title}
-              onChange={(e) => setHeroData({ ...heroData, title: e.target.value })}
+              value={heroData.hero_title}
+              onChange={(e) => setHeroData({ ...heroData, hero_title: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="Premium Wooden Toys"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle/Description</label>
-            <textarea
-              rows={4}
-              value={heroData.subtitle}
-              onChange={(e) => setHeroData({ ...heroData, subtitle: e.target.value })}
+            <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+            <input
+              type="text"
+              value={heroData.hero_subtitle}
+              onChange={(e) => setHeroData({ ...heroData, hero_subtitle: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="Made with Love"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Primary Button Text</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Button Text</label>
               <input
                 type="text"
-                value={heroData.ctaText}
-                onChange={(e) => setHeroData({ ...heroData, ctaText: e.target.value })}
+                value={heroData.hero_cta_text}
+                onChange={(e) => setHeroData({ ...heroData, hero_cta_text: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                placeholder="Shop Collection"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Secondary Button Text</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Button Link</label>
               <input
                 type="text"
-                value={heroData.secondaryCtaText}
-                onChange={(e) => setHeroData({ ...heroData, secondaryCtaText: e.target.value })}
+                value={heroData.hero_cta_link}
+                onChange={(e) => setHeroData({ ...heroData, hero_cta_link: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                placeholder="#products"
               />
             </div>
           </div>
@@ -207,8 +235,8 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Hero Background Image</label>
             
-            {/* Image Upload Button */}
             <div className="space-y-3">
+              {/* Upload Button */}
               <div className="flex items-center gap-3">
                 <label className="cursor-pointer">
                   <input
@@ -218,7 +246,7 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
                     className="hidden"
                     disabled={uploading}
                   />
-                  <div className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  <div className={`bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2 ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                     {uploading ? (
                       <>
                         <RefreshCw size={16} className="animate-spin" />
@@ -236,61 +264,30 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
                 <span className="text-sm text-gray-500">or paste URL below</span>
               </div>
 
-              {uploadError && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">
-                  {uploadError}
-                </div>
-              )}
-
+              {/* Image URL Input */}
               <input
                 type="text"
-                value={heroData.backgroundImage}
-                onChange={(e) => setHeroData({ ...heroData, backgroundImage: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                placeholder="Or paste image URL here"
+                value={heroData.hero_bg_image}
+                onChange={(e) => setHeroData({ ...heroData, hero_bg_image: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent font-mono text-sm"
+                placeholder="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/..."
               />
               
-              {heroData.backgroundImage && (
+              {/* Image Preview */}
+              {heroData.hero_bg_image && (
                 <div className="mt-2">
                   <p className="text-sm text-gray-600 mb-2">Preview:</p>
                   <img
-                    src={heroData.backgroundImage}
+                    src={heroData.hero_bg_image}
                     alt="Hero preview"
-                    className="w-full max-w-md h-48 object-cover rounded border"
+                    className="w-full max-w-md h-48 object-cover rounded border border-gray-300"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = '/FB_IMG_1640827671355.jpg';
+                      target.style.display = 'none';
                     }}
                   />
                 </div>
               )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Top Right Badge</label>
-              <input
-                type="text"
-                value={heroData.badges.topRight}
-                onChange={(e) => setHeroData({ 
-                  ...heroData, 
-                  badges: { ...heroData.badges, topRight: e.target.value }
-                })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bottom Left Badge</label>
-              <input
-                type="text"
-                value={heroData.badges.bottomLeft}
-                onChange={(e) => setHeroData({ 
-                  ...heroData, 
-                  badges: { ...heroData.badges, bottomLeft: e.target.value }
-                })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-              />
             </div>
           </div>
         </div>
@@ -299,13 +296,13 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h4 className="font-medium text-blue-900 mb-2">💡 Hero Section Tips</h4>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Keep the title short and impactful</li>
-          <li>• Use the subtitle to explain your value proposition</li>
-          <li>• Click "Upload New Image" to select an image from your computer</li>
-          <li>• Recommended image size: 1920x1080px or larger</li>
-          <li>• Images are automatically optimized to WebP format</li>
-          <li>• Test different call-to-action button text</li>
-          <li>• Click "Save Hero Changes" when you're done editing</li>
+          <li>• Keep the title short and impactful (e.g., "Premium Wooden Toys")</li>
+          <li>• Subtitle appears next to the title in amber color</li>
+          <li>• Click "Upload New Image" to upload directly to Supabase Storage</li>
+          <li>• Or paste an existing Supabase Storage URL in the text field</li>
+          <li>• Recommended image size: 1200x1200px (square format)</li>
+          <li>• Changes save to your live website immediately after clicking "Save Hero Changes"</li>
+          <li>• Your hero image is stored permanently in Supabase Storage</li>
         </ul>
       </div>
     </div>
