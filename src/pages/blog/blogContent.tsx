@@ -41,6 +41,9 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     case 'happy-go-luck-train':
       return <HappyGoLuckTrainContent />;
 
+    case 'why-rimu-wood-makes-the-best-kitchen-utensils':
+      return <WhyRimuWoodMakesTheBestKitchenUtensilsContent />;
+
     default:
       return <p>Content coming soon...</p>;
   }
@@ -1843,5 +1846,34 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
       What age-appropriate wooden toys are you looking for? Browse our collection of handcrafted toys made right here in Whangarei from sustainably sourced native New Zealand timbers.
     </p>
 
+  </>
+);
+
+// ==========================================
+// BLOG POST: Why Rimu Wood Makes the Best Kitchen Utensils
+// ==========================================
+const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
+  <>
+    <h1>Why Rimu Wood Makes the Best Kitchen Utensils</h1>
+    
+    <p>There's something special about holding a freshly crafted wooden utensil in your hands. These beautiful rimu spatulas, photographed on a clean white cloth with our Whangarei garden as a backdrop, showcase the natural warmth and solid quality that makes wooden kitchenware so appealing. Each piece displays a unique grain pattern—a fingerprint from the New Zealand forest where the timber originated. If you've ever wondered what makes the perfect kitchen utensil, the answer lies in the timber itself.</p>
+    
+    <h2>The Natural Benefits of Rimu Wood</h2>
+    
+    <p>Rimu stands out as an exceptional choice for kitchen utensils, and for good reason. This stunning native New Zealand timber combines beauty with practicality in ways that synthetic materials simply can't match. Its dense, fine grain naturally resists absorbing liquids and food particles, making it hygienic and long-lasting in even the busiest kitchens. Unlike metal utensils that can scratch and damage your cookware, rimu is gentle on non-stick pans and seasoned cast iron, protecting your investment in quality cooking equipment.</p>
+    
+    <p>The timber's rich colour palette—ranging from warm honey tones to deep reddish-browns—develops a beautiful patina over time, ensuring each piece becomes more characterful with use. This natural aging process means your rimu utensils will look better year after year, not worse. The wood's natural antibacterial properties also make it a healthier choice compared to plastic alternatives that can harbour bacteria in scratches and wear marks.</p>
+    
+    <h2>Sustainability Matters</h2>
+    
+    <p>Choosing rimu utensils isn't just about quality—it's about making responsible choices. As a renewable resource, timber has a significantly lower environmental impact than plastic or metal alternatives. Our rimu is sustainably sourced, ensuring New Zealand's precious native forests are protected for future generations. When you invest in wooden kitchenware, you're choosing products that won't end up in landfill after a few years of use.</p>
+    
+    <h2>Handcrafted in Whangarei, New Zealand</h2>
+    
+    <p>Every spatula and kitchen utensil we create is meticulously handcrafted in our Whangarei workshop. From timber selection through to the final sanding and finishing touches, we invest care and expertise into each piece. There's genuine satisfaction in knowing these tools will become cherished parts of someone's daily cooking routine. We're committed to creating functional pieces that bring a touch of New Zealand's natural beauty into your home, while supporting local craftsmanship and traditional woodworking skills.</p>
+    
+    <h2>Discover Quality That Lasts Generations</h2>
+    
+    <p>Ready to elevate your kitchen with handcrafted rimu utensils? <a href="https://poppaswoodencreations.co.nz/wooden-kitchenware">Browse our complete collection of wooden kitchen utensils</a> and experience the difference that genuine New Zealand craftsmanship makes. Each piece is designed to become a family heirloom—tools you'll use daily and pass down with pride.</p>
   </>
 );
