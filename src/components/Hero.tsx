@@ -45,12 +45,23 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   // Determine which image to use - settings override featured product
   const heroImage = siteSettings.hero_bg_image || featuredProduct?.images?.[0];
 
-  // Preload the hero image
+  // Preload the hero image with high priority
   useEffect(() => {
     if (heroImage) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = heroImage;
+      link.fetchPriority = 'high';
+      document.head.appendChild(link);
+      
       const img = new Image();
       img.src = heroImage;
       img.onload = () => setImageLoaded(true);
+      
+      return () => {
+        document.head.removeChild(link);
+      };
     }
   }, [heroImage]);
 
@@ -134,6 +145,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
                   }`}
                   loading="eager"
                   decoding="async"
+                  fetchpriority="high"
                   width="600"
                   height="600"
                 />
