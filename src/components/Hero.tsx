@@ -1,23 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
+import { supabase } from '../lib/supabase';
 
 interface HeroProps {
   onCategorySelect: (category: string) => void;
   products: Product[];
 }
 
+interface SiteSettings {
+  hero_bg_image?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  hero_cta_text?: string;
+  hero_cta_link?: string;
+}
+
 const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>({});
   const featuredProduct = products.find(p => p.featured) || products[0];
 
-  // Preload the first image
+  // Load site settings from Supabase
   useEffect(() => {
-    if (featuredProduct?.images?.[0]) {
+    const loadSettings = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('site_settings')
+          .select('*')
+          .single();
+        
+        if (error) {
+          console.error('Error loading site settings:', error);
+        } else if (data) {
+          setSiteSettings(data);
+        }
+      } catch (err) {
+        console.error('Error loading site settings:', err);
+      }
+    };
+    
+    loadSettings();
+  }, []);
+
+  // Determine which image to use - settings override featured product
+  const heroImage = siteSettings.hero_bg_image || featuredProduct?.images?.[0];
+
+  // Preload the hero image
+  useEffect(() => {
+    if (heroImage) {
       const img = new Image();
-      img.src = featuredProduct.images[0];
+      img.src = heroImage;
       img.onload = () => setImageLoaded(true);
     }
-  }, [featuredProduct]);
+  }, [heroImage]);
 
   return (
     <section className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 overflow-hidden">
@@ -34,8 +69,10 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Premium Wooden Toys
-              <span className="block text-amber-600 mt-2">Made with Love</span>
+              {siteSettings.hero_title || 'Premium Wooden Toys'}
+              <span className="block text-amber-600 mt-2">
+                {siteSettings.hero_subtitle || 'Made with Love'}
+              </span>
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
@@ -54,7 +91,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
                 onClick={() => onCategorySelect('wooden-vehicles')}
                 className="bg-amber-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Shop Collection
+                {siteSettings.hero_cta_text || 'Shop Collection'}
               </button>
               
               <button
@@ -82,16 +119,16 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
           </div>
           
-          {/* Hero Image - Optimized with lazy loading */}
+          {/* Hero Image - Now pulls from site_settings */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl transform lg:rotate-3 transition-transform hover:rotate-0 duration-500">
               {!imageLoaded && (
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-200 animate-pulse"></div>
               )}
-              {featuredProduct?.images?.[0] && (
+              {heroImage && (
                 <img
-                  src={featuredProduct.images[0]}
-                  alt={featuredProduct.name || "Premium Wooden Toy"}
+                  src={heroImage}
+                  alt={siteSettings.hero_title || "Premium Wooden Toy"}
                   className={`w-full h-full object-cover transition-opacity duration-500 ${
                     imageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
