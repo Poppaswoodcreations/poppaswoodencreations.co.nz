@@ -26,13 +26,18 @@
     <meta property="twitter:description" content="Discover premium handcrafted wooden toys made in New Zealand. Safe, durable, and educational toys for children of all ages. Free shipping on orders over $150." />
     <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/logo.png" />
     
-    <!-- FIXED: Preconnect with proper crossorigin attribute -->
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous">
     <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="preconnect" href="https://i.ibb.co" crossorigin="anonymous">
-    <link rel="dns-prefetch" href="https://i.ibb.co">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    
+    <!-- Preload hero image for instant LCP - CRITICAL FOR PERFORMANCE -->
+    <link rel="preload" 
+          href="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp" 
+          as="image" 
+          fetchpriority="high"
+          crossorigin="anonymous">
     
     <!-- Critical CSS Inlined - EXPANDED -->
     <style>
@@ -183,8 +188,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- REMOVED: async CSS loading - let it load normally since it's small -->
     
     <!-- Google Tag Manager - Deferred -->
     <script>
