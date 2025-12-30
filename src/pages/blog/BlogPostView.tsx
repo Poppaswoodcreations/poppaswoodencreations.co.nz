@@ -1,12 +1,9 @@
 // src/pages/blog/BlogPostView.tsx
-// Individual blog post page with optimized images and schema
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogPosts } from './blogData';
 import { getBlogContent } from './blogContent';
-import OptimizedImage from '../../components/OptimizedImage';
 
 const BlogPostView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -27,7 +24,6 @@ const BlogPostView: React.FC = () => {
 
   const content = getBlogContent(slug!);
 
-  // Create Article schema
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -55,7 +51,6 @@ const BlogPostView: React.FC = () => {
     }
   };
 
-  // Create FAQPage schema if FAQs exist
   const faqSchema = post.faqs ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -69,7 +64,6 @@ const BlogPostView: React.FC = () => {
     }))
   } : null;
 
-  // Create BreadcrumbList schema
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -102,20 +96,17 @@ const BlogPostView: React.FC = () => {
         <meta name="description" content={post.metaDescription} />
         <meta name="keywords" content={post.tags.join(', ')} />
         
-        {/* Open Graph */}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.metaDescription} />
         <meta property="og:image" content={post.featuredImage} />
         <meta property="og:url" content={`https://poppaswoodencreations.co.nz/blog/${slug}`} />
         <meta property="og:type" content="article" />
         
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.metaDescription} />
         <meta name="twitter:image" content={post.featuredImage} />
         
-        {/* Schema markup */}
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
         </script>
@@ -130,21 +121,14 @@ const BlogPostView: React.FC = () => {
       </Helmet>
 
       <article className="min-h-screen bg-white">
-        {/* Hero Section */}
         <div className="relative h-[400px] bg-gray-900">
-          <OptimizedImage
+          <img
             src={post.featuredImage}
             alt={post.imageAlt}
-            width={1920}
-            height={600}
-            priority
+            className="w-full h-full object-cover opacity-60"
             loading="eager"
-            quality={90}
-            className="w-full h-full opacity-60"
-            objectFit="cover"
           />
           
-          {/* Overlay Content */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="max-w-4xl mx-auto px-4 text-center">
               <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-amber-600 rounded-full mb-4">
@@ -168,9 +152,7 @@ const BlogPostView: React.FC = () => {
           </div>
         </div>
 
-        {/* Content */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Breadcrumbs */}
           <nav className="mb-8 text-sm">
             <Link to="/" className="text-amber-600 hover:text-amber-700">Home</Link>
             <span className="mx-2 text-gray-400">/</span>
@@ -179,12 +161,10 @@ const BlogPostView: React.FC = () => {
             <span className="text-gray-600">{post.title}</span>
           </nav>
 
-          {/* Article Content */}
           <div className="prose prose-lg max-w-none">
             {content}
           </div>
 
-          {/* Tags */}
           {post.tags && post.tags.length > 0 && (
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Tags:</h3>
@@ -201,7 +181,6 @@ const BlogPostView: React.FC = () => {
             </div>
           )}
 
-          {/* Back to Blog */}
           <div className="mt-12 pt-8 border-t border-gray-200">
             <Link
               to="/blog"
