@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { blogPosts } from './blogData';
-import { OptimizedImage } from '../../components/OptimizedImage';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const BlogListView: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
