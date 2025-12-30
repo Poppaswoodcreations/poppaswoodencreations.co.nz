@@ -10,6 +10,12 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://poppaswoodencreations.co.nz" />
     
+    <!-- CRITICAL PERFORMANCE - Preconnect BEFORE everything else -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://poppaswoodencreations.co.nz" />
@@ -26,21 +32,14 @@
     <meta property="twitter:description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated." />
     <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/logo.png" />
     
-    <!-- Preconnect to critical origins -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous">
-    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <!-- OPTIMIZED META TAGS -->
+    <title>Handcrafted Wooden Toys Whangarei | Kauri & Rimu | Poppa's Wooden Creations NZ</title>
+    <meta name="description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated.">
+    <meta name="keywords" content="wooden toys Whangarei, Kauri wooden toys, Rimu toys NZ, handcrafted wooden toys Northland, wooden kitchenware New Zealand, Macrocarpa toys">
     
-    <!-- Preload hero image for instant LCP - CRITICAL FOR PERFORMANCE -->
-    <link rel="preload" 
-          href="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp" 
-          as="image" 
-          fetchpriority="high"
-          crossorigin="anonymous">
-    
-    <!-- Critical CSS Inlined - EXPANDED -->
+    <!-- CRITICAL CSS - Expanded and Optimized -->
     <style>
+      /* CSS Reset & Base Styles */
       * {
         margin: 0;
         padding: 0;
@@ -60,13 +59,14 @@
           sans-serif;
         margin: 0;
         background: rgb(249 250 251);
+        color: rgb(17 24 39);
       }
       
       .min-h-screen {
         min-height: 100vh;
       }
       
-      /* Loading state */
+      /* Optimized Loading State - Reduces CLS */
       #root:empty::before {
         content: '';
         display: block;
@@ -81,50 +81,172 @@
         50% { opacity: 0.8; }
       }
       
+      /* Image Optimization */
       img {
         max-width: 100%;
         height: auto;
         display: block;
       }
       
-      /* Critical above-the-fold styles */
+      img[loading="lazy"] {
+        content-visibility: auto;
+      }
+      
+      /* Critical Above-the-Fold Styles - Prevents FOUC */
+      .text-base { font-size: 1rem; line-height: 1.5rem; }
       .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
       .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
       .text-2xl { font-size: 1.5rem; line-height: 2rem; }
       .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
       .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+      .text-5xl { font-size: 3rem; line-height: 1; }
+      .text-6xl { font-size: 3.75rem; line-height: 1; }
+      
+      .font-bold { font-weight: 700; }
+      .font-semibold { font-weight: 600; }
+      .font-medium { font-weight: 500; }
+      
       .text-gray-600 { color: rgb(75 85 99); }
+      .text-gray-700 { color: rgb(55 65 81); }
+      .text-gray-800 { color: rgb(31 41 55); }
       .text-gray-900 { color: rgb(17 24 39); }
       .text-white { color: rgb(255 255 255); }
+      
+      .leading-tight { line-height: 1.25; }
       .leading-relaxed { line-height: 1.625; }
+      
+      .max-w-xl { max-width: 36rem; }
       .max-w-2xl { max-width: 42rem; }
+      .max-w-3xl { max-width: 48rem; }
+      .max-w-4xl { max-width: 56rem; }
+      .max-w-5xl { max-width: 64rem; }
+      .max-w-6xl { max-width: 72rem; }
       .max-w-7xl { max-width: 80rem; }
-      .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
-      .from-amber-50 { --tw-gradient-from: #fffbeb; --tw-gradient-to: rgb(255 251 235 / 0); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-      .via-orange-50 { --tw-gradient-to: rgb(255 247 237 / 0); --tw-gradient-stops: var(--tw-gradient-from), #fff7ed, var(--tw-gradient-to); }
-      .to-red-50 { --tw-gradient-to: #fef2f2; }
+      
+      .mx-auto { margin-left: auto; margin-right: auto; }
+      
+      .bg-gradient-to-br { 
+        background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); 
+      }
+      .from-amber-50 { 
+        --tw-gradient-from: #fffbeb; 
+        --tw-gradient-to: rgb(255 251 235 / 0); 
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); 
+      }
+      .via-orange-50 { 
+        --tw-gradient-to: rgb(255 247 237 / 0); 
+        --tw-gradient-stops: var(--tw-gradient-from), #fff7ed, var(--tw-gradient-to); 
+      }
+      .to-red-50 { 
+        --tw-gradient-to: #fef2f2; 
+      }
+      
       .flex { display: flex; }
+      .grid { display: grid; }
+      .hidden { display: none; }
+      
       .items-center { align-items: center; }
+      .items-start { align-items: flex-start; }
       .justify-center { justify-content: center; }
+      .justify-between { justify-content: space-between; }
+      
+      .flex-col { flex-direction: column; }
+      .flex-wrap { flex-wrap: wrap; }
+      .gap-2 { gap: 0.5rem; }
+      .gap-3 { gap: 0.75rem; }
+      .gap-4 { gap: 1rem; }
+      .gap-6 { gap: 1.5rem; }
+      .gap-8 { gap: 2rem; }
+      
       .text-center { text-align: center; }
+      .text-left { text-align: left; }
+      
+      .m-0 { margin: 0; }
+      .m-2 { margin: 0.5rem; }
+      .m-4 { margin: 1rem; }
+      .mt-2 { margin-top: 0.5rem; }
+      .mt-4 { margin-top: 1rem; }
+      .mt-6 { margin-top: 1.5rem; }
+      .mt-8 { margin-top: 2rem; }
       .mb-2 { margin-bottom: 0.5rem; }
       .mb-3 { margin-bottom: 0.75rem; }
       .mb-4 { margin-bottom: 1rem; }
       .mb-6 { margin-bottom: 1.5rem; }
       .mb-8 { margin-bottom: 2rem; }
-      .p-4 { padding: 1rem; }
-      .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .mb-12 { margin-bottom: 3rem; }
       
+      .p-0 { padding: 0; }
+      .p-2 { padding: 0.5rem; }
+      .p-4 { padding: 1rem; }
+      .p-6 { padding: 1.5rem; }
+      .p-8 { padding: 2rem; }
+      .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+      .px-4 { padding-left: 1rem; padding-right: 1rem; }
+      .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .px-8 { padding-left: 2rem; padding-right: 2rem; }
+      .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+      .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+      .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+      .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+      .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+      
+      .rounded { border-radius: 0.25rem; }
+      .rounded-lg { border-radius: 0.5rem; }
+      .rounded-xl { border-radius: 0.75rem; }
+      
+      .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+      .shadow { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); }
+      .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+      
+      .bg-white { background-color: rgb(255 255 255); }
+      .bg-gray-50 { background-color: rgb(249 250 251); }
+      .bg-gray-100 { background-color: rgb(243 244 246); }
+      
+      .border { border-width: 1px; }
+      .border-gray-200 { border-color: rgb(229 231 235); }
+      
+      .w-full { width: 100%; }
+      .h-full { height: 100%; }
+      
+      .object-cover { object-fit: cover; }
+      .object-contain { object-fit: contain; }
+      
+      .overflow-hidden { overflow: hidden; }
+      
+      .transition { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+      
+      .cursor-pointer { cursor: pointer; }
+      
+      .pointer-events-none { pointer-events: none; }
+      
+      /* Responsive Design */
       @media (min-width: 640px) {
+        .sm\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
         .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .sm\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .sm\:text-5xl { font-size: 3rem; line-height: 1; }
+        .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      }
+      
+      @media (min-width: 768px) {
+        .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .md\:flex-row { flex-direction: row; }
+        .md\:text-5xl { font-size: 3rem; line-height: 1; }
+        .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+      }
+      
+      @media (min-width: 1024px) {
+        .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .lg\:text-6xl { font-size: 3.75rem; line-height: 1; }
       }
     </style>
-    
-    <!-- OPTIMIZED META TAGS -->
-    <title>Handcrafted Wooden Toys Whangarei | Kauri & Rimu | Poppa's Wooden Creations NZ</title>
-    <meta name="description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated.">
-    <meta name="keywords" content="wooden toys Whangarei, Kauri wooden toys, Rimu toys NZ, handcrafted wooden toys Northland, wooden kitchenware New Zealand, Macrocarpa toys">
     
     <!-- ENHANCED LocalBusiness Schema with GEO/AEO/SEO optimization -->
     <script type="application/ld+json">
@@ -225,12 +347,13 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Google Tag Manager - Deferred -->
+    <!-- Google Tag Manager - Optimized with requestIdleCallback -->
     <script>
+      // Defer GTM until browser is idle or after 3 seconds
       if (window.requestIdleCallback) {
         requestIdleCallback(function() {
           loadGTM();
-        });
+        }, { timeout: 3000 });
       } else {
         window.addEventListener('load', function() {
           setTimeout(loadGTM, 3000);
