@@ -6,7 +6,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogPosts } from './blogData';
 import { getBlogContent } from './blogContent';
-import { OptimizedImage } from '../../components/OptimizedImage';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const BlogPostView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
