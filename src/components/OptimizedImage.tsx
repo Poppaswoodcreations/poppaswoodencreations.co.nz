@@ -1,103 +1,172 @@
-import React, { useState, useEffect } from 'react';
+// src/utils/imageOptimizer.ts
+// Utility for optimizing Supabase Storage images
 
-interface OptimizedImageProps {
-  src: string;
-  alt: string;
-  productName?: string;
-  category?: string;
-  price?: number;
-  description?: string;
-  context?: string;
-  priority?: boolean;
-  className?: string;
+interface ImageOptimizationOptions {
   width?: number;
   height?: number;
-  sizes?: string;
-  onLoad?: () => void;
-  onError?: () => void;
+  quality?: number;
+  format?: 'webp' | 'png' | 'jpeg';
+  resize?: 'contain' | 'cover' | 'fill';
 }
 
-const OptimizedImage: React.FC<OptimizedImageProps> = ({
-  src,
-  alt,
-  priority = false,
-  className = '',
-  width = 800,
-  height = 600,
-  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
-  onLoad,
-  onError
-}) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(src);
+/**
+ * Optimizes Supabase Storage image URLs with transformation parameters
+ * 
+ * @param imageUrl - Original Supabase image URL
+ * @param options - Optimization options (width, height, quality, format)
+ * @returns Optimized image URL with transformation parameters
+ * 
+ * @example
+ * const optimized = optimizeSupabaseImage(
+ *   'https://...supabase.co/storage/v1/object/public/product-images/toy.webp',
+ *   { width: 800, quality: 85 }
+ * );
+ */
+export function optimizeSupabaseImage(
+  imageUrl: string,
+  options: ImageOptimizationOptions = {}
+): string {
+  // Return original URL if not a Supabase URL
+  if (!imageUrl || !imageUrl.includes('supabase.co')) {
+    return imageUrl;
+  }
 
-  // Optimize image URL for better compression
-  const getOptimizedSrc = (originalSrc: string) => {
-    if (originalSrc.includes('squarespace-cdn.com')) {
-      return `${originalSrc.split('?')[0]}?format=webp&w=${width}&q=75`;
-    }
-    return originalSrc;
-  };
+  // Default options for optimal performance
+  const {
+    width,
+    height,
+    quality = 85,
+    format = 'webp',
+    resize = 'contain'
+  } = options;
 
-  useEffect(() => {
-    const optimizedSrc = getOptimizedSrc(src);
-    console.log('🖼️ OptimizedImage: Setting src from', src, 'to', optimizedSrc);
-    setCurrentSrc(optimizedSrc);
-  }, [src, width]);
+  // Check if URL already uses the render endpoint
+  const isRenderUrl = imageUrl.includes('/render/image/');
+  
+  if (isRenderUrl) {
+    // Already optimized, return as-is
+    return imageUrl;
+  }
 
-  const handleLoad = () => {
-    console.log('✅ OptimizedImage: Successfully loaded:', currentSrc);
-    setIsLoaded(true);
-    onLoad?.();
-  };
-
-  const handleError = () => {
-    console.log('❌ OptimizedImage: Error loading image:', currentSrc);
-    if (!hasError) {
-      setHasError(true);
-      console.log('🔄 OptimizedImage: Trying fallback image');
-      setCurrentSrc('/FB_IMG_1640827671355.jpg');
-      onError?.();
-    }
-  };
-
-  return (
-    <div className={`relative overflow-hidden ${className}`}>
-      {/* Loading placeholder */}
-      {!isLoaded && !hasError && (
-        <div 
-          className="absolute inset-0 bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 animate-pulse"
-          style={{ width: '100%', height: '100%' }}
-        />
-      )}
-      
-      <img
-        src={currentSrc}
-        alt={alt}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        onLoad={handleLoad}
-        onError={handleError}
-        width={width}
-        height={height}
-        sizes={sizes}
-      />
-      
-      {/* Error fallback */}
-      {hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-amber-100">
-          <div className="text-center text-amber-700">
-            <div className="text-4xl mb-2">🪵</div>
-            <div className="text-sm">Wooden Toy</div>
-          </div>
-        </div>
-      )}
-    </div>
+  // Convert standard URL to render URL
+  // From: /storage/v1/object/public/bucket/path
+  // To: /storage/v1/render/image/public/bucket/path?params
+  const renderUrl = imageUrl.replace(
+    '/storage/v1/object/public/',
+    '/storage/v1/render/image/public/'
   );
+
+  // Build query parameters
+  const params = new URLSearchParams();
+  
+  if (width) params.append('width', width.toString());
+  if (height) params.append('height', height.toString());
+  params.append('quality', quality.toString());
+  params.append('format', format);
+  params.append('resize', resize);
+
+  return `${renderUrl}?${params.toString()}`;
+}
+
+/**
+ * Pre-configured image optimization presets for common use cases
+ */
+export const imagePresets = {
+  // Blog featured images (large, high quality)
+  blogFeatured: (url: string) => optimizeSupabaseImage(url, {
+    width: 1200,
+    quality: 90,
+    format: 'webp'
+  }),
+
+  // Blog listing thumbnails (medium, balanced)
+  blogThumbnail: (url: string) => optimizeSupabaseImage(url, {
+    width: 600,
+    quality: 85,
+    format: 'webp'
+  }),
+
+  // Product images (optimized for detail)
+  productMain: (url: string) => optimizeSupabaseImage(url, {
+    width: 800,
+    quality: 90,
+    format: 'webp'
+  }),
+
+  // Product thumbnails (small, fast)
+  productThumbnail: (url: string) => optimizeSupabaseImage(url, {
+    width: 400,
+    quality: 80,
+    format: 'webp'
+  }),
+
+  // Hero images (large, high quality)
+  hero: (url: string) => optimizeSupabaseImage(url, {
+    width: 1920,
+    quality: 90,
+    format: 'webp'
+  }),
+
+  // Mobile hero (smaller for mobile devices)
+  heroMobile: (url: string) => optimizeSupabaseImage(url, {
+    width: 800,
+    quality: 85,
+    format: 'webp'
+  }),
+
+  // Gallery images (balanced)
+  gallery: (url: string) => optimizeSupabaseImage(url, {
+    width: 600,
+    quality: 85,
+    format: 'webp'
+  }),
+
+  // Thumbnails (very small, fast loading)
+  thumbnail: (url: string) => optimizeSupabaseImage(url, {
+    width: 200,
+    quality: 75,
+    format: 'webp'
+  })
 };
 
-export default OptimizedImage;
+/**
+ * Generate responsive image srcSet for different screen sizes
+ * 
+ * @param imageUrl - Original image URL
+ * @param sizes - Array of widths to generate
+ * @returns srcSet string for responsive images
+ * 
+ * @example
+ * const srcSet = generateResponsiveSrcSet(imageUrl, [400, 800, 1200]);
+ * <img src={imageUrl} srcSet={srcSet} sizes="(max-width: 768px) 400px, 800px" />
+ */
+export function generateResponsiveSrcSet(
+  imageUrl: string,
+  sizes: number[] = [400, 800, 1200, 1600]
+): string {
+  return sizes
+    .map(width => {
+      const optimized = optimizeSupabaseImage(imageUrl, { width, quality: 85 });
+      return `${optimized} ${width}w`;
+    })
+    .join(', ');
+}
+
+/**
+ * Check if image is from Supabase Storage
+ */
+export function isSupabaseImage(url: string): boolean {
+  return url.includes('supabase.co/storage');
+}
+
+/**
+ * Extract filename from Supabase URL
+ */
+export function getImageFilename(url: string): string {
+  try {
+    const parts = url.split('/');
+    return parts[parts.length - 1].split('?')[0];
+  } catch {
+    return '';
+  }
+}
