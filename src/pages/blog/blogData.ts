@@ -272,6 +272,21 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Handcrafted rimu wood spatulas  in Whangarei  - Poppa\'s Wooden Creations',
     content: null
   },
+
+  {
+    slug: 'why-natural-wood-toys-beat-plastic',
+    title: 'Why Natural Wood Toys Beat Plastic',
+    metaDescription: 'Why wooden toys beat plastic: safer (no BPA/chemicals), last generations, boost development. Expert guide from Poppa\'s Wooden Creations, Whangarei NZ.',
+    excerpt: 'Discover why natural wooden toys consistently outperform plastic alternatives. Learn about safety differences, durability advantages, developmental benefits, and environmental impact. Expert insights from 15+ years crafting quality toys from native NZ timbers in Whangarei.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-12-30',
+    readTime: '6 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys', 'handcrafted', 'NZ made'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/logging-truck-optimized%20(1).webp',
+    imageAlt: 'Natural wooden toys handcrafted from Kauri and Rimu timber - safer, more durable alternative to plastic toys from Poppa\'s Wooden Creations Whangarei',
+    content: null
+  },
 ];
 
 // Template for adding new blog posts:
