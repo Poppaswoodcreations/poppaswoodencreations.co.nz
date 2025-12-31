@@ -209,19 +209,98 @@ export const useProducts = () => {
     }
   };
 
+  // Helper function to extract file path from Supabase Storage URL
+  const extractStoragePathFromUrl = (url: string): string | null => {
+    try {
+      // Match pattern: https://[project].supabase.co/storage/v1/object/public/[bucket]/[path]
+      const match = url.match(/\/storage\/v1\/object\/public\/[^/]+\/(.+)$/);
+      return match ? match[1] : null;
+    } catch (error) {
+      console.error('Error extracting storage path:', error);
+      return null;
+    }
+  };
+
   // Delete product from Supabase using admin client
   const deleteProduct = async (productId: string) => {
     try {
       if (supabaseAdmin) {
         console.log('🔐 Using admin client to delete product:', productId);
-        const { error } = await supabaseAdmin
+        
+        // STEP 1: Get the product to find its images
+        const { data: productData, error: fetchError } = await supabaseAdmin
+          .from('products')
+          .select('images')
+          .eq('id', productId)
+          .single();
+
+        if (fetchError) {
+          console.error('❌ Error fetching product for deletion:', fetchError);
+          throw fetchError;
+        }
+
+        // STEP 2: Delete images from Supabase Storage
+        if (productData && productData.images) {
+          let imageUrls: string[] = [];
+          
+          // Parse images if it's a string
+          if (typeof productData.images === 'string') {
+            try {
+              imageUrls = JSON.parse(productData.images);
+            } catch (e) {
+              imageUrls = [productData.images];
+            }
+          } else if (Array.isArray(productData.images)) {
+            imageUrls = productData.images;
+          }
+
+          console.log('🗑️ Deleting images from Storage:', imageUrls);
+
+          // Delete each image from Storage
+          for (const imageUrl of imageUrls) {
+            // Only delete if it's a Supabase Storage URL
+            if (imageUrl && imageUrl.includes('/storage/v1/object/public/')) {
+              const filePath = extractStoragePathFromUrl(imageUrl);
+              
+              if (filePath) {
+                try {
+                  // Extract bucket name from URL (assuming format: /bucket/path)
+                  const bucketMatch = imageUrl.match(/\/storage\/v1\/object\/public\/([^/]+)\//);
+                  const bucketName = bucketMatch ? bucketMatch[1] : 'product-images';
+                  
+                  console.log(`🗑️ Deleting from bucket "${bucketName}":`, filePath);
+                  
+                  const { error: deleteError } = await supabaseAdmin.storage
+                    .from(bucketName)
+                    .remove([filePath]);
+
+                  if (deleteError) {
+                    console.warn('⚠️ Failed to delete image from Storage:', deleteError);
+                    // Don't throw - continue with product deletion even if image deletion fails
+                  } else {
+                    console.log('✅ Image deleted from Storage:', filePath);
+                  }
+                } catch (storageError) {
+                  console.warn('⚠️ Storage deletion error:', storageError);
+                  // Continue anyway
+                }
+              }
+            }
+          }
+        }
+
+        // STEP 3: Delete the product record from database
+        const { error: deleteError } = await supabaseAdmin
           .from('products')
           .delete()
           .eq('id', productId);
 
-        if (error) throw error;
+        if (deleteError) {
+          console.error('❌ Database deletion error:', deleteError);
+          throw deleteError;
+        }
 
-        console.log('✅ Product deleted from Supabase with admin client');
+        console.log('✅ Product and associated images deleted from Supabase');
         await loadProducts(); // Reload all products
       } else {
         throw new Error('Supabase admin client not connected');
@@ -280,6 +359,7 @@ export const useProducts = () => {
     console.log('🔄 useProducts: Force reloading products...');
     loadProducts();
   };
+  
   return {
     products,
     loading,
