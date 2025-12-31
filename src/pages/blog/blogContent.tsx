@@ -102,7 +102,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Simple Rattles:</strong> Lightweight wooden rattles with gentle sounds help develop auditory processing and cause-and-effect understanding. Babies learn "when I move this, it makes that sound"—a foundational concept.
+      <strong>Simple Rattles:</strong> Lightweight wooden rattles with gentle sounds help develop auditory processing and cause-and-effect understanding. Babies learn &quot;when I move this, it makes that sound&quot;—a foundational concept.
     </p>
 
     <p className="mb-6">
@@ -474,7 +474,7 @@ const WhyNaturalWoodToysBeatPlasticContent: React.FC = () => (
     </h2>
 
     <p className="mb-6">
-      Plastic toys often contain chemicals that parents can't see or smell. Phthalates, BPA, and PVC are common in cheaper plastics, and even "BPA-free" alternatives may contain equally concerning substitutes. When babies mouth plastic toys—which they inevitably do—they're exposed to whatever chemicals leach from the material.
+      Plastic toys often contain chemicals that parents can't see or smell. Phthalates, BPA, and PVC are common in cheaper plastics, and even &quot;BPA-free&quot; alternatives may contain equally concerning substitutes. When babies mouth plastic toys—which they inevitably do—they're exposed to whatever chemicals leach from the material.
     </p>
 
     <p className="mb-6">
@@ -653,7 +653,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
     <p className="mb-6">Quality toys survive childhood—and then some.</p>
 
-    <p className="mb-6">Plastic toys crack when dropped on hard floors. Wooden toys might get dented, but that dent becomes part of the story. "See this mark? That's from when you drove it off the couch when you were three."</p>
+    <p className="mb-6">Plastic toys crack when dropped on hard floors. Wooden toys might get dented, but that dent becomes part of the story. &quot;See this mark? That's from when you drove it off the couch when you were three.&quot;</p>
 
     <p className="mb-6">Our wooden vehicles have been passed from older siblings to younger ones, then to cousins, then to the next generation. The toy doesn't wear out—it wears in. The finish develops a patina. The edges get smoother. It becomes more beautiful with age, not less.</p>
 
@@ -664,7 +664,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
     <p className="mb-6">Quality toys don't compromise on safety—ever.</p>
 
-    <p className="mb-6">Cheap plastic toys often contain chemicals you can't see or smell. Phthalates, BPA, lead in paints. Even toys marked "BPA-free" might contain equally concerning substitutes. When your baby mouths a toy (which they will), what are they actually putting in their mouth?</p>
+    <p className="mb-6">Cheap plastic toys often contain chemicals you can't see or smell. Phthalates, BPA, lead in paints. Even toys marked &quot;BPA-free&quot; might contain equally concerning substitutes. When your baby mouths a toy (which they will), what are they actually putting in their mouth?</p>
 
     <p className="mb-6">Wooden toys finished with natural oils contain no synthetic chemicals. The wood itself—especially native timber—has no harmful additives. What you see is what you get: timber, craftsmanship, and food-safe finish.</p>
 
@@ -875,7 +875,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
 <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Explain Trade-Offs</h3>
 
-    <p className="mb-6">"We could buy five cheap trucks that will break, or one beautiful truck that will last until you're grown. Which makes more sense?"</p>
+    <p className="mb-6">&quot;We could buy five cheap trucks that will break, or one beautiful truck that will last until you're grown. Which makes more sense?&quot;</p>
 
     <p className="mb-6">Let them participate in these decisions. They'll develop judgment about value vs. price.</p>
 
@@ -883,9 +883,9 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Celebrate Longevity</h3>
 
     <p className="mb-6">Point out when toys last:
-- "This truck was your sister's first, and now it's yours."
-- "Grandpa made this when I was little, and now you play with it."
-- "See how the wood gets smoother the more we use it?"</p>
+- &quot;This truck was your sister's first, and now it's yours.&quot;
+- &quot;Grandpa made this when I was little, and now you play with it.&quot;
+- &quot;See how the wood gets smoother the more we use it?&quot;</p>
 
     <p className="mb-6">You're teaching that good things endure—and that's something to celebrate.</p>
 
@@ -978,31 +978,31 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
 <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Common Questions About Choosing Quality</h2>
 
-    <p className="mb-6"><strong>"My child just plays roughly and breaks everything anyway. Why spend more?"</strong></p>
+    <p className="mb-6"><strong>&quot;My child just plays roughly and breaks everything anyway. Why spend more?"</strong></p>
 
     <p className="mb-6">Children break cheap things because cheap things break easily—it's a self-fulfilling prophecy. When children play with quality items that can withstand their play, they develop better motor control and more respect for possessions. The toy's durability gives them space to play enthusiastically without constant "be careful" warnings.</p>
 
-    <p className="mb-6"><strong>"Aren't wooden toys just a trend? What if my child prefers plastic?"</strong></p>
+    <p className="mb-6"><strong>&quot;Aren't wooden toys just a trend? What if my child prefers plastic?"</strong></p>
 
     <p className="mb-6">Wooden toys have been around for thousands of years—longer than plastic has existed. That's not a trend; that's time-tested. As for preference, children don't actually prefer plastic toys. Studies show when given a mix, they play longer and more creatively with simple, natural materials. What looks like preference is often familiarity.</p>
 
-    <p className="mb-6"><strong>"How do I convince grandparents to buy quality instead of quantity?"</strong></p>
+    <p className="mb-6"><strong>&quot;How do I convince grandparents to buy quality instead of quantity?"</strong></p>
 
     <p className="mb-6">Share your "wants" list with specific items. Explain that you'd rather have fewer, better gifts that last. Most grandparents actually appreciate this—they remember when toys were built to last, and they enjoy giving meaningful gifts more than contributing to clutter.</p>
 
-    <p className="mb-6"><strong>"What about special occasions? Don't kids expect lots of presents?"</strong></p>
+    <p className="mb-6"><strong>&quot;What about special occasions? Don't kids expect lots of presents?"</strong></p>
 
     <p className="mb-6">Children's expectations match what we've taught them. If you shift to quality over quantity from the start, they don't feel deprived—it's their normal. Focus on experiences alongside gifts: time together, special outings, tradition-building. These create better memories than toy count anyway.</p>
 
-    <p className="mb-6"><strong>"Can't I just buy secondhand plastic toys? That's sustainable too."</strong></p>
+    <p className="mb-6"><strong>&quot;Can't I just buy secondhand plastic toys? That's sustainable too."</strong></p>
 
     <p className="mb-6">Secondhand is always better than new, regardless of material. But here's the issue: most plastic toys don't survive long enough to be secondhand candidates. Wooden toys, on the other hand, thrive in the secondhand market precisely because they're built to last. You'll find 30-year-old wooden toys in excellent condition, but rarely 5-year-old plastic toys worth buying.</p>
 
-    <p className="mb-6"><strong>"This seems elitist. Not everyone can afford expensive toys."</strong></p>
+    <p className="mb-6"><strong>&quot;This seems elitist. Not everyone can afford expensive toys."</strong></p>
 
     <p className="mb-6">Quality isn't about price—it's about value. A $15 thrift store wooden toy that lasts 10 years is higher quality than a $30 plastic toy that breaks in 6 months. And the truth is, the quantity approach often costs more. Middle-income families spend hundreds annually replacing broken cheap toys. That money could buy quality items that last. It's not about being wealthy; it's about being strategic.</p>
 
-    <p className="mb-6"><strong>"My child already has so many toys. Where do I start?"</strong></p>
+    <p className="mb-6"><strong>&quot;My child already has so many toys. Where do I start?"</strong></p>
 
     <p className="mb-6">Start with the toy audit mentioned earlier. Identify the 20% of toys that get 80% of play. Keep those. Everything else is a candidate for removal. Then commit to only adding quality from here forward. It's easier to shift gradually than to overhaul everything at once.</p>
 
@@ -1059,7 +1059,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
 <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Frequently Asked Questions</h2>
 
-    <p className="mb-6"><strong>What makes a toy "quality" vs. just expensive?</strong></p>
+    <p className="mb-6"><strong>What makes a toy &quot;quality&quot; vs. just expensive?</strong></p>
 
     <p className="mb-6">Quality isn't determined by price alone. A quality toy has specific characteristics: durable construction that survives years of play, safe materials with no toxic chemicals, open-ended design that encourages creativity, and craftsmanship that's visible and tactile. Expensive toys can be poor quality if they break easily or have limited play value. Conversely, some reasonably-priced toys (especially secondhand wooden toys) offer exceptional quality. Test: Will this toy work properly, safely, and remain beautiful after 5 years of daily use?</p>
 
@@ -1081,11 +1081,10 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 
     <p className="mb-6"><strong>How can I convince family members to give quality gifts instead of quantity?</strong></p>
 
-    <p className="mb-6">Create a specific wish list with exact items, including where to buy them. Explain your approach: "We're focusing on toys that last and can be passed down rather than items that break quickly." Most grandparents actually appreciate this—they remember when toys were built to last. Suggest they contribute toward one larger quality item rather than multiple small toys. Alternatively, recommend experiential gifts: zoo memberships, swimming lessons, special outings. Frame it positively: you're helping create meaningful childhood memories, not limiting gifts.</p>
+    <p className="mb-6">Create a specific wish list with exact items, including where to buy them. Explain your approach: &quot;We're focusing on toys that last and can be passed down rather than items that break quickly." Most grandparents actually appreciate this—they remember when toys were built to last. Suggest they contribute toward one larger quality item rather than multiple small toys. Alternatively, recommend experiential gifts: zoo memberships, swimming lessons, special outings. Frame it positively: you're helping create meaningful childhood memories, not limiting gifts.</p>
 
     <p className="mb-6"><strong>Are wooden toys safe for babies who mouth everything?</strong></p>
 
     <p className="mb-6">Quality wooden toys finished with food-safe natural oils are completely safe for mouthing babies. Unlike plastic which can leach chemicals (BPA, phthalates, PVC), properly finished wood contains no synthetic chemicals. The key is choosing reputable makers who use non-toxic finishes and solid hardwoods without adhesives. Check that toys have smooth surfaces with no splinters, are sized appropriately (no choking hazards), and have securely attached parts. Our toys are finished with food-safe natural oils specifically because babies will mouth them—it's expected and safe.</p>
   </>
 );
-
