@@ -620,7 +620,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">This year, let's make different choices. Better choices. Choices that matter not just this month, but for years to come.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Problem with Modern Toy Culture</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Problem with Modern Toy Culture</h2>
 
     <p className="mb-6">Walk into any big-box store, and you'll face walls of brightly colored plastic. Everything beeps, blinks, or talks. The packaging promises educational value, developmental benefits, and hours of entertainment.</p>
 
@@ -633,7 +633,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">But there's another way.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Why I Started Making Wooden Toys</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Why I Started Making Wooden Toys</h2>
 
     <p className="mb-6">I started Poppa's Wooden Creations in 2015, right here in Whangarei. Every toy is handcrafted from native New Zealand timbers—Kauri, Rimu, Macrocarpa.</p>
 
@@ -644,12 +644,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Every piece of Kauri I work with is over 100 years old. It seems wrong to turn something that took a century to grow into something that lasts a year. So I don't. I make toys that honor the timber, that respect the craft, and that serve families for decades.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">What Makes a Quality Toy in 2025?</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">What Makes a Quality Toy in 2025?</h2>
 
     <p className="mb-6">Quality isn't about price tags or brand names. It's about specific, measurable characteristics that determine whether a toy will be treasured or tossed.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">1. Durability That Actually Lasts</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">1. Durability That Actually Lasts</h3>
 
     <p className="mb-6">Quality toys survive childhood—and then some.</p>
 
@@ -660,7 +660,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Test: Will this toy survive being dropped, thrown, chewed, and played with daily for five years? If not, it's not quality.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">2. Safety You Can Trust</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">2. Safety You Can Trust</h3>
 
     <p className="mb-6">Quality toys don't compromise on safety—ever.</p>
 
@@ -671,7 +671,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Our toys meet or exceed all safety standards not because we have to, but because they're made for our own grandchildren. That's the ultimate quality test.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">3. Open-Ended Play Value</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">3. Open-Ended Play Value</h3>
 
     <p className="mb-6">Quality toys don't do the imagining for your child—they enable it.</p>
 
@@ -682,7 +682,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">This is why children often ignore expensive electronic toys in favor of simple wooden blocks. The blocks respond to imagination, not batteries.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">4. Developmental Appropriateness</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">4. Developmental Appropriateness</h3>
 
     <p className="mb-6">Quality toys match your child's developmental stage and grow with them.</p>
 
@@ -693,7 +693,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Quality toys have layers of complexity that reveal themselves as your child develops.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">5. Aesthetic Value</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">5. Aesthetic Value</h3>
 
     <p className="mb-6">Quality toys are beautiful enough to leave out.</p>
 
@@ -704,14 +704,14 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Beauty isn't frivolous in children's objects. It teaches aesthetic appreciation and respect for materials.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The True Cost of Quality</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The True Cost of Quality</h2>
 
     <p className="mb-6">"Wooden toys are expensive."</p>
 
     <p className="mb-6">I hear this often. And yes, quality wooden toys cost more upfront than mass-produced plastic alternatives. But let's do the actual math.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Cost-Per-Year Calculation:</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Cost-Per-Year Calculation:</h3>
 
     <p className="mb-6"><strong>Plastic Toy Scenario:</strong>
 - Plastic truck: $15
@@ -732,7 +732,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">The wooden toy is actually more economical—before you even factor in the intangible value of family heirlooms and sustainable consumption.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The Hidden Costs of Cheap Toys:</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The Hidden Costs of Cheap Toys:</h3>
 
     <p className="mb-6">Cheap toys carry costs that don't appear on price tags:
 - Environmental cost of petroleum-based plastics
@@ -744,12 +744,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Quality toys cost more upfront but save money, reduce waste, and provide better play value over time.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Making Better Choices This Year</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Making Better Choices This Year</h2>
 
     <p className="mb-6">So how do you actually implement this? What changes when you shift from quantity to quality?</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Start With a Toy Audit</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Start With a Toy Audit</h3>
 
     <p className="mb-6">Look at what your children actually play with. Not what you think they should play with—what they actually reach for day after day.</p>
 
@@ -762,7 +762,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">This is valuable data. It tells you what to buy more of—and what to stop wasting money on.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The One-In-One-Out Rule</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The One-In-One-Out Rule</h3>
 
     <p className="mb-6">Before buying any new toy, remove one old toy.</p>
 
@@ -771,7 +771,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Let your child participate in choosing what goes. They learn decision-making, they appreciate what they keep more, and your home stays manageable.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Focus on Categories, Not Characters</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Focus on Categories, Not Characters</h3>
 
     <p className="mb-6">Character toys have built-in obsolescence. When the movie hype ends, the toys lose appeal.</p>
 
@@ -785,7 +785,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">These provide years of play across changing interests and ages.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Buy Less, Choose Better</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Buy Less, Choose Better</h3>
 
     <p className="mb-6">Instead of ten cheap toys, buy one quality toy.</p>
 
@@ -798,12 +798,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Quality over quantity isn't just better for your budget—it's better for your child.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">What to Look For When Shopping</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">What to Look For When Shopping</h2>
 
     <p className="mb-6">Practical guidance for evaluating toys before you buy:</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Materials Matter</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Materials Matter</h3>
 
     <p className="mb-6"><strong>Best:</strong>
 - Solid hardwood (maple, beech, oak, native NZ timbers)
@@ -820,7 +820,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6"><strong>Test:</strong> If it doesn't smell like wood/natural materials, be cautious.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Construction Quality</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Construction Quality</h3>
 
     <p className="mb-6"><strong>Look for:</strong>
 - Smooth edges and surfaces (run your hand over it)
@@ -835,7 +835,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 - Too lightweight (feels cheap)</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Age Appropriateness</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Age Appropriateness</h3>
 
     <p className="mb-6"><strong>Consider:</strong>
 - Is it sized right for your child's hands?
@@ -846,7 +846,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6"><strong>Remember:</strong> Age ranges on packaging are guidelines, not rules. You know your child best.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Brand Reputation</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Brand Reputation</h3>
 
     <p className="mb-6"><strong>Research:</strong>
 - How long has the company existed?
@@ -857,12 +857,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6"><strong>Our guarantee:</strong> If any toy we make breaks during normal play in the first five years, we'll repair or replace it. That's how confident we are in our construction.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Teaching Children About Quality</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Teaching Children About Quality</h2>
 
     <p className="mb-6">The shift to quality toys isn't just about what you buy—it's about what you teach.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Model Respect for Possessions</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Model Respect for Possessions</h3>
 
     <p className="mb-6">Show (don't just tell) that quality items deserve care:
 - Store toys properly
@@ -873,14 +873,14 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">When your child sees you value quality, they learn to value it too.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Explain Trade-Offs</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Explain Trade-Offs</h3>
 
     <p className="mb-6">&quot;We could buy five cheap trucks that will break, or one beautiful truck that will last until you're grown. Which makes more sense?&quot;</p>
 
     <p className="mb-6">Let them participate in these decisions. They'll develop judgment about value vs. price.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Celebrate Longevity</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Celebrate Longevity</h3>
 
     <p className="mb-6">Point out when toys last:
 - &quot;This truck was your sister's first, and now it's yours.&quot;
@@ -890,12 +890,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">You're teaching that good things endure—and that's something to celebrate.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Building Your Quality Toy Collection</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Building Your Quality Toy Collection</h2>
 
     <p className="mb-6">You don't need to throw out everything and start over. Build gradually toward a better collection.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The Essential Foundation (Ages 0-5):</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">The Essential Foundation (Ages 0-5):</h3>
 
     <p className="mb-6"><strong>First Year:</strong>
 - Quality teething ring (0-12 months): $25-40
@@ -918,7 +918,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 - Ability to pass to siblings: Priceless</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Prioritization Strategy</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Prioritization Strategy</h3>
 
     <p className="mb-6">If budget is tight, prioritize this way:</p>
 
@@ -938,12 +938,12 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
 - Trendy items (short-lived interest)</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Ripple Effects of Better Choices</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Ripple Effects of Better Choices</h2>
 
     <p className="mb-6">When you choose quality over quantity, the benefits extend beyond your own family.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Environmental Impact</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Environmental Impact</h3>
 
     <p className="mb-6">Every quality toy that lasts 20 years instead of 2 years is:
 - One less toy in landfill (most plastic toys aren't recyclable)
@@ -954,7 +954,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Your purchasing decisions are votes for the kind of world you want your children to inherit.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Economic Impact</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Economic Impact</h3>
 
     <p className="mb-6">Buying quality, locally-made toys:
 - Supports craftspeople and small businesses
@@ -965,7 +965,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Every wooden toy we sell here in Whangarei supports not just our family, but the timber suppliers, tool makers, and community around us.</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Social Impact</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Social Impact</h3>
 
     <p className="mb-6">Quality toys teach your children:
 - To value craftsmanship and skill
@@ -976,7 +976,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">These are lessons that serve them for life, in areas far beyond toy selection.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Common Questions About Choosing Quality</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Common Questions About Choosing Quality</h2>
 
     <p className="mb-6"><strong>&quot;My child just plays roughly and breaks everything anyway. Why spend more?"</strong></p>
 
@@ -1007,33 +1007,33 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">Start with the toy audit mentioned earlier. Identify the 20% of toys that get 80% of play. Keep those. Everything else is a candidate for removal. Then commit to only adding quality from here forward. It's easier to shift gradually than to overhaul everything at once.</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Moving Forward: Your 2025 Toy Plan</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Moving Forward: Your 2025 Toy Plan</h2>
 
     <p className="mb-6">Here's a practical action plan for implementing these principles this year:</p>
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Month:</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Month:</h3>
 - Audit current toys (what actually gets played with?)
 - Remove broken toys immediately
 - Box up toys that haven't been touched in 3 months
 - Research quality brands for your child's age
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Quarter:</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Quarter:</h3>
 - Implement one-in-one-out rule
 - Make your first strategic quality purchase
 - Visit local craftspeople or toy shops
 - Share your approach with gift-giving relatives
 
 
-<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Year:</h3>
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">This Year:</h3>
 - Build foundation collection of 5-10 quality toys
 - Develop family culture around caring for possessions
 - Notice changes in your child's play patterns
 - Enjoy less clutter, better play, meaningful items
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Choice Is Yours</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">The Choice Is Yours</h2>
 
     <p className="mb-6">Every toy you bring into your home is a choice. A choice about what you value, what you want to teach, what kind of childhood you want to create, and what kind of world you want to build.</p>
 
@@ -1057,7 +1057,7 @@ const StartingYearRightQualityToys2026Content: React.FC = () => (
     <p className="mb-6">*At Poppa's Wooden Creations, we've been handcrafting quality wooden toys in Whangarei since 2015. Every toy is made from native New Zealand timbers—Kauri, Rimu, and Macrocarpa—with the care and craftsmanship that ensures they'll last for generations. Visit us at poppaswoodencreations.co.nz to see our collection.*</p>
 
 
-<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Frequently Asked Questions</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Frequently Asked Questions</h2>
 
     <p className="mb-6"><strong>What makes a toy &quot;quality&quot; vs. just expensive?</strong></p>
 
