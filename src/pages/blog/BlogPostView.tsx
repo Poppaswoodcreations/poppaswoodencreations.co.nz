@@ -1,102 +1,210 @@
-// src/pages/blog/BlogListView.tsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// src/pages/blog/BlogPostView.tsx
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { blogPosts } from './blogData';
 
-const BlogListView: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const categories = ['All', ...Array.from(new Set(blogPosts.map(post => post.category)))];
-  
-  const filteredPosts = selectedCategory === 'All'
-    ? blogPosts
-    : blogPosts.filter(post => post.category === selectedCategory);
-  
-  const sortedPosts = [...filteredPosts].sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-  
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Wooden Toy Guides & Stories
-          </h1>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            Expert insights on wooden toys, child development, and sustainable craftsmanship from Poppa's Wooden Creations in Whangarei, New Zealand.
-          </p>
+// Try to import getBlogContent, but handle if it doesn't exist
+let getBlogContent: ((slug: string) => React.ReactNode) | undefined;
+try {
+  const blogContentModule = require('./blogContent');
+  getBlogContent = blogContentModule.getBlogContent;
+} catch (e) {
+  console.error('blogContent module not found:', e);
+}
+
+const BlogPostView: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const post = blogPosts.find(p => p.slug === slug);
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
+          <Link to="/blog" className="text-amber-600 hover:text-amber-700">
+            ← Back to Blog
+          </Link>
         </div>
       </div>
-      
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap gap-2">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedPosts.map(post => (
-            <Link
-              key={post.slug}
-              to={`/blog/${post.slug}`}
-              className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="aspect-video overflow-hidden bg-gray-200">
-                <img
-                  src={post.featuredImage}
-                  alt={post.imageAlt}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
-              <div className="p-6">
-                <span className="inline-block px-3 py-1 text-xs font-semibold text-amber-600 bg-amber-50 rounded-full mb-3">
-                  {post.category}
-                </span>
-                
-                <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors line-clamp-2">
-                  {post.title}
-                </h2>
-                
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span>{post.readTime}</span>
-                  <span>{post.date}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        
-        {sortedPosts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">
-              No posts found in this category.
-            </p>
-          </div>
-        )}
-      </div>
+    );
+  }
+
+  // Use getBlogContent if available, otherwise show a placeholder
+  const content = getBlogContent ? getBlogContent(slug!) : (
+    <div className="text-gray-600">
+      <p>{post.excerpt}</p>
+      <p className="mt-4 text-sm italic">Blog content coming soon...</p>
     </div>
+  );
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.metaDescription,
+    "image": post.featuredImage,
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Organization",
+      "name": "Poppa's Wooden Creations",
+      "url": "https://poppaswoodencreations.co.nz"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Poppa's Wooden Creations",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://poppaswoodencreations.co.nz/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://poppaswoodencreations.co.nz/blog/${slug}`
+    }
+  };
+
+  const faqSchema = post.faqs ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://poppaswoodencreations.co.nz"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://poppaswoodencreations.co.nz/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": `https://poppaswoodencreations.co.nz/blog/${slug}`
+      }
+    ]
+  };
+
+  return (
+    <>
+      <Helmet>
+        <title>{post.title} | Poppa's Wooden Creations</title>
+        <meta name="description" content={post.metaDescription} />
+        <meta name="keywords" content={post.tags.join(', ')} />
+        
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.metaDescription} />
+        <meta property="og:image" content={post.featuredImage} />
+        <meta property="og:url" content={`https://poppaswoodencreations.co.nz/blog/${slug}`} />
+        <meta property="og:type" content="article" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.metaDescription} />
+        <meta name="twitter:image" content={post.featuredImage} />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
+        {faqSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
+
+      <article className="min-h-screen bg-white">
+        <div className="relative h-[400px] bg-gray-900">
+          <img
+            src={post.featuredImage}
+            alt={post.imageAlt}
+            className="w-full h-full object-cover opacity-60"
+            loading="eager"
+          />
+          
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="max-w-4xl mx-auto px-4 text-center">
+              <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-amber-600 rounded-full mb-4">
+                {post.category}
+              </span>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {post.title}
+              </h1>
+              <div className="flex items-center justify-center gap-6 text-white text-sm">
+                <span>{post.author}</span>
+                <span>•</span>
+                <time dateTime={post.date}>
+                  {post.date}
+                </time>
+                <span>•</span>
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <nav className="mb-8 text-sm">
+            <Link to="/" className="text-amber-600 hover:text-amber-700">Home</Link>
+            <span className="mx-2 text-gray-400">/</span>
+            <Link to="/blog" className="text-amber-600 hover:text-amber-700">Blog</Link>
+            <span className="mx-2 text-gray-400">/</span>
+            <span className="text-gray-600">{post.title}</span>
+          </nav>
+
+          <div className="prose prose-lg max-w-none">
+            {content}
+          </div>
+
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">Tags:</h3>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <Link
+              to="/blog"
+              className="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium"
+            >
+              ← Back to All Posts
+            </Link>
+          </div>
+        </div>
+      </article>
+    </>
   );
 };
 
-export default BlogListView;
+export default BlogPostView;
