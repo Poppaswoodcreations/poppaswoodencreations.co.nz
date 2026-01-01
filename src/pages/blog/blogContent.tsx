@@ -352,11 +352,11 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      A $50 wooden toy car used from age 1 to age 5, then passed to a sibling who uses it another 4 years: $50 ÷ 8 years = $6.25 per year.
+      A $50 wooden toy car used from age 1 to age 5, then passed to a sibling who uses it another 4 years: $50 &divide; 8 years = $6.25 per year.
     </p>
 
     <p className="mb-6">
-      A $10 plastic car that breaks after 6 months and gets replaced 3 times before your child outgrows it: $30 ÷ 1.5 years = $20 per year.
+      A $10 plastic car that breaks after 6 months and gets replaced 3 times before your child outgrows it: $30 &divide; 1.5 years = $20 per year.
     </p>
 
     <p className="mb-6">
