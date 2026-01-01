@@ -21,20 +21,6 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'starting-year-right-quality-toys-2026',
-    title: 'Starting the Year Right: Choosing Quality Toys for 2026',
-    metaDescription: 'Start 2026 with quality wooden toys from Poppa\'s Wooden Creations. Expert guide to choosing safe, sustainable toys that grow with your child in New Zealand.',
-    excerpt: 'As we welcome 2026, make thoughtful choices for your children\'s playtime. Discover why investing in quality wooden toys from New Zealand native timber creates lasting value, supports development, and brings joy for years to come.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2026-01-01',
-    readTime: '15 min read',
-    category: 'Buying Guide',
-    tags: ['wooden toys', 'quality toys', 'New Year 2026', 'buying guide', 'sustainable toys', 'Whangarei', 'handcrafted', 'NZ made'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HELICOPTER%20-%20Rimu-optimized.webp',
-    imageAlt: 'Quality handcrafted wooden toys from New Zealand native timber by Poppa\'s Wooden Creations for the new year 2026'
-  },
-
-  {
     slug: 'wooden-vs-plastic-toys',
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
     metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
@@ -318,4 +304,3 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Natural wooden toys handcrafted from Kauri and Rimu timber - safer, more durable alternative to plastic toys from Poppa\'s Wooden Creations Whangarei'
   },
 ];
-
