@@ -1,12 +1,25 @@
 // src/pages/blog/BlogPostView.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogPosts } from './blogData';
 import { getBlogContent } from './blogContent';
 
-const BlogPostView: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+interface BlogPostViewProps {
+  slug?: string | null;
+  onNavigate: (view: string) => void;
+  onPostSelect: (slug: string) => void;
+}
+
+export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug: propSlug, onNavigate, onPostSelect }) => {
+  const { slug: paramSlug } = useParams<{ slug: string }>();
+  const slug = propSlug || paramSlug;
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   const post = blogPosts.find(p => p.slug === slug);
 
   if (!post) {
@@ -23,6 +36,22 @@ const BlogPostView: React.FC = () => {
   }
 
   const content = getBlogContent(slug!);
+  
+  // Format date only on client side to avoid hydration mismatch
+  const formatDate = (dateString: string) => {
+    if (!mounted) return dateString;
+    
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-NZ', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch (e) {
+      return dateString;
+    }
+  };
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -140,11 +169,9 @@ const BlogPostView: React.FC = () => {
               <div className="flex items-center justify-center gap-6 text-white text-sm">
                 <span>{post.author}</span>
                 <span>•</span>
-                <span>{new Date(post.date).toLocaleDateString('en-NZ', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric'
-                })}</span>
+                <time dateTime={post.date} suppressHydrationWarning>
+                  {formatDate(post.date)}
+                </time>
                 <span>•</span>
                 <span>{post.readTime}</span>
               </div>
