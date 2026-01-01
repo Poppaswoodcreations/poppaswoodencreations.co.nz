@@ -58,7 +58,7 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
   <>
     <p className="mb-6">
-      Choosing the right toys for your child's age isn't just about keeping them entertained—it's about supporting their development at exactly the right moment. Give a newborn a complex puzzle, and they'll ignore it. Give a toddler a simple rattle, and they'll be bored in seconds.
+      Choosing the right toys for your child's age isn't just about keeping them entertained&mdash;it's about supporting their development at exactly the right moment. Give a newborn a complex puzzle, and they'll ignore it. Give a toddler a simple rattle, and they'll be bored in seconds.
     </p>
 
     <p className="mb-6">
@@ -74,7 +74,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      Wooden toys excel at this because they're naturally suited to open-ended play. A simple wooden car serves a baby learning to grasp, a toddler developing motor skills, and a preschooler creating imaginary scenarios. The toy doesn't change—your child's interaction with it evolves.
+      Wooden toys excel at this because they're naturally suited to open-ended play. A simple wooden car serves a baby learning to grasp, a toddler developing motor skills, and a preschooler creating imaginary scenarios. The toy doesn't change&mdash;your child's interaction with it evolves.
     </p>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -86,7 +86,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Development Focus:</strong> Sensory exploration, visual tracking, grasping reflexes, and oral exploration (everything goes in the mouth—this is normal and important).
+      <strong>Development Focus:</strong> Sensory exploration, visual tracking, grasping reflexes, and oral exploration (everything goes in the mouth&mdash;this is normal and important).
     </p>
 
     <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
@@ -98,7 +98,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Simple Rattles:</strong> Lightweight wooden rattles with gentle sounds help develop auditory processing and cause-and-effect understanding. Babies learn "when I move this, it makes that sound"—a foundational concept.
+      <strong>Simple Rattles:</strong> Lightweight wooden rattles with gentle sounds help develop auditory processing and cause-and-effect understanding. Babies learn "when I move this, it makes that sound"&mdash;a foundational concept.
     </p>
 
     <p className="mb-6">
@@ -112,7 +112,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     <ul className="list-disc pl-6 mb-6 space-y-2">
       <li>All toys must be larger than a toilet paper roll (choking hazard test)</li>
       <li>No small parts, no loose pieces</li>
-      <li>Smooth surfaces only—babies will mouth everything</li>
+      <li>Smooth surfaces only&mdash;babies will mouth everything</li>
       <li>Food-safe, non-toxic finishes (our natural oil finish is completely safe)</li>
       <li>Supervision during all play</li>
     </ul>
@@ -122,7 +122,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </h2>
 
     <p className="mb-6">
-      <strong>What's Happening:</strong> Your baby is becoming mobile—rolling, sitting, crawling, maybe pulling to stand. Their hand control is improving dramatically. They're starting to understand object permanence (things exist even when you can't see them).
+      <strong>What's Happening:</strong> Your baby is becoming mobile&mdash;rolling, sitting, crawling, maybe pulling to stand. Their hand control is improving dramatically. They're starting to understand object permanence (things exist even when you can't see them).
     </p>
 
     <p className="mb-6">
@@ -138,15 +138,15 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Stacking Toys:</strong> Large wooden rings or blocks for stacking teach hand-eye coordination, size relationships, and gravity (what goes up, comes down—repeatedly). The satisfying weight of wooden pieces provides better feedback than lightweight plastic.
+      <strong>Stacking Toys:</strong> Large wooden rings or blocks for stacking teach hand-eye coordination, size relationships, and gravity (what goes up, comes down&mdash;repeatedly). The satisfying weight of wooden pieces provides better feedback than lightweight plastic.
     </p>
 
     <p className="mb-6">
-      <strong>Simple Shape Sorters:</strong> Basic shape sorters with 2-3 large shapes introduce problem-solving. Babies this age need BIG openings and simple shapes—complexity comes later.
+      <strong>Simple Shape Sorters:</strong> Basic shape sorters with 2-3 large shapes introduce problem-solving. Babies this age need BIG openings and simple shapes&mdash;complexity comes later.
     </p>
 
     <p className="mb-6">
-      <strong>First Vehicles:</strong> Our baby-sized wooden cars are perfectly proportioned for small hands. The smooth rolling wheels and solid construction withstand enthusiastic play while teaching cause and effect—push the car, it moves.
+      <strong>First Vehicles:</strong> Our baby-sized wooden cars are perfectly proportioned for small hands. The smooth rolling wheels and solid construction withstand enthusiastic play while teaching cause and effect&mdash;push the car, it moves.
     </p>
 
     <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
@@ -182,7 +182,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Wooden Vehicles:</strong> Toddlers love toy trucks, cars, and trains they can push around. Our Kauri toy vehicles are sized for small hands but built to withstand enthusiastic play. The simple design encourages imaginative play—they provide the sound effects and story.
+      <strong>Wooden Vehicles:</strong> Toddlers love toy trucks, cars, and trains they can push around. Our Kauri toy vehicles are sized for small hands but built to withstand enthusiastic play. The simple design encourages imaginative play&mdash;they provide the sound effects and story.
     </p>
 
     <p className="mb-6">
@@ -199,8 +199,8 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
 
     <ul className="list-disc pl-6 mb-6 space-y-2">
       <li>Toys with small parts (still a choking hazard until age 3)</li>
-      <li>Overly complex toys—toddlers need simple, open-ended options</li>
-      <li>Toys that do everything for them—buttons that make all the sounds leave nothing for imagination</li>
+      <li>Overly complex toys&mdash;toddlers need simple, open-ended options</li>
+      <li>Toys that do everything for them&mdash;buttons that make all the sounds leave nothing for imagination</li>
     </ul>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -228,7 +228,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Transportation Toys:</strong> Two-year-olds are fascinated by how things move. Our wooden trucks, tractors, and trains inspire elaborate scenarios. The Tractor Exquisite is particularly popular with this age—the solid Kauri construction withstands enthusiastic farm play.
+      <strong>Transportation Toys:</strong> Two-year-olds are fascinated by how things move. Our wooden trucks, tractors, and trains inspire elaborate scenarios. The Tractor Exquisite is particularly popular with this age&mdash;the solid Kauri construction withstands enthusiastic farm play.
     </p>
 
     <p className="mb-6">
@@ -244,7 +244,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </h3>
 
     <p className="mb-6">
-      At this age, the simpler the toy, the better. A wooden truck doesn't tell your child what to do with it. It could be a delivery truck, a race car, a character in a story, or a bridge in their block city. This flexibility is what makes wooden toys so valuable—they grow with your child's imagination.
+      At this age, the simpler the toy, the better. A wooden truck doesn't tell your child what to do with it. It could be a delivery truck, a race car, a character in a story, or a bridge in their block city. This flexibility is what makes wooden toys so valuable&mdash;they grow with your child's imagination.
     </p>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -272,7 +272,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Complex Vehicles:</strong> Vehicles with moving parts—our wooden trucks with cargo that loads and unloads, for example—let children act out complex scenarios. The Wooden Rubbish Truck is particularly engaging because it lets them mimic real-world activities they observe.
+      <strong>Complex Vehicles:</strong> Vehicles with moving parts&mdash;our wooden trucks with cargo that loads and unloads, for example&mdash;let children act out complex scenarios. The Wooden Rubbish Truck is particularly engaging because it lets them mimic real-world activities they observe.
     </p>
 
     <p className="mb-6">
@@ -280,7 +280,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      <strong>Games with Rules:</strong> Simple board games and matching games help children learn to follow rules, take turns, and handle winning and losing—crucial social skills.
+      <strong>Games with Rules:</strong> Simple board games and matching games help children learn to follow rules, take turns, and handle winning and losing&mdash;crucial social skills.
     </p>
 
     <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
@@ -288,7 +288,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </h3>
 
     <p className="mb-6">
-      Preschoolers notice quality. They prefer toys that feel substantial, work properly, and look beautiful. Our Kauri and Rimu toys have natural grain patterns that children find fascinating. The solid construction means the toys actually work the way children want them to—wheels roll smoothly, pieces fit together properly, nothing breaks with normal play.
+      Preschoolers notice quality. They prefer toys that feel substantial, work properly, and look beautiful. Our Kauri and Rimu toys have natural grain patterns that children find fascinating. The solid construction means the toys actually work the way children want them to&mdash;wheels roll smoothly, pieces fit together properly, nothing breaks with normal play.
     </p>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -360,7 +360,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      The wooden toy is actually more economical—and you haven't factored in resale value (quality wooden toys retain value) or the intangible value of toys that become family heirlooms.
+      The wooden toy is actually more economical&mdash;and you haven't factored in resale value (quality wooden toys retain value) or the intangible value of toys that become family heirlooms.
     </p>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -372,7 +372,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
         What wooden toys are best for babies 0-6 months?
       </h3>
       <p className="mb-6">
-        For babies 0-6 months, focus on simple teething rings and lightweight rattles. Our Rimu teething rings are perfect first toys—they're safe for mouthing, the right size for tiny hands, and the natural wood feels good on sore gums. Avoid anything with small parts, sharp edges, or toxic finishes. At this age, babies explore everything orally, so safety is paramount. Look for smooth, well-sanded surfaces and food-safe natural oil finishes like we use on all our baby toys.
+        For babies 0-6 months, focus on simple teething rings and lightweight rattles. Our Rimu teething rings are perfect first toys&mdash;they're safe for mouthing, the right size for tiny hands, and the natural wood feels good on sore gums. Avoid anything with small parts, sharp edges, or toxic finishes. At this age, babies explore everything orally, so safety is paramount. Look for smooth, well-sanded surfaces and food-safe natural oil finishes like we use on all our baby toys.
       </p>
     </div>
 
@@ -417,7 +417,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
         Do wooden toys work for both boys and girls?
       </h3>
       <p className="mb-6">
-        Absolutely. Developmental needs are the same regardless of gender. Our wooden trucks are equally loved by all children, just as our wooden kitchen toys appeal across the board. The "gendered toy" concept is largely marketing. Children benefit from diverse play experiences—building toys develop spatial skills, pretend play develops social skills, and both are important for all children. Choose toys based on your child's developmental stage and interests, not arbitrary gender categories.
+        Absolutely. Developmental needs are the same regardless of gender. Our wooden trucks are equally loved by all children, just as our wooden kitchen toys appeal across the board. The "gendered toy" concept is largely marketing. Children benefit from diverse play experiences&mdash;building toys develop spatial skills, pretend play develops social skills, and both are important for all children. Choose toys based on your child's developmental stage and interests, not arbitrary gender categories.
       </p>
     </div>
 
@@ -426,7 +426,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
         Can wooden toys keep up with active preschoolers?
       </h3>
       <p className="mb-6">
-        Quality wooden toys are actually more durable than plastic for active play. Our toys are crafted from solid Kauri, Rimu, and Macrocarpa—native New Zealand hardwoods that withstand years of enthusiastic play. Plastic toys crack, break, and fade. Wooden toys might get scratched or dented, but this adds character rather than requiring replacement. We've seen our toys pass through multiple siblings and still look beautiful. For active preschoolers, the weight and solidity of wooden toys actually enhances play—they don't tip over easily and they feel substantial in small hands.
+        Quality wooden toys are actually more durable than plastic for active play. Our toys are crafted from solid Kauri, Rimu, and Macrocarpa&mdash;native New Zealand hardwoods that withstand years of enthusiastic play. Plastic toys crack, break, and fade. Wooden toys might get scratched or dented, but this adds character rather than requiring replacement. We've seen our toys pass through multiple siblings and still look beautiful. For active preschoolers, the weight and solidity of wooden toys actually enhances play&mdash;they don't tip over easily and they feel substantial in small hands.
       </p>
     </div>
 
@@ -447,7 +447,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      That's the real value of choosing well—not just for this year, but for the memories being made and the lessons being learned through play.
+      That's the real value of choosing well&mdash;not just for this year, but for the memories being made and the lessons being learned through play.
     </p>
   </>
 );
@@ -458,7 +458,7 @@ const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
 const WhyNaturalWoodToysBeatPlasticContent: React.FC = () => (
   <>
     <p className="mb-6">
-      As a parent, you want the best for your child—toys that are safe, engaging, and worth the investment. Walk into any toy store, and you'll face a wall of brightly colored plastic options. But more parents are discovering what generations before knew: natural wooden toys offer something fundamentally different.
+      As a parent, you want the best for your child&mdash;toys that are safe, engaging, and worth the investment. Walk into any toy store, and you'll face a wall of brightly colored plastic options. But more parents are discovering what generations before knew: natural wooden toys offer something fundamentally different.
     </p>
 
     <p className="mb-6">
@@ -470,11 +470,11 @@ const WhyNaturalWoodToysBeatPlasticContent: React.FC = () => (
     </h2>
 
     <p className="mb-6">
-      Plastic toys often contain chemicals that parents can't see or smell. Phthalates, BPA, and PVC are common in cheaper plastics, and even "BPA-free" alternatives may contain equally concerning substitutes. When babies mouth plastic toys—which they inevitably do—they're exposed to whatever chemicals leach from the material.
+      Plastic toys often contain chemicals that parents can't see or smell. Phthalates, BPA, and PVC are common in cheaper plastics, and even "BPA-free" alternatives may contain equally concerning substitutes. When babies mouth plastic toys&mdash;which they inevitably do&mdash;they're exposed to whatever chemicals leach from the material.
     </p>
 
     <p className="mb-6">
-      Natural wooden toys eliminate this worry entirely. Quality wooden toys use food-safe finishes or natural oils, with no synthetic chemicals to leach out. Our toys at Poppa's are finished with natural oils that are completely safe for teething babies. The wood itself—especially native New Zealand timbers—contains no harmful additives, just the natural grain your child can see and feel.
+      Natural wooden toys eliminate this worry entirely. Quality wooden toys use food-safe finishes or natural oils, with no synthetic chemicals to leach out. Our toys at Poppa's are finished with natural oils that are completely safe for teething babies. The wood itself&mdash;especially native New Zealand timbers&mdash;contains no harmful additives, just the natural grain your child can see and feel.
     </p>
 
     <p className="mb-6">
@@ -498,7 +498,7 @@ const WhyNaturalWoodToysBeatPlasticContent: React.FC = () => (
     </p>
 
     <p className="mb-6">
-      When you calculate cost-per-year of use, wooden toys are often the more economical choice—not to mention the only toys your children might one day give to their own kids.
+      When you calculate cost-per-year of use, wooden toys are often the more economical choice&mdash;not to mention the only toys your children might one day give to their own kids.
     </p>
 
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
