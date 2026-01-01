@@ -21,7 +21,7 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'why-natural-wood-toys-beat-plastic',  // FIXED: Changed from 'wooden-vs-plastic-toys'
+    slug: 'why-natural-wood-toys-beat-plastic',
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
     metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
     excerpt: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
@@ -185,6 +185,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/baby-toy-cars.jpg',
     imageAlt: 'Handcrafted wooden toy cars for babies'
   },
+
   {
     slug: 'sensory-wooden-toys-babies',
     title: 'Best Sensory Wooden Toys for Babies: A Complete Guide',
@@ -198,6 +199,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/sensory-toys-babies.jpg',
     imageAlt: 'Baby exploring wooden sensory toy'
   },
+
   {
     slug: 'how-to-clean-wooden-toys-naturally',
     title: 'How to Clean Wooden Toys Naturally: A Simple Step-by-Step Guide',
@@ -211,6 +213,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/cleaning-wooden-toys.jpg',
     imageAlt: 'Natural cleaning supplies for wooden toys'
   },
+
   {
     slug: 'tractor-exquisite',
     title: 'Tractor Exquisite',
@@ -224,6 +227,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
     imageAlt: 'Handcrafted kauri tractor toy from Whangarei'
   },
+
   {
     slug: 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b',
     title: 'Choosing the Best Wooden Toy Cars for Toddlers: A Practical Buying Guide',
@@ -237,6 +241,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers'
   },
+
   {
     slug: 'teething-ring',
     title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
@@ -250,6 +255,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
     imageAlt: 'Handcrafted rimu teething ring with wooden beads'
   },
+
   {
     slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
     title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
@@ -263,6 +269,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/bgTnCW9d/13c0ec8a8ded.webp',
     imageAlt: 'handmade wooden toys by poppawoodencreations.co.nz'
   },
+
   {
     slug: 'happy-go-luck-train',
     title: 'Happy-go-luck-train',
@@ -276,6 +283,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/p673PM37/8443ece5600c.webp',
     imageAlt: 'handmade wooden train by poppas wooden creations'
   },
+
   {
     slug: 'why-rimu-wood-makes-the-best-kitchen-utensils',
     title: 'Why Rimu Wood Makes the Best Kitchen Utensils',
@@ -288,19 +296,5 @@ export const blogPosts: BlogPost[] = [
     tags: ['rimu wood', 'kitchen utensils', 'wooden spatulas', 'handcrafted kitchenware', 'NZ made'],
     featuredImage: 'https://i.ibb.co/rRTH8z2c/FB-IMG-1641578366807-optimized.webp',
     imageAlt: 'Handcrafted rimu wood spatulas  in Whangarei  - Poppa\'s Wooden Creations'
-  },
-
-  {
-    slug: 'why-natural-wood-toys-beat-plastic',
-    title: 'Why Natural Wood Toys Beat Plastic',
-    metaDescription: 'Why wooden toys beat plastic: safer (no BPA/chemicals), last generations, boost development. Expert guide from Poppa\'s Wooden Creations, Whangarei NZ.',
-    excerpt: 'Discover why natural wooden toys consistently outperform plastic alternatives. Learn about safety differences, durability advantages, developmental benefits, and environmental impact. Expert insights from 15+ years crafting quality toys from native NZ timbers in Whangarei.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-30',
-    readTime: '6 min read',
-    category: 'Buying Guide',
-    tags: ['wooden toys', 'handcrafted', 'NZ made'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/logging-truck-optimized%20(1).webp',
-    imageAlt: 'Natural wooden toys handcrafted from Kauri and Rimu timber - safer, more durable alternative to plastic toys from Poppa\'s Wooden Creations Whangarei'
-  },
+  }
 ];
