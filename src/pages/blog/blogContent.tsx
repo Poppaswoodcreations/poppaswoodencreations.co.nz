@@ -5,8 +5,9 @@ import React from 'react';
 
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
-    case 'starting-year-right-quality-toys-2026':
-      return <StartingYearRightQualityToys2026Content />;
+    case 'starting-the-year-right-choosing-quality-toys-for-2026':
+      return <StartingTheYearRightChoosingQualityToysFor2026Content />;
+
 
     case 'why-natural-wood-toys-beat-plastic':
       return <WhyNaturalWoodToysBeatPlasticContent />;
@@ -56,37 +57,6 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 };
 
 // ==========================================
-// BLOG POST: Starting the Year Right
-// ==========================================
-const StartingYearRightQualityToys2026Content: React.FC = () => (
-  <>
-    <p className="mb-6">
-      The new year brings fresh starts, clean slates, and for many parents, a living room overflowing with holiday toys. As you look at the pile of gifts your children received, some already broken, others ignored, you might be wondering: what actually makes a good toy?
-    </p>
-
-    <p className="mb-6">
-      After a decade of crafting wooden toys in Whangarei, I have watched thousands of children play, and I have learned something important: the best toys are not the flashiest, the loudest, or even the most expensive. The best toys are the ones that last, that grow with your child, and that create memories worth keeping.
-    </p>
-
-    <p className="mb-6">
-      This year, let us make different choices. Better choices. Choices that matter not just this month, but for years to come.
-    </p>
-
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">Quality Over Quantity</h2>
-
-    <p className="mb-6">
-      At Poppa's Wooden Creations, we have been handcrafting wooden toys from native New Zealand timbers since 2015. Every toy is made with care, built to last for generations, and finished with food-safe natural oils.
-    </p>
-
-    <p className="mb-6">
-      Quality wooden toys are an investment in your child's development, your family's sustainability, and the future of our planet. They outlast plastic alternatives, provide better sensory experiences, and become treasured heirlooms.
-    </p>
-
-    <p className="mb-6">
-      Start 2026 by choosing toys that truly matter. Visit our collection to discover handcrafted Kauri, Rimu, and Macrocarpa toys made right here in Whangarei.
-    </p>
-  </>
-);
 // BLOG POST: Wooden Toys by Age Guide 0-5 Years
 // ==========================================
 const WoodenToysByAgeCompleteGuide05Years2025Content: React.FC = () => (
