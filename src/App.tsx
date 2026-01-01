@@ -21,8 +21,8 @@ const TermsOfService = lazy(() => import('./components/TermsOfService'));
 const ReviewsSection = lazy(() => import('./components/Reviews/ReviewsSection'));
 const Cart = lazy(() => import('./components/Cart/Cart'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
-const BlogListView = lazy(() => import('./pages/blog/BlogListView').then(module => ({ default: module.BlogListView })));
-const BlogPostView = lazy(() => import('./pages/blog/BlogPostView').then(module => ({ default: module.BlogPostView })));
+const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
+const BlogPostView = lazy(() => import('./pages/blog/BlogPostView'));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -47,18 +47,11 @@ const ModalLoadingFallback: React.FC = () => (
 );
 
 // Blog Post Wrapper Component - Gets slug from URL
-const BlogPostWrapper: React.FC<{
-  onNavigate: (view: string) => void;
-  onPostSelect: (slug: string) => void;
-}> = ({ onNavigate, onPostSelect }) => {
+const BlogPostWrapper: React.FC = () => {
   const { slug } = useParams();
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <BlogPostView 
-        slug={slug || null}
-        onNavigate={onNavigate} 
-        onPostSelect={onPostSelect} 
-      />
+      <BlogPostView />
     </Suspense>
   );
 };
@@ -428,18 +421,12 @@ const AppContent: React.FC = () => {
             <Route path="/blog" element={
               <>
                 <SEOHead title="Blog" description="Tips and guides for wooden toys and parenting" />
-                <BlogListView 
-                  onPostSelect={handleBlogPostSelect} 
-                  onNavigate={handleCategorySelect} 
-                />
+                <BlogListView />
               </>
             } />
             
             <Route path="/blog/:slug" element={
-              <BlogPostWrapper 
-                onNavigate={handleCategorySelect} 
-                onPostSelect={handleBlogPostSelect} 
-              />
+              <BlogPostWrapper />
             } />
           </Routes>
         </Suspense>
