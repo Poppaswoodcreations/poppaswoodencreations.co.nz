@@ -21,12 +21,12 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'wooden-vs-plastic-toys',
+    slug: 'why-natural-wood-toys-beat-plastic',  // FIXED: Changed from 'wooden-vs-plastic-toys'
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
     metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
     excerpt: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-22',  // Changed from 2025-12-22
+    date: '2024-12-22',
     readTime: '6 min read',
     category: 'Buying Guide',
     tags: ['wooden toys', 'vs plastic', 'buying guide', 'safety', 'sustainability'],
@@ -62,7 +62,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Discover the magic of Poppa\'s Wooden Creations, handcrafted wooden toys made from New Zealand\'s native timbers. Learn about our Wooden Pine Trolley and Blocks.',
     excerpt: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability, safety and quality.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-14',  // Changed from 2025-12-14
+    date: '2024-12-14',
     readTime: '2 min read',
     category: 'Baby Toys',
     tags: ['Handmade Toys', 'Wooden Toys', 'Sustainability', 'Child Safety', 'New Zealand'],
@@ -134,7 +134,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Complete guide to choosing wooden toys by age from 0-5 years. Expert advice on safe, developmental toys from native NZ timber for every stage.',
     excerpt: 'Discover the perfect wooden toys for each developmental stage from birth to 5 years. Expert guide to choosing safe, engaging toys from native New Zealand timber.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-25',  // Changed from 2025-12-25
+    date: '2024-12-25',
     readTime: '7 min read',
     category: 'Buying Guide',
     tags: ['wooden toys', 'handcrafted', 'NZ made', 'age guide', 'child development'],
@@ -217,7 +217,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
     excerpt: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-04',  // Changed from 2025-12-04
+    date: '2024-12-04',
     readTime: '6 min read',
     category: 'Product Spotlight',
     tags: ['kauri toys', 'wooden toys', 'Whangarei', 'handcrafted', 'NZ made'],
@@ -230,7 +230,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits from Poppa\'s Wooden Creations.',
     excerpt: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-10',  // Changed from 2025-12-10
+    date: '2024-12-10',
     readTime: '7 min read',
     category: 'Buying Guide',
     tags: ['wooden toy cars', 'toddler toys', 'buying guide', 'toy safety', 'wooden vehicles'],
@@ -243,7 +243,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
     excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-12',  // Changed from 2025-12-12
+    date: '2024-12-12',
     readTime: '5 min read',
     category: 'Baby Toys',
     tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
@@ -256,7 +256,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Handcrafted Wooden rubbish truck from exquisite kauri with smooth wheels and sturdy construction. Built to last and inspire imaginative play. Made with love ...',
     excerpt: 'Wooden rubbish truck made from  Kauri and macrocarpa',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-11',  // Changed from 2025-12-11
+    date: '2024-12-11',
     readTime: '8 min read',
     category: 'Products',
     tags: ['wooden toys', 'handcrafted', 'NZ made', 'baby toys', 'natural toys'],
@@ -269,7 +269,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'The Happy-go-luck-train handmade from brings timeless charm to playtime. Handcrafted from premium New Zealand pine, it inspires endless adventures.',
     excerpt: 'handmade wooden toys made in whangarei new Zealand by poppas wooden creations',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-16',  // Changed from 2025-12-16
+    date: '2024-12-16',
     readTime: '3 min read',
     category: 'Products',
     tags: ['wooden train toy', 'handcrafted train', 'toy train NZ', 'handcrafted toys NZ', 'handmade wooden products', 'New Zealand wooden toys', 'Poppa\'s Wooden Creations'],
@@ -282,7 +282,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Discover why rimu wood makes exceptional kitchen utensils. Handcrafted in Whangarei, NZ from native timber - durable, beautiful, and sustainably sourced.',
     excerpt: 'Handcrafted rimu spatulas showcase natural warmth and quality. Discover why this native NZ timber is the perfect choice for kitchen utensils.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-29',  // Changed from 2025-12-29
+    date: '2024-12-29',
     readTime: '3 min read',
     category: 'Products',
     tags: ['rimu wood', 'kitchen utensils', 'wooden spatulas', 'handcrafted kitchenware', 'NZ made'],
@@ -296,7 +296,7 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Why wooden toys beat plastic: safer (no BPA/chemicals), last generations, boost development. Expert guide from Poppa\'s Wooden Creations, Whangarei NZ.',
     excerpt: 'Discover why natural wooden toys consistently outperform plastic alternatives. Learn about safety differences, durability advantages, developmental benefits, and environmental impact. Expert insights from 15+ years crafting quality toys from native NZ timbers in Whangarei.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-30',  // Changed from 2025-12-30
+    date: '2024-12-30',
     readTime: '6 min read',
     category: 'Buying Guide',
     tags: ['wooden toys', 'handcrafted', 'NZ made'],
