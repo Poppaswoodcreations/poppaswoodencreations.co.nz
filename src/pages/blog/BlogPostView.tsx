@@ -3,15 +3,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogPosts } from './blogData';
-
-// Try to import getBlogContent, but handle if it doesn't exist
-let getBlogContent: ((slug: string) => React.ReactNode) | undefined;
-try {
-  const blogContentModule = require('./blogContent');
-  getBlogContent = blogContentModule.getBlogContent;
-} catch (e) {
-  console.error('blogContent module not found:', e);
-}
+import { getBlogContent } from './blogContent';
 
 const BlogPostView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -22,6 +14,7 @@ const BlogPostView: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
+          <p className="text-gray-600 mb-4">Looking for: <code className="bg-gray-200 px-2 py-1 rounded">{slug}</code></p>
           <Link to="/blog" className="text-amber-600 hover:text-amber-700">
             ← Back to Blog
           </Link>
@@ -30,13 +23,7 @@ const BlogPostView: React.FC = () => {
     );
   }
 
-  // Use getBlogContent if available, otherwise show a placeholder
-  const content = getBlogContent ? getBlogContent(slug!) : (
-    <div className="text-gray-600">
-      <p>{post.excerpt}</p>
-      <p className="mt-4 text-sm italic">Blog content coming soon...</p>
-    </div>
-  );
+  const content = getBlogContent(slug!);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -140,7 +127,6 @@ const BlogPostView: React.FC = () => {
             src={post.featuredImage}
             alt={post.imageAlt}
             className="w-full h-full object-cover opacity-60"
-            loading="eager"
           />
           
           <div className="absolute inset-0 flex items-center justify-center">
