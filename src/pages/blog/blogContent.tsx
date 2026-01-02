@@ -58,6 +58,9 @@ const BestFirstBirthdayWoodenToysContent: React.FC = () => (
 
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'montessori-wooden-toys-complete-guide':
+      return <MontessoriWoodenToysCompleteGuideContent />;
+
     case 'best-first-birthday-wooden-toys':
       return <BestFirstBirthdayWoodenToysContent />;
 
@@ -660,67 +663,95 @@ const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
   <p>Content for rimu kitchen utensils coming soon...</p>
 );
 
-const BestFirstBirthdayWoodenToysContent: React.FC = () => (
+
+const MontessoriWoodenToysCompleteGuideContent: React.FC = () => (
   <>
     <p className="mb-6">
-      <strong>Title: Celebrate First Birthdays with Handcrafted Wooden Toys from Poppa's Wooden Creations</strong>
+      As a parent, you want toys that actually support your child's development—not just entertain them for five minutes. That's where Montessori wooden toys come in. After crafting educational wooden toys in Whangarei for over a decade, we've seen firsthand how the right toys can transform a child's learning experience.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What Are Montessori Toys?
+    </h2>
 
     <p className="mb-6">
-      <strong>Introduction</strong>
+      Montessori toys support the educational philosophy developed by Dr. Maria Montessori. Key principles include child-led exploration, focus on one skill at a time, natural materials (especially wood), real-world connection, and open-ended use.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Wooden Toys Are Perfect for Montessori
+    </h2>
 
     <p className="mb-6">
-      The first birthday of a child is a significant milestone that deserves a special celebration. It is also an opportunity to gift a keepsake that will be cherished for years to come. At Poppa's Wooden Creations, we take pride in crafting unique wooden toys made from native New Zealand timbers. Our toys are not just playthings; they are a symbol of love, craftsmanship, and sustainability.
+      Maria Montessori emphasized natural materials. Each piece of native New Zealand timber—Kauri, Rimu, Macrocarpa—has unique characteristics that provide genuine sensory feedback. Wooden toys have satisfying heft that teaches real lessons about gravity and balance.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Montessori Wooden Toys by Age
+    </h2>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 0-6 Months: Sensory Foundation
+    </h3>
 
     <p className="mb-6">
-      <strong>Poppa's Wooden Creations: A Blend of Craftsmanship and Tradition</strong>
+      Simple wooden grasping toys and interlocking discs allow gentle exploration without overstimulation.
     </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 6-12 Months: Movement and Discovery
+    </h3>
 
     <p className="mb-6">
-      Poppa's Wooden Creations is nestled in the heart of Whangarei, New Zealand, a place known for its beautiful native timbers like Kauri, Rimu, and Macrocarpa. Our toys are carefully handcrafted by skilled artisans, ensuring that each piece is unique and of the highest quality. We believe that our toys are more than just a plaything; they are a piece of New Zealand's rich natural heritage that your child can cherish for a lifetime.
+      Ball trackers, object permanence boxes, and our Pine Trolley support active learning. Offer one toy at a time on a low shelf.
     </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 1-2 Years: Practical Life
+    </h3>
 
     <p className="mb-6">
-      <strong>The Perfect First Birthday Gift</strong>
+      Wooden stacking rings, simple puzzles, and our handcrafted vehicles allow genuine participation in practical activities.
     </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 2-3 Years: Order and Refinement
+    </h3>
 
     <p className="mb-6">
-      When it comes to choosing a first birthday gift, it's important to select something that is safe, durable, and can last for years. Our wooden toys fit the bill perfectly.
+      Wooden blocks, shape sorters, and our Happy-Go-Lucky Train support sustained concentration and spatial reasoning.
     </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 3-5 Years: Mastery and Complexity
+    </h3>
 
     <p className="mb-6">
-      Consider our popular <strong>Kauri Rocking Horse</strong>. This is not just a toy; it's a work of art. Made from native Kauri timber, this rocking horse is sturdy, beautifully crafted, and designed to be a family heirloom.
+      Construction sets, geometric solids, and realistic wooden tool sets provide appropriate complexity for preschoolers.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Setting Up a Toy Rotation
+    </h2>
 
     <p className="mb-6">
-      Or perhaps our <strong>Rimu Stacking Blocks</strong>. These blocks are a great way to introduce your little one to different shapes and help develop their motor skills. Plus, they're made from Rimu, a durable and attractive wood that's native to New Zealand.
+      Display 6-10 toys on low, open shelves where children can access everything independently. Rotate toys every 1-2 weeks. Limited choices reduce overwhelm and increase focus.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Choosing Quality Over Quantity
+    </h2>
 
     <p className="mb-6">
-      For something a bit different, our <strong>Macrocarpa Wooden Puzzle</strong> is a fantastic option. This puzzle helps to promote problem-solving skills and is made from Macrocarpa, a wood known for its beautiful grain and warm colour.
+      Look for solid hardwood construction, natural finishes, and purposeful design. Our toys use native New Zealand timbers with natural variations that provide genuine sensory experiences. A quality wooden toy used by three children over 10 years is more economical than repeatedly replacing plastic toys.
     </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Bottom Line
+    </h2>
 
     <p className="mb-6">
-      <strong>Why Choose Wooden Toys?</strong>
+      You don't need a perfectly curated playroom. You need a few quality wooden toys, thoughtfully arranged, and the patience to let your child engage deeply. The toys we craft in Whangarei from native New Zealand timbers allow children to learn through genuine, self-directed exploration.
     </p>
-
-    <p className="mb-6">
-      Wooden toys offer many benefits over their plastic counterparts. They are more durable and can withstand the rough and tumble of a toddler's play. Plus, they are safer, as they don't contain any harmful chemicals that are often found in plastic toys. Moreover, wooden toys are easy to clean and maintain.
-    </p>
-
-    <p className="mb-6">
-      <strong>Conclusion</strong>
-    </p>
-
-    <p className="mb-6">
-      At Poppa's Wooden Creations, we believe in creating toys that are more than just playthings. They are a connection to the natural world, a celebration of craftsmanship, and a keepsake to be cherished. So, for your child's first birthday, give the gift of a wooden toy - a gift that is meaningful, sustainable, and will last a lifetime.
-    </p>
-
-    <p className="mb-6">
-      <strong>Tags:</strong> Poppa's Wooden Creations, Wooden Toys, First Birthday Gifts, Handcrafted Toys, New Zealand Timbers, Kauri, Rimu, Macrocarpa.
-    </p>
-
   </>
 );
