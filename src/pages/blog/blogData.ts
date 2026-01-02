@@ -21,6 +21,19 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'montessori-wooden-toys-complete-guide',
+    title: 'Montessori Wooden Toys: Complete Guide for Parents (2025)',
+    metaDescription: 'Complete guide to Montessori wooden toys for ages 0-5. Learn principles, best toys by age, DIY setup tips. Expert advice from Whangarei, NZ craftsmen.',
+    excerpt: 'Discover how Montessori wooden toys support natural development from birth to age 5. Complete guide to choosing, using, and organizing quality wooden toys that align with Montessori principles. Expert insights from New Zealand\'s wooden toy craftsmen.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-01-03',
+    readTime: '10 min read',
+    category: 'Child Development',
+    tags: ['montessori', 'wooden toys', 'child development', 'educational toys', 'parenting'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HELICOPTER%20-%20Rimu-optimized.webp',
+    imageAlt: 'Handcrafted Montessori wooden toys made from New Zealand native timber - Kauri, Rimu, Macrocarpa'
+  },
+  {
     slug: 'why-natural-wood-toys-beat-plastic',
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
     metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
