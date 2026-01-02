@@ -21,17 +21,17 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'montessori-wooden-toys-complete-guide',
-    title: 'Montessori Wooden Toys: Complete Guide for Parents (2025)',
-    metaDescription: 'Complete guide to Montessori wooden toys for ages 0-5. Learn principles, best toys by age, DIY setup tips. Expert advice from Whangarei, NZ craftsmen.',
-    excerpt: 'Discover how Montessori wooden toys support natural development from birth to age 5. Complete guide to choosing, using, and organizing quality wooden toys that align with Montessori principles. Expert insights from New Zealand\'s wooden toy craftsmen.',
+    slug: 'best-first-birthday-wooden-toys',
+    title: 'Best First Birthday Gifts: Handcrafted Wooden Toys That Last',
+    metaDescription: 'Celebrate baby\'s first birthday with heirloom wooden toys from Whangarei, NZ. Handcrafted from Kauri, Rimu & Macrocarpa. Safe, durable, cherished for life.',
+    excerpt: 'The first birthday is a milestone deserving a special keepsake. Discover why handcrafted wooden toys from native NZ timbers make the perfect first birthday gift - safe, durable, and treasured for generations.',
     author: 'Poppa\'s Wooden Creations',
     date: '2025-01-03',
-    readTime: '10 min read',
-    category: 'Child Development',
-    tags: ['montessori', 'wooden toys', 'child development', 'educational toys', 'parenting'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HELICOPTER%20-%20Rimu-optimized.webp',
-    imageAlt: 'Handcrafted Montessori wooden toys made from New Zealand native timber - Kauri, Rimu, Macrocarpa'
+    readTime: '6 min read',
+    category: 'Buying Guide',
+    tags: ['first birthday gifts', 'wooden toys', 'handcrafted toys', 'kauri', 'rimu', 'macrocarpa', 'heirloom toys', 'baby gifts'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/FLOOR%20NOISE%20MAKER-optimized.webp',
+    imageAlt: 'Handcrafted wooden first birthday gifts made from New Zealand Kauri, Rimu, and Macrocarpa timber'
   },
   {
     slug: 'why-natural-wood-toys-beat-plastic',
