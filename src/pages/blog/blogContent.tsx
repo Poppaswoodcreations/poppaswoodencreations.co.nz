@@ -5,6 +5,9 @@ import React from 'react';
 
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'montessori-wooden-toys-complete-guide':
+      return <MontessoriWoodenToysCompleteGuideContent />;
+
     case 'why-natural-wood-toys-beat-plastic':
       return <WhyNaturalWoodToysBeatPlasticContent />;
 
@@ -601,4 +604,132 @@ const HappyGoLuckTrainContent: React.FC = () => (
 
 const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
   <p>Content for rimu kitchen utensils coming soon...</p>
+);
+
+const MontessoriWoodenToysCompleteGuideContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      As a parent, you want toys that actually support your child's development—not just entertain them for five minutes. That's where Montessori wooden toys come in. After crafting educational wooden toys in Whangarei for over a decade, we've seen firsthand how the right toys can transform a child's learning experience.
+    </p>
+
+    <p className="mb-6">
+      This isn't about buying expensive equipment or creating a picture-perfect playroom. It's about understanding which simple wooden toys align with Montessori principles and how to use them effectively at each stage of development.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What Are Montessori Toys? (And What They're Not)
+    </h2>
+
+    <p className="mb-6">
+      Montessori toys support the educational philosophy developed by Dr. Maria Montessori over a century ago. But here's what surprises most parents: Montessori isn't a brand or a specific style of toy. It's a set of principles about how children learn best.
+    </p>
+
+    <p className="mb-6">
+      <strong>Key Montessori Principles:</strong> Child-led exploration (not adult-directed play), focus on one skill at a time (not overstimulation), natural materials (especially wood), real-world connection (toys that mimic real objects), and open-ended use (no single "correct" way to play).
+    </p>
+
+    <p className="mb-6">
+      The beauty of authentic Montessori toys is their simplicity. A well-crafted wooden car teaches more about physics, spatial relationships, and cause-and-effect than any battery-powered toy with flashing lights.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Wooden Toys Are Perfect for Montessori
+    </h2>
+
+    <p className="mb-6">
+      Maria Montessori emphasized natural materials, and wood is the ideal material for children's toys. Each piece of native New Zealand timber—Kauri, Rimu, Macrocarpa—has unique characteristics that provide genuine sensory feedback.
+    </p>
+
+    <p className="mb-6">
+      Wooden toys have satisfying heft that teaches real lessons about gravity and balance. They last for generations, becoming family heirlooms rather than landfill waste. Unlike plastic toys with endless pieces, wooden toys often come in purposeful sets that enhance creativity.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Montessori Wooden Toys by Age
+    </h2>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 0-6 Months: Sensory Foundation
+    </h3>
+
+    <p className="mb-6">
+      Babies are discovering their bodies and learning to control their movements. Simple wooden grasping toys, interlocking discs, and mobiles allow gentle exploration without overstimulation.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 6-12 Months: Movement and Discovery
+    </h3>
+
+    <p className="mb-6">
+      Baby is mobile and wants to DO things. Ball trackers, object permanence boxes, and sturdy push toys like our Pine Trolley support this active learning phase. Offer one toy at a time on a low shelf to teach focus.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 1-2 Years: Practical Life Begins
+    </h3>
+
+    <p className="mb-6">
+      Toddlers want to do everything adults do. Wooden stacking rings, simple puzzles, our handcrafted vehicles, and real wooden tools at child-size allow genuine participation in practical life activities.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 2-3 Years: Order and Refinement
+    </h3>
+
+    <p className="mb-6">
+      Children this age crave order and routine. Wooden blocks, shape sorters, matching games, and our Happy-Go-Lucky Train support sustained concentration and spatial reasoning. Arrange toys on low shelves where children can access everything independently.
+    </p>
+
+    <h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+      Ages 3-5 Years: Mastery and Complexity
+    </h3>
+
+    <p className="mb-6">
+      Preschoolers are ready for real challenges. Construction sets, geometric solids, advanced puzzles, and realistic wooden tool sets provide appropriate complexity. Quality wooden toys support cooperative play and sustained focus.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Setting Up a Montessori Toy Rotation at Home
+    </h2>
+
+    <p className="mb-6">
+      You don't need 50 toys visible at once. Display 6-10 toys on low, open shelves where children can see and reach everything independently. Rotate toys every 1-2 weeks, keeping favorites available. Limited choices reduce overwhelm and increase focus.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Choosing Quality Over Quantity
+    </h2>
+
+    <p className="mb-6">
+      Look for solid hardwood construction, natural finishes, purposeful design, and realistic proportions. Our toys use native New Zealand timbers with natural variations in grain and color that provide genuine sensory experiences.
+    </p>
+
+    <p className="mb-6">
+      A $50 quality wooden toy used by three children over 10 years costs $5 per child-year. A $10 plastic toy replaced three times per child costs $30 per child. The wooden toy is actually more economical—and it's the only one that might become an heirloom.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Common Montessori Toy Mistakes
+    </h2>
+
+    <p className="mb-6">
+      Don't assume expensive means better—judge toys by Montessori principles, not branding. Avoid offering too many toys at once, which leads to scattered attention. Use open shelving instead of bins where children can't see toys. Follow your child's actual abilities, not marketing claims about "educational" toys.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Bottom Line: Simple Toys, Profound Impact
+    </h2>
+
+    <p className="mb-6">
+      After years of crafting wooden toys and watching children grow with them, we've seen a consistent pattern: the simplest toys create the deepest engagement. A beautifully crafted wooden car doesn't tell your child how to play—it invites exploration.
+    </p>
+
+    <p className="mb-6">
+      You don't need a perfectly curated Montessori playroom. You need a few quality wooden toys, thoughtfully arranged, and the patience to let your child engage deeply with them. The toys we craft in Whangarei from native New Zealand timbers allow children to learn the way nature designed: through genuine, self-directed exploration.
+    </p>
+
+    <p className="mb-6">
+      Start simple. Choose quality. Step back and observe. You might be surprised by what your child discovers when given the right tools and the freedom to explore.
+    </p>
+  </>
 );
