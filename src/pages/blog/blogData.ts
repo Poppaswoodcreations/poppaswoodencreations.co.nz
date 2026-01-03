@@ -34,25 +34,62 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Handcrafted Montessori wooden toys made from New Zealand native timber - Kauri, Rimu, Macrocarpa'
   },
   {
+    slug: 'happy-go-lucky-train',
+    title: 'Happy-Go-Lucky Train: Handcrafted Wooden Toy Magic',
+    metaDescription: 'Discover our handcrafted Happy-Go-Lucky Train made from NZ Pine in Whangarei. Safe, durable wooden toy with detachable carriages. Perfect for ages 18 months+.',
+    excerpt: 'Experience the joy of traditional play with our Happy-Go-Lucky Train, lovingly handcrafted from New Zealand Pine in Whangarei. This charming wooden train with detachable carriages sparks imagination, develops fine motor skills, and becomes a treasured keepsake for generations.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2025-01-03',
+    readTime: '5 min read',
+    category: 'Product Spotlight',
+    tags: ['happy-go-lucky train', 'wooden train', 'handcrafted toys', 'nz pine', 'wooden toys', 'toddler toys', 'imaginative play'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HAPPY-GO-LUCK-TRAIN-optimized.webp',
+    imageAlt: 'Happy-Go-Lucky wooden train handcrafted from New Zealand Pine with detachable carriages',
+    faqs: [
+      {
+        question: 'What age is the Happy-Go-Lucky Train suitable for?',
+        answer: 'The Happy-Go-Lucky Train is perfect for children aged 18 months and up. The detachable carriages help develop fine motor skills, while the sturdy construction can withstand enthusiastic toddler play. As children grow, the train becomes a cherished imaginative play companion for preschoolers as well.'
+      },
+      {
+        question: 'Is New Zealand Pine durable enough for active play?',
+        answer: 'Absolutely! New Zealand Pine is known for its strength and resilience. We specifically choose this timber because it can handle the rough-and-tumble of everyday play while maintaining its beautiful appearance. The fine grain means minimal splintering, and with proper care, your Happy-Go-Lucky Train will last for years—even generations.'
+      },
+      {
+        question: 'How do I clean and maintain the Happy-Go-Lucky Train?',
+        answer: 'Cleaning is simple! Just wipe the train with a slightly damp cloth and dry thoroughly. Avoid soaking in water or using harsh chemicals. For ongoing care, you can occasionally apply a thin coat of food-safe natural oil (like walnut or mineral oil) to keep the wood nourished and beautiful. The non-toxic finish we use makes the train safe even when little ones put it in their mouths.'
+      },
+      {
+        question: 'Can I purchase additional carriages separately?',
+        answer: 'Currently, the Happy-Go-Lucky Train comes as a complete set with the engine and two carriages. However, we\'re always happy to discuss custom orders! Contact us at our Whangarei workshop if you\'d like to add more carriages or create a personalized train set for your child.'
+      },
+      {
+        question: 'What makes handcrafted wooden trains better than plastic alternatives?',
+        answer: 'Handcrafted wooden trains offer several advantages: they\'re more durable (plastic trains crack and break), safer (no harmful chemicals or small parts that break off), more sustainable (renewable timber vs. petroleum-based plastic), and provide better sensory feedback for developing children. Plus, the weight and texture of real wood helps children understand physics concepts like momentum and balance through natural play. Most importantly, a quality wooden train becomes a treasured keepsake rather than disposable plastic'
+      }
+    ]
+  },
+  {
     slug: 'why-kauri-wood-makes-superior-toys',
-    title: 'Why Kauri Wood Makes Superior Toys: New Zealand\'s Premium Timber',
+    title: 'Why Kauri Wood Makes Superior Toys: New Zealand\'s Premium Ti',
     metaDescription: 'Discover why Kauri wood creates superior wooden toys. Learn about this rare NZ native timber\'s unique properties, durability & heirloom quality from Whangarei.',
     excerpt: 'Kauri is New Zealand\'s most prized native timber, known for its exceptional strength, beautiful grain, and longevity. Discover why our handcrafted Kauri toys from Whangarei are built to become treasured family heirlooms lasting generations.',
     author: 'Poppa\'s Wooden Creations',
-    date: '2025-01-03',
-    readTime: '8 min read',
-    category: 'Products',
+    date: '2026-01-02',
+    readTime: '5 min read',
+    category: 'Product Spotlight',
     tags: ['kauri wood', 'wooden toys', 'new zealand timber', 'heirloom toys', 'premium toys', 'native timber', 'whangarei'],
     featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/DUMP%20TRUCK-optimized.webp',
     imageAlt: 'Premium handcrafted wooden toys made from rare New Zealand Kauri timber in Whangarei',
     faqs: [
       {
         question: 'Is Kauri wood safe for teething babies?',
-        answer: 'Yes, absolutely. We finish our Kauri toys with food-safe natural oils that are completely safe for babies to mouth. Kauri\'s fine grain and smooth finish mean no splinter risk, and the wood\'s natural resins are non-toxic.'
+        answer: ': Yes, absolutely. We finish our Kauri toys with food-safe natural oils that are completely safe for babies to mouth. Kauri\'s fine grain and smooth finish mean no splinter risk, and the wood\'s natural resins are non-toxic.'
       },
       {
         question: 'Why is Kauri more expensive than other wooden toys?',
-        answer: 'Kauri is a premium native New Zealand timber that\'s no longer commercially harvested. We source reclaimed and swamp Kauri through regulated channels. The wood\'s exceptional properties—strength, durability, fine grain—combined with its rarity make it more costly, but a Kauri toy will outlast cheaper alternatives by decades.'
+        answer: 'Kauri is a premium native New Zealand timber that\'s no longer commercially harvested. We source reclaimed and swamp Kauri through regulated channels. The wood\'s exceptional properties—strength, durability, fine grain—combined with its rarity make it more costly, but a Kauri toy will outlast cheaper alternatives by decades.
+
+FAQ 3:'
       },
       {
         question: 'How long will a Kauri toy last?',
@@ -67,7 +104,7 @@ export const blogPosts: BlogPost[] = [
         answer: 'Swamp Kauri has been preserved in peat swamps for thousands of years. It\'s even denser and more stable than regular Kauri, with sometimes darker, richer coloring. Both are excellent for toys, but swamp Kauri is particularly prized for its history and unique character.'
       },
       {
-        question: 'Can damaged Kauri toys be repaired?',
+        question: 'can damaged Kauri toys be repaired?',
         answer: 'Yes, one of Kauri\'s great advantages is repairability. Minor scratches can be sanded out and the toy refinished with food-safe oil. Unlike plastic toys that break permanently, Kauri toys can be restored to like-new condition even after decades of use.'
       }
     ]
