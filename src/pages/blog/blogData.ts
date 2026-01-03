@@ -370,19 +370,7 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'handmade wooden toys by poppawoodencreations.co.nz'
   },
 
-  {
-    slug: 'happy-go-luck-train',
-    title: 'Happy-go-luck-train',
-    metaDescription: 'The Happy-go-luck-train handmade from brings timeless charm to playtime. Handcrafted from premium New Zealand pine, it inspires endless adventures.',
-    excerpt: 'handmade wooden toys made in whangarei new Zealand by poppas wooden creations',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-16',
-    readTime: '3 min read',
-    category: 'Products',
-    tags: ['wooden train toy', 'handcrafted train', 'toy train NZ', 'handcrafted toys NZ', 'handmade wooden products', 'New Zealand wooden toys', 'Poppa Wooden Creations'],
-    featuredImage: 'https://i.ibb.co/p673PM37/8443ece5600c.webp',
-    imageAlt: 'handmade wooden train by poppas wooden creations'
-  },
+  
 
   {
     slug: 'why-rimu-wood-makes-the-best-kitchen-utensils',
