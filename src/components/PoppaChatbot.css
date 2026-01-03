@@ -3,7 +3,7 @@
 :root {
   --poppa-primary: #8B4513;
   --poppa-primary-dark: #654321;
-  --poppa-secondary: #228B22;
+  --poppa-secondary: #1a6b1a; /* FIXED: Darker green for better contrast */
   --poppa-accent: #D2691E;
   --poppa-light: #F5F5DC;
   --poppa-gray: #757575;
@@ -46,7 +46,7 @@
   position: absolute;
   top: -8px;
   right: -8px;
-  background: var(--poppa-secondary);
+  background: var(--poppa-secondary); /* Now uses darker green #1a6b1a */
   color: var(--poppa-white);
   padding: 4px 12px;
   border-radius: 12px;
