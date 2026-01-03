@@ -9,6 +9,7 @@ import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
 import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEOHead'; // Import SEOHead
+import PoppaChatbot from './components/PoppaChatbot'; // Import Chatbot
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -433,6 +434,9 @@ const AppContent: React.FC = () => {
       </main>
       
       <Footer />
+      
+      {/* AI Chatbot */}
+      <PoppaChatbot />
       
       {/* Cart Modal - NOINDEX */}
       {showCart && (
