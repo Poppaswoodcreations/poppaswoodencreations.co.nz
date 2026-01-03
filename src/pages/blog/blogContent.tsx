@@ -7,7 +7,63 @@ const MontessoriWoodenToysCompleteGuideContent: React.FC = () => (
 );
 
 const HappyGoLuckyTrainContent: React.FC = () => (
-  <p>Content for Happy-Go-Lucky Train coming soon...</p>
+  <>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Discover the Magic of Handcrafted Wooden Toys with the Happy-Go-Lucky Train
+    </h2>
+
+    <p className="mb-6">
+      There's a simple yet profound joy that comes from watching your child play with a toy that's been lovingly crafted by hand. At <strong>Poppa's Wooden Creations</strong>, we believe in preserving the tradition of handmade toys, using only the best native timbers New Zealand has to offer.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Celebrating the Beauty of New Zealand Pine
+    </h2>
+
+    <p className="mb-6">
+      We're fortunate to have an abundance of native timbers in New Zealand, each with its unique characteristics. For our Happy-Go-Lucky Train, we chose the robust and durable New Zealand Pine.
+    </p>
+
+    <p className="mb-6">
+      Pine is known for its <strong>fine grain and versatile nature</strong>, making it the perfect choice for crafting intricate toys that withstand the test of time.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Happy-Go-Lucky Train: A Journey of Imagination
+    </h2>
+
+    <p className="mb-6">
+      Every child loves the allure of a train, and our Happy-Go-Lucky Train is no different. Lovingly crafted, it features a delightful train engine with two carriages that can be easily connected and disconnected, stimulating your child's fine motor skills.
+    </p>
+
+    <p className="mb-6">
+      But it's not just about physical development. The Happy-Go-Lucky Train is a <strong>gateway to a world of imagination</strong>.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Sustainable and Safe: A Toy You Can Trust
+    </h2>
+
+    <p className="mb-6">
+      At Poppa's Wooden Creations, we take pride in creating toys that are not only fun and educational but also environmentally friendly and safe. Our Happy-Go-Lucky Train, like all our toys, is crafted from <strong>sustainably sourced</strong> New Zealand Pine.
+    </p>
+
+    <p className="mb-6">
+      Moreover, we use <strong>non-toxic paints and finishes</strong> to ensure that our toys are safe for your little ones.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      A Gift That Keeps on Giving
+    </h2>
+
+    <p className="mb-6">
+      The Happy-Go-Lucky Train makes the perfect gift for birthdays, Christmas, or simply as a special treat for your little one. It's more than just a toy — it's a piece of art, a tool for learning, and a gateway to endless adventures.
+    </p>
+
+    <p className="mb-6">
+      Embrace the joy of traditional play with Poppa's Wooden Creations. Explore our range of handcrafted toys today and discover the difference that quality, locally sourced materials and craftsmanship can make.
+    </p>
+  </>
 );
 
 const WhyKauriWoodMakesSuperiorToysContent: React.FC = () => (
