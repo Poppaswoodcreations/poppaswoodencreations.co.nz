@@ -29,7 +29,7 @@ export const blogPosts: BlogPost[] = [
     date: '2026-01-05',
     readTime: '4 min read time',
     category: 'Buying Guide',
-    tags: ['wooden toy car', 'handmade car toy', 'wooden cars NZ', 'toy vehicles', 'kauri wood', 'NZ kauri', 'New Zealand wooden toys', 'Poppa's Wooden Creations', 'eco-friendly wooden toys'],
+    tags: ['wooden toy car', 'handmade car toy', 'wooden cars NZ', 'toy vehicles', 'kauri wood', 'NZ kauri', 'New Zealand wooden toys', 'Poppa\'s Wooden Creations', 'eco-friendly wooden toys'],
     featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/DUMP%20TRUCK-optimized.webp',
     imageAlt: 'Handcrafted wooden dump truck toy made from premium New Zealand Kauri wood, featuring smooth natural finish and child-safe design by Poppa\'s Wooden Creations',
     faqs: [
@@ -47,6 +47,7 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
+  {
     slug: 'montessori-wooden-toys-complete-guide',
     title: 'Montessori Wooden Toys: Complete Guide for Parents (2025)',
     metaDescription: 'Complete guide to Montessori wooden toys for ages 0-5. Learn principles, best toys by age, DIY setup tips. Expert advice from Whangarei, NZ craftsmen.',
