@@ -21,6 +21,32 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-kauri-wood-makes-superior-toys-new-zealands',
+    title: 'Why Kauri Wood Makes Superior Toys: New Zealand\'s',
+    metaDescription: 'Explore the unique properties of Kauri wood that make it ideal for children\'s toys. Durable, safe, and beautiful - discover New Zealand\'s premium timber.',
+    excerpt: 'Discover why Kauri wood has been treasured for generations. Learn what makes this native New Zealand timber the perfect choice for heirloom-quality toys.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-05',
+    readTime: '4 min read time',
+    category: 'Buying Guide',
+    tags: ['wooden toy car', 'handmade car toy', 'wooden cars NZ', 'toy vehicles', 'kauri wood', 'NZ kauri', 'New Zealand wooden toys', 'Poppa's Wooden Creations', 'eco-friendly wooden toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/DUMP%20TRUCK-optimized.webp',
+    imageAlt: 'Handcrafted wooden dump truck toy made from premium New Zealand Kauri wood, featuring smooth natural finish and child-safe design by Poppa\'s Wooden Creations',
+    faqs: [
+      {
+        question: 'Is Kauri wood safe for babies and toddlers?',
+        answer: 'Yes, Kauri wood is exceptionally safe for young children. The timber has natural antimicrobial properties and, when finished with food-safe, non-toxic oils or waxes, provides a completely safe surface for teething and mouthing. Unlike plastic toys that may contain harmful chemicals like BPA or phthalates, Kauri offers a pure, natural alternative. Its density also means fewer splinters compared to softer woods, and the smooth finish remains consistent even after repeated washing and handling.'
+      },
+      {
+        question: 'How does Kauri wood compare to other woods used for toys?',
+        answer: 'Kauri stands apart from common toy woods like pine, beech, or bamboo in several key ways. it is significantly more durable and resistant to dents and wear, meaning toys maintain their appearance and integrity far longer. The timber\'s beautiful grain patterns and warm honey tones are more distinctive than many alternatives. Additionally, as a native New Zealand timber with proper sustainable sourcing, Kauri carries unique heritage value. While woods like maple or oak are excellent choices, Kauri\'s combination of strength, beauty, and cultural significance makes it premium-tier material for heirloom-quality toys.'
+      },
+      {
+        question: 'Will Kauri wood toys last long enough to pass down to multiple children?',
+        answer: 'Absolutely. Kauri\'s exceptional durability is precisely why it is considered heirloom-quality material. With proper care—simple cleaning with a damp cloth and occasional treatment with food-safe oil—Kauri toys can easily serve multiple generations. The timber\'s resistance to wear means that wooden toy cars, trucks, and vehicles maintain their structural integrity and aesthetic appeal through decades of play. Many families find that well-crafted Kauri toys actually improve with age, developing a rich patina that adds to their character and story.'
+      }
+    ]
+  },
     slug: 'montessori-wooden-toys-complete-guide',
     title: 'Montessori Wooden Toys: Complete Guide for Parents (2025)',
     metaDescription: 'Complete guide to Montessori wooden toys for ages 0-5. Learn principles, best toys by age, DIY setup tips. Expert advice from Whangarei, NZ craftsmen.',
