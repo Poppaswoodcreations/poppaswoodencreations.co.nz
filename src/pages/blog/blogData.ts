@@ -31,7 +31,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Baby Toys',
     tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made', 'toddler toys', 'educational toys'],
     featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg',
-    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa's Wooden Creations Whangarei',
+    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa\'s Wooden Creations Whangarei',
     faqs: [
       {
         question: 'Is New Zealand pine durable enough for daily play?',
