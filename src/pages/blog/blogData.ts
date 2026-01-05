@@ -188,6 +188,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
     imageAlt: 'Handcrafted wooden toy car made from Kauri timber'
   },
+  {
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
