@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'montessori-wooden-toys-complete-guide-for-parents-2026',
+    title: 'Montessori Wooden Toys: Complete Guide for Parents (2026)',
+    metaDescription: 'Complete guide to Montessori wooden toys for parents. Learn which toys support child development at each age, from birth to 5 years. Expert NZ advice.',
+    excerpt: 'Learn which Montessori wooden toys support your child\'s development at each stage, from birth to 5 years. Expert guidance from Poppa\'s Wooden Creations.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-06',
+    readTime: '8 min read',
+    category: 'Child Development',
+    tags: ['montessori', 'wooden toys', 'child development', 'educational toys', 'age guide'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HELICOPTER%20-%20Rimu-optimized.webp',
+    imageAlt: 'Montessori wooden toys arranged by age group - handcrafted in Whangarei, New Zealand',
+    faqs: [
+      {
+        question: 'What age should I start with Montessori wooden toys?',
+        answer: 'You can introduce wooden toys from birth. Start with simple teething rings made from food-safe native wood around 3-4 months when babies begin grasping objects. Each developmental stage has appropriate wooden toys that support learning'
+      },
+      {
+        question: 'Are wooden toys safe for babies who put everything in their mouths?',
+        answer: 'Yes, when properly crafted. Choose wooden toys finished with food-safe oils only, with no small detachable parts, and at least 45mm in diameter to prevent choking. Native New Zealand timbers like Kauri and Rimu are naturally antimicrobial.'
+      },
+      {
+        question: 'How many wooden toys does my child need?',
+        answer: 'The Montessori approach emphasizes quality over quantity. Start with 3-5 well-chosen toys appropriate for your child\'s developmental stage, rotating them to maintain interest. This prevents overwhelm and encourages deeper, more focused play.'
+      },
+      {
+        question: 'Why are wooden toys better than plastic for Montessori learning?',
+        answer: 'Wooden toys provide authentic sensory experiences through natural weight, texture, and warmth. They are durable, beautiful, and support open-ended play. The connection to natural materials is fundamental to Montessori philosophy.'
+      },
+      {
+        question: 'Can wooden toys grow with my child?',
+        answer: 'Absolutely. Quality wooden toys like blocks, vehicles, and building sets remain engaging across multiple developmental stages. A simple wooden car that delights a 1-year-old becomes part of elaborate play scenarios at age 4.'
+      }
+    ]
+  },
+  {
     slug: 'why-kauri-wood-makes-superior-toys-new-zealands',
     title: 'Why Kauri Wood Makes Superior Toys: New Zealand\'s',
     metaDescription: 'Explore the unique properties of Kauri wood that make it ideal for children\'s toys. Durable, safe, and beautiful - discover New Zealand\'s premium timber.',
@@ -48,19 +83,6 @@ export const blogPosts: BlogPost[] = [
     ]
   },
   {
-    slug: 'montessori-wooden-toys-complete-guide',
-    title: 'Montessori Wooden Toys: Complete Guide for Parents (2025)',
-    metaDescription: 'Complete guide to Montessori wooden toys for ages 0-5. Learn principles, best toys by age, DIY setup tips. Expert advice from Whangarei, NZ craftsmen.',
-    excerpt: 'Discover how Montessori wooden toys support natural development from birth to age 5. Complete guide to choosing, using, and organizing quality wooden toys that align with Montessori principles.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2025-01-03',
-    readTime: '10 min read',
-    category: 'Child Development',
-    tags: ['montessori', 'wooden toys', 'child development', 'educational toys', 'parenting'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/HELICOPTER%20-%20Rimu-optimized.webp',
-    imageAlt: 'Handcrafted Montessori wooden toys made from New Zealand native timber - Kauri, Rimu, Macrocarpa'
-  },
-  {
     slug: 'happy-go-lucky-train',
     title: 'Happy-Go-Lucky Train: Handcrafted Wooden Toy Magic',
     metaDescription: 'Discover our handcrafted Happy-Go-Lucky Train made from NZ Pine in Whangarei. Safe, durable wooden toy with detachable carriages. Perfect for ages 18 months+.',
@@ -83,74 +105,22 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I clean and maintain the Happy-Go-Lucky Train?',
-        answer: 'Cleaning is simple! Just wipe the train with a slightly damp cloth and dry thoroughly. Avoid soaking in water or using harsh chemicals. For ongoing care, you can occasionally apply a thin coat of food-safe natural oil (like walnut or mineral oil) to keep the wood nourished and beautiful. The non-toxic finish we use makes the train safe even when little ones put it in their mouths.'
+        answer: 'Cleaning is simple! Wipe the train with a slightly damp cloth and mild soap if needed. Avoid soaking the wood or using harsh chemicals. Occasionally, apply a food-safe wood oil or beeswax to maintain the natural finish and protect the timber. Store in a dry place away from direct sunlight to preserve the wood\'s beautiful color.'
       },
       {
-        question: 'Can I purchase additional carriages separately?',
-        answer: 'Currently, the Happy-Go-Lucky Train comes as a complete set with the engine and two carriages. However, we are always happy to discuss custom orders! Contact us at our Whangarei workshop if you would like to add more carriages or create a personalized train set for your child.'
+        question: 'Are the paints and finishes safe for young children?',
+        answer: 'Yes, absolutely. We use only non-toxic, child-safe paints and natural finishes on all our toys, including the Happy-Go-Lucky Train. Parents can have complete peace of mind knowing their little ones can safely explore and play, even during the mouthing stage.'
       },
       {
-        question: 'What makes handcrafted wooden trains better than plastic alternatives?',
-        answer: 'Handcrafted wooden trains offer several advantages: they are more durable (plastic trains crack and break), safer (no harmful chemicals or small parts that break off), more sustainable (renewable timber vs. petroleum-based plastic), and provide better sensory feedback for developing children. Plus, the weight and texture of real wood helps children understand physics concepts like momentum and balance through natural play. Most importantly, a quality wooden train becomes a treasured keepsake rather than disposable plastic.'
+        question: 'Can I purchase extra carriages or customize the train?',
+        answer: 'While the Happy-Go-Lucky Train comes as a complete set with the engine and two carriages, we love creating custom pieces! Contact us directly to discuss adding extra carriages, personalization options, or creating a custom train set that perfectly matches your child\'s interests. Each piece is handcrafted with the same care and attention to detail.'
       }
     ]
-  },
-  {
-    slug: 'why-kauri-wood-makes-superior-toys',
-    title: 'Why Kauri Wood Makes Superior Toys: New Zealand\'s Premium Timber',
-    metaDescription: 'Discover why Kauri wood creates superior wooden toys. Learn about this rare NZ native timber\'s unique properties, durability & heirloom quality from Whangarei.',
-    excerpt: 'Kauri is New Zealand\'s most prized native timber, known for its exceptional strength, beautiful grain, and longevity. Discover why our handcrafted Kauri toys from Whangarei are built to become treasured family heirlooms lasting generations.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2025-01-03',
-    readTime: '8 min read',
-    category: 'Products',
-    tags: ['kauri wood', 'wooden toys', 'new zealand timber', 'heirloom toys', 'premium toys', 'native timber', 'whangarei'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/DUMP%20TRUCK-optimized.webp',
-    imageAlt: 'Premium handcrafted wooden toys made from rare New Zealand Kauri timber in Whangarei',
-    faqs: [
-      {
-        question: 'Is Kauri wood safe for teething babies?',
-        answer: 'Yes, absolutely. We finish our Kauri toys with food-safe natural oils that are completely safe for babies to mouth. Kauri fine grain and smooth finish mean no splinter risk, and the wood natural resins are non-toxic.'
-      },
-      {
-        question: 'Why is Kauri more expensive than other wooden toys?',
-        answer: 'Kauri is a premium native New Zealand timber that is no longer commercially harvested. We source reclaimed and swamp Kauri through regulated channels. The wood exceptional properties (strength, durability, fine grain) combined with its rarity make it more costly, but a Kauri toy will outlast cheaper alternatives by decades.'
-      },
-      {
-        question: 'How long will a Kauri toy last?',
-        answer: 'With basic care, a well-crafted Kauri toy will last for generations. We have seen Kauri toys from the early 1900s still in beautiful condition. The wood natural durability and resistance to decay mean your Kauri toy can become a genuine family heirloom.'
-      },
-      {
-        question: 'Is using Kauri wood environmentally responsible?',
-        answer: 'Yes. We only use reclaimed Kauri from old buildings or swamp Kauri excavated under permit, never from living trees. Living Kauri are protected. By transforming salvaged timber into heirloom toys used for generations, we are honoring this timber rather than letting it go to waste.'
-      },
-      {
-        question: 'What is the difference between regular Kauri and swamp Kauri?',
-        answer: 'Swamp Kauri has been preserved in peat swamps for thousands of years. It is even denser and more stable than regular Kauri, with sometimes darker, richer coloring. Both are excellent for toys, but swamp Kauri is particularly prized for its history and unique character.'
-      },
-      {
-        question: 'Can damaged Kauri toys be repaired?',
-        answer: 'Yes, one of Kauri great advantages is repairability. Minor scratches can be sanded out and the toy refinished with food-safe oil. Unlike plastic toys that break permanently, Kauri toys can be restored to like-new condition even after decades of use.'
-      }
-    ]
-  },
-  {
-    slug: 'best-first-birthday-wooden-toys',
-    title: 'Best First Birthday Gifts: Handcrafted Wooden Toys That Last',
-    metaDescription: 'Celebrate baby\'s first birthday with heirloom wooden toys from Whangarei, NZ. Handcrafted from Kauri, Rimu & Macrocarpa. Safe, durable, cherished for life.',
-    excerpt: 'The first birthday is a milestone deserving a special keepsake. Discover why handcrafted wooden toys from native NZ timbers make the perfect first birthday gift - safe, durable, and treasured for generations.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2025-01-03',
-    readTime: '6 min read',
-    category: 'Buying Guide',
-    tags: ['first birthday gifts', 'wooden toys', 'handcrafted toys', 'kauri', 'rimu', 'macrocarpa', 'heirloom toys', 'baby gifts'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/FLOOR%20NOISE%20MAKER-optimized.webp',
-    imageAlt: 'Handcrafted wooden first birthday gifts made from New Zealand Kauri, Rimu, and Macrocarpa timber'
   },
   {
     slug: 'why-natural-wood-toys-beat-plastic',
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
-    metaDescription: 'Discover why natural wooden toys beat plastic for safety, durability & development. Expert guide from NZ craftsmen at Poppa\'s Wooden Creations, Whangarei.',
+    metaDescription: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
     excerpt: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
     author: 'Poppa\'s Wooden Creations',
     date: '2024-12-22',
@@ -158,147 +128,34 @@ export const blogPosts: BlogPost[] = [
     category: 'Buying Guide',
     tags: ['wooden toys', 'vs plastic', 'buying guide', 'safety', 'sustainability'],
     featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
-    imageAlt: 'Handcrafted wooden toy car made from Kauri timber',
-    faqs: [
-      {
-        question: 'Are wooden toys really safer than plastic toys?',
-        answer: 'Yes, quality wooden toys are typically safer than plastic alternatives. They contain no harmful chemicals like BPA, phthalates, or PVC that can leach from plastic. Wooden toys finished with natural, food-safe oils are completely safe even when babies mouth them during teething.'
-      },
-      {
-        question: 'How long do wooden toys last compared to plastic?',
-        answer: 'Well-crafted wooden toys can last for generations, while plastic toys typically last 1-2 years before breaking or fading. A quality wooden toy can be passed down through multiple children and even to the next generation, making it more economical over time despite higher upfront costs.'
-      },
-      {
-        question: 'Do wooden toys help with child development?',
-        answer: 'Absolutely. Wooden toys provide rich sensory experiences through natural textures and weight variations. Their open-ended nature encourages imaginative play, problem-solving, and creativity. The solid weight of wooden toys also helps develop fine motor skills and spatial awareness in ways lightweight plastic cannot.'
-      },
-      {
-        question: 'Are wooden toys environmentally friendly?',
-        answer: 'Yes, wooden toys from sustainable sources are far more eco-friendly than plastic. They are biodegradable, made from renewable resources, and often crafted locally (reducing shipping emissions). Unlike plastic toys that sit in landfills for 400+ years, wooden toys are sustainable and often get passed down rather than discarded.'
-      },
-      {
-        question: 'What should I look for when buying wooden toys?',
-        answer: 'Look for solid hardwood construction (not laminated or composite), natural finishes or food-safe paints, smooth edges with no splinters, appropriate sizing for your child age, and locally crafted options when possible. Quality craftsmanship should be visible and tactile.'
-      }
-    ]
+    imageAlt: 'Handcrafted wooden toy car made from Kauri timber'
   },
-
   {
     slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
     title: 'Poppa\'s Wooden Creations: Handmade Wooden Pine Trolley and Blocks',
-    metaDescription: 'Discover the magic of Poppa\'s Wooden Creations, handcrafted wooden toys made from New Zealand\'s native timbers. Learn about our Wooden Pine Trolley and Blocks.',
+    metaDescription: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability.',
     excerpt: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability, safety and quality.',
     author: 'Poppa\'s Wooden Creations',
     date: '2024-12-14',
     readTime: '2 min read',
     category: 'Baby Toys',
-    tags: ['Handmade Toys', 'Wooden Toys', 'Sustainability', 'Child Safety', 'New Zealand'],
-    featuredImage: 'https://i.ibb.co/R8myyxx/05f82f2aa051.webp',
-    imageAlt: 'Handmade wooden pine trolley and blocks',
-    faqs: [
-      {
-        question: "What types of wood does Poppa Wooden Creations use?",
-        answer: "Poppa Wooden Creations uses native New Zealand timbers like Kauri, Rimu, and Macrocarpa to create our toys. These woods are not only beautiful but also sustainable."
-      },
-      {
-        question: "Why choose wooden toys over plastic ones?",
-        answer: "Wooden toys offer a unique sensory experience for children. The texture, weight, and natural variations provide a rich, engaging play experience that plastic toys cannot match. Plus, they are more environmentally friendly."
-      },
-      {
-        question: "Are the toys from Poppa Wooden Creations safe for children?",
-        answer: "Absolutely! All of our toys are designed with safety in mind. They are smooth and well-rounded to prevent injuries, and our trolleys are sturdy and balanced to avoid tipping. We also use non-toxic finishes on all our toys."
-      },
-      {
-        question: "How does Poppa Wooden Creations contribute to sustainability?",
-        answer: "We believe in creating toys that are gentle on our planet. We use sustainable timbers and incorporate eco-friendly practices in our workshop. This way, we are doing our part to preserve New Zealand beautiful native forests for future generations."
-      }
-    ]
+    tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made'],
+    featuredImage: 'https://i.ibb.co/x2x7Ty50/8443ece5600c.webp',
+    imageAlt: 'Wooden pine trolley with colorful blocks'
   },
-
   {
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
-    metaDescription: 'Discover why wooden toys are better for your child\'s development. Learn how they enhance motor skills, creativity, and more from New Zealand\'s wooden toy experts.',
+    metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
     excerpt: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility. Expert insights from Poppa\'s Wooden Creations.',
     author: 'Poppa\'s Wooden Creations',
     date: '2024-11-01',
     readTime: '8 min read',
     category: 'Child Development',
-    tags: ['wooden toys', 'child development', 'parenting tips', 'educational toys'],
+    tags: ['child development', 'educational toys', 'wooden toys', 'parenting'],
     featuredImage: '/images/blog/wooden-toys-benefits.jpg',
-    imageAlt: 'Child playing with wooden blocks',
-    faqs: [
-      {
-        question: "What age are wooden toys best for?",
-        answer: "Wooden toys are suitable for all ages from newborn onwards. For babies 0-6 months, choose smooth teething rings and simple rattles. Toddlers 1-3 years benefit from stacking toys, push toys, and simple vehicles. Preschoolers 3-5 years can enjoy more complex puzzles, building blocks, and imaginative play toys. Our handcrafted wooden toys are designed with age-appropriate features and safety standards."
-      },
-      {
-        question: "Are wooden toys safer than plastic toys?",
-        answer: "Yes, quality wooden toys are generally safer than plastic alternatives. They contain no harmful chemicals like BPA, phthalates, or PVC found in many plastic toys. Our toys are made from natural New Zealand native timbers (Kauri, Rimu, Macrocarpa) finished with food-safe, non-toxic oils. They are also more durable and will not break into sharp pieces like plastic can."
-      },
-      {
-        question: "How do wooden toys help with motor skills development?",
-        answer: "Wooden toys support motor skills through their natural weight, texture, and construction. The slightly heavier weight helps babies and toddlers develop hand strength and grip control. The varied textures of different wood grains provide sensory feedback. Activities like stacking, pushing, and manipulating wooden toys build fine and gross motor coordination essential for later skills like writing and sports."
-      },
-      {
-        question: "Do wooden toys last longer than plastic toys?",
-        answer: "Absolutely. Quality handcrafted wooden toys can last for generations when properly cared for. Unlike plastic toys that crack, fade, and break, wooden toys become family heirlooms. Our toys are crafted from durable native timbers that withstand years of play. With simple cleaning and occasional re-oiling, they maintain their beauty and functionality indefinitely."
-      },
-      {
-        question: "Why are wooden toys better for the environment?",
-        answer: "Wooden toys are sustainable and biodegradable, unlike plastic toys that contribute to landfill waste for hundreds of years. We source our timber from sustainably managed New Zealand forests. Wood is a renewable resource that stores carbon rather than releasing it. When a wooden toy eventually reaches end of life, it naturally decomposes without releasing harmful chemicals into the environment."
-      },
-      {
-        question: "Are wooden toys worth the higher price?",
-        answer: "Yes, wooden toys offer exceptional value despite higher upfront costs. They last decades rather than months, often becoming family heirlooms passed down through generations. Their durability means you will not need replacements. Wooden toys also hold their resale value well. Most importantly, they provide superior developmental benefits and safety compared to mass-produced plastic alternatives."
-      }
-    ]
+    imageAlt: 'Child playing with wooden educational toys'
   },
-
-  {
-    slug: 'wooden-toys-by-age-the-complete-guide-for-0-5-years-2025',
-    title: 'Wooden Toys by Age: The Complete Guide for 0-5 Years (2025)',
-    metaDescription: 'Complete guide to choosing wooden toys by age from 0-5 years. Expert advice on safe, developmental toys from native NZ timber for every stage.',
-    excerpt: 'Discover the perfect wooden toys for each developmental stage from birth to 5 years. Expert guide to choosing safe, engaging toys from native New Zealand timber.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-25',
-    readTime: '7 min read',
-    category: 'Buying Guide',
-    tags: ['wooden toys', 'handcrafted', 'NZ made', 'age guide', 'child development'],
-    featuredImage: 'https://i.ibb.co/wh5GjzgJ/bcc2e0763a5d.webp',
-    imageAlt: 'handmade wooden toys',
-    faqs: [
-      {
-        question: "What wooden toys are best for babies 0-6 months?",
-        answer: "For babies 0-6 months, focus on simple teething rings and lightweight rattles. Our Rimu teething rings are perfect first toys. They are safe for mouthing, the right size for tiny hands, and the natural wood feels good on sore gums. Avoid anything with small parts, sharp edges, or toxic finishes. At this age, babies explore everything orally, so safety is paramount. Look for smooth, well-sanded surfaces and food-safe natural oil finishes like we use on all our baby toys."
-      },
-      {
-        question: "When can babies start playing with wooden blocks?",
-        answer: "Babies can begin exploring wooden blocks around 6-8 months when they develop sitting stability and intentional grasping. Initially, they will mouth them, bang them together, and practice transferring between hands. True stacking typically begins around 12-15 months. Our large wooden building blocks are sized appropriately for little hands and provide the satisfying weight that helps develop motor skills. The natural wood grain also provides visual interest that supports development."
-      },
-      {
-        question: "Are wooden toys safe for toddlers who still mouth everything?",
-        answer: "Quality wooden toys with proper finishes are completely safe for mouthing toddlers. We finish all our toys with food-safe natural oils that contain no harmful chemicals. The key is choosing toys from reputable makers who use non-toxic finishes and solid hardwoods without composite materials or adhesives. Avoid painted wooden toys unless you can verify the paint is non-toxic and lead-free. Natural wood finished with oils is the safest choice for children who still explore orally."
-      },
-      {
-        question: "What is the best age for wooden train sets?",
-        answer: "Simple wooden trains can be enjoyed from around 18 months as push toys, but complex train sets with tracks work best for ages 2.5-5 years. At 2-3 years, children enjoy pushing trains along tracks but may need help with setup. By 3-4 years, they can plan layouts, connect tracks, and create elaborate scenarios. Our Happy-Go-Lucky Train is perfect for younger toddlers (18 months+) while full train sets with multiple pieces suit preschoolers who can handle the spatial planning and fine motor demands."
-      },
-      {
-        question: "How many wooden toys does a child really need?",
-        answer: "Children benefit more from a few high-quality toys they use repeatedly than a room full of options that overwhelm them. A good starting collection includes: teething ring or rattle (0-12m), simple vehicle (6m+), building blocks (12m+), push toy (12-36m), and one complex pretend play toy (2y+). This core collection provides years of developmental play. Add toys gradually based on your child interests rather than accumulating everything at once. Quality over quantity makes play more meaningful and sustainable."
-      },
-      {
-        question: "Do wooden toys work for both boys and girls?",
-        answer: "Absolutely. Developmental needs are the same regardless of gender. Our wooden trucks are equally loved by all children, just as our wooden kitchen toys appeal across the board. The gendered toy concept is largely marketing. Children benefit from diverse play experiences. Building toys develop spatial skills, pretend play develops social skills, and both are important for all children. Choose toys based on your child developmental stage and interests, not arbitrary gender categories."
-      },
-      {
-        question: "Can wooden toys keep up with active preschoolers?",
-        answer: "Quality wooden toys are actually more durable than plastic for active play. Our toys are crafted from solid Kauri, Rimu, and Macrocarpa, native New Zealand hardwoods that withstand years of enthusiastic play. Plastic toys crack, break, and fade. Wooden toys might get scratched or dented, but this adds character rather than requiring replacement. We have seen our toys pass through multiple siblings and still look beautiful. For active preschoolers, the weight and solidity of wooden toys actually enhances play. They do not tip over easily and they feel substantial in small hands."
-      }
-    ]
-  },
-
   {
     slug: 'baby-toy-cars-handcrafted-new-zealand',
     title: 'Discovering Magic in Every Grain: Baby Toy Cars',
@@ -312,7 +169,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/baby-toy-cars.jpg',
     imageAlt: 'Handcrafted wooden toy cars for babies'
   },
-
   {
     slug: 'sensory-wooden-toys-babies',
     title: 'Best Sensory Wooden Toys for Babies: A Complete Guide',
@@ -326,7 +182,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/sensory-toys-babies.jpg',
     imageAlt: 'Baby exploring wooden sensory toy'
   },
-
   {
     slug: 'how-to-clean-wooden-toys-naturally',
     title: 'How to Clean Wooden Toys Naturally: A Simple Step-by-Step Guide',
@@ -340,7 +195,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/cleaning-wooden-toys.jpg',
     imageAlt: 'Natural cleaning supplies for wooden toys'
   },
-
   {
     slug: 'tractor-exquisite',
     title: 'Tractor Exquisite',
@@ -354,7 +208,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
     imageAlt: 'Handcrafted kauri tractor toy from Whangarei'
   },
-
   {
     slug: 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b',
     title: 'Choosing the Best Wooden Toy Cars for Toddlers: A Practical Buying Guide',
@@ -368,7 +221,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers'
   },
-
   {
     slug: 'teething-ring',
     title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
@@ -382,7 +234,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
     imageAlt: 'Handcrafted rimu teething ring with wooden beads'
   },
-
   {
     slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
     title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
@@ -396,9 +247,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/bgTnCW9d/13c0ec8a8ded.webp',
     imageAlt: 'handmade wooden toys by poppawoodencreations.co.nz'
   },
-
-  
-
   {
     slug: 'why-rimu-wood-makes-the-best-kitchen-utensils',
     title: 'Why Rimu Wood Makes the Best Kitchen Utensils',
