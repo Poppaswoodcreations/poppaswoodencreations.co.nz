@@ -39,7 +39,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I clean and maintain the wooden trolley and blocks?',
-        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood's color.'
+        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood\'s color.'
       }
     ]
   },
