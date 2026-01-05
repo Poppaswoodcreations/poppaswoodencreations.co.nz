@@ -233,10 +233,6 @@ const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
   <p>Content for best handmade wooden toys from Whangarei coming soon...</p>
 );
 
-const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC = () => (
-  <p>Content for wooden pine trolley and blocks coming soon...</p>
-);
-
 const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
   <>
     <p className="mb-6">
@@ -581,8 +577,116 @@ const MontessoriWoodenToysCompleteGuideForParents2026Content: React.FC = () => (
   </>
 );
 
+const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC = () => (
+  <>
+<p className="mb-6">
+  There's something magical about watching a toddler discover the simple joy of stacking blocks and pushing a wooden trolley. Our handmade Wooden Pine Trolley and Blocks set represents everything we believe in at Poppa's Wooden Creations: timeless play, quality craftsmanship, and a deep respect for both children and the environment.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  The Perfect First Building Set
+</h2>
+
+<p className="mb-6">
+  This isn't just another toy—it's a carefully designed learning tool that grows with your child. The set includes a sturdy pine trolley and a collection of smooth, perfectly weighted blocks that invite hours of creative exploration. Whether your little one is just learning to grasp and stack or building elaborate structures, this set adapts to every developmental stage.
+</p>
+
+<p className="mb-6">
+  The trolley serves dual purposes: it's both a practical storage solution and a push toy that encourages those first wobbly steps. The stable design and smooth-rolling wheels provide confidence for new walkers, while the open design makes cleanup a fun part of playtime.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Why New Zealand Pine?
+</h2>
+
+<p className="mb-6">
+  We chose New Zealand pine for this set with intention. Pine is known for its fine, even grain and natural durability—perfect for toys that will see daily use. It's lightweight enough for small hands to manipulate easily, yet strong enough to withstand the enthusiastic play of toddlers. The warm, honey-colored timber develops a beautiful patina over time, becoming more characterful with each year of play.
+</p>
+
+<p className="mb-6">
+  Unlike cheaper softwoods that can splinter or dent easily, quality New Zealand pine maintains its smooth finish through years of stacking, dropping, and dragging. The natural antimicrobial properties of pine also mean these toys stay cleaner between washings—an important consideration for toys that inevitably end up in mouths.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Handcrafted in Our Whangarei Workshop
+</h2>
+
+<p className="mb-6">
+  Every trolley and block in this set is crafted by hand in our Whangarei workshop. We start with carefully selected pine boards, ensuring consistent grain and quality throughout each piece. The blocks are cut to precise dimensions—large enough to prevent choking hazards while being perfectly sized for small hands.
+</p>
+
+<p className="mb-6">
+  Each piece goes through multiple stages of sanding to achieve that signature silky-smooth finish that wooden toys are known for. We round edges carefully, check for any imperfections, and hand-inspect every block before it goes into a set. The trolley receives the same meticulous attention, with wheels tested for smooth rolling and the entire structure checked for stability.
+</p>
+
+<p className="mb-6">
+  We finish the set with food-safe, non-toxic oils that enhance the natural beauty of the pine while providing protection. There are no harsh chemicals, no synthetic finishes—just pure, natural wood that's safe for your child to explore with all their senses.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Educational Benefits That Last
+</h2>
+
+<p className="mb-6">
+  This simple set provides surprisingly complex learning opportunities. Stacking blocks teaches spatial reasoning, hand-eye coordination, and the fundamental physics concepts of balance and gravity. As children experiment with different configurations, they develop problem-solving skills and learn through trial and error in a safe environment.
+</p>
+
+<p className="mb-6">
+  The open-ended nature of block play encourages creativity and imagination. Unlike toys with predetermined uses, blocks can be anything a child envisions—a tower, a road, a house, or something entirely unique. This type of play is crucial for cognitive development and helps children learn to think abstractly.
+</p>
+
+<p className="mb-6">
+  The trolley component adds another dimension by encouraging gross motor development. Pushing, pulling, loading, and unloading all build strength and coordination while teaching practical concepts like sorting and organization.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Safety You Can Trust
+</h2>
+
+<p className="mb-6">
+  Safety is paramount in everything we create. The blocks are sized to exceed safety standards for young children—large enough to eliminate choking hazards while being manageable for small hands. The trolley is designed with a low center of gravity to prevent tipping, and the wheels are securely attached and tested for durability.
+</p>
+
+<p className="mb-6">
+  We avoid small parts, sharp edges, and any design elements that could pose risks. The natural finish means there's no paint to chip or peel, and the solid wood construction eliminates concerns about cheap composite materials or toxic adhesives.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Sustainable Play for Future Generations
+</h2>
+
+<p className="mb-6">
+  Choosing wooden toys is an investment in sustainability. While plastic toys typically last a year or two before being discarded, this pine trolley and block set is built to serve multiple children over many years. The durable construction and timeless design mean these toys won't go out of style—they'll become family treasures passed from sibling to sibling, or even to the next generation.
+</p>
+
+<p className="mb-6">
+  When you choose locally crafted wooden toys, you're supporting sustainable forestry practices and reducing the environmental impact associated with mass-produced plastic alternatives. You're also supporting local artisans and keeping traditional woodworking skills alive in New Zealand.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  A Gift That Keeps Giving
+</h2>
+
+<p className="mb-6">
+  Whether you're furnishing a nursery, looking for the perfect first birthday gift, or adding to an existing toy collection, this Pine Trolley and Blocks set makes a meaningful choice. It's a gift that acknowledges the importance of quality, encourages screen-free play, and creates opportunities for genuine learning and development.
+</p>
+
+<p className="mb-6">
+  Parents appreciate toys that last, that are safe, and that genuinely engage children in meaningful play. This set delivers on all counts while bringing the natural warmth and beauty of New Zealand pine into your home.
+</p>
+
+<p className="mb-6">
+  <a href="https://poppaswoodencreations.co.nz/products" className="text-amber-600 hover:text-amber-700 underline">Explore our complete collection of handcrafted wooden toys</a> and discover why families throughout New Zealand choose Poppa's Wooden Creations for toys that become treasured parts of childhood.
+</p>
+  </>
+);
+
+
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
+      return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
+
     case 'montessori-wooden-toys-complete-guide-for-parents-2026':
       return <MontessoriWoodenToysCompleteGuideForParents2026Content />;
 
@@ -633,9 +737,6 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     
     case 'best-handmade-wooden-toys-from-whangarei-new-zealand':
       return <BestHandmadeWoodenToysFromWhangareiNewZealandContent />;
-
-    case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
-      return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
 
 
     case 'why-rimu-wood-makes-the-best-kitchen-utensils':
