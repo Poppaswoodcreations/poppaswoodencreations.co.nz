@@ -298,7 +298,35 @@ const HappyGoLuckTrainContent: React.FC = () => (
 );
 
 const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
-  <p>Content for Rimu kitchen utensils coming soon...</p>
+  <>
+    <p className="mb-6">
+      There's something special about holding a freshly crafted wooden utensil in your hands. These beautiful rimu spatulas, photographed on a clean white cloth with our Whangarei garden as a backdrop, showcase the natural warmth and solid quality that makes wooden kitchenware so appealing. Each piece displays a unique grain pattern—a fingerprint from the New Zealand forest where the timber originated.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Natural Benefits of Rimu Wood
+    </h2>
+
+    <p className="mb-6">
+      Rimu stands out as an exceptional choice for kitchen utensils, and for good reason. This stunning native New Zealand timber combines beauty with practicality. Its dense, fine grain naturally resists absorbing liquids and food particles, making it hygienic and long-lasting. Unlike metal utensils, rimu is gentle on non-stick cookware, protecting your investment in quality pans. The timber's rich colour palette—ranging from warm honey tones to deep reddish-browns—develops a beautiful patina over time, ensuring each piece becomes more characterful with use.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Handcrafted in Whangarei, New Zealand
+    </h2>
+
+    <p className="mb-6">
+      Every spatula and kitchen utensil we create is meticulously handcrafted in our Whangarei workshop. From timber selection through to the final sanding and finishing touches, we invest care and expertise into each piece. There's genuine satisfaction in knowing these tools will become cherished parts of someone's daily cooking routine. We're committed to creating functional pieces that bring a touch of New Zealand's natural beauty into your home.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Discover Quality That Lasts Generations
+    </h2>
+
+    <p className="mb-6">
+      Ready to elevate your kitchen with handcrafted rimu utensils? <a href="https://poppaswoodencreations.co.nz/wooden-kitchenware" className="text-amber-600 hover:text-amber-700 underline">Browse our complete collection of wooden kitchen utensils</a> and experience the difference that genuine New Zealand craftsmanship makes.
+    </p>
+  </>
 );
 
 const WhyKauriWoodMakesSuperiorToysNewZealandsContent: React.FC = () => (
