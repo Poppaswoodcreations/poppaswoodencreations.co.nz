@@ -60,13 +60,13 @@ export const blogPosts: BlogPost[] = [
     title: 'Handmade Wooden Pine Trolley and Blocks',
     metaDescription: 'Discover our handmade wooden pine trolley and blocks set. Perfect for toddlers, handcrafted in Whangarei from NZ pine. Durable, safe, educational play.',
     excerpt: 'Experience the charm of handmade wooden toys with our Pine Trolley and Blocks set. More than just toys - a commitment to sustainability, safety, and quality craftsmanship.',
-    author: 'Poppa's Wooden Creations',
+    author: 'Poppa\'s Wooden Creations',
     date: '2026-01-05',
     readTime: '4 min read',
     category: 'Baby Toys',
     tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made', 'toddler toys', 'educational toys'],
     featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg',
-    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa's Wooden Creations Whangarei',
+    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa\'s Wooden Creations Whangarei',
     faqs: [
       {
         question: 'Is New Zealand pine durable enough for daily play?',
@@ -74,7 +74,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I clean and maintain the wooden trolley and blocks?',
-        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood's color.'
+        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood\'s color.'
       }
     ]
   },
