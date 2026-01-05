@@ -19,19 +19,54 @@ export interface BlogPost {
   }>;
 }
 
-export const blogPosts: BlogPost[] = [
+export const blogPosts: BlogPost[
+  {
+    slug: 'teething-ring-rimu-handcrafted-natural-baby-toy',
+    title: 'Rimu Teething Ring - Natural Baby Toy',
+    metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys. Perfect for soothing sore gums and early development.',
+    excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-06',
+    readTime: '5 min read',
+    category: 'Baby Toys',
+    tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made', 'natural teething', 'infant toys', 'teething relief'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TEETHING%20RING-optimized.webp',
+    imageAlt: 'Handcrafted rimu teething ring with wooden beads - Poppa\'s Wooden Creations Whangarei',
+    faqs: [
+      {
+        question: 'Is rimu wood safe for babies to put in their mouths?',
+        answer: 'Yes, rimu is completely safe for babies. This native New Zealand timber has natural antimicrobial properties and is finished only with food-safe, non-toxic oils. Unlike plastic teethers that may contain harmful chemicals like BPA, rimu offers a pure, natural alternative that meets all safety standards.'
+      },
+      {
+        question: 'At what age can babies start using a wooden teething ring?',
+        answer: 'Babies can begin using wooden teething rings around 3-4 months when they start grasping objects and bringing them to their mouth. The teething ring is safe for this age because it is large enough to prevent choking hazards and smooth enough for sensitive gums.'
+      },
+      {
+        question: 'How do I clean a wooden teething ring?',
+        answer: 'Simply wipe the teething ring with a slightly damp cloth after use and allow it to air dry completely. Never soak it in water or put it in the dishwasher. Occasionally apply food-safe oil or beeswax to maintain the finish. Proper care ensures the ring stays hygienic and beautiful.'
+      },
+      {
+        question: 'Will the teething ring splinter or become rough over time?',
+        answer: 'No, rimu\'s dense grain and quality craftsmanship prevent splintering. Each ring is hand-sanded to a silky-smooth finish and carefully inspected. With proper care, the wood maintains its smooth texture through months of use. The natural oils and regular cleaning help preserve the finish.'
+      },
+      {
+        question: 'Can I cool the wooden teething ring in the refrigerator?',
+        answer: 'Yes, you can place it in the refrigerator (not freezer) for gentle cooling that may provide additional relief for sore gums. Never freeze wooden teething rings as extreme cold can damage the wood. The slight coolness from refrigeration is usually sufficient and more comfortable for babies than frozen teethers.'
+      }
+    ]
+  },
   {
     slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
     title: 'Handmade Wooden Pine Trolley and Blocks',
     metaDescription: 'Discover our handmade wooden pine trolley and blocks set. Perfect for toddlers, handcrafted in Whangarei from NZ pine. Durable, safe, educational play.',
     excerpt: 'Experience the charm of handmade wooden toys with our Pine Trolley and Blocks set. More than just toys - a commitment to sustainability, safety, and quality craftsmanship.',
-    author: 'Poppa\'s Wooden Creations',
+    author: 'Poppa's Wooden Creations',
     date: '2026-01-05',
     readTime: '4 min read',
     category: 'Baby Toys',
     tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made', 'toddler toys', 'educational toys'],
     featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg',
-    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa\'s Wooden Creations Whangarei',
+    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa's Wooden Creations Whangarei',
     faqs: [
       {
         question: 'Is New Zealand pine durable enough for daily play?',
@@ -39,7 +74,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I clean and maintain the wooden trolley and blocks?',
-        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood\'s color.'
+        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood's color.'
       }
     ]
   },
@@ -153,7 +188,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
     imageAlt: 'Handcrafted wooden toy car made from Kauri timber'
   },
-  {
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
@@ -231,20 +265,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
     imageAlt: 'Collection of handcrafted wooden toy cars for toddlers'
   },
-  {
-    slug: 'teething-ring',
-    title: 'Rimu Teething Ring - Handcrafted Natural Baby Toy',
-    metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys made by Poppa\'s Wooden Creations. Perfect for soothing sore gums and early development.',
-    excerpt: 'Lovingly handcrafted natural wooden teething rings from beautiful rimu. Safe, smooth, and perfectly sized for tiny hands. A treasured NZ-made keepsake.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-12',
-    readTime: '5 min read',
-    category: 'Baby Toys',
-    tags: ['teething ring', 'baby toys', 'rimu', 'wooden baby toys', 'NZ made'],
-    featuredImage: 'https://i.ibb.co/fYQTbN8V/20201218-104927-optimized.webp',
-    imageAlt: 'Handcrafted rimu teething ring with wooden beads'
-  },
-  {
+{
     slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
     title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
     metaDescription: 'Handcrafted Wooden rubbish truck from exquisite kauri with smooth wheels and sturdy construction. Built to last and inspire imaginative play. Made with love ...',
