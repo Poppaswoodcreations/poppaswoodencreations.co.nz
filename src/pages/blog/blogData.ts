@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Handmade Wooden Pine Trolley and Blocks',
     metaDescription: 'Discover our handmade wooden pine trolley and blocks set. Perfect for toddlers, handcrafted in Whangarei from NZ pine. Durable, safe, educational play.',
     excerpt: 'Experience the charm of handmade wooden toys with our Pine Trolley and Blocks set. More than just toys - a commitment to sustainability, safety, and quality craftsmanship.',
-    author: 'Poppa's Wooden Creations',
+    author: 'Poppa\'s Wooden Creations',
     date: '2026-01-05',
     readTime: '4 min read',
     category: 'Baby Toys',
