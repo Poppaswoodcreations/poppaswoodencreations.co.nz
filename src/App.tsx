@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -66,6 +66,26 @@ const AppContent: React.FC = () => {
   
   const { products, loading, error, loadProducts } = useProducts();
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
+
+  // ============================================
+  // CANONICAL TAG FIX - Updates on route change
+  // ============================================
+  useEffect(() => {
+    const baseUrl = 'https://poppaswoodencreations.co.nz';
+    const currentUrl = baseUrl + location.pathname;
+    
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    
+    if (canonical) {
+      canonical.href = currentUrl;
+    } else {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      canonical.href = currentUrl;
+      document.head.appendChild(canonical);
+    }
+  }, [location.pathname]);
+  // ============================================
 
   const handleCategorySelect = (category: string) => {
     navigate(`/${category}`);
