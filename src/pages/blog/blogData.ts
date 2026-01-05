@@ -21,6 +21,29 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
+    title: 'Handmade Wooden Pine Trolley and Blocks',
+    metaDescription: 'Discover our handmade wooden pine trolley and blocks set. Perfect for toddlers, handcrafted in Whangarei from NZ pine. Durable, safe, educational play.',
+    excerpt: 'Experience the charm of handmade wooden toys with our Pine Trolley and Blocks set. More than just toys - a commitment to sustainability, safety, and quality craftsmanship.',
+    author: 'Poppa's Wooden Creations',
+    date: '2026-01-05',
+    readTime: '4 min read',
+    category: 'Baby Toys',
+    tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made', 'toddler toys', 'educational toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg',
+    imageAlt: 'Handmade wooden pine trolley with colorful blocks - Poppa's Wooden Creations Whangarei',
+    faqs: [
+      {
+        question: 'Is New Zealand pine durable enough for daily play?',
+        answer: 'Absolutely! New Zealand pine is surprisingly durable despite being lighter than hardwoods. Its fine, even grain resists splintering, and the wood maintains its smooth finish through years of use. With proper care, this set will easily serve multiple children and remain in excellent condition.'
+      },
+      {
+        question: 'How do I clean and maintain the wooden trolley and blocks?',
+        answer: 'Simply wipe with a slightly damp cloth and mild soap when needed. Avoid soaking the wood or using harsh chemicals. Periodically applying food-safe wood oil or beeswax helps maintain the natural finish. Store in a dry area away from direct sunlight to preserve the wood's color.'
+      }
+    ]
+  },
+  {
     slug: 'montessori-wooden-toys-complete-guide-for-parents-2026',
     title: 'Montessori Wooden Toys: Complete Guide for Parents (2026)',
     metaDescription: 'Complete guide to Montessori wooden toys for parents. Learn which toys support child development at each age, from birth to 5 years. Expert NZ advice.',
@@ -130,20 +153,6 @@ export const blogPosts: BlogPost[] = [
     featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
     imageAlt: 'Handcrafted wooden toy car made from Kauri timber'
   },
-  {
-    slug: 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
-    title: 'Poppa\'s Wooden Creations: Handmade Wooden Pine Trolley and Blocks',
-    metaDescription: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability.',
-    excerpt: 'Experience the charm of handmade wooden toys with Poppa\'s Wooden Creations. Our Wooden Pine Trolley and Blocks are not just toys, but a commitment to sustainability, safety and quality.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-14',
-    readTime: '2 min read',
-    category: 'Baby Toys',
-    tags: ['wooden blocks', 'pine trolley', 'handmade toys', 'baby toys', 'NZ made'],
-    featuredImage: 'https://i.ibb.co/x2x7Ty50/8443ece5600c.webp',
-    imageAlt: 'Wooden pine trolley with colorful blocks'
-  },
-  {
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
