@@ -19,7 +19,7 @@ export interface BlogPost {
   }>;
 }
 
-export const blogPosts: BlogPost[
+export const blogPosts: BlogPost[] = [
   {
     slug: 'teething-ring-rimu-handcrafted-natural-baby-toy',
     title: 'Rimu Teething Ring - Natural Baby Toy',
