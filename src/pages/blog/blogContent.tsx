@@ -237,66 +237,6 @@ const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC =
   <p>Content for wooden pine trolley and blocks coming soon...</p>
 );
 
-const HappyGoLuckTrainContent: React.FC = () => (
-  <>
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
-      Discover the Magic of Handcrafted Wooden Toys with the Happy-Go-Luck-Train
-    </h2>
-
-    <p className="mb-6">
-      There's a simple yet profound joy that comes from watching your child play with a toy that's been lovingly crafted by hand. At <strong>Poppa's Wooden Creations</strong>, we believe in preserving the tradition of handmade toys, using only the best native timbers New Zealand has to offer.
-    </p>
-
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
-      Celebrating the Beauty of New Zealand Pine
-    </h2>
-
-    <p className="mb-6">
-      We're fortunate to have an abundance of native timbers in New Zealand, each with its unique characteristics. For our Happy-Go-Luck-Train, we chose the robust and durable New Zealand Pine.
-    </p>
-
-    <p className="mb-6">
-      Pine is known for its <strong>fine grain and versatile nature</strong>, making it the perfect choice for crafting intricate toys that withstand the test of time.
-    </p>
-
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
-      The Happy-Go-Luck-Train: A Journey of Imagination
-    </h2>
-
-    <p className="mb-6">
-      Every child loves the allure of a train, and our Happy-Go-Luck-Train is no different. Lovingly crafted, it features a delightful train engine with two carriages that can be easily connected and disconnected, stimulating your child's fine motor skills.
-    </p>
-
-    <p className="mb-6">
-      But it's not just about physical development. The Happy-Go-Luck-Train is a <strong>gateway to a world of imagination</strong>.
-    </p>
-
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
-      Sustainable and Safe: A Toy You Can Trust
-    </h2>
-
-    <p className="mb-6">
-      At Poppa's Wooden Creations, we take pride in creating toys that are not only fun and educational but also environmentally friendly and safe. Our Happy-Go-Luck-Train, like all our toys, is crafted from <strong>sustainably sourced</strong> New Zealand Pine.
-    </p>
-
-    <p className="mb-6">
-      Moreover, we use <strong>non-toxic paints and finishes</strong> to ensure that our toys are safe for your little ones.
-    </p>
-
-    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
-      A Gift That Keeps on Giving
-    </h2>
-
-    <p className="mb-6">
-      The Happy-Go-Luck-Train makes the perfect gift for birthdays, Christmas, or simply as a special treat for your little one. It's more than just a toy — it's a piece of art, a tool for learning, and a gateway to endless adventures.
-    </p>
-
-    <p className="mb-6">
-      Embrace the joy of traditional play with Poppa's Wooden Creations. Explore our range of handcrafted toys today and discover the difference that quality, locally sourced materials and craftsmanship can make.
-    </p>
-  </>
-);
-
 const WhyRimuWoodMakesTheBestKitchenUtensilsContent: React.FC = () => (
   <>
     <p className="mb-6">
@@ -424,8 +364,228 @@ const WhyKauriWoodMakesSuperiorToysNewZealandsContent: React.FC = () => (
   </>
 );
 
+const MontessoriWoodenToysCompleteGuideForParents2026Content: React.FC = () => (
+  <>
+<p className="mb-6">
+  Choosing the right wooden toy for your child\'s developmental stage makes all the difference. As Whangarei-based craftsmen specializing in handcrafted wooden toys from native New Zealand timbers, we have watched countless children grow with toys perfectly matched to their abilities. This guide breaks down exactly which Montessori-inspired wooden toys support your child\'s development at each stage from birth to five years.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  0-6 Months: Sensory Exploration Begins
+</h2>
+
+<p className="mb-6">
+  During the first six months, babies explore the world through touch, taste, and sound. Wooden toys for this age prioritize safety and sensory stimulation.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Wooden Teething Rings
+</h3>
+
+<p className="mb-6">
+  Your baby\'s first wooden toy should be a teething ring crafted from food-safe timber like Kauri or Rimu. These native New Zealand woods are naturally antimicrobial and safe for constant mouthing. Look for smooth, rounded edges and a finish using only food-grade oils. The natural wood texture provides gentle gum relief while the weight helps babies develop grip strength.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Natural Wooden Rattles
+</h3>
+
+<p className="mb-6">
+  Unlike plastic alternatives, wooden rattles produce a softer, more organic sound that will not startle young ears. The gentle weight encourages muscle development as babies learn to grasp and shake. Choose rattles with securely enclosed elements—loose beads or wooden balls should never be accessible.
+</p>
+
+<p className="mb-6">
+  <strong>Safety First:</strong> All toys for this age must be large enough to prevent choking (at least 45mm in diameter), splinter-free, and finished with non-toxic, food-safe oils.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  6-12 Months: Movement and Coordination
+</h2>
+
+<p className="mb-6">
+  As babies become mobile, their toys should encourage crawling, reaching, and hand-eye coordination.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Simple Wooden Vehicles
+</h3>
+
+<p className="mb-6">
+  Chunky wooden cars and trucks with smooth, rounded edges are perfect first vehicles. Look for designs without small wheels that could detach—the best options for this age have wheels that are carved as part of the solid body or securely fixed. These toys encourage push-and-chase games that motivate crawling.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Grasping Toys
+</h3>
+
+<p className="mb-6">
+  Wooden toys with multiple graspable parts—like simple wooden keys on a ring or textured blocks—help develop the pincer grasp essential for self-feeding. The varied shapes and weights provide important tactile feedback.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  1-2 Years: Active Learning and Problem Solving
+</h2>
+
+<p className="mb-6">
+  Toddlers are ready for more complex toys that challenge their growing problem-solving abilities and fine motor skills.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Stacking and Sorting Toys
+</h3>
+
+<p className="mb-6">
+  Simple wooden stackers and sorting boxes introduce concepts like size, shape, and spatial relationships. Natural wood variations in grain and color provide subtle sensory interest without the overstimulation of bright plastic colors. These open-ended toys encourage independent exploration and concentration—core Montessori principles.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Push and Pull Toys
+</h3>
+
+<p className="mb-6">
+  Wooden push toys and pull-along animals support balance and coordination as toddlers master walking. The substantial weight of quality wooden toys provides stability, while wheels should roll smoothly on various surfaces. Look for simple designs without unnecessary bells or lights that distract from the fundamental movement experience.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Simple Wooden Cars
+</h3>
+
+<p className="mb-6">
+  At this age, children begin imaginative play. A collection of simple wooden vehicles—cars, trucks, trains—becomes the foundation for endless creative scenarios. Choose substantial pieces that feel good in small hands and can withstand enthusiastic play.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  2-3 Years: Imagination and Symbolic Play
+</h2>
+
+<p className="mb-6">
+  Two-year-olds enter a magical phase of imaginative play. Their toys should support increasingly complex narratives and social scenarios.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Vehicle Collections
+</h3>
+
+<p className="mb-6">
+  Expand their collection of wooden vehicles to include planes, boats, trains, and specialized vehicles like fire trucks or tractors. Each new vehicle opens different play scenarios and vocabulary opportunities. The beauty of wooden vehicles is their longevity—these toys will remain engaging for years.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Building Blocks
+</h3>
+
+<p className="mb-6">
+  A quality set of wooden blocks is perhaps the most valuable Montessori toy you can provide. Blocks teach geometry, balance, spatial reasoning, and planning—all through play. Choose blocks in natural wood finishes that showcase the timber\'s beauty and provide honest sensory feedback about weight and balance.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Simple Wooden Puzzles
+</h3>
+
+<p className="mb-6">
+  Wooden puzzles with chunky pieces help develop problem-solving skills and hand-eye coordination. Start with simple 3-5 piece puzzles and gradually increase complexity as skills develop.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  3-5 Years: Complex Play and Real-World Connections
+</h2>
+
+<p className="mb-6">
+  Preschoolers are ready for toys that mirror real-world activities and support increasingly sophisticated imaginative play.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Wooden Kitchen Sets
+</h3>
+
+<p className="mb-6">
+  Wooden kitchen items—utensils, bowls, cutting boards—allow children to participate in real food preparation alongside toy play kitchens. This connection between real and pretend work is fundamental to Montessori philosophy. Choose items crafted from native New Zealand timbers that are both functional and beautiful.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Complex Vehicle Sets
+</h3>
+
+<p className="mb-6">
+  Elaborate wooden vehicles like our Tractor Exquisite or detailed dump trucks support more complex narratives. These toys often become the centerpiece of elaborate play scenarios involving construction sites, farms, or transportation networks.
+</p>
+
+<h3 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">
+  Wooden Train Sets
+</h3>
+
+<p className="mb-6">
+  Train sets with tracks encourage planning, pattern recognition, and spatial reasoning. The open-ended nature means children can create new configurations endlessly, supporting problem-solving and creativity.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Why Choose Wooden Toys for Montessori Learning
+</h2>
+
+<p className="mb-6">
+  Maria Montessori emphasized natural materials in learning environments, and wooden toys align perfectly with this philosophy for several reasons:
+</p>
+
+<ul className="list-disc pl-6 mb-6 space-y-2">
+  <li><strong>Sensory richness:</strong> Natural wood grain, weight, and warmth provide authentic sensory experiences</li>
+  <li><strong>Durability:</strong> Quality wooden toys last for generations, supporting sustainability values</li>
+  <li><strong>Beauty:</strong> The natural aesthetics of wood create calming, attractive play spaces</li>
+  <li><strong>Connection to nature:</strong> Wooden toys help children feel connected to the natural world</li>
+  <li><strong>Open-ended play:</strong> Simple wooden toys encourage creativity rather than dictating play patterns</li>
+</ul>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Choosing Quality Wooden Toys
+</h2>
+
+<p className="mb-6">
+  Not all wooden toys are created equal. When selecting Montessori wooden toys for your child, look for:
+</p>
+
+<ul className="list-disc pl-6 mb-6 space-y-2">
+  <li><strong>Solid wood construction:</strong> Native New Zealand timbers like Kauri, Rimu, and Macrocarpa offer superior durability</li>
+  <li><strong>Non-toxic finishes:</strong> Food-safe oils and natural waxes only</li>
+  <li><strong>Smooth craftsmanship:</strong> Hand-sanded edges with no splinters</li>
+  <li><strong>Simple designs:</strong> Toys that invite imagination rather than dictate play</li>
+  <li><strong>Appropriate weight:</strong> Substantial enough to feel quality but not too heavy for small hands</li>
+  <li><strong>Timeless appeal:</strong> Designs that will engage children for years, not months</li>
+</ul>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Building Your Collection Thoughtfully
+</h2>
+
+<p className="mb-6">
+  The Montessori approach emphasizes fewer, higher-quality toys rather than overwhelming abundance. Start with a few well-chosen pieces at your child\'s current developmental stage, then gradually add items as they grow and their interests evolve.
+</p>
+
+<p className="mb-6">
+  A thoughtful collection might include: a teething ring for infancy, simple vehicles for toddlerhood, blocks for preschool years, and gradually more complex items as capabilities develop. Quality wooden toys from native New Zealand timbers will serve your family for decades, potentially becoming cherished heirlooms passed to the next generation.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Supporting Development Through Play
+</h2>
+
+<p className="mb-6">
+  The right wooden toy at the right developmental stage becomes more than entertainment—it is a tool for learning, a catalyst for imagination, and a connection to the natural world. Whether you are choosing your baby\'s first teething ring or expanding your preschooler\'s vehicle collection, selecting quality Montessori wooden toys is an investment in your child\'s developmental journey.
+</p>
+
+<p className="mb-6">
+  At Poppa\'s Wooden Creations, each piece is handcrafted with care from premium native New Zealand timbers. We understand that these toys will become part of your family\'s story, supporting your child\'s growth from infancy through the preschool years and beyond.
+</p>
+
+<p className="mb-6">
+  <a href="https://poppaswoodencreations.co.nz/products" className="text-amber-600 hover:text-amber-700 underline">Explore our complete collection of handcrafted wooden toys</a> and discover pieces perfectly suited to your child\'s current developmental stage.
+</p>
+  </>
+);
+
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'montessori-wooden-toys-complete-guide-for-parents-2026':
+      return <MontessoriWoodenToysCompleteGuideForParents2026Content />;
+
     case 'why-kauri-wood-makes-superior-toys-new-zealands':
       return <WhyKauriWoodMakesSuperiorToysNewZealandsContent />;
 
@@ -477,8 +637,6 @@ export const getBlogContent = (slug: string): React.ReactNode => {
     case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
       return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
 
-    case 'happy-go-luck-train':
-      return <HappyGoLuckTrainContent />;
 
     case 'why-rimu-wood-makes-the-best-kitchen-utensils':
       return <WhyRimuWoodMakesTheBestKitchenUtensilsContent />;
