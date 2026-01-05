@@ -225,10 +225,6 @@ const ChoosingBestWoodenToyCarsContent: React.FC = () => (
   <p>Content for choosing best wooden toy cars coming soon...</p>
 );
 
-const TeethingRingContent: React.FC = () => (
-  <p>Content for teething ring coming soon...</p>
-);
-
 const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
   <p>Content for best handmade wooden toys from Whangarei coming soon...</p>
 );
@@ -682,8 +678,147 @@ const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC =
 );
 
 
+const TeethingRingRimuHandcraftedNaturalBabyToyContent: React.FC = () => (
+  <>
+<p className="mb-6">
+  When your baby\'s first teeth begin their journey through tender gums, you want something safe, soothing, and natural to ease their discomfort. Our handcrafted rimu teething rings offer exactly that—a beautiful blend of form, function, and the natural warmth of New Zealand native timber.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Why Rimu for Teething?
+</h2>
+
+<p className="mb-6">
+  Rimu is one of New Zealand\'s most treasured native timbers, and for good reason. This stunning wood possesses natural properties that make it ideal for babies exploring the world through touch and taste. The fine, dense grain creates a naturally smooth surface that is gentle on sensitive gums, while the timber\'s inherent antimicrobial qualities provide an extra layer of hygiene that plastic alternatives simply cannot match.
+</p>
+
+<p className="mb-6">
+  Unlike synthetic teething toys that may contain questionable chemicals, rimu offers pure, natural relief. The slightly textured surface provides just the right amount of resistance for babies to work their emerging teeth against, while the wood\'s natural warmth feels pleasant in tiny hands—never startlingly cold like metal or uncomfortably hard like rigid plastic.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Handcrafted with Care in Whangarei
+</h2>
+
+<p className="mb-6">
+  Every teething ring we create begins with carefully selected rimu timber in our Whangarei workshop. We choose pieces with beautiful, consistent grain patterns and no imperfections—only the finest wood is suitable for something that will spend so much time in your baby\'s mouth.
+</p>
+
+<p className="mb-6">
+  The crafting process is meticulous. Each ring is shaped, then hand-sanded through multiple stages to achieve that signature silky-smooth finish. We pay particular attention to ensuring there are no sharp edges, no rough spots, and no possibility of splinters. The final step involves finishing with food-safe, non-toxic oils that enhance the natural beauty of the rimu while providing protection.
+</p>
+
+<p className="mb-6">
+  Many of our teething rings feature smooth wooden beads that slide along the ring, adding visual interest and tactile variety. These beads are large enough to eliminate any choking hazard, yet sized perfectly for tiny fingers to explore and grasp.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Perfect Size for Little Hands
+</h2>
+
+<p className="mb-6">
+  The diameter of our teething rings is carefully considered—large enough for baby to hold comfortably and safely manipulate, yet not so large that it becomes unwieldy. This sizing encourages the development of the pincer grasp and hand-eye coordination as babies learn to bring the ring to their mouth independently.
+</p>
+
+<p className="mb-6">
+  The ring shape itself is intentional. Unlike harder-to-grasp shapes, a ring design allows babies to hold it from any angle, making it easier for them to find relief exactly where they need it. As they grow and their coordination improves, they will discover new ways to manipulate and explore their teething ring.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Natural Relief for Sore Gums
+</h2>
+
+<p className="mb-6">
+  Teething can be an uncomfortable experience for babies, with symptoms ranging from drooling and fussiness to disturbed sleep and sore, swollen gums. A natural wooden teething ring provides gentle counter-pressure that can help ease this discomfort.
+</p>
+
+<p className="mb-6">
+  The smooth, firm surface of rimu is ideal for this purpose. it is hard enough to provide the resistance babies seek when they are working a tooth through, yet it is not so rigid that it risks damaging delicate gum tissue. The natural texture offers subtle sensory feedback that babies find satisfying.
+</p>
+
+<p className="mb-6">
+  Some parents find that cooling the teething ring slightly (never freezing—just cool) can provide additional soothing relief. The wood holds a gentle coolness that feels pleasant against inflamed gums without the extreme cold of gel-filled plastic teethers that can sometimes be too intense for sensitive babies.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Beyond Teething: A Developmental Tool
+</h2>
+
+<p className="mb-6">
+  While these rings are designed primarily for teething relief, they serve multiple developmental purposes. The act of grasping, manipulating, and bringing the ring to their mouth helps babies develop crucial motor skills and hand-eye coordination.
+</p>
+
+<p className="mb-6">
+  The sliding beads (if your chosen design includes them) introduce early concepts of cause and effect—push the bead, watch it move. These simple actions lay groundwork for more complex problem-solving later. The natural variations in the wood grain provide subtle visual interest that supports developing vision.
+</p>
+
+<p className="mb-6">
+  Even after the teething phase passes, many children continue to enjoy their wooden rings as comfort objects or simple toys. The durability of rimu means these pieces can serve through multiple developmental stages and even multiple children.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Safe, Non-Toxic, and Natural
+</h2>
+
+<p className="mb-6">
+  As parents, we understand the importance of knowing exactly what goes into your baby\'s mouth. Our rimu teething rings contain absolutely no synthetic materials, no paints, no stains, and no questionable chemicals. The only finish used is food-safe oil that meets all New Zealand safety standards for children\'s products.
+</p>
+
+<p className="mb-6">
+  Rimu\'s natural antimicrobial properties mean the wood itself helps resist bacteria, though we still recommend regular cleaning with a damp cloth. The dense grain structure does not harbor moisture the way softer woods might, and it maintains its smooth finish through months of enthusiastic use.
+</p>
+
+<p className="mb-6">
+  Each teething ring is individually inspected before it leaves our workshop. We check for any imperfections, test the smoothness, and ensure the finish is perfect. Nothing less than the best is acceptable when it comes to products for babies.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  Caring for Your Rimu Teething Ring
+</h2>
+
+<p className="mb-6">
+  Maintaining your teething ring is simple. Wipe it clean with a slightly damp cloth after use, and allow it to air dry completely. Avoid soaking the wood or exposing it to excessive moisture. Never put wooden teething rings in the dishwasher or use harsh cleaning chemicals.
+</p>
+
+<p className="mb-6">
+  Occasionally, you may want to refresh the finish by applying a thin coat of food-safe oil or beeswax. This helps maintain the wood\'s natural beauty and protective qualities. With proper care, your rimu teething ring will remain in beautiful condition throughout the teething months and beyond.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  A Keepsake Worth Keeping
+</h2>
+
+<p className="mb-6">
+  Unlike plastic teethers that typically end up in the trash, a handcrafted wooden teething ring becomes a keepsake—a tangible reminder of your baby\'s early months. Many parents treasure these pieces long after their children have grown, keeping them as mementos of those precious early days.
+</p>
+
+<p className="mb-6">
+  The natural beauty of rimu, with its rich color variations and distinctive grain patterns, makes each teething ring a small work of art. As the wood develops a patina through use, it becomes even more characterful—a testament to the journey it shared with your child.
+</p>
+
+<h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+  A Thoughtful Gift for New Parents
+</h2>
+
+<p className="mb-6">
+  Looking for a meaningful baby gift that stands apart from mass-produced alternatives? A handcrafted rimu teething ring makes a thoughtful choice. It demonstrates care in selection, appreciation for quality craftsmanship, and commitment to natural, safe products for babies.
+</p>
+
+<p className="mb-6">
+  New parents will appreciate receiving something that is both practical for everyday use and special enough to treasure. it is a gift that acknowledges the importance of this developmental stage while offering a beautiful alternative to synthetic teething toys.
+</p>
+
+<p className="mb-6">
+  <a href="https://poppaswoodencreations.co.nz/products" className="text-amber-600 hover:text-amber-700 underline">Explore our complete collection of natural wooden baby toys</a> and discover more handcrafted treasures for your little one.
+</p>
+  </>
+);
+
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'teething-ring-rimu-handcrafted-natural-baby-toy':
+      return <TeethingRingRimuHandcraftedNaturalBabyToyContent />;
+
     case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
       return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
 
@@ -730,12 +865,7 @@ export const getBlogContent = (slug: string): React.ReactNode => {
       return <TractorExquisiteContent />;
     
     case 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b':
-      return <ChoosingBestWoodenToyCarsContent />;
-	
-    case 'teething-ring':
-      return <TeethingRingContent />;	
-    
-    case 'best-handmade-wooden-toys-from-whangarei-new-zealand':
+      return <ChoosingBestWoodenToyCarsContent />;    case 'best-handmade-wooden-toys-from-whangarei-new-zealand':
       return <BestHandmadeWoodenToysFromWhangareiNewZealandContent />;
 
 
