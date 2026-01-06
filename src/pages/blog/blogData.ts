@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'best-sensory-wooden-toys-for-babies-a-complete-guide',
+    title: 'Best Sensory Wooden Toys for Babies: A Complete Guide',
+    metaDescription: 'Discover the best sensory wooden toys for babies aged 0-18 months. Learn why natural wood supports development better than plastic with our complete guide.',
+    excerpt: 'Wooden toys offer sensory experiences plastic cannot replicate. Discover why natural New Zealand timbers like Rimu and Kauri provide superior tactile, visual, and auditory stimulation for babies aged 0-18 months—plus expert guidance on choosing safe, developmental toys.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-07',
+    readTime: '10 min read',
+    category: 'Baby Development',
+    tags: ['sensory toys', 'baby development', 'wooden toys', 'infant toys', 'sensory play', 'baby toys', 'teething toys', 'educational toys', 'natural toys', 'Montessori toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/Baby%20Rattle-optimized%20(1).webp',
+    imageAlt: 'Natural wooden sensory toys including Rimu teething ring , Baby Rattle, and building blocks for baby development',
+    faqs: [
+      {
+        question: 'What age should babies start using sensory wooden toys?',
+        answer: 'Babies can start using sensory wooden toys from birth. For newborns to 6 months, simple wooden rattles and teething rings are ideal. As babies develop, introduce building blocks at 6-12 months and shape sorters at 12-18 months. Always choose toys appropriate for your baby\'s current developmental stage.'
+      },
+      {
+        question: 'Are wooden toys safe for babies who put everything in their mouths?',
+        answer: 'Yes, quality wooden toys are very safe for mouthing babies. Native New Zealand timbers like Rimu and Kauri have natural antimicrobial properties. Choose toys finished with food-safe oils or left natural, avoiding painted surfaces for babies under 12 months. Ensure toys are large enough to prevent choking hazards.'
+      },
+      {
+        question: 'How do sensory wooden toys support baby development?',
+        answer: 'Sensory wooden toys support development through multiple pathways. The natural weight builds proprioceptive awareness and motor skills. Varied textures and grain patterns stimulate tactile and visual senses. Natural sounds from wooden toys provide auditory feedback without overwhelming sensitive ears. These multi-sensory experiences build neural pathways crucial for all future learning.'
+      },
+      {
+        question: 'How do I clean wooden sensory toys for babies?',
+        answer: 'Clean wooden toys by wiping with a slightly damp cloth. For deeper cleaning, use a diluted vinegar solution, then dry thoroughly. Native timbers like Rimu have natural antimicrobial properties. Avoid soaking wooden toys or using harsh chemicals. Occasionally treat with food-safe oil to maintain the finish.'
+      },
+      {
+        question: 'What makes New Zealand timber better for sensory toys?',
+        answer: 'Native New Zealand timbers like Rimu, Kauri, and Macrocarpa offer exceptional sensory benefits. They have natural antimicrobial properties for safety, beautiful grain patterns for visual interest, and pleasant warmth to touch. These hardwoods are exceptionally durable, lasting generations. The varied colors and textures provide richer sensory input than uniform plastic toys.'
+      }
+    ]
+  },
+  {
     slug: 'why-natural-wood-toys-beat-plastic-parents-guide',
     title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
     metaDescription: 'Discover why natural wood toys are safer, more durable, and better for child development than plastic. Learn about native NZ timbers and making the switch.',
@@ -236,20 +271,7 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/baby-toy-cars.jpg',
     imageAlt: 'Handcrafted wooden toy cars for babies'
   },
-  {
-    slug: 'sensory-wooden-toys-babies',
-    title: 'Best Sensory Wooden Toys for Babies: A Complete Guide',
-    metaDescription: 'Learn how sensory wooden toys support your baby\'s development. Expert guide to choosing safe, engaging sensory toys for infants.',
-    excerpt: 'A comprehensive guide to sensory wooden toys and how they support crucial early development in babies aged 0-18 months.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-11-07',
-    readTime: '6 min read',
-    category: 'Baby Development',
-    tags: ['sensory toys', 'baby development', 'infant toys', 'sensory play'],
-    featuredImage: '/images/blog/sensory-toys-babies.jpg',
-    imageAlt: 'Baby exploring wooden sensory toy'
-  },
-  {
+{
     slug: 'how-to-clean-wooden-toys-naturally',
     title: 'How to Clean Wooden Toys Naturally: A Simple Step-by-Step Guide',
     metaDescription: 'Learn how to clean wooden toys naturally using kitchen staples like vinegar and lemon. Safe, effective, and eco-friendly cleaning tips for parents.',
