@@ -348,7 +348,7 @@ const AboutSection: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex items-center space-x-2">
               <Truck size={20} />
-              <span>Free shipping over $150</span>
+              <span>Free shipping over $1000</span>
             </div>
             <div className="flex items-center space-x-2">
               <Shield size={20} />
