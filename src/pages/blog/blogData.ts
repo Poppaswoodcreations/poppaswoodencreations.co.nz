@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-natural-wood-toys-beat-plastic-parents-guide',
+    title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
+    metaDescription: 'Discover why natural wood toys are safer, more durable, and better for child development than plastic. Learn about native NZ timbers and making the switch.',
+    excerpt: 'Most parents do not realize what is in plastic toys. Discover why natural wood toys crafted from native New Zealand timbers offer superior safety, durability, and developmental benefits—plus how to make the switch without breaking the bank.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-07',
+    readTime: '12 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys', 'plastic toys', 'toy safety', 'sustainable toys', 'natural toys', 'child development', 'Montessori toys', 'eco-friendly toys', 'New Zealand timber', 'parenting tips'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/T-REX%20WOODEN%20TOY.jpg',
+    imageAlt: 'Natural wooden building blocks made from New Zealand Rimu timber next to colorful plastic toys on white background',
+    faqs: [
+      {
+        question: 'Are wooden toys really safer than plastic toys?',
+        answer: 'Yes, quality wooden toys are safer because they contain no synthetic chemicals like phthalates or BPA, do not break into sharp pieces or choking hazards as easily, and when finished with natural oils are safe even for teething babies. Native New Zealand hardwoods like Rimu and Macrocarpa are naturally antimicrobial.'
+      },
+      {
+        question: 'How long do wooden toys last compared to plastic?',
+        answer: 'Well-crafted wooden toys can last for generations, often 20+ years with normal use. Native New Zealand hardwoods like Kauri, Rimu, and Macrocarpa are exceptionally durable. Unlike plastic toys that fade, crack, and break within months, wooden toys develop character over time and can be passed down as family heirlooms.'
+      },
+      {
+        question: 'Are wooden toys worth the higher cost?',
+        answer: 'While wooden toys cost more upfront, they are more economical long-term. Calculate cost-per-use over 10+ years, factor in resale value, use across multiple children, and eliminated replacement costs. One quality wooden toy often outlasts dozens of plastic alternatives.'
+      },
+      {
+        question: 'How do I clean and care for wooden toys?',
+        answer: 'Wooden toys are low-maintenance. Wipe with a damp cloth for regular cleaning, use diluted vinegar solution for sanitizing, and occasionally treat with food-safe oil. Avoid soaking and store in dry areas. With minimal care, wooden toys serve families for decades.'
+      },
+      {
+        question: 'What makes New Zealand native timbers special for wooden toys?',
+        answer: 'Native NZ timbers like Rimu, Macrocarpa, and Kauri offer exceptional durability, natural antimicrobial properties, beautiful grain patterns, and sustainable sourcing. These hardwoods are specifically suited to New Zealand\'s climate and connect children to Aotearoa\'s natural heritage through heirloom-quality toys.'
+      }
+    ]
+  },
+  {
     slug: 'teething-ring-rimu-handcrafted-natural-baby-toy',
     title: 'Rimu Teething Ring - Natural Baby Toy',
     metaDescription: 'Handcrafted rimu teething rings from Whangarei, NZ. Natural, safe wooden baby toys. Perfect for soothing sore gums and early development.',
@@ -175,20 +210,7 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
-  {
-    slug: 'why-natural-wood-toys-beat-plastic',
-    title: 'Why Natural Wood Toys Beat Plastic: A Parent\'s Guide',
-    metaDescription: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
-    excerpt: 'Discover why natural wooden toys are safer, more durable, and better for child development than plastic alternatives. Expert insights from Poppa\'s Wooden Creations.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-22',
-    readTime: '6 min read',
-    category: 'Buying Guide',
-    tags: ['wooden toys', 'vs plastic', 'buying guide', 'safety', 'sustainability'],
-    featuredImage: 'https://i.ibb.co/wZnNwr2H/58174bef133e.webp',
-    imageAlt: 'Handcrafted wooden toy car made from Kauri timber'
-  },
-  {
+{
     slug: 'benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
