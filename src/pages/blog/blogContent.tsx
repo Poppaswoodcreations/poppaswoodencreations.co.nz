@@ -1403,8 +1403,268 @@ const FiveBenefitsWoodenToysChildDevelopmentContent: React.FC = () => (
   </>
 );
 
+const HowToCleanWoodenToysNaturallyAndSafelyContent: React.FC = () => (
+  <>
+<article>
+  <p>Wooden toys are beautiful, durable, and safe—but they need proper care to stay that way. Many parents worry about using harsh chemicals on toys their children mouth and handle constantly. The good news? Natural cleaning methods work perfectly for wooden toys and are completely safe for babies and toddlers.</p>
+  
+  <p>After crafting wooden toys from native New Zealand timbers for nearly a decade in Whangarei, I have learned exactly how to keep them clean, safe, and beautiful for years. Here is your complete guide to cleaning wooden toys naturally.</p>
+
+  <h2>Why Natural Cleaning Matters</h2>
+  
+  <p>Wooden toys need different care than plastic. Harsh chemicals, excessive water, and abrasive cleaners can damage the wood, strip protective finishes, and leave harmful residues. Natural cleaning methods preserve the wood while keeping toys hygienically safe for children.</p>
+  
+  <p>Native New Zealand timbers like Rimu, Kauri, and Macrocarpa have natural antimicrobial properties. Proper cleaning enhances these natural benefits without compromising the wood.</p>
+
+  <h2>What You Need</h2>
+  
+  <p>You probably already have everything required:</p>
+  
+  <p><strong>Essential Supplies:</strong></p>
+  <ul>
+    <li>White vinegar</li>
+    <li>Warm water</li>
+    <li>Soft cloths (microfiber works perfectly)</li>
+    <li>Mild dish soap (optional)</li>
+    <li>Food-safe oil or beeswax (for conditioning)</li>
+  </ul>
+  
+  <p><strong>Optional Additions:</strong></p>
+  <ul>
+    <li>Lemon juice (natural disinfectant)</li>
+    <li>Tea tree oil (antimicrobial boost)</li>
+    <li>Soft-bristled toothbrush (for detailed toys)</li>
+  </ul>
+  
+  <p>That is it. No expensive products, no harsh chemicals—just simple, safe ingredients.</p>
+
+  <h2>Daily Quick Clean</h2>
+  
+  <p>For routine cleaning after normal play:</p>
+  
+  <p><strong>Step 1:</strong> Wipe the toy with a slightly damp cloth. The cloth should be damp, not wet—excess water damages wood.</p>
+  
+  <p><strong>Step 2:</strong> Dry immediately with a clean, dry cloth.</p>
+  
+  <p><strong>Step 3:</strong> Allow toys to air dry completely before storage.</p>
+  
+  <p>This quick wipe-down removes surface dirt, dust, and light grime. For toys that go in mouths frequently, like teething rings, do this daily.</p>
+
+  <h2>Deep Cleaning Method</h2>
+  
+  <p>For thorough cleaning or after illness:</p>
+  
+  <h3>Step 1: Make Your Cleaning Solution</h3>
+  
+  <p>Mix equal parts white vinegar and water in a small bowl. For extra cleaning power, add 2-3 drops of lemon juice. The vinegar disinfects naturally without leaving harmful residues.</p>
+  
+  <h3>Step 2: Clean the Toy</h3>
+  
+  <p>Dip your cloth in the solution and wring it out well—it should be barely damp. Wipe down all surfaces of the wooden toy. For detailed areas or carved sections, use a soft toothbrush dipped in the solution.</p>
+  
+  <h3>Step 3: Rinse</h3>
+  
+  <p>Wipe the toy with a clean cloth dampened with plain water to remove any vinegar residue.</p>
+  
+  <h3>Step 4: Dry Thoroughly</h3>
+  
+  <p>Immediately dry with a clean towel. Then let the toy air dry completely in a well-ventilated area for at least 2-3 hours before children play with it again.</p>
+
+  <h2>Special Situations</h2>
+
+  <h3>After Illness</h3>
+  
+  <p>When a child has been sick, toys need extra attention:</p>
+  
+  <ol>
+    <li>Clean with the vinegar solution as described above</li>
+    <li>Add 2-3 drops of tea tree oil to the cleaning solution for extra antimicrobial action</li>
+    <li>Let toys air dry for 4-6 hours or overnight</li>
+    <li>Consider rotating toys out of circulation for 24 hours</li>
+  </ol>
+
+  <h3>Sticky Messes</h3>
+  
+  <p>For sticky substances like food or dried liquids:</p>
+  
+  <ol>
+    <li>Use a cloth dampened with warm water and a tiny drop of mild dish soap</li>
+    <li>Gently work at the sticky area—do not scrub aggressively</li>
+    <li>Wipe clean with a plain damp cloth to remove soap</li>
+    <li>Dry thoroughly immediately</li>
+  </ol>
+
+  <h3>Crayon or Marker Marks</h3>
+  
+  <p>For non-toxic crayon or marker:</p>
+  
+  <ol>
+    <li>Try rubbing gently with a slightly damp cloth first</li>
+    <li>If needed, add a tiny bit of baking soda to your damp cloth</li>
+    <li>Rub very gently in the direction of the wood grain</li>
+    <li>Wipe clean and dry immediately</li>
+  </ol>
+
+  <h2>Conditioning Wooden Toys</h2>
+  
+  <p>Every few months, wooden toys benefit from conditioning to maintain their finish and protect the wood:</p>
+  
+  <p><strong>Step 1:</strong> Clean the toy thoroughly and let it dry completely.</p>
+  
+  <p><strong>Step 2:</strong> Apply a small amount of food-safe mineral oil or beeswax to a soft cloth.</p>
+  
+  <p><strong>Step 3:</strong> Rub the oil into the wood following the grain direction.</p>
+  
+  <p><strong>Step 4:</strong> Let it absorb for 15-20 minutes, then buff away any excess with a clean cloth.</p>
+  
+  <p>This conditioning keeps the wood from drying out, enhances its natural beauty, and provides a protective barrier.</p>
+
+  <h2>What NOT to Do</h2>
+  
+  <p>Avoid these common mistakes that damage wooden toys:</p>
+  
+  <p><strong>Never Soak:</strong> Do not submerge wooden toys in water. Soaking causes warping, cracking, and finish damage.</p>
+  
+  <p><strong>No Dishwasher:</strong> The heat and prolonged water exposure will ruin wooden toys.</p>
+  
+  <p><strong>Avoid Harsh Chemicals:</strong> Bleach, ammonia, and commercial disinfectants are too harsh. They damage wood and leave potentially harmful residues.</p>
+  
+  <p><strong>Do Not Use Abrasives:</strong> Steel wool, rough sponges, or abrasive cleaners scratch and damage the wood surface.</p>
+  
+  <p><strong>Skip the Heat:</strong> Do not use hot water or attempt to sanitize with heat. Temperature extremes damage wood.</p>
+
+  <h2>Storage Tips for Clean Toys</h2>
+  
+  <p>Proper storage keeps toys cleaner longer:</p>
+  
+  <p><strong>Dry Environment:</strong> Store wooden toys in a dry location. Avoid damp basements or humid bathrooms.</p>
+  
+  <p><strong>Air Circulation:</strong> Do not seal wooden toys in airtight containers. Wood needs to breathe.</p>
+  
+  <p><strong>Away from Direct Sun:</strong> Prolonged sun exposure can fade natural wood colors and dry out the wood.</p>
+  
+  <p><strong>Organized System:</strong> Keep toys organized so they are not piled up collecting dust and germs.</p>
+
+  <h2>Cleaning Specific Wooden Toys</h2>
+
+  <h3>Teething Rings</h3>
+  
+  <p>These need the most frequent cleaning since they are constantly in babies' mouths:</p>
+  <ul>
+    <li>Quick wipe after each use</li>
+    <li>Deep clean with vinegar solution daily</li>
+    <li>Condition weekly with food-safe oil</li>
+    <li>Always dry completely before giving back to baby</li>
+  </ul>
+
+  <h3>Building Blocks</h3>
+  
+  <p>Blocks accumulate dust and hand oils:</p>
+  <ul>
+    <li>Quick wipe weekly</li>
+    <li>Deep clean monthly</li>
+    <li>Check for splinters or rough edges while cleaning</li>
+    <li>Condition every 3-4 months</li>
+  </ul>
+
+  <h3>Toy Vehicles</h3>
+  
+  <p>Cars and trucks collect dirt from floors and hands:</p>
+  <ul>
+    <li>Check wheels for debris buildup</li>
+    <li>Use a soft toothbrush for wheel wells and details</li>
+    <li>Clean weekly if used daily</li>
+    <li>Condition every few months</li>
+  </ul>
+
+  <h3>Puzzles</h3>
+  
+  <p>Puzzle pieces need gentle handling:</p>
+  <ul>
+    <li>Wipe pieces individually</li>
+    <li>Pay attention to edges where grime accumulates</li>
+    <li>Ensure pieces dry completely before reassembling</li>
+    <li>Store flat to prevent warping</li>
+  </ul>
+
+  <h2>Signs Your Toys Need Attention</h2>
+  
+  <p>Watch for these indicators that toys need cleaning or conditioning:</p>
+  
+  <ul>
+    <li>Wood feels rough or dry</li>
+    <li>Visible dirt or sticky residue</li>
+    <li>Discoloration or dull appearance</li>
+    <li>Toys have been used by sick children</li>
+    <li>More than a month since last deep clean</li>
+  </ul>
+
+  <h2>The Benefits of Natural Cleaning</h2>
+  
+  <p>Using natural cleaning methods provides multiple advantages:</p>
+  
+  <p><strong>Safety:</strong> No harmful chemical residues for children to ingest.</p>
+  
+  <p><strong>Wood Preservation:</strong> Gentle cleaning protects the wood and extends toy life.</p>
+  
+  <p><strong>Environmental:</strong> Natural ingredients are better for your home and the planet.</p>
+  
+  <p><strong>Cost-Effective:</strong> Vinegar and water cost pennies compared to commercial cleaners.</p>
+  
+  <p><strong>Peace of Mind:</strong> You know exactly what is on your child's toys.</p>
+
+  <h2>Teaching Children to Care for Toys</h2>
+  
+  <p>Involving children in toy care builds responsibility:</p>
+  
+  <p><strong>Toddlers (2-3 years):</strong> Can help wipe toys with a damp cloth under supervision.</p>
+  
+  <p><strong>Preschoolers (3-5 years):</strong> Can learn to put toys away properly and report when toys need cleaning.</p>
+  
+  <p><strong>School Age (5+ years):</strong> Can participate in the cleaning process and understand why we care for wooden toys differently.</p>
+  
+  <p>This hands-on care teaches children to value quality items and understand responsible ownership.</p>
+
+  <h2>When to Seek Professional Help</h2>
+  
+  <p>Most wooden toy cleaning is straightforward, but sometimes professional restoration is needed:</p>
+  
+  <ul>
+    <li>Deep cracks or splits in the wood</li>
+    <li>Extensive water damage or warping</li>
+    <li>Damaged or peeling finish</li>
+    <li>Mold or mildew (though this is rare with proper care)</li>
+  </ul>
+  
+  <p>Contact the craftsperson who made the toy for advice on restoration.</p>
+
+  <h2>Making It a Habit</h2>
+  
+  <p>Establish a simple routine:</p>
+  
+  <p><strong>Daily:</strong> Quick wipe-down of frequently used toys</p>
+  <p><strong>Weekly:</strong> Clean all toys in rotation</p>
+  <p><strong>Monthly:</strong> Deep clean entire toy collection</p>
+  <p><strong>Quarterly:</strong> Condition wooden toys with oil</p>
+  
+  <p>A consistent routine keeps toys clean without overwhelming effort.</p>
+
+  <h2>Conclusion</h2>
+  
+  <p>Cleaning wooden toys naturally is simple, safe, and effective. With just vinegar, water, and a few minutes of time, you can keep your child's wooden toys hygienically clean while preserving their beauty and durability.</p>
+  
+  <p>The native New Zealand timbers in our toys—Rimu, Kauri, and Macrocarpa—are naturally resistant to bacteria when properly cared for. Your gentle, natural cleaning enhances these properties rather than fighting against them.</p>
+  
+  <p>Start with these simple methods today. Your wooden toys will stay beautiful, safe, and ready for years of imaginative play.</p>
+</article>
+  </>
+);
+
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'how-to-clean-wooden-toys-naturally-and-safely':
+      return <HowToCleanWoodenToysNaturallyAndSafelyContent />;
+
     case '5-benefits-wooden-toys-child-development':
       return <FiveBenefitsWoodenToysChildDevelopmentContent />;
 
