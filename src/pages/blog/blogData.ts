@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'how-to-clean-wooden-toys-naturally-and-safely',
+    title: 'How to Clean Wooden Toys Naturally and Safely',
+    metaDescription: 'Learn how to clean wooden toys naturally with vinegar and water. Simple, safe methods for keeping toys hygienically clean without harsh chemicals.',
+    excerpt: 'Keep your wooden toys clean, safe, and beautiful using simple natural ingredients. This step-by-step guide shows you exactly how to clean and care for wooden toys using vinegar, water, and food-safe oils—no harsh chemicals needed.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-08',
+    readTime: '6 min read',
+    category: 'Care & Maintenance',
+    tags: ['cleaning', 'wooden toys', 'natural cleaning', 'toy care', 'maintenance', 'vinegar cleaning', 'baby safety', 'toy hygiene', 'eco-friendly'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TEETHING%20RING-optimized.webp',
+    imageAlt: 'Clean wooden teething ring and toys with natural cleaning supplies including vinegar and cloth',
+    faqs: [
+      {
+        question: 'Can I use water to clean wooden toys?',
+        answer: 'Yes, but use water sparingly. The cloth should be barely damp, not wet. Excess water damages wood by causing warping, cracking, and finish deterioration. Always dry wooden toys immediately and completely after any water contact. Never soak or submerge wooden toys in water.'
+      },
+      {
+        question: 'Is vinegar safe for cleaning baby toys?',
+        answer: 'Yes, white vinegar is completely safe for cleaning baby toys. It is a natural disinfectant that kills bacteria without leaving harmful residues. Mix equal parts vinegar and water, wipe the toy with a barely damp cloth, rinse with plain water, and dry thoroughly. The vinegar smell dissipates as it dries.'
+      },
+      {
+        question: 'How often should I clean wooden toys?',
+        answer: 'Quick daily wipes for toys that go in mouths like teething rings. Weekly cleaning for frequently used toys. Monthly deep cleaning for the entire toy collection. Quarterly conditioning with food-safe oil. Always clean immediately after illness or visible dirt.'
+      },
+      {
+        question: 'Can I put wooden toys in the dishwasher?',
+        answer: 'No, never put wooden toys in the dishwasher. The prolonged heat and water exposure will warp, crack, and ruin the wood. The harsh detergents strip protective finishes. Always hand clean wooden toys with a barely damp cloth and dry immediately.'
+      },
+      {
+        question: 'What oil should I use to condition wooden toys?',
+        answer: 'Use food-safe mineral oil or beeswax for conditioning wooden toys. These are non-toxic and safe for toys children put in their mouths. Avoid vegetable oils as they can turn rancid. Apply a small amount, rub into the wood grain, let absorb for 15-20 minutes, then buff away excess. Condition every 3-4 months.'
+      }
+    ]
+  },
+  {
     slug: '5-benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
     metaDescription: 'Discover 5 research-backed ways wooden toys boost child development. Learn how natural toys enhance motor skills, cognition, and emotional growth.',
@@ -294,19 +329,6 @@ export const blogPosts: BlogPost[] = [
     imageAlt: 'Handcrafted wooden toy cars for babies'
   },
 {
-    slug: 'how-to-clean-wooden-toys-naturally',
-    title: 'How to Clean Wooden Toys Naturally: A Simple Step-by-Step Guide',
-    metaDescription: 'Learn how to clean wooden toys naturally using kitchen staples like vinegar and lemon. Safe, effective, and eco-friendly cleaning tips for parents.',
-    excerpt: 'Keep your wooden toys safe and clean using natural ingredients you already have. A complete guide to gentle, effective cleaning without harsh chemicals.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-11-27',
-    readTime: '8 min read',
-    category: 'Care & Maintenance',
-    tags: ['cleaning', 'natural cleaning', 'toy care', 'maintenance'],
-    featuredImage: '/images/blog/cleaning-wooden-toys.jpg',
-    imageAlt: 'Natural cleaning supplies for wooden toys'
-  },
-  {
     slug: 'tractor-exquisite',
     title: 'Tractor Exquisite',
     metaDescription: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
