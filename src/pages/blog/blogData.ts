@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'montessori-wooden-toys-for-babies-what-to-buy-why',
+    title: 'Montessori Wooden Toys for Babies: What to Buy & Why',
+    metaDescription: 'Discover the best Montessori wooden toys for babies 0-12 months. Learn what makes a toy Montessori and how natural materials support your baby\'s development.',
+    excerpt: 'Montessori toys support babies\' natural drive to learn through simple, purposeful design. Discover which wooden toys align with Montessori principles, why natural materials matter, and exactly what to buy for each stage from 0-12 months.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-08',
+    readTime: '6 min read',
+    category: 'Baby Development',
+    tags: ['montessori toys', 'baby development', 'wooden toys', 'educational baby toys', 'natural toys', 'montessori method', 'baby learning', 'infant development', 'purposeful play'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TEETHING%20RING-optimized.webp',
+    imageAlt: 'Montessori wooden toys for babies including teething ring and natural wooden rattles on neutral background',
+    faqs: [
+      {
+        question: 'What makes a wooden toy Montessori?',
+        answer: 'A Montessori wooden toy is simple, purposeful, and made from natural materials. It focuses on one skill at a time, behaves realistically (like real physics), and is child-sized for independent use. Montessori toys avoid electronic features, bright colors, and multiple functions that overwhelm babies. They invite focused exploration and support natural learning.'
+      },
+      {
+        question: 'What Montessori toys should I buy for a newborn?',
+        answer: 'For newborns 0-3 months, start with simple wooden mobiles for visual tracking and smooth wooden rings for early grasping practice. Choose toys made from solid hardwood with food-safe finishes. Keep selections minimal—two or three purposeful toys are sufficient for this age.'
+      },
+      {
+        question: 'Are Montessori wooden toys worth the investment?',
+        answer: 'Yes, quality Montessori wooden toys last for years across multiple children, making them economical despite higher initial costs. More importantly, they support concentrated play, problem-solving, and independence—developmental benefits that extend far beyond the toy itself. Consider cost-per-use over decades rather than initial price.'
+      },
+      {
+        question: 'How do I introduce Montessori toys to my baby?',
+        answer: 'Present toys on low shelves where babies can see and reach them independently. Offer only a few toys at a time to prevent overwhelm. Observe your baby\'s natural interests before intervening. Allow time for struggle and problem-solving. Rotate toys weekly to maintain novelty while supporting deep engagement.'
+      },
+      {
+        question: 'Can wooden toys really replace electronic baby toys?',
+        answer: 'Yes, wooden toys provide superior developmental benefits. They build concentration, problem-solving, and motor skills through active engagement rather than passive watching. Natural materials offer authentic sensory experiences that support brain development. Babies play longer and more deeply with simple wooden toys than electronic alternatives.'
+      }
+    ]
+  },
+  {
     slug: 'how-to-clean-wooden-toys-naturally-and-safely',
     title: 'How to Clean Wooden Toys Naturally and Safely',
     metaDescription: 'Learn how to clean wooden toys naturally with vinegar and water. Simple, safe methods for keeping toys hygienically clean without harsh chemicals.',
@@ -55,6 +90,7 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
+
   {
     slug: '5-benefits-wooden-toys-child-development',
     title: '5 Benefits of Wooden Toys for Child Development',
