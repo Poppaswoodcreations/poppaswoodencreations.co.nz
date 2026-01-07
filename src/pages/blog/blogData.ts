@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: '5-benefits-wooden-toys-child-development',
+    title: '5 Benefits of Wooden Toys for Child Development',
+    metaDescription: 'Discover 5 research-backed ways wooden toys boost child development. Learn how natural toys enhance motor skills, cognition, and emotional growth.',
+    excerpt: 'Wooden toys are not just beautiful—they are powerful developmental tools. Discover five research-backed ways quality wooden toys support motor skills, cognitive growth, sensory integration, language development, and emotional regulation in children.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-07',
+    readTime: '7 min read',
+    category: 'Child Development',
+    tags: ['child development', 'wooden toys', 'educational toys', 'motor skills', 'cognitive development', 'parenting tips', 'natural toys', 'sensory play', 'early learning'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg',
+    imageAlt: 'Child playing with wooden blocks and trolley demonstrating developmental benefits of wooden toys',
+    faqs: [
+      {
+        question: 'How do wooden toys improve motor skills better than plastic toys?',
+        answer: 'Wooden toys\' substantial weight requires deliberate, controlled movements that build fine motor skills. The natural texture and resistance strengthen hand muscles and improve coordination. Unlike lightweight plastic toys, wooden toys demand intentional manipulation, accelerating motor development through purposeful play.'
+      },
+      {
+        question: 'At what age should I introduce wooden toys for development?',
+        answer: 'Wooden toys benefit children from birth onward. Babies can use simple wooden rattles and teething rings. Toddlers benefit from stacking toys and blocks. Preschoolers thrive with building sets and puzzles. Quality wooden toys grow with your child, offering age-appropriate challenges at each developmental stage.'
+      },
+      {
+        question: 'Do wooden toys really boost cognitive development?',
+        answer: 'Yes, research shows wooden block play correlates with higher math achievement. Open-ended wooden toys build spatial reasoning, problem-solving, and executive function. The hands-on manipulation of three-dimensional wooden shapes creates stronger neural pathways than digital or two-dimensional learning experiences.'
+      },
+      {
+        question: 'Why are open-ended wooden toys better for development?',
+        answer: 'Open-ended wooden toys encourage creativity, problem-solving, and extended engagement. Without predetermined functions, children must think, experiment, and innovate. This builds executive function, imagination, and persistence—skills that predict academic and life success more reliably than IQ alone.'
+      },
+      {
+        question: 'Are expensive wooden toys worth it for development?',
+        answer: 'Quality wooden toys are an investment in your child\'s development. They last for years across multiple children, making the cost-per-use minimal. More importantly, the developmental advantages—enhanced motor skills, cognitive growth, and emotional regulation—create lifelong benefits worth far more than the initial cost.'
+      }
+    ]
+  },
+  {
     slug: 'best-sensory-wooden-toys-for-babies-a-complete-guide',
     title: 'Best Sensory Wooden Toys for Babies: A Complete Guide',
     metaDescription: 'Discover the best sensory wooden toys for babies aged 0-18 months. Learn why natural wood supports development better than plastic with our complete guide.',
@@ -246,19 +281,6 @@ export const blogPosts: BlogPost[] = [
     ]
   },
 {
-    slug: 'benefits-wooden-toys-child-development',
-    title: '5 Benefits of Wooden Toys for Child Development',
-    metaDescription: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility.',
-    excerpt: 'Discover why wooden toys are better for your child\'s development, from motor skills to creativity and environmental responsibility. Expert insights from Poppa\'s Wooden Creations.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-11-01',
-    readTime: '8 min read',
-    category: 'Child Development',
-    tags: ['child development', 'educational toys', 'wooden toys', 'parenting'],
-    featuredImage: '/images/blog/wooden-toys-benefits.jpg',
-    imageAlt: 'Child playing with wooden educational toys'
-  },
-  {
     slug: 'baby-toy-cars-handcrafted-new-zealand',
     title: 'Discovering Magic in Every Grain: Baby Toy Cars',
     metaDescription: 'Explore our handcrafted baby toy cars made from premium New Zealand timber. Safe, durable, and perfect for developing young minds.',
