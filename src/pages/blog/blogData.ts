@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'teak-wood-tea-spoons-salt-spoons',
+    title: 'Teak Wood Tea Spoons & Salt Spoons | Handcrafted NZ',
+    metaDescription: 'Handcrafted teak wood tea spoons and salt spoons made in Whangarei, NZ. Food-safe finish, durable design. Perfect for kitchen use or gifting. Shop now.',
+    excerpt: 'Discover our handcrafted teak wood tea spoons and salt spoons, made in Whangarei from premium teak. Food-safe, durable, and beautifully finished - perfect for everyday use or as thoughtful gifts.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-13',
+    readTime: '3 read time',
+    category: 'Product Spotlight',
+    tags: ['wooden spoons', 'teak spoons', 'kitchen utensils', 'handcrafted spoons', 'NZ made', 'sustainable kitchenware', 'tea spoon', 'salt spoon', 'wooden kitchen tools'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/wooden%20spoon_result.webp',
+    imageAlt: 'Handcrafted teak wood tea spoons and salt spoons made in Whangarei New Zealand',
+    faqs: [
+      {
+        question: 'How do I care for wooden spoons?',
+        answer: 'Hand wash with warm soapy water and dry immediately. Re-oil occasionally with food-safe mineral oil. Never soak or put in dishwasher.'
+      },
+      {
+        question: 'Are wooden spoons sanitary?',
+        answer: 'Yes! Teak wood has natural antimicrobial properties. When properly cleaned and dried after each use, wooden spoons are very hygienic.'
+      },
+      {
+        question: 'Will the wood stain or absorb flavors?',
+        answer: 'Teak is naturally resistant to staining and odor absorption due to its high oil content. With proper care, your spoons will remain fresh and clean.'
+      },
+      {
+        question: 'How long do wooden spoons last?',
+        answer: 'With proper care, teak wood spoons can last 10-20+ years. Re-oiling occasionally keeps them in excellent condition.'
+      },
+      {
+        question: 'Can I use these with hot liquids?',
+        answer: 'Yes! Wooden spoons are heat-resistant and safe to use with hot tea, coffee, soups, and sauces.'
+      }
+    ]
+  },
+  {
     slug: 'montessori-wooden-toys-for-babies-what-to-buy-why',
     title: 'Montessori Wooden Toys for Babies: What to Buy & Why',
     metaDescription: 'Discover the best Montessori wooden toys for babies 0-12 months. Learn what makes a toy Montessori and how natural materials support your baby\'s development.',
