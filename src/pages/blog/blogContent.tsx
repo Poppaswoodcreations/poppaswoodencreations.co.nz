@@ -6,6 +6,102 @@ const MontessoriWoodenToysCompleteGuideContent: React.FC = () => (
   <p>Content for Montessori wooden toys guide coming soon...</p>
 );
 
+const TeakWoodTeaSpoonsContent: React.FC = () => (
+  <>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Handcrafted Teak Wood Tea Spoons & Salt Spoons
+    </h2>
+    
+    <p className="mb-6">
+      Our teak wood tea spoons and salt spoons are handcrafted in Whangarei, New Zealand, from premium teak timber. Each spoon is carefully shaped, sanded smooth, and finished with food-safe oil to bring out the natural beauty of the wood grain.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Why Choose Wooden Spoons?
+    </h3>
+    
+    <p className="mb-6">
+      Wooden spoons offer several advantages over metal or plastic alternatives:
+    </p>
+    
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li><strong>Gentle on surfaces:</strong> Won't scratch delicate bowls or pots</li>
+      <li><strong>Natural antimicrobial properties:</strong> Teak naturally resists bacteria</li>
+      <li><strong>Heat resistant:</strong> Safe to use with hot liquids</li>
+      <li><strong>Chemical-free:</strong> No BPA, no plastics, no metal leaching</li>
+      <li><strong>Beautiful to use:</strong> Each piece has unique grain patterns</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      About Teak Wood
+    </h3>
+    
+    <p className="mb-6">
+      Teak is prized for kitchen use because of its natural durability and water resistance. The wood contains natural oils that make it resistant to moisture damage, meaning these spoons will last for years with proper care.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Perfect For:
+    </h3>
+    
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li>Stirring tea, coffee, or hot chocolate</li>
+      <li>Measuring and serving salt, sugar, or spices</li>
+      <li>Gift sets for home cooks and tea lovers</li>
+      <li>Adding a natural touch to your kitchen</li>
+      <li>Housewarming gifts</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Care Instructions
+    </h3>
+    
+    <p className="mb-6">
+      To keep your wooden spoons in beautiful condition:
+    </p>
+    
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li>Hand wash with warm soapy water</li>
+      <li>Dry immediately after washing</li>
+      <li>Re-oil occasionally with food-safe mineral oil or beeswax</li>
+      <li>Never soak in water or put in dishwasher</li>
+      <li>Store in a dry place</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Specifications
+    </h3>
+    
+    <ul className="list-disc list-inside mb-6 space-y-2">
+      <li><strong>Material:</strong> Premium teak wood</li>
+      <li><strong>Finish:</strong> Food-safe natural oil</li>
+      <li><strong>Origin:</strong> Handcrafted in Whangarei, New Zealand</li>
+      <li><strong>Size:</strong> Tea spoon approximately 15cm, salt spoon approximately 10cm</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Sustainable & Local
+    </h3>
+    
+    <p className="mb-6">
+      Every spoon is made by hand in our Whangarei workshop, supporting local craftsmanship and sustainable woodworking practices. When you choose wooden kitchen tools, you're choosing products that will last decades rather than disposable plastic alternatives.
+    </p>
+
+    <p className="mb-6">
+      Each piece is unique - the natural variations in wood grain mean no two spoons are exactly alike, making yours truly one-of-a-kind.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Gift Packaging Available
+    </h3>
+    
+    <p className="mb-6">
+      These spoons make wonderful gifts! We can arrange special packaging for weddings, housewarmings, or other special occasions. Contact us for custom gift sets.
+    </p>
+  </>
+);
+
+
 const HappyGoLuckyTrainContent: React.FC = () => (
   <>
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
@@ -1806,8 +1902,78 @@ const MontessoriWoodenToysForBabiesWhatToBuyWhyContent: React.FC = () => (
   </>
 );
 
+const TeakWoodTeaSpoonsSaltSpoonsContent: React.FC = () => (
+  <>
+<div className="blog-content">
+  <h2>Handcrafted Teak Wood Tea Spoons & Salt Spoons</h2>
+  
+  <p>Our teak wood tea spoons and salt spoons are handcrafted in Whangarei, New Zealand, from premium teak timber. Each spoon is carefully shaped, sanded smooth, and finished with food-safe oil to bring out the natural beauty of the wood grain.</p>
+
+  <h3>Why Choose Wooden Spoons?</h3>
+  
+  <p>Wooden spoons offer several advantages over metal or plastic alternatives:</p>
+  
+  <ul>
+    <li><strong>Gentle on surfaces:</strong> Won't scratch delicate bowls or pots</li>
+    <li><strong>Natural antimicrobial properties:</strong> Teak naturally resists bacteria</li>
+    <li><strong>Heat resistant:</strong> Safe to use with hot liquids</li>
+    <li><strong>Chemical-free:</strong> No BPA, no plastics, no metal leaching</li>
+    <li><strong>Beautiful to use:</strong> Each piece has unique grain patterns</li>
+  </ul>
+
+  <h3>About Teak Wood</h3>
+  
+  <p>Teak is prized for kitchen use because of its natural durability and water resistance. The wood contains natural oils that make it resistant to moisture damage, meaning these spoons will last for years with proper care.</p>
+
+  <h3>Perfect For:</h3>
+  
+  <ul>
+    <li>Stirring tea, coffee, or hot chocolate</li>
+    <li>Measuring and serving salt, sugar, or spices</li>
+    <li>Gift sets for home cooks and tea lovers</li>
+    <li>Adding a natural touch to your kitchen</li>
+    <li>Housewarming gifts</li>
+  </ul>
+
+  <h3>Care Instructions</h3>
+  
+  <p>To keep your wooden spoons in beautiful condition:</p>
+  
+  <ul>
+    <li>Hand wash with warm soapy water</li>
+    <li>Dry immediately after washing</li>
+    <li>Re-oil occasionally with food-safe mineral oil or beeswax</li>
+    <li>Never soak in water or put in dishwasher</li>
+    <li>Store in a dry place</li>
+  </ul>
+
+  <h3>Specifications</h3>
+  
+  <ul>
+    <li><strong>Material:</strong> Premium teak wood</li>
+    <li><strong>Finish:</strong> Food-safe natural oil</li>
+    <li><strong>Origin:</strong> Handcrafted in Whangarei, New Zealand</li>
+    <li><strong>Size:</strong> Tea spoon approximately 15cm, salt spoon approximately 10cm</li>
+  </ul>
+
+  <h3>Sustainable & Local</h3>
+  
+  <p>Every spoon is made by hand in our Whangarei workshop, supporting local craftsmanship and sustainable woodworking practices. When you choose wooden kitchen tools, you're choosing products that will last decades rather than disposable plastic alternatives.</p>
+
+  <p>Each piece is unique - the natural variations in wood grain mean no two spoons are exactly alike, making yours truly one-of-a-kind.</p>
+
+  <h3>Gift Packaging Available</h3>
+  
+  <p>These spoons make wonderful gifts! We can arrange special packaging for weddings, housewarmings, or other special occasions. Contact us for custom gift sets.</p>
+</div>
+  </>
+);
+
 export const getBlogContent = (slug: string): React.ReactNode => {
   switch (slug) {
+    case 'teak-wood-tea-spoons-salt-spoons':
+      return <TeakWoodTeaSpoonsSaltSpoonsContent />;
+
     case 'montessori-wooden-toys-for-babies-what-to-buy-why':
       return <MontessoriWoodenToysForBabiesWhatToBuyWhyContent />;
 
@@ -1831,6 +1997,9 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 
     case 'montessori-wooden-toys-complete-guide-for-parents-2026':
       return <MontessoriWoodenToysCompleteGuideForParents2026Content />;
+
+    case 'teak-wood-tea-spoons-salt-spoons':
+      return <TeakWoodTeaSpoonsContent />;
 
     case 'why-kauri-wood-makes-superior-toys-new-zealands':
       return <WhyKauriWoodMakesSuperiorToysNewZealandsContent />;
