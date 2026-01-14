@@ -1824,3 +1824,398 @@ const TeakWoodTeaSpoonsContent: React.FC = () => (
     </p>
   </>
 );
+
+
+// ============================================
+// BLOG POST: MONTESSORI WOODEN TOYS FOR BABIES
+// ============================================
+const MontessoriWoodenToysForBabiesContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      Walk into any baby store, and you'll face walls of plastic toys that flash, beep, and promise to "stimulate development." But here's what most parents don't realize: the simplest toys often provide the richest learning experiences.
+    </p>
+
+    <p className="mb-6">
+      Montessori philosophy has understood this for over a century. Rather than overwhelming babies with sensory chaos, Montessori toys focus on purposeful design, natural materials, and respect for a child's innate drive to learn. At Poppa's Wooden Creations in Whangarei, we craft toys from native New Zealand timbers that embody these principles—not because we follow trends, but because we've seen firsthand how quality wooden toys transform play.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What Makes a Toy "Montessori"?
+    </h2>
+
+    <p className="mb-6">
+      The term "Montessori" gets thrown around liberally in toy marketing, but authentic Montessori toys share specific characteristics that support natural development:
+    </p>
+
+    <p className="mb-6">
+      <strong>Natural materials take priority.</strong> Wood, cotton, metal—materials children can experience authentically. A wooden toy feels substantial, smells like real wood, and responds naturally when dropped. This sensory authenticity helps babies build accurate mental models of how the world works.
+    </p>
+
+    <p className="mb-6">
+      <strong>Simplicity over stimulation.</strong> True Montessori toys focus on one skill or concept at a time. Rather than combining lights, sounds, shapes, and colors in one overwhelming package, each toy has a clear purpose. This allows babies to develop concentration—a skill that predicts academic success far better than early literacy or numeracy.
+    </p>
+
+    <p className="mb-6">
+      <strong>Realistic function.</strong> Montessori toys behave according to natural laws. A wooden ball rolls predictably. Building blocks stack and fall based on balance and gravity. This consistency helps babies develop logical thinking and problem-solving skills.
+    </p>
+
+    <p className="mb-6">
+      <strong>Child-sized and accessible.</strong> Toys should invite independent use without adult intervention. Items are proportioned for small hands, stored within reach, and designed to succeed or fail based on the child's actions, not battery life.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Natural Wood Matters for Baby Development
+    </h2>
+
+    <p className="mb-6">
+      The material choice isn't arbitrary—natural wood offers developmental advantages plastic cannot replicate:
+    </p>
+
+    <p className="mb-6">
+      <strong>Sensory richness.</strong> Each piece of native New Zealand timber—Kauri, Rimu, Macrocarpa—has unique grain patterns, subtle color variations, and distinct weight. Babies learn to distinguish textures and qualities through handling these natural variations, building sensory integration skills crucial for all future learning.
+    </p>
+
+    <p className="mb-6">
+      <strong>Appropriate resistance.</strong> Wooden toys have substance. Grasping requires effort. Manipulating builds hand strength. This resistance develops fine motor skills and proprioceptive awareness—knowing where your body is in space—which supports everything from crawling to eventual handwriting.
+    </p>
+
+    <p className="mb-6">
+      <strong>Safety without compromise.</strong> Quality wooden toys finished with food-safe oils contain no synthetic chemicals, no batteries that leak, no electronics that overheat. When your baby inevitably mouths everything (a crucial stage of sensory exploration), natural wood provides a safe surface. Native New Zealand timbers even have antimicrobial properties, offering hygienic advantages over plastic.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What to Buy: Montessori Wooden Toys by Stage (0-12 Months)
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Newborn to 3 Months: Visual Tracking and Early Grasping
+    </h3>
+
+    <p className="mb-6">
+      During these first weeks, babies develop visual focus and begin coordinating their movements. The best Montessori toys for this stage are remarkably simple:
+    </p>
+
+    <p className="mb-6">
+      <strong>Simple wooden mobiles</strong> with contrasting elements help babies practice visual tracking—following objects with their eyes, which develops neural pathways for reading. Unlike elaborate, battery-powered mobiles, simple wooden ones move with natural air currents, providing realistic motion.
+    </p>
+
+    <p className="mb-6">
+      <strong>Smooth wooden rings</strong> (think teething rings without the teething purpose yet) give babies something appropriate to grasp during those random hand movements that become more intentional each day. Choose rings made from solid hardwood like Kauri or Rimu, finished with food-safe oil, large enough to prevent choking hazards.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      3 to 6 Months: Intentional Grasping and Mouthing Exploration
+    </h3>
+
+    <p className="mb-6">
+      As hand-eye coordination improves, babies begin reaching for objects intentionally. Everything goes into the mouth—this is sensory research, not misbehavior:
+    </p>
+
+    <p className="mb-6">
+      <strong>Wooden grasping toys</strong> with varied shapes and textures encourage exploration. Simple wooden rattles, not the plastic kind with a dozen moving parts, provide auditory feedback while building cause-and-effect understanding.
+    </p>
+
+    <p className="mb-6">
+      <strong>Natural teething toys</strong> become essential. Our Rimu teething rings serve double duty—satisfying the oral exploration drive while providing gentle gum relief. The slightly varied diameter and natural wood texture offer sensory input plastic cannot match.
+    </p>
+
+    <p className="mb-6">
+      <strong>Wooden balls</strong> (large enough for safety) introduce rolling, tracking, and eventually crawling motivation. Unlike lightweight plastic balls that bounce unpredictably, wooden balls roll smoothly and predictably, teaching physics through play.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      6 to 9 Months: Sitting, Transferring, Problem-Solving
+    </h3>
+
+    <p className="mb-6">
+      Once babies sit independently, their world expands dramatically. They can now use both hands together, transfer objects, and engage in more complex play:
+    </p>
+
+    <p className="mb-6">
+      <strong>Object permanence boxes</strong> teach that things exist even when hidden—a massive cognitive leap. A simple wooden box with a slot and drawer lets babies practice this concept repeatedly without adult direction.
+    </p>
+
+    <p className="mb-6">
+      <strong>Simple stacking toys</strong> with just 2-3 large wooden rings introduce problem-solving. Babies work to understand size relationships, hand-eye coordination, and spatial reasoning. Start simple—those elaborate 10-ring stackers overwhelm rather than educate at this stage.
+    </p>
+
+    <p className="mb-6">
+      <strong>Wooden puzzles</strong> with single large pieces and knobs provide early puzzle-solving practice. Each piece should have an obvious place (shape-matching), building pattern recognition and persistence.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      9 to 12 Months: Mobility, Language, and Purposeful Play
+    </h3>
+
+    <p className="mb-6">
+      Mobile babies seek more challenging activities. They're ready for toys that support their emerging independence and language:
+    </p>
+
+    <p className="mb-6">
+      <strong>Push toys</strong> made from solid wood provide stability for cruising and early walking. Unlike plastic push-toys that tip easily, well-crafted wooden ones offer appropriate weight and balance.
+    </p>
+
+    <p className="mb-6">
+      <strong>Simple wooden vehicles</strong> without unnecessary details invite imaginative play. A basic wooden car that rolls smoothly is perfect—babies don't need lights, sounds, or faces. They create the story; the toy just needs to respond predictably.
+    </p>
+
+    <p className="mb-6">
+      <strong>Building blocks</strong> become beloved companions. Start with larger blocks that stack easily. Native timber blocks from New Zealand woods offer varied weights and textures, making each building session a sensory experience.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      How Many Toys Does a Baby Actually Need?
+    </h2>
+
+    <p className="mb-6">
+      Here's where Montessori philosophy diverges sharply from conventional wisdom: fewer toys create deeper engagement.
+    </p>
+
+    <p className="mb-6">
+      A baby surrounded by dozens of toys becomes overwhelmed, flitting from one to another without developing concentration or mastery. The Montessori approach suggests having just 4-6 toys available at any time, thoughtfully chosen for the current developmental stage.
+    </p>
+
+    <p className="mb-6">
+      This doesn't mean owning only 6 toys total. Rather, store most toys away and rotate them weekly or bi-weekly. When a toy reappears after absence, it's novel again, extending its developmental value without requiring constant new purchases.
+    </p>
+
+    <p className="mb-6">
+      Present toys on low shelves where babies can see and access them independently. This builds decision-making skills and respects their emerging autonomy—"I can choose what to play with" is powerful for developing independence.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Long-Term Value of Montessori Wooden Toys
+    </h2>
+
+    <p className="mb-6">
+      Parents sometimes balk at the cost of quality wooden toys. A simple Kauri teething ring costs more than a pack of plastic alternatives. But consider the full picture:
+    </p>
+
+    <p className="mb-6">
+      <strong>Durability across children.</strong> That wooden rattle serves your first baby, then your second, then becomes a gift to a friend's new baby—still beautiful, still functional. Plastic toys rarely survive one child, let alone three.
+    </p>
+
+    <p className="mb-6">
+      <strong>Developmental advantages.</strong> The skills built through simple, purposeful play—concentration, problem-solving, independence—predict success far better than early academic skills. You're not buying toys; you're investing in neural development.
+    </p>
+
+    <p className="mb-6">
+      <strong>Environmental responsibility.</strong> Wooden toys don't end up in landfills. They become heirlooms, hand-me-downs, or eventually compost. Teaching environmental values starts with the objects we bring into our homes.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Starting Your Montessori Toy Collection
+    </h2>
+
+    <p className="mb-6">
+      You don't need to replace everything overnight. Start with these essentials, chosen for your baby's current stage:
+    </p>
+
+    <p className="mb-6">
+      For young babies (0-6 months): One quality teething ring, one simple rattle, one grasping toy with varied texture.
+    </p>
+
+    <p className="mb-6">
+      For sitting babies (6-9 months): Add stacking rings (2-3 pieces only), a simple puzzle, and a wooden ball.
+    </p>
+
+    <p className="mb-6">
+      For mobile babies (9-12 months): Include a push toy, basic wooden vehicle, and a small set of building blocks.
+    </p>
+
+    <p className="mb-6">
+      Source locally when possible. Our Whangarei workshop crafts each toy from native New Zealand timbers—Kauri for its lightness and fine grain, Rimu for its rich color and durability, Macrocarpa for sustainability. Supporting local artisans means toys made with care, not churned from factory lines.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Observing Your Baby's Interests
+    </h2>
+
+    <p className="mb-6">
+      The Montessori approach emphasizes observation over intervention. Rather than constantly entertaining babies, watch what naturally captures their attention. A baby who repeatedly brings items to their mouth might benefit from varied teething textures. One who loves knocking things over is ready for stacking toys. Another who cruises furniture is prepared for a push toy.
+    </p>
+
+    <p className="mb-6">
+      This observation-based approach respects your baby as an individual with unique interests and developmental timing. Not all 9-month-olds need the same toys—follow your specific child's lead.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Beyond the First Year
+    </h2>
+
+    <p className="mb-6">
+      The beauty of quality Montessori wooden toys is their longevity. That simple wooden car engaging your 10-month-old becomes part of elaborate imaginative scenarios at age 3. Building blocks serve babies, toddlers, preschoolers, and even early elementary students—each stage brings new complexity and creativity.
+    </p>
+
+    <p className="mb-6">
+      This extended developmental range makes wooden toys economical despite higher initial costs. Calculate cost-per-year-of-use, and suddenly that premium teething ring costing $25 that serves 4 years across multiple children is far cheaper than dozens of plastic toys heading to landfills.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Creating Space for Concentration
+    </h2>
+
+    <p className="mb-6">
+      One final Montessori principle worth emphasizing: allow time for struggle. When your baby works to fit that puzzle piece or stack those rings, resist the urge to immediately assist. Frustration is uncomfortable to watch, but it's also where learning happens.
+    </p>
+
+    <p className="mb-6">
+      Offer encouragement, not solutions. "You're working so hard on that" validates effort without rescuing. This builds persistence and problem-solving—life skills with value far beyond childhood.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Choosing Quality That Matters
+    </h2>
+
+    <p className="mb-6">
+      Montessori wooden toys represent more than playthings. They're tools for building concentration, independence, and problem-solving. They respect babies as capable learners deserving of beautiful, purposeful objects. And they connect children to natural materials in an increasingly synthetic world.
+    </p>
+
+    <p className="mb-6">
+      When you choose wooden toys crafted from native New Zealand timbers, you're giving your baby toys that support natural development, last for generations, and teach environmental responsibility through example. That's an investment worth making.
+    </p>
+
+    <p className="mb-6">
+      Start simple, observe carefully, and trust your baby's innate drive to learn. The results might surprise you.
+    </p>
+  </>
+);
+
+// ============================================
+// BLOG POST: WHY KAURI WOOD MAKES SUPERIOR TOYS
+// ============================================
+const WhyKauriWoodMakesSuperiorToysContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      In our Whangarei workshop, we work with various native New Zealand timbers—each beautiful, each with distinct properties. But when parents ask what makes the finest toys, the answer consistently returns to Kauri. This isn't marketing hyperbole; it's the result of years spent crafting toys from this remarkable timber and watching how they perform across generations of play.
+    </p>
+
+    <p className="mb-6">
+      Understanding why Kauri stands apart requires looking beyond surface beauty to the qualities that matter for children's toys: durability, safety, tactile experience, and the connection to place that makes heirloom pieces meaningful.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Heritage of Kauri
+    </h2>
+
+    <p className="mb-6">
+      Kauri forests once dominated Northland. These ancient trees grew slowly, developing timber with unique characteristics prized by Māori for waka (canoes) and early European settlers for buildings and ships. While old-growth Kauri logging ceased decades ago, sustainably sourced Kauri remains available through reclaimed timber and carefully managed forestry.
+    </p>
+
+    <p className="mb-6">
+      This heritage matters. When you give a child a Kauri toy, you're connecting them to New Zealand's natural history—to forests that predated human arrival, to timber that built this nation, to a legacy of craftsmanship spanning centuries.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What Makes Kauri Exceptional for Toys
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Density and Durability Without Excessive Weight
+    </h3>
+
+    <p className="mb-6">
+      Kauri occupies a sweet spot: dense enough for exceptional durability, yet lighter than many hardwoods. A Kauri toy car has substance—children feel its quality immediately—but remains light enough for small hands to manipulate easily. This balance matters enormously for toys serving babies through preschoolers.
+    </p>
+
+    <p className="mb-6">
+      The timber's density means resistance to dents and scratches. While softer woods show wear quickly, Kauri maintains its surface integrity through years of enthusiastic play. Dropped repeatedly? Tossed into toy boxes? Used as construction materials for block towers? Kauri handles it all while maintaining the smooth finish crucial for safety and tactile appeal.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Fine, Even Grain for Smooth Finishes
+    </h3>
+
+    <p className="mb-6">
+      Kauri's fine, consistent grain allows craftspeople to achieve remarkably smooth finishes—important when toys inevitably end up in mouths. Unlike coarser woods requiring heavy finishing, Kauri sands to a silky texture with food-safe oils alone. This smoothness isn't just pleasant; it's safe, with minimal splintering risk even after years of use.
+    </p>
+
+    <p className="mb-6">
+      The even grain also provides aesthetic benefits. Kauri's subtle patterns and warm honey tones showcase natural wood beauty without overwhelming variation. Children respond positively to this natural warmth—studies suggest natural materials provide calming sensory input compared to synthetic alternatives.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">
+      Natural Stability and Moisture Resistance
+    </h3>
+
+    <p className="mb-6">
+      Toys face environmental challenges: humidity changes, temperature fluctuations, occasional moisture exposure from drool or spills. Kauri's natural stability means less warping, splitting, or cracking than many alternatives. The timber's slight moisture resistance (while not waterproof) provides additional protection for toys inevitably subjected to less-than-ideal conditions.
+    </p>
+
+    <p className="mb-6">
+      This stability extends toy longevity significantly. That wooden truck surviving multiple children isn't luck—it's Kauri's inherent properties protecting against environmental stress.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Safety Factor Often Overlooked
+    </h2>
+
+    <p className="mb-6">
+      Beyond durability and beauty, Kauri offers inherent safety advantages. The wood's naturally antimicrobial properties create a healthier play surface—particularly important for toys that inevitably end up in young mouths. Unlike plastics that may contain questionable chemicals or require synthetic finishes, properly treated Kauri provides a non-toxic alternative where safety and health are paramount.
+    </p>
+
+    <p className="mb-6">
+      The timber's stability also means fewer splinters and a smooth finish that remains consistent through years of handling, washing, and play. Parents can confidently offer Kauri toys to teething babies, knowing the surface won't degrade into rough patches or shed material.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Comparing Kauri to Other Toy Woods
+    </h2>
+
+    <p className="mb-6">
+      How does Kauri compare to alternatives like pine, beech, or even other native New Zealand timbers?
+    </p>
+
+    <p className="mb-6">
+      <strong>Pine,</strong> while affordable and accessible, lacks Kauri's density. Pine toys dent more easily and show wear faster. They're perfectly suitable for budget-conscious families but won't achieve heirloom status.
+    </p>
+
+    <p className="mb-6">
+      <strong>Rimu,</strong> another native New Zealand timber we use extensively, offers beautiful red tones and good durability. It's heavier than Kauri—advantageous for certain toys but potentially cumbersome for smaller items meant for baby hands. Rimu's gorgeous color darkens beautifully with age, making it ideal for display pieces and larger toys.
+    </p>
+
+    <p className="mb-6">
+      <strong>Macrocarpa</strong> provides excellent sustainability (faster growing than Kauri) and works beautifully for larger items. It's softer than Kauri, meaning more care required to maintain surfaces, but its light color and pleasant aroma make it popular for certain applications.
+    </p>
+
+    <p className="mb-6">
+      <strong>Beech and maple,</strong> common in imported toys, are fine woods. However, they lack the connection to place that New Zealand native timbers provide—and for our market, using local timber supports sustainable forestry and local economies while reducing environmental impact from shipping.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      An Investment in Timeless Play
+    </h2>
+
+    <p className="mb-6">
+      Consider the lifecycle of a typical plastic toy vehicle: a few months of play, perhaps a year if you're lucky, then off to the landfill. Now imagine a beautifully crafted Kauri wooden toy car—solid, smooth, ready for endless imaginative journeys—that moves seamlessly from child to grandchild, accumulating stories and memories along the way.
+    </p>
+
+    <p className="mb-6">
+      This is the promise of New Zealand wooden toys crafted from Kauri: playthings that transcend trends, resist obsolescence, and gain value through the years. They represent a different philosophy of childhood—one where fewer, better-made items foster deeper engagement and more meaningful play.
+    </p>
+
+    <p className="mb-6">
+      The initial investment in Kauri toys pays dividends across years and children. Calculate cost-per-use over a decade or more, factor in the elimination of replacement purchases, and suddenly that premium price makes economic sense—before even considering developmental benefits and environmental impact.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Choosing Quality That Endures
+    </h2>
+
+    <p className="mb-6">
+      The decision to choose Kauri wood for children's toys isn't merely about selecting a material—it's about embracing values. It's choosing durability over disposability, natural beauty over synthetic uniformity, and sustainable craftsmanship over mass production.
+    </p>
+
+    <p className="mb-6">
+      From a simple wooden toy car to an elaborate collection of toy vehicles, Kauri wood transforms play into an experience steeped in natural beauty and enduring value. When you invest in New Zealand wooden toys made from this premium timber, you're not just buying a toy—you're passing down a piece of heritage, a connection to ancient forests, and a commitment to quality that will outlast childhood itself.
+    </p>
+
+    <p className="mb-6">
+      In our Whangarei workshop, we continue working with Kauri not from tradition alone, but from consistent evidence that it produces the finest toys—ones children treasure, parents trust, and grandparents pass down. That's the true measure of quality: not marketing claims, but decades of satisfied families choosing Kauri again and again.
+    </p>
+
+    <p className="mb-6">
+      Give your child something that matters. Choose Kauri.
+    </p>
+  </>
+);
