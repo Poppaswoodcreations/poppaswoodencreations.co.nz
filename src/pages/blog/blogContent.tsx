@@ -270,11 +270,158 @@ const MontessoriWoodenToysCompleteGuideContent: React.FC = () => (
 );
 
 const HappyGoLuckyTrainContent: React.FC = () => (
-  <p>Content for Happy-Go-Lucky Train coming soon...</p>
+  <>
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Discover the Magic of Handcrafted Wooden Toys with the Happy-Go-Lucky Train
+    </h2>
+
+    <p className="mb-6">
+      There's a simple yet profound joy that comes from watching your child play with a toy that's been lovingly crafted by hand. At <strong>Poppa's Wooden Creations</strong>, we believe in preserving the tradition of handmade toys, using only the best native timbers New Zealand has to offer.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Celebrating the Beauty of New Zealand Pine
+    </h2>
+
+    <p className="mb-6">
+      We're fortunate to have an abundance of native timbers in New Zealand, each with its unique characteristics. For our Happy-Go-Lucky Train, we chose the robust and durable New Zealand Pine.
+    </p>
+
+    <p className="mb-6">
+      Pine is known for its <strong>fine grain and versatile nature</strong>, making it the perfect choice for crafting intricate toys that withstand the test of time.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Happy-Go-Lucky Train: A Journey of Imagination
+    </h2>
+
+    <p className="mb-6">
+      Every child loves the allure of a train, and our Happy-Go-Lucky Train is no different. Lovingly crafted, it features a delightful train engine with two carriages that can be easily connected and disconnected, stimulating your child's fine motor skills.
+    </p>
+
+    <p className="mb-6">
+      But it's not just about physical development. The Happy-Go-Lucky Train is a <strong>gateway to a world of imagination</strong>.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Sustainable and Safe: A Toy You Can Trust
+    </h2>
+
+    <p className="mb-6">
+      At Poppa's Wooden Creations, we take pride in creating toys that are not only fun and educational but also environmentally friendly and safe. Our Happy-Go-Lucky Train, like all our toys, is crafted from <strong>sustainably sourced</strong> New Zealand Pine.
+    </p>
+
+    <p className="mb-6">
+      Moreover, we use <strong>non-toxic paints and finishes</strong> to ensure that our toys are safe for your little ones.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      A Gift That Keeps on Giving
+    </h2>
+
+    <p className="mb-6">
+      The Happy-Go-Lucky Train makes the perfect gift for birthdays, Christmas, or simply as a special treat for your little one. It's more than just a toy — it's a piece of art, a tool for learning, and a gateway to endless adventures.
+    </p>
+
+    <p className="mb-6">
+      Embrace the joy of traditional play with Poppa's Wooden Creations. Explore our range of handcrafted toys today and discover the difference that quality, locally sourced materials and craftsmanship can make.
+    </p>
+  </>
 );
 
 const WhyKauriWoodMakesSuperiorToysContent: React.FC = () => (
-  <p>Content for Kauri Wood guide coming soon...</p>
+  <>
+    <p className="mb-6">
+      New Zealand's ancient Kauri forests have gifted us with one of the world's most remarkable timbers—and it's revolutionizing how we think about children's toys. For parents seeking alternatives to plastic playthings, Kauri wood offers something extraordinary: a material that combines exceptional durability with natural beauty and a legacy that spans generations.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Built to Last: The Durability Advantage
+    </h2>
+
+    <p className="mb-6">
+      When a wooden toy car tumbles down the stairs for the third time this week, you'll appreciate what makes Kauri special. This magnificent native timber possesses incredible strength and resistance to wear, outlasting softer woods and plastics by decades. A Kauri dump truck that delights your toddler today will still be rolling strong when they're passing it down to their own children.
+    </p>
+
+    <p className="mb-6">
+      The timber's density creates toys that feel substantial in small hands—solid, balanced, and reassuring. Unlike mass-produced alternatives that splinter or crack, properly crafted Kauri toy vehicles withstand the enthusiastic play that childhood demands. Fewer breakages mean safer play environments and toys that truly earn the title "heirloom quality."
+    </p>
+
+    <div className="my-8">
+      <img 
+        src="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/DUMP%20TRUCK-optimized.webp" 
+        alt="Handcrafted wooden dump truck toy made from premium New Zealand Kauri wood, featuring smooth natural finish and child-safe design by Poppa's Wooden Creations"
+        className="w-full rounded-lg shadow-lg"
+      />
+      <p className="text-sm text-gray-600 italic text-center mt-2">
+        Premium Kauri timber showcasing the natural grain and craftsmanship that defines New Zealand wooden toys
+      </p>
+    </div>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Natural Beauty in Every Grain
+    </h2>
+
+    <p className="mb-6">
+      Each piece of Kauri tells a story through its distinctive grain patterns and warm honey tones. When artisans at Poppa's Wooden Creations select timber for a handmade car toy, they're choosing wood with character—no two pieces identical, each bearing the unique signature of New Zealand's ancient forests.
+    </p>
+
+    <p className="mb-6">
+      This natural aesthetic creates a sensory richness that plastic simply cannot replicate. The smooth finish invites touch, the subtle wood grain engages developing eyes, and the solid weight provides tactile feedback that supports sensory development. These aren't just toys; they're connections to the natural world, bringing organic beauty into the playroom.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Sustainability Meets Heritage
+    </h2>
+
+    <p className="mb-6">
+      Choosing Kauri wood for children's toys represents a commitment beyond quality—it's an investment in environmental responsibility. When responsibly sourced, this local timber supports sustainable forestry practices and reduces the carbon footprint associated with imported materials or petroleum-based plastics.
+    </p>
+
+    <p className="mb-6">
+      The eco-friendly wooden toys crafted from NZ Kauri also preserve traditional woodworking skills and support local artisans. Every wooden toy car made in New Zealand keeps these crafts alive for future generations, creating economic sustainability alongside environmental stewardship.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Safety Factor Often Overlooked
+    </h2>
+
+    <p className="mb-6">
+      Beyond durability and beauty, Kauri offers inherent safety advantages. The wood's naturally antimicrobial properties create a healthier play surface—particularly important for toys that inevitably end up in young mouths. Unlike plastics that may contain questionable chemicals or require synthetic finishes, properly treated Kauri provides a non-toxic alternative where safety and health are paramount.
+    </p>
+
+    <p className="mb-6">
+      The timber's stability also means fewer splinters and a smooth finish that remains consistent through years of handling, washing, and play.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      An Investment in Timeless Play
+    </h2>
+
+    <p className="mb-6">
+      Consider the lifecycle of a typical plastic toy vehicle: a few months of play, perhaps a year if you're lucky, then off to the landfill. Now imagine a beautifully crafted Kauri wooden toy car—solid, smooth, ready for endless imaginative journeys—that moves seamlessly from child to grandchild, accumulating stories and memories along the way.
+    </p>
+
+    <p className="mb-6">
+      This is the promise of New Zealand wooden toys crafted from Kauri: playthings that transcend trends, resist obsolescence, and gain value through the years. They represent a different philosophy of childhood—one where fewer, better-made items foster deeper engagement and more meaningful play.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Choosing Quality That Endures
+    </h2>
+
+    <p className="mb-6">
+      The decision to choose Kauri wood for children's toys isn't merely about selecting a material—it's about embracing values. It's choosing durability over disposability, natural beauty over synthetic uniformity, and sustainable craftsmanship over mass production.
+    </p>
+
+    <p className="mb-6">
+      From a simple wooden toy car to an elaborate collection of toy vehicles, Kauri wood transforms play into an experience steeped in natural beauty and enduring value. When you invest in New Zealand wooden toys made from this premium timber, you're not just buying a toy—you're passing down a piece of heritage, a connection to ancient forests, and a commitment to quality that will outlast childhood itself.
+    </p>
+
+    <p className="mb-6">
+      <strong>Give your child something that matters. Choose Kauri.</strong>
+    </p>
+  </>
 );
 
 const BestFirstBirthdayWoodenToysContent: React.FC = () => (
