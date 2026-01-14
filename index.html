@@ -48,7 +48,7 @@
     <meta name="description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated.">
     <meta name="keywords" content="wooden toys Whangarei, Kauri wooden toys, Rimu toys NZ, handcrafted wooden toys Northland, wooden kitchenware New Zealand, Macrocarpa toys">
     
-    <!-- CRITICAL CSS - Expanded and Optimized -->
+    <!-- CRITICAL CSS - ENHANCED VERSION -->
     <style>
       /* CSS Reset & Base Styles */
       * {
@@ -77,40 +77,52 @@
         min-height: 100vh;
       }
       
-      /* Optimized Loading State - Reduces CLS and render delay */
-      #root:empty::before {
-        content: '';
+      /* ENHANCED Loading State - Shows Actual Content Structure */
+      #root:empty {
         display: block;
-        width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         background: linear-gradient(135deg, #fffbeb 0%, #ffedd5 50%, #fecaca 100%);
-        animation: pulse 2s ease-in-out infinite;
+        position: relative;
       }
       
-      /* Immediate hero text skeleton to prevent layout shift */
-      #root:empty::after {
-        content: '';
+      /* Show actual hero content skeleton during load */
+      #root:empty::before {
+        content: 'Poppa\'s Wooden Creations';
         display: block;
         position: absolute;
-        top: 20vh;
+        top: 30vh;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 42rem;
+        text-align: center;
+        font-size: clamp(2rem, 6vw, 3.75rem);
+        font-weight: 700;
+        color: rgb(17 24 39);
+        line-height: 1.2;
+        animation: fadeIn 0.5s ease-in;
+      }
+      
+      /* Subtitle text */
+      #root:empty::after {
+        content: 'Handcrafted wooden toys from native New Zealand timber';
+        display: block;
+        position: absolute;
+        top: calc(30vh + 6rem);
         left: 50%;
         transform: translateX(-50%);
         width: 80%;
-        max-width: 42rem;
-        height: 8rem;
-        background: rgba(255, 255, 255, 0.6);
-        border-radius: 0.75rem;
-        animation: shimmer 2s ease-in-out infinite;
+        max-width: 32rem;
+        text-align: center;
+        font-size: clamp(1rem, 3vw, 1.25rem);
+        color: rgb(75 85 99);
+        line-height: 1.625;
+        animation: fadeIn 0.8s ease-in;
       }
       
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
-      }
-      
-      @keyframes shimmer {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 0.6; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
       }
       
       /* Image Optimization */
@@ -121,6 +133,11 @@
       }
       
       img[loading="lazy"] {
+        content-visibility: auto;
+      }
+      
+      /* Hero image priority hint */
+      img[fetchpriority="high"] {
         content-visibility: auto;
       }
       
