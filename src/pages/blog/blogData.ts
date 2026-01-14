@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
+    title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
+    metaDescription: 'Discover premium handmade wooden toys crafted in Whangarei from native NZ timber. Safe, sustainable toys made from Kauri, Rimu & Macrocarpa since 2015.',
+    excerpt: 'Explore our collection of handcrafted wooden toys made in Whangarei from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Each piece is lovingly crafted to last generations, combining traditional craftsmanship with modern safety standards.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-14',
+    readTime: '6 min read',
+    category: 'Product Spotlight',
+    tags: ['handmade wooden toys', 'Whangarei', 'New Zealand made', 'Kauri toys', 'Rimu toys', 'Macrocarpa', 'sustainable toys', 'Montessori toys', 'heirloom toys', 'eco-friendly'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/workshop-hero.jpg',
+    imageAlt: 'Handcrafted wooden toys displayed on workbench in Whangarei workshop made from native New Zealand timber',
+    faqs: [
+      {
+        question: 'What makes Whangarei wooden toys different from mass-produced toys?',
+        answer: 'Our Whangarei-made toys are individually handcrafted from native NZ timber like Kauri, Rimu, and Macrocarpa. Each piece is made with traditional woodworking techniques, ensuring superior quality and durability. Unlike factory toys, ours develop character over time and can be passed down through generations. We also use only non-toxic, food-safe finishes.'
+      },
+      {
+        question: 'Are your wooden toys safe for babies and toddlers?',
+        answer: 'Absolutely! All our toys meet or exceed NZ toy safety standards. We use food-safe, non-toxic finishes, rounded edges, and ensure there are no small parts that could be choking hazards. The natural antimicrobial properties of native timber also make our toys more hygienic than plastic alternatives.'
+      },
+      {
+        question: 'Which native New Zealand timber is best for wooden toys?',
+        answer: 'Each timber has unique qualities: Kauri is lightweight with a fine grain, perfect for delicate toys. Rimu offers rich color and durability for heavy-use items. Macrocarpa is our sustainable choice with excellent workability. We select timber based on the toy\'s purpose and desired characteristics.'
+      },
+      {
+        question: 'How do I care for handmade wooden toys?',
+        answer: 'Care is simple! Wipe with a damp cloth and mild soap when needed, then dry thoroughly. Avoid soaking or dishwashers. Occasionally treat with food-safe mineral oil to maintain the wood\'s natural beauty. Proper care ensures your toys will last decades.'
+      },
+      {
+        question: 'Do you ship wooden toys nationwide across New Zealand?',
+        answer: 'Yes! We ship to all regions of New Zealand. We also offer free shipping on orders over $1000. For local Whangarei customers, workshop pickup is available by appointment, and you\'re welcome to visit and see how your toys are made.'
+      }
+    ]
+  },
+  {
     slug: 'teak-wood-tea-spoons-salt-spoons',
     title: 'Teak Wood Tea Spoons & Salt Spoons | Handcrafted NZ',
     metaDescription: 'Handcrafted teak wood tea spoons and salt spoons made in Whangarei, NZ. Food-safe finish, durable design. Perfect for kitchen use or gifting. Shop now.',
@@ -399,56 +434,4 @@ export const blogPosts: BlogPost[] = [
     featuredImage: '/images/blog/baby-toy-cars.jpg',
     imageAlt: 'Handcrafted wooden toy cars for babies'
   },
-{
-    slug: 'tractor-exquisite',
-    title: 'Tractor Exquisite',
-    metaDescription: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
-    excerpt: 'Discover the Tractor Exquisite, handcrafted from kauri in Whangarei, NZ. A timeless treasure from Poppa\'s Wooden Creations, blending beauty and durability.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-04',
-    readTime: '6 min read',
-    category: 'Product Spotlight',
-    tags: ['kauri toys', 'wooden toys', 'Whangarei', 'handcrafted', 'NZ made'],
-    featuredImage: 'https://i.ibb.co/6JJCJj8S/Messenger-creation-278-DDA3-E-23-C9-4-CBF-9-A96-6-FCB56-F987-CD-2-Copy-optimized-1.webp',
-    imageAlt: 'Handcrafted kauri tractor toy from Whangarei'
-  },
-  {
-    slug: 'choosing-the-best-wooden-toy-cars-for-toddlers-a-practical-b',
-    title: 'Choosing the Best Wooden Toy Cars for Toddlers: A Practical Buying Guide',
-    metaDescription: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits from Poppa\'s Wooden Creations.',
-    excerpt: 'Expert guide to choosing safe, durable wooden toy cars for toddlers. Learn what to look for in quality, safety, and developmental benefits.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-10',
-    readTime: '7 min read',
-    category: 'Buying Guide',
-    tags: ['wooden toy cars', 'toddler toys', 'buying guide', 'toy safety', 'wooden vehicles'],
-    featuredImage: 'https://i.ibb.co/B5GrTKdc/33c3d1345f55.webp',
-    imageAlt: 'Collection of handcrafted wooden toy cars for toddlers'
-  },
-{
-    slug: 'best-handmade-wooden-toys-from-whangarei-new-zealand',
-    title: 'Best Handmade Wooden Toys from Whangarei, New Zealand',
-    metaDescription: 'Handcrafted Wooden rubbish truck from exquisite kauri with smooth wheels and sturdy construction. Built to last and inspire imaginative play. Made with love ...',
-    excerpt: 'Wooden rubbish truck made from  Kauri and macrocarpa',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-11',
-    readTime: '8 min read',
-    category: 'Products',
-    tags: ['wooden toys', 'handcrafted', 'NZ made', 'baby toys', 'natural toys'],
-    featuredImage: 'https://i.ibb.co/bgTnCW9d/13c0ec8a8ded.webp',
-    imageAlt: 'handmade wooden toys by poppawoodencreations.co.nz'
-  },
-  {
-    slug: 'why-rimu-wood-makes-the-best-kitchen-utensils',
-    title: 'Why Rimu Wood Makes the Best Kitchen Utensils',
-    metaDescription: 'Discover why rimu wood makes exceptional kitchen utensils. Handcrafted in Whangarei, NZ from native timber - durable, beautiful, and sustainably sourced.',
-    excerpt: 'Handcrafted rimu spatulas showcase natural warmth and quality. Discover why this native NZ timber is the perfect choice for kitchen utensils.',
-    author: 'Poppa\'s Wooden Creations',
-    date: '2024-12-29',
-    readTime: '3 min read',
-    category: 'Products',
-    tags: ['rimu wood', 'kitchen utensils', 'wooden spatulas', 'handcrafted kitchenware', 'NZ made'],
-    featuredImage: 'https://i.ibb.co/rRTH8z2c/FB-IMG-1641578366807-optimized.webp',
-    imageAlt: 'Handcrafted rimu wood spatulas in Whangarei - Poppa Wooden Creations'
-  }
 ];
