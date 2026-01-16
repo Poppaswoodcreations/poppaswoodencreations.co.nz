@@ -21,6 +21,41 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'best-wooden-toys-nz-complete-2026-parents-guide',
+    title: 'Best Wooden Toys NZ: Complete 2026 Parent\'s Guide',
+    metaDescription: 'Discover the best wooden toys NZ has to offer. Complete guide to choosing quality wooden toys made in New Zealand with native timbers. Expert recommendations.',
+    excerpt: 'Looking for the best wooden toys in New Zealand? This comprehensive guide helps parents choose quality wooden toys crafted from native NZ timbers. Learn which toys suit each age, why NZ-made toys are superior, where to buy authentic wooden toys, and how they support your child\'s development naturally.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-16',
+    readTime: '10 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys nz', 'nz made toys', 'wooden toys', 'best wooden toys', 'handcrafted toys', 'kauri toys', 'rimu toys', 'educational toys nz', 'sustainable toys nz', 'baby wooden toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/workshop-hero.jpg',
+    imageAlt: 'Best wooden toys NZ handcrafted from native timber displayed in Whangarei workshop',
+    faqs: [
+      {
+        question: 'What are the best wooden toys for babies in NZ?',
+        answer: 'The best wooden toys NZ for babies include teething rings made from Rimu (antibacterial and safe), simple wooden rattles from native timber, and wooden grasping rings from lightweight Kauri. These toys provide natural sensory experiences while being completely safe for mouthing. Choose toys with food-safe oil finishes and smooth surfaces.'
+      },
+      {
+        question: 'Where can I buy quality wooden toys in New Zealand?',
+        answer: 'Quality wooden toys NZ are available from local craftsmen at artisan markets (especially in Whangarei), online NZ-made toy shops, and direct from makers\' websites. Look for toys made from native NZ timbers (Kauri, Rimu, Macrocarpa) with clear information about materials and finishes. Avoid mass-produced imports with bright paint.'
+      },
+      {
+        question: 'Are wooden toys worth the higher price?',
+        answer: 'Yes! Quality wooden toys NZ last 15+ years compared to 1-2 years for plastic toys. A $90 wooden toy used for 15 years costs $6 per year, while a $30 plastic toy replaced annually costs $450 total. Wooden toys also provide better developmental benefits, are safer (no chemicals), and can become family heirlooms.'
+      },
+      {
+        question: 'How do I care for wooden toys?',
+        answer: 'Caring for wooden toys is simple: wipe with damp cloth and mild vinegar solution (never soak), dry thoroughly, and apply food-safe mineral oil every 3-6 months. Store in dry areas away from direct heat. With proper care, quality wooden toys NZ last for generations and can be passed down to multiple children.'
+      },
+      {
+        question: 'What\'s the difference between NZ-made and imported wooden toys?',
+        answer: 'NZ-made wooden toys use superior native timbers (Kauri, Rimu, Macrocarpa), receive individual craftsmanship from skilled artisans, meet strict NZ safety standards, and support sustainable local forestry. Imported toys often use inferior woods, mass-production techniques, and travel thousands of miles. NZ-made toys offer better quality and support our local economy.'
+      }
+    ]
+  },
+  {
     slug: 'best-montessori-toys-nz-complete-2026-buying-guide',
     title: 'Best Montessori Toys NZ: Complete 2026 Buying Guide',
     metaDescription: 'Discover the best Montessori toys NZ parents trust. Complete guide to choosing authentic wooden Montessori toys made in New Zealand. Expert recommendations',
