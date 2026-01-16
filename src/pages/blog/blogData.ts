@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Best Montessori Toys NZ: Complete 2026 Buying Guide',
     metaDescription: 'Discover the best Montessori toys NZ parents trust. Complete guide to choosing authentic wooden Montessori toys made in New Zealand. Expert recommendations',
     excerpt: 'Finding authentic Montessori toys in New Zealand can be overwhelming. This comprehensive guide helps Kiwi parents choose the best Montessori wooden toys for their children, from newborns to preschoolers. Learn which NZ-made Montessori toys align with true Montessori principles, why natural materials matter, and where to find quality options that support your child\'s development.',
-    author: 'Poppa's Wooden Creations',
+    author: 'Poppa\'s Wooden Creations',
     date: '2026-01-16',
     readTime: 'READ TIME: 12',
     category: 'Buying Guide',
