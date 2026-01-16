@@ -30,8 +30,8 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Buying Guide',
     tags: ['wooden toys nz', 'nz made toys', 'wooden toys', 'best wooden toys', 'handcrafted toys', 'kauri toys', 'rimu toys', 'educational toys nz', 'sustainable toys nz', 'baby wooden toys'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/workshop-hero.jpg',
-    imageAlt: 'Best wooden toys NZ handcrafted from native timber displayed in Whangarei workshop',
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp',
+    imageAlt: 'Best wooden toys NZ handcrafted rubbish truck toy from native timber',
     faqs: [
       {
         question: 'What are the best wooden toys for babies in NZ?',
