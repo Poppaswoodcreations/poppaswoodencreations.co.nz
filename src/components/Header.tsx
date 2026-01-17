@@ -178,7 +178,18 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </span>
               )}
             </button>
-            {/* ✅ FIXED: Admin button removed from public view - only accessible via URL or secret */}
+            {/* ✅ ADMIN BUTTON - Back and visible for you */}
+            <button
+              onClick={handleAdminClick}
+              className="hidden md:block p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              title="Admin access"
+              aria-label="Open admin dashboard"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors"
