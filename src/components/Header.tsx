@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     { slug: 'wooden-trucks', name: 'Trucks' },
     { slug: 'wooden-cars', name: 'Cars' },
     { slug: 'wooden-trains', name: 'Trains' },
-    { slug: 'wooden-planes-helicopters', name: 'Planes' },
+    { slug: 'wooden-planes-helicopters', name: 'Planes & Helicopters' },
   ];
 
   const handleAdminClick = () => {
