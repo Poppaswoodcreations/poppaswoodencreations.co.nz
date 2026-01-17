@@ -21,6 +21,37 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'best-wooden-toys-nz-simple-parents-guide-2026',
+    title: 'Best Wooden Toys NZ: Simple Parent\'s Guide 2026',
+    metaDescription: 'Find the best wooden toys in New Zealand. Easy guide to choosing safe, quality toys made from native NZ wood. Perfect for babies to preschoolers.',
+    excerpt: 'Finding good wooden toys shouldn\'t be hard. This simple guide helps you choose the best wooden toys in New Zealand. Learn which toys are right for each age, why NZ-made toys last longer, and where to buy quality wooden toys from local makers.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-17',
+    readTime: '8 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys nz', 'nz made toys', 'best wooden toys', 'children\'s toys', 'safe toys', 'quality toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/Baby%20Rattle-optimized%20(1).webp',
+    imageAlt: 'Best wooden toys NZ handcrafted baby rattle from native Rimu timber for child development',
+    faqs: [
+      {
+        question: 'What\'s the best wooden toy for a baby?',
+        answer: 'Teething rings made from Rimu wood are perfect for babies. They\'re safe to chew on, help with sore gums, and babies can easily hold them. Start with one teething ring and one simple rattle. That\'s enough for a baby to explore and learn.'
+      },
+      {
+        question: 'Why do wooden toys cost more than plastic toys?',
+        answer: 'Wooden toys cost more because they\'re made by hand from real wood, not machines making plastic. But they last 10-15 years while plastic toys break in 1-2 years. A $90 wooden toy used for 15 years costs only $6 per year. That\'s cheaper than replacing plastic toys every year!'
+      },
+      {
+        question: 'Are wooden toys safe for kids who put everything in their mouth?',
+        answer: 'Yes! Quality wooden toys are very safe. They\'re made from natural wood with food-safe finishes (no chemicals). NZ woods like Rimu even have natural germ-fighting properties. Just make sure the toy is smooth with no splinters, and it\'s safe for chewing.'
+      },
+      {
+        question: 'How do I clean wooden toys?',
+        answer: 'Super easy! Just wipe with a slightly damp cloth, then dry it off completely. Never soak wooden toys in water. Every few months, rub on a little food-safe oil to keep the wood looking nice. That\'s all you need to do!'
+      }
+    ]
+  },
+  {
     slug: 'best-wooden-toys-nz-complete-2026-parents-guide',
     title: 'Best Wooden Toys NZ: Complete 2026 Parent\'s Guide',
     metaDescription: 'Discover the best wooden toys NZ has to offer. Complete guide to choosing quality wooden toys made in New Zealand with native timbers. Expert recommendations.',
@@ -30,8 +61,8 @@ export const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Buying Guide',
     tags: ['wooden toys nz', 'nz made toys', 'wooden toys', 'best wooden toys', 'handcrafted toys', 'kauri toys', 'rimu toys', 'educational toys nz', 'sustainable toys nz', 'baby wooden toys'],
-    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp',
-    imageAlt: 'Best wooden toys NZ handcrafted rubbish truck toy from native timber',
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/workshop-hero.jpg',
+    imageAlt: 'Best wooden toys NZ handcrafted from native timber displayed in Whangarei workshop',
     faqs: [
       {
         question: 'What are the best wooden toys for babies in NZ?',
