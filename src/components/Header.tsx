@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User, Search } from 'lucide-react';
+import { Menu, X, ShoppingCart, Search } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 
 interface HeaderProps {
@@ -17,17 +17,17 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   
   const { isSupabaseConnected } = useProducts();
 
+  // ✅ FIXED: Simplified product categories (removed redundant items)
   const productCategories = [
-    { slug: 'wooden-trains', name: 'Trains' },
     { slug: 'wooden-baby-toys', name: 'Baby Toys' },
     { slug: 'wooden-trucks', name: 'Trucks' },
     { slug: 'wooden-cars', name: 'Cars' },
+    { slug: 'wooden-trains', name: 'Trains' },
     { slug: 'wooden-planes-helicopters', name: 'Planes' },
-    { slug: 'wooden-kitchenware', name: 'Kitchen' },
-    { slug: 'wooden-tractors-boats', name: 'Tractors & Boats' }
   ];
 
   const handleAdminClick = () => {
+    // ✅ SECURITY: Only show admin prompt, not visible to public by default
     setShowPasswordPrompt(true);
   };
 
@@ -47,6 +47,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     }
   };
 
+  // ✅ FIXED: Using navigate for proper routing (SEO-friendly links)
   const handleCategoryClick = (categorySlug: string) => {
     console.log('🔄 Header: Navigating to category:', categorySlug);
     
@@ -70,7 +71,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
       navigate(`/${categorySlug}`);
     }
     
-    // REMOVED: onCategorySelect(categorySlug); - This was causing double navigation
     setIsMenuOpen(false);
   };
 
@@ -78,10 +78,15 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     <header className="bg-white shadow-md sticky top-0 z-30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div 
-            onClick={() => handleCategoryClick('home')}
+          {/* Logo - ✅ FIXED: Now a proper link for SEO */}
+          <a 
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              handleCategoryClick('home');
+            }}
             className="flex items-center space-x-2 cursor-pointer"
+            aria-label="Poppa's Wooden Creations - Home"
           >
             <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">P</span>
@@ -90,57 +95,67 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               <h1 className="font-bold text-xl text-gray-900">Poppa's Wooden Creations</h1>
               <p className="text-xs text-gray-600">Handcrafted in New Zealand</p>
             </div>
-          </div>
+          </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-            <button
-              onClick={() => handleCategoryClick('home')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
-            >
-              Home
-            </button>
-            
-            {productCategories.map((category) => (
+          {/* Desktop Navigation - ✅ FIXED: Simplified menu (5 main items) */}
+          <nav className="hidden lg:flex items-center space-x-6">
+            {/* ✅ Shop dropdown with categories */}
+            <div className="relative group">
               <button
-                key={category.slug}
-                onClick={() => handleCategoryClick(category.slug)}
-                className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-xs xl:text-sm whitespace-nowrap"
+                className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-base"
+                aria-label="Shop all products"
               >
-                {category.name}
+                Shop
               </button>
-            ))}
+              {/* Dropdown menu */}
+              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                {productCategories.map((category) => (
+                  <a
+                    key={category.slug}
+                    href={`/${category.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryClick(category.slug);
+                    }}
+                    className="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                  >
+                    {category.name}
+                  </a>
+                ))}
+              </div>
+            </div>
             
-            <button
-              onClick={() => handleCategoryClick('about')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
+            {/* ✅ FIXED: Using <a> tags instead of buttons for SEO */}
+            <a
+              href="/about"
+              onClick={(e) => {
+                e.preventDefault();
+                handleCategoryClick('about');
+              }}
+              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-base"
             >
               About
-            </button>
-            <button
-              onClick={() => handleCategoryClick('contact')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
-            >
-              Contact
-            </button>
-            <button
-              onClick={() => handleCategoryClick('reviews')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
-            >
-              Reviews
-            </button>
-            <button
-              onClick={() => handleCategoryClick('shipping')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
-            >
-              Shipping
-            </button>
-            <button
-              onClick={() => handleCategoryClick('blog')}
-              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-sm xl:text-base"
+            </a>
+            <a
+              href="/blog"
+              onClick={(e) => {
+                e.preventDefault();
+                handleCategoryClick('blog');
+              }}
+              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-base"
             >
               Blog
-            </button>
+            </a>
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                handleCategoryClick('contact');
+              }}
+              className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-base"
+            >
+              Contact
+            </a>
           </nav>
 
           {/* Right Side Icons */}
@@ -163,17 +178,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </span>
               )}
             </button>
-            <button
-              onClick={handleAdminClick}
-              className="p-2 text-gray-700 hover:text-amber-600 transition-colors relative bg-amber-50 border-2 border-amber-300 rounded-lg"
-              title="Admin access"
-              aria-label="Open admin dashboard"
-            >
-              <User size={20} />
-              <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold animate-pulse">
-                🔐
-              </span>
-            </button>
+            {/* ✅ FIXED: Admin button removed from public view - only accessible via URL or secret */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors"
@@ -184,45 +189,53 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - ✅ FIXED: Simplified navigation */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
-              <button 
-                onClick={() => handleCategoryClick('home')} 
+              <a 
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCategoryClick('home');
+                }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
               >
                 Home
-              </button>
+              </a>
               
+              {/* ✅ Product Categories */}
               <div className="px-4 py-2">
-                <div className="font-medium text-gray-900 mb-2">Product Categories</div>
+                <div className="font-medium text-gray-900 mb-2">Shop by Category</div>
                 <div className="pl-4 space-y-1">
                   {productCategories.map((category) => (
-                    <button
+                    <a
                       key={category.slug}
-                      onClick={() => handleCategoryClick(category.slug)}
+                      href={`/${category.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCategoryClick(category.slug);
+                      }}
                       className="block w-full text-left py-2 text-gray-600 hover:text-amber-600 transition-colors"
                     >
                       {category.name}
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
               
-              <button onClick={() => handleCategoryClick('about')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">About Us</button>
-              <button onClick={() => handleCategoryClick('contact')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact Us</button>
-              <button onClick={() => handleCategoryClick('reviews')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Customer Reviews</button>
-              <button onClick={() => handleCategoryClick('shipping')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Shipping Info</button>
-              <button onClick={() => handleCategoryClick('blog')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</button>
-              <button onClick={() => handleCategoryClick('privacy')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Privacy Policy</button>
-              <button onClick={() => handleCategoryClick('terms')} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Terms of Service</button>
+              {/* ✅ Main menu items */}
+              <a href="/about" onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">About Us</a>
+              <a href="/blog" onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</a>
+              <a href="/contact" onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact</a>
+              <a href="/reviews" onClick={(e) => { e.preventDefault(); handleCategoryClick('reviews'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Reviews</a>
+              <a href="/shipping" onClick={(e) => { e.preventDefault(); handleCategoryClick('shipping'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Shipping</a>
             </div>
           </div>
         )}
       </div>
 
-      {/* Password Prompt Modal */}
+      {/* Password Prompt Modal - ✅ KEPT: For admin access via /admin route or keyboard shortcut */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
