@@ -10,7 +10,7 @@ import CategoryGrid from './components/CategoryGrid';
 import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
-import { HomePageSchema } from './components/HomePageSchema'; // NEW: Import homepage schema
+import { HomePageSchema } from './components/HomePageSchema';
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -25,6 +25,7 @@ const Cart = lazy(() => import('./components/Cart/Cart'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
 const BlogPostView = lazy(() => import('./pages/blog/BlogPostView'));
+const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -149,14 +150,14 @@ const AppContent: React.FC = () => {
       <main>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
-            {/* Home Page - ENHANCED WITH SCHEMA */}
+            {/* Home Page */}
             <Route path="/" element={
-  <>
-              <SEOHead 
-                title="Handmade Wooden Toys NZ | Premium New Zealand Wooden Toys | Poppa's Wooden Creations"
-                description="Premium handmade wooden toys crafted in New Zealand from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000."
-                ogImage="https://poppaswoodencreations.co.nz/hero-image.jpg"
-               />
+              <>
+                <SEOHead 
+                  title="Handmade Wooden Toys NZ | Premium New Zealand Wooden Toys | Poppa's Wooden Creations"
+                  description="Premium handmade wooden toys crafted in New Zealand from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000."
+                  ogImage="https://poppaswoodencreations.co.nz/hero-image.jpg"
+                />
                 <HomePageSchema />
                 <Hero onCategorySelect={handleCategorySelect} products={products} />
                 <CategoryGrid categories={categories} onCategorySelect={handleCategorySelect} />
@@ -168,7 +169,10 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* Individual Product Pages - ProductDetail has its own SEO */}
+            {/* SEO Landing Page for Wooden Toys NZ */}
+            <Route path="/wooden-toys-nz" element={<WoodenToysNZ />} />
+
+            {/* Individual Product Pages */}
             <Route path="/products/:productId" element={
               <ProductDetail 
                 products={products}
