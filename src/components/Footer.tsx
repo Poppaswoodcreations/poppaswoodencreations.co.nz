@@ -6,37 +6,37 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      {/* ✅ NEW: Trust Badges Section */}
-      <div className="bg-amber-600 text-white py-6">
+    <footer className="bg-gray-900 text-gray-200">
+      {/* ✅ FIXED: Trust Badges Section - Better Contrast */}
+      <div className="bg-amber-700 text-white py-6">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {/* Trust Badge 1 */}
             <div className="flex flex-col items-center space-y-2">
               <Shield className="w-8 h-8" />
-              <div className="text-sm font-semibold">Secure Checkout</div>
-              <div className="text-xs opacity-90">SSL Encrypted</div>
+              <div className="text-sm font-bold">Secure Checkout</div>
+              <div className="text-xs">SSL Encrypted</div>
             </div>
 
             {/* Trust Badge 2 */}
             <div className="flex flex-col items-center space-y-2">
               <Award className="w-8 h-8" />
-              <div className="text-sm font-semibold">Made in NZ 🇳🇿</div>
-              <div className="text-xs opacity-90">Handcrafted Quality</div>
+              <div className="text-sm font-bold">Made in NZ 🇳🇿</div>
+              <div className="text-xs">Handcrafted Quality</div>
             </div>
 
             {/* Trust Badge 3 */}
             <div className="flex flex-col items-center space-y-2">
               <Package className="w-8 h-8" />
-              <div className="text-sm font-semibold">Free Shipping</div>
-              <div className="text-xs opacity-90">Orders Over $75</div>
+              <div className="text-sm font-bold">Free Shipping</div>
+              <div className="text-xs">Orders Over $75</div>
             </div>
 
             {/* Trust Badge 4 */}
             <div className="flex flex-col items-center space-y-2">
               <Heart className="w-8 h-8" />
-              <div className="text-sm font-semibold">30-Day Returns</div>
-              <div className="text-xs opacity-90">Quality Guaranteed</div>
+              <div className="text-sm font-bold">30-Day Returns</div>
+              <div className="text-xs">Quality Guaranteed</div>
             </div>
           </div>
         </div>
@@ -62,22 +62,22 @@ const Footer: React.FC = () => {
               Every toy is handcrafted from native NZ timber in Whangarei.
             </p>
             
-            {/* ✅ NEW: Quality Badges */}
+            {/* ✅ FIXED: Quality Badges - Better Contrast */}
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-xs">
-                <span className="bg-green-600 text-white px-2 py-1 rounded">Food-Safe Finish</span>
+                <span className="bg-green-700 text-white px-2 py-1 rounded font-semibold">Food-Safe Finish</span>
               </div>
               <div className="flex items-center space-x-2 text-xs">
-                <span className="bg-blue-600 text-white px-2 py-1 rounded">Native NZ Timber</span>
+                <span className="bg-blue-600 text-white px-2 py-1 rounded font-semibold">Native NZ Timber</span>
               </div>
               <div className="flex items-center space-x-2 text-xs">
-                <span className="bg-purple-600 text-white px-2 py-1 rounded">Heirloom Quality</span>
+                <span className="bg-purple-600 text-white px-2 py-1 rounded font-semibold">Heirloom Quality</span>
               </div>
             </div>
 
-            {/* ✅ NEW: Payment Methods */}
+            {/* ✅ FIXED: Payment Methods - Better Contrast */}
             <div className="pt-4">
-              <p className="text-xs text-gray-500 mb-2">We Accept:</p>
+              <p className="text-xs text-gray-400 mb-2">We Accept:</p>
               <div className="flex items-center space-x-3">
                 <div className="bg-white p-2 rounded text-gray-900 text-xs font-bold">VISA</div>
                 <div className="bg-white p-2 rounded text-gray-900 text-xs font-bold">MC</div>
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Shop - ✅ FIXED: Using <Link> instead of buttons */}
+          {/* Column 2: Shop - Using <Link> instead of buttons */}
           <div>
             <h4 className="font-semibold text-white mb-4">Shop by Category</h4>
             <ul className="space-y-2">
@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Quick Links - ✅ FIXED: Using <Link> instead of buttons */}
+          {/* Column 3: Quick Links - Using <Link> instead of buttons */}
           <div>
             <h4 className="font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -233,7 +233,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* ✅ NEW: Guarantee Section */}
+      {/* Guarantee Section */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
           <div className="bg-gray-800 rounded-lg p-6">
@@ -259,7 +259,7 @@ const Footer: React.FC = () => {
       {/* Bottom Bar - Copyright */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
+          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
             <p>© {currentYear} Poppa's Wooden Creations. Made with ❤️ in New Zealand</p>
             <p className="mt-2 md:mt-0">All toys handcrafted from native NZ timber</p>
           </div>
