@@ -13,7 +13,7 @@ export const HomePageSchema = () => {
       "width": 250,
       "height": 60
     },
-    "description": "Handcrafted wooden toys and kitchenware from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Serving Montessori schools and eco-conscious families since 2015.",
+    "description": "Handmade wooden toys and kitchenware from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Specializing in childrens wooden toys, Montessori educational toys, and premium wooden baby toys. Serving eco-conscious families across New Zealand since 2015.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Workshop",
@@ -41,7 +41,7 @@ export const HomePageSchema = () => {
     "@id": "https://poppaswoodencreations.co.nz/#store",
     "name": "Poppa's Wooden Creations",
     "image": "https://poppaswoodencreations.co.nz/storefront.jpg",
-    "description": "Premium handcrafted wooden toys and kitchenware made from native New Zealand timbers. Specializing in Montessori-aligned educational toys and heirloom kitchen pieces.",
+    "description": "Premium handmade wooden toys NZ. Specializing in childrens wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Trusted supplier to Montessori schools across New Zealand.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Workshop Location",
@@ -72,14 +72,15 @@ export const HomePageSchema = () => {
     "areaServed": {
       "@type": "Country",
       "name": "New Zealand"
-    }
+    },
+    "keywords": "handmade wooden toys nz, wooden toys new zealand, childrens wooden toys, wooden baby toys, montessori wooden toys, eco friendly toys nz"
   };
 
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": "https://poppaswoodencreations.co.nz/#website",
-    "name": "Poppa's Wooden Creations",
+    "name": "Poppa's Wooden Creations - Handmade Wooden Toys NZ",
     "url": "https://poppaswoodencreations.co.nz",
     "potentialAction": {
       "@type": "SearchAction",
@@ -88,6 +89,25 @@ export const HomePageSchema = () => {
         "urlTemplate": "https://poppaswoodencreations.co.nz/products?search={search_term_string}"
       },
       "query-input": "required name=search_term_string"
+    }
+  };
+
+  const productCollectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Handmade Wooden Toys New Zealand",
+    "description": "Browse our collection of premium handmade wooden toys, crafted in New Zealand from native timbers. Safe, sustainable childrens wooden toys and baby toys.",
+    "url": "https://poppaswoodencreations.co.nz",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://poppaswoodencreations.co.nz"
+        }
+      ]
     }
   };
 
@@ -101,6 +121,9 @@ export const HomePageSchema = () => {
       </script>
       <script type="application/ld+json">
         {JSON.stringify(websiteSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(productCollectionSchema)}
       </script>
     </Helmet>
   );
