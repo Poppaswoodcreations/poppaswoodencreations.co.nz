@@ -191,10 +191,10 @@ const AppContent: React.FC = () => {
                 />
                 <ProductGrid 
                   products={products.filter(p => 
-                    p.category === 'Cars' || 
-                    p.category === 'Trucks' || 
-                    p.category === 'Trains' || 
-                    p.category === 'Planes & Helicopters'
+                    p.category === 'wooden-cars' || 
+                    p.category === 'wooden-trucks' || 
+                    p.category === 'wooden-trains' || 
+                    p.category === 'wooden-planes-helicopters'
                   )} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
@@ -212,7 +212,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Planes & Helicopters')} 
+                  products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-planes-helicopters"
@@ -229,7 +229,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Tractors & Boats')} 
+                  products={products.filter(p => p.category === 'wooden-tractors-boats')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-tractors-boats"
@@ -246,7 +246,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Baby Toys')} 
+                  products={products.filter(p => p.category === 'wooden-baby-toys')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-baby-toys"
@@ -263,7 +263,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Kitchenware')} 
+                  products={products.filter(p => p.category === 'wooden-kitchenware')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchen-utensils"
@@ -280,7 +280,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Kitchenware')} 
+                  products={products.filter(p => p.category === 'wooden-kitchenware')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-serving-boards"
@@ -288,12 +288,12 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* Additional Category Routes with 301 redirects */}
+            {/* Additional Category Routes */}
             <Route path="/trucks" element={
               <>
                 <SEOHead canonicalPath="/wooden-trucks" />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Trucks')} 
+                  products={products.filter(p => p.category === 'wooden-trucks')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trucks"
@@ -310,7 +310,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Trucks')} 
+                  products={products.filter(p => p.category === 'wooden-trucks')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trucks"
@@ -322,7 +322,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead canonicalPath="/wooden-cars" />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Cars')} 
+                  products={products.filter(p => p.category === 'wooden-cars')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-cars"
@@ -339,7 +339,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Cars')} 
+                  products={products.filter(p => p.category === 'wooden-cars')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-cars"
@@ -351,7 +351,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead canonicalPath="/wooden-planes-helicopters" />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Planes & Helicopters')} 
+                  products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-planes-helicopters"
@@ -363,7 +363,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead canonicalPath="/wooden-kitchenware" />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Kitchenware')} 
+                  products={products.filter(p => p.category === 'wooden-kitchenware')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchenware"
@@ -380,7 +380,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Kitchenware')} 
+                  products={products.filter(p => p.category === 'wooden-kitchenware')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchenware"
@@ -392,7 +392,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead canonicalPath="/wooden-trains" />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Trains')} 
+                  products={products.filter(p => p.category === 'wooden-trains')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
@@ -409,7 +409,7 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <ProductGrid 
-                  products={products.filter(p => p.category === 'Trains')} 
+                  products={products.filter(p => p.category === 'wooden-trains')} 
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
