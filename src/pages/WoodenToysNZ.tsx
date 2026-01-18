@@ -235,22 +235,22 @@ const WoodenToysNZ: React.FC = () => {
             </div>
           </div>
 
-          {/* CTA Section */}
-          <div className="bg-amber-600 rounded-2xl p-12 text-center text-white">
+          {/* ✅ FIXED: CTA Section - Improved Contrast for 100/100 Accessibility */}
+          <div className="bg-amber-700 rounded-2xl p-12 text-center text-white shadow-xl">
             <h2 className="text-3xl font-bold mb-4">Ready to Choose Quality?</h2>
-            <p className="text-xl mb-8 text-amber-50">
+            <p className="text-xl mb-8">
               Browse our collection of handmade wooden toys and discover the difference that craftsmanship makes.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <button
                 onClick={() => navigate('/wooden-cars')}
-                className="bg-white text-amber-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-50 transition-all shadow-lg"
+                className="bg-white text-amber-800 px-8 py-4 rounded-lg text-lg font-bold hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
               >
                 Shop All Toys
               </button>
               <button
                 onClick={() => navigate('/contact')}
-                className="bg-amber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-800 transition-all border-2 border-white"
+                className="bg-amber-800 text-white px-8 py-4 rounded-lg text-lg font-bold hover:bg-amber-900 transition-all border-2 border-white shadow-lg transform hover:scale-105"
               >
                 Custom Orders
               </button>
