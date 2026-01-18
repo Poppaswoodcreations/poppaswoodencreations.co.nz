@@ -75,26 +75,25 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
           <div className="text-center lg:text-left">
             <div className="inline-block mb-4">
               <span className="text-sm font-semibold text-amber-600 bg-amber-100 px-4 py-2 rounded-full">
-                ⭐ Handcrafted in New Zealand
+                ⭐ Handmade in New Zealand
               </span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              {siteSettings.hero_title || 'Premium Wooden Toys'}
+              {siteSettings.hero_title || 'Handmade Wooden Toys'}
               <span className="block text-amber-600 mt-2">
-                {siteSettings.hero_subtitle || 'Made with Love'}
+                {siteSettings.hero_subtitle || 'New Zealand'}
               </span>
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
-              Discover our collection of beautiful, safe, and sustainable wooden toys handcrafted in New Zealand.
-              Each piece is made from premium timber including Kauri, Rimu, and Macrocarpa, designed to inspire
-              creativity and last for generations.
+              Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. 
+              Safe, sustainable, and built to last generations.
             </p>
             
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
-              From our workshop in Whangarei, we create toys that encourage imaginative play, develop fine motor
-              skills, and provide endless hours of screen-free entertainment.
+              From our Whangarei workshop, we create childrens wooden toys that inspire imaginative play and develop 
+              fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.
             </p>
             
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
@@ -102,7 +101,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
                 onClick={() => onCategorySelect('wooden-vehicles')}
                 className="bg-amber-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                {siteSettings.hero_cta_text || 'Shop Collection'}
+                {siteSettings.hero_cta_text || 'Shop Wooden Toys'}
               </button>
               
               <button
@@ -139,7 +138,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
               {heroImage && (
                 <img
                   src={heroImage}
-                  alt={siteSettings.hero_title || "Premium Wooden Toy"}
+                  alt="Handmade wooden toys New Zealand - Premium childrens wooden toys"
                   className={`w-full h-full object-cover transition-opacity duration-500 ${
                     imageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
