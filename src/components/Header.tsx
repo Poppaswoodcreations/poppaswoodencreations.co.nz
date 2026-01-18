@@ -17,17 +17,17 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   
   const { isSupabaseConnected } = useProducts();
 
-  // ✅ FIXED: Simplified product categories (removed redundant items)
+  // ✅ UPDATED: Added Kitchenware to product categories
   const productCategories = [
     { slug: 'wooden-baby-toys', name: 'Baby Toys' },
     { slug: 'wooden-trucks', name: 'Trucks' },
     { slug: 'wooden-cars', name: 'Cars' },
     { slug: 'wooden-trains', name: 'Trains' },
     { slug: 'wooden-planes-helicopters', name: 'Planes & Helicopters' },
+    { slug: 'wooden-kitchenware', name: 'Kitchenware' },
   ];
 
   const handleAdminClick = () => {
-    // ✅ SECURITY: Only show admin prompt, not visible to public by default
     setShowPasswordPrompt(true);
   };
 
@@ -47,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     }
   };
 
-  // ✅ FIXED: Using navigate for proper routing (SEO-friendly links)
   const handleCategoryClick = (categorySlug: string) => {
     console.log('🔄 Header: Navigating to category:', categorySlug);
     
@@ -78,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     <header className="bg-white shadow-md sticky top-0 z-30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo - ✅ FIXED: Now a proper link for SEO */}
+          {/* Logo */}
           <a 
             href="/"
             onClick={(e) => {
@@ -97,9 +96,9 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </div>
           </a>
 
-          {/* Desktop Navigation - ✅ FIXED: Simplified menu (5 main items) */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
-            {/* ✅ Shop dropdown with categories */}
+            {/* Shop dropdown with categories */}
             <div className="relative group">
               <button
                 className="text-gray-700 hover:text-amber-600 transition-colors font-medium text-base"
@@ -110,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               {/* Dropdown menu */}
               <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 {productCategories.map((category) => (
-                  <a
+                  
                     key={category.slug}
                     href={`/${category.slug}`}
                     onClick={(e) => {
@@ -125,8 +124,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </div>
             </div>
             
-            {/* ✅ FIXED: Using <a> tags instead of buttons for SEO */}
-            <a
+            
               href="/about"
               onClick={(e) => {
                 e.preventDefault();
@@ -136,7 +134,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             >
               About
             </a>
-            <a
+            
               href="/blog"
               onClick={(e) => {
                 e.preventDefault();
@@ -146,7 +144,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             >
               Blog
             </a>
-            <a
+            
               href="/contact"
               onClick={(e) => {
                 e.preventDefault();
@@ -178,7 +176,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </span>
               )}
             </button>
-            {/* ✅ ADMIN BUTTON - Back and visible for you */}
             <button
               onClick={handleAdminClick}
               className="hidden md:block p-2 text-gray-700 hover:text-amber-600 transition-colors"
@@ -200,7 +197,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </div>
         </div>
 
-        {/* Mobile Menu - ✅ FIXED: Simplified navigation */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
@@ -215,12 +212,12 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 Home
               </a>
               
-              {/* ✅ Product Categories */}
+              {/* Product Categories */}
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Shop by Category</div>
                 <div className="pl-4 space-y-1">
                   {productCategories.map((category) => (
-                    <a
+                    
                       key={category.slug}
                       href={`/${category.slug}`}
                       onClick={(e) => {
@@ -235,7 +232,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </div>
               </div>
               
-              {/* ✅ Main menu items */}
+              {/* Main menu items */}
               <a href="/about" onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">About Us</a>
               <a href="/blog" onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Blog</a>
               <a href="/contact" onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">Contact</a>
@@ -246,7 +243,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
         )}
       </div>
 
-      {/* Password Prompt Modal - ✅ KEPT: For admin access via /admin route or keyboard shortcut */}
+      {/* Password Prompt Modal */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
