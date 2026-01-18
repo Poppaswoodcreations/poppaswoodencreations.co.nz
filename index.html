@@ -1,421 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <base href="/" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="C3-J4gNSV9r3BE8yiODgVA3ORw0lu-uqrURG2jKZI_M" />
-    
-    <!-- SEO Meta Tags -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="https://poppaswoodencreations.co.nz" />
-    
-    <!-- CRITICAL PERFORMANCE - Optimized Resource Hints -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin>
-    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    
-    <!-- NEW: Preconnect to Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Preload critical fonts to reduce render delay -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://poppaswoodencreations.co.nz" />
-    <meta property="og:title" content="Handcrafted Wooden Toys Whangarei | Kauri & Rimu | Poppa's Wooden Creations NZ" />
-    <meta property="og:description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated." />
-    <meta property="og:image" content="https://poppaswoodencreations.co.nz/logo.png" />
-    <meta property="og:locale" content="en_NZ" />
-    <meta property="og:site_name" content="Poppa's Wooden Creations" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://poppaswoodencreations.co.nz" />
-    <meta property="twitter:title" content="Handcrafted Wooden Toys Whangarei | Kauri & Rimu | Poppa's Wooden Creations NZ" />
-    <meta property="twitter:description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated." />
-    <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/logo.png" />
-    
-    <!-- OPTIMIZED META TAGS -->
-    <title>Handcrafted Wooden Toys Whangarei | Kauri & Rimu | Poppa's Wooden Creations NZ</title>
-    <meta name="description" content="Premium wooden toys & kitchenware handcrafted in Whangarei since 2015. Made from native Kauri, Rimu & Macrocarpa timber. Free shipping over $1000. 4.9★ rated.">
-    <meta name="keywords" content="wooden toys Whangarei, Kauri wooden toys, Rimu toys NZ, handcrafted wooden toys Northland, wooden kitchenware New Zealand, Macrocarpa toys">
-    
-    <!-- CRITICAL CSS - ENHANCED VERSION -->
-    <style>
-      /* CSS Reset & Base Styles */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      html {
-        -webkit-text-size-adjust: 100%;
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        margin: 0;
-        background: rgb(249 250 251);
-        color: rgb(17 24 39);
-      }
-      
-      .min-h-screen {
-        min-height: 100vh;
-      }
-      
-      /* ENHANCED Loading State - Shows Actual Content Structure */
-      #root:empty {
-        display: block;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #fffbeb 0%, #ffedd5 50%, #fecaca 100%);
-        position: relative;
-      }
-      
-      /* Show actual hero content skeleton during load */
-      #root:empty::before {
-        content: 'Poppa\'s Wooden Creations';
-        display: block;
-        position: absolute;
-        top: 30vh;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 42rem;
-        text-align: center;
-        font-size: clamp(2rem, 6vw, 3.75rem);
-        font-weight: 700;
-        color: rgb(17 24 39);
-        line-height: 1.2;
-        animation: fadeIn 0.5s ease-in;
-      }
-      
-      /* Subtitle text */
-      #root:empty::after {
-        content: 'Handcrafted wooden toys from native New Zealand timber';
-        display: block;
-        position: absolute;
-        top: calc(30vh + 6rem);
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        max-width: 32rem;
-        text-align: center;
-        font-size: clamp(1rem, 3vw, 1.25rem);
-        color: rgb(75 85 99);
-        line-height: 1.625;
-        animation: fadeIn 0.8s ease-in;
-      }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-        to { opacity: 1; transform: translateX(-50%) translateY(0); }
-      }
-      
-      /* Image Optimization */
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
-      
-      img[loading="lazy"] {
-        content-visibility: auto;
-      }
-      
-      /* Hero image priority hint */
-      img[fetchpriority="high"] {
-        content-visibility: auto;
-      }
-      
-      /* Critical Above-the-Fold Styles - Prevents FOUC */
-      .text-base { font-size: 1rem; line-height: 1.5rem; }
-      .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-      .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-      .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-      .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-      .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-      .text-5xl { font-size: 3rem; line-height: 1; }
-      .text-6xl { font-size: 3.75rem; line-height: 1; }
-      
-      .font-bold { font-weight: 700; }
-      .font-semibold { font-weight: 600; }
-      .font-medium { font-weight: 500; }
-      
-      .text-gray-600 { color: rgb(75 85 99); }
-      .text-gray-700 { color: rgb(55 65 81); }
-      .text-gray-800 { color: rgb(31 41 55); }
-      .text-gray-900 { color: rgb(17 24 39); }
-      .text-white { color: rgb(255 255 255); }
-      
-      .leading-tight { line-height: 1.25; }
-      .leading-relaxed { line-height: 1.625; }
-      
-      .max-w-xl { max-width: 36rem; }
-      .max-w-2xl { max-width: 42rem; }
-      .max-w-3xl { max-width: 48rem; }
-      .max-w-4xl { max-width: 56rem; }
-      .max-w-5xl { max-width: 64rem; }
-      .max-w-6xl { max-width: 72rem; }
-      .max-w-7xl { max-width: 80rem; }
-      
-      .mx-auto { margin-left: auto; margin-right: auto; }
-      
-      .bg-gradient-to-br { 
-        background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); 
-      }
-      .from-amber-50 { 
-        --tw-gradient-from: #fffbeb; 
-        --tw-gradient-to: rgb(255 251 235 / 0); 
-        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); 
-      }
-      .via-orange-50 { 
-        --tw-gradient-to: rgb(255 247 237 / 0); 
-        --tw-gradient-stops: var(--tw-gradient-from), #fff7ed, var(--tw-gradient-to); 
-      }
-      .to-red-50 { 
-        --tw-gradient-to: #fef2f2; 
-      }
-      
-      .flex { display: flex; }
-      .grid { display: grid; }
-      .hidden { display: none; }
-      
-      .items-center { align-items: center; }
-      .items-start { align-items: flex-start; }
-      .justify-center { justify-content: center; }
-      .justify-between { justify-content: space-between; }
-      
-      .flex-col { flex-direction: column; }
-      .flex-wrap { flex-wrap: wrap; }
-      .gap-2 { gap: 0.5rem; }
-      .gap-3 { gap: 0.75rem; }
-      .gap-4 { gap: 1rem; }
-      .gap-6 { gap: 1.5rem; }
-      .gap-8 { gap: 2rem; }
-      
-      .text-center { text-align: center; }
-      .text-left { text-align: left; }
-      
-      .m-0 { margin: 0; }
-      .m-2 { margin: 0.5rem; }
-      .m-4 { margin: 1rem; }
-      .mt-2 { margin-top: 0.5rem; }
-      .mt-4 { margin-top: 1rem; }
-      .mt-6 { margin-top: 1.5rem; }
-      .mt-8 { margin-top: 2rem; }
-      .mb-2 { margin-bottom: 0.5rem; }
-      .mb-3 { margin-bottom: 0.75rem; }
-      .mb-4 { margin-bottom: 1rem; }
-      .mb-6 { margin-bottom: 1.5rem; }
-      .mb-8 { margin-bottom: 2rem; }
-      .mb-12 { margin-bottom: 3rem; }
-      
-      .p-0 { padding: 0; }
-      .p-2 { padding: 0.5rem; }
-      .p-4 { padding: 1rem; }
-      .p-6 { padding: 1.5rem; }
-      .p-8 { padding: 2rem; }
-      .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-      .px-4 { padding-left: 1rem; padding-right: 1rem; }
-      .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .px-8 { padding-left: 2rem; padding-right: 2rem; }
-      .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-      .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-      .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-      .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-      .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-      .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
-      .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
-      
-      .rounded { border-radius: 0.25rem; }
-      .rounded-lg { border-radius: 0.5rem; }
-      .rounded-xl { border-radius: 0.75rem; }
-      
-      .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
-      .shadow { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); }
-      .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
-      
-      .bg-white { background-color: rgb(255 255 255); }
-      .bg-gray-50 { background-color: rgb(249 250 251); }
-      .bg-gray-100 { background-color: rgb(243 244 246); }
-      
-      .border { border-width: 1px; }
-      .border-gray-200 { border-color: rgb(229 231 235); }
-      
-      .w-full { width: 100%; }
-      .h-full { height: 100%; }
-      
-      .object-cover { object-fit: cover; }
-      .object-contain { object-fit: contain; }
-      
-      .overflow-hidden { overflow: hidden; }
-      
-      .transition { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
-      
-      .cursor-pointer { cursor: pointer; }
-      
-      .pointer-events-none { pointer-events: none; }
-      
-      /* Responsive Design */
-      @media (min-width: 640px) {
-        .sm\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-        .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-        .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
-        .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-        .sm\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-        .sm\:text-5xl { font-size: 3rem; line-height: 1; }
-        .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-      }
-      
-      @media (min-width: 768px) {
-        .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .md\:flex-row { flex-direction: row; }
-        .md\:text-5xl { font-size: 3rem; line-height: 1; }
-        .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
-      }
-      
-      @media (min-width: 1024px) {
-        .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-        .lg\:text-6xl { font-size: 3.75rem; line-height: 1; }
-      }
-    </style>
-    
-    <!-- ENHANCED LocalBusiness Schema with GEO/AEO/SEO optimization -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Poppa's Wooden Creations",
-      "image": "https://poppaswoodencreations.co.nz/logo.png",
-      "@id": "https://poppaswoodencreations.co.nz",
-      "url": "https://poppaswoodencreations.co.nz",
-      "telephone": "+64210228166",
-      "email": "poppas.wooden.creations@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "102 Kiripaka Rd",
-        "addressLocality": "Whangarei",
-        "addressRegion": "Northland",
-        "postalCode": "0110",
-        "addressCountry": "NZ"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -35.7334,
-        "longitude": 174.3234
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "09:00",
-        "closes": "15:00"
-      },
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=100051923245827",
-        "https://www.instagram.com/poppas.wooden.creations",
-        "https://www.tiktok.com/@poppaswoodencreations"
-      ],
-      "priceRange": "$5-$400",
-      "foundingDate": "2015",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "150"
-      },
-      "description": "Handcrafted wooden toys and kitchenware made from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Established in Whangarei, Northland in 2015, creating heirloom-quality pieces built to last generations."
-    }
-    </script>
-
-    <!-- WebSite Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Poppa's Wooden Creations",
-      "url": "https://poppaswoodencreations.co.nz",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://poppaswoodencreations.co.nz/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
-    <!-- BreadcrumbList Schema for better navigation understanding -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://poppaswoodencreations.co.nz"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Wooden Toys",
-          "item": "https://poppaswoodencreations.co.nz/wooden-toys"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Kitchenware",
-          "item": "https://poppaswoodencreations.co.nz/kitchenware"
-        }
-      ]
-    }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Google Tag Manager - Optimized with requestIdleCallback -->
-    <script>
-      // Defer GTM until browser is idle or after 5 seconds
-      if (window.requestIdleCallback) {
-        requestIdleCallback(function() {
-          loadGTM();
-        }, { timeout: 5000 });
-      } else {
-        window.addEventListener('load', function() {
-          setTimeout(loadGTM, 5000);
-        });
-      }
-      
-      function loadGTM() {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NQG3DNXR');
-      }
-    </script>
-  </body>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- ✅ PERFORMANCE: Preconnect to Critical Origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co">
+  
+  <!-- ✅ PERFORMANCE: DNS Prefetch for GTM -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- ✅ PERFORMANCE: Async Load Fonts (Non-blocking) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+        rel="stylesheet" 
+        media="print" 
+        onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </noscript>
+  
+  <!-- ✅ PERFORMANCE: Critical CSS Inline -->
+  <style>
+    /* Critical above-the-fold styles */
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, sans-serif; }
+    .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+    .from-amber-50 { --tw-gradient-from: #fffbeb; --tw-gradient-to: rgb(255 251 235 / 0); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+    .via-orange-50 { --tw-gradient-to: rgb(255 247 237 / 0); --tw-gradient-stops: var(--tw-gradient-from), #fff7ed, var(--tw-gradient-to); }
+    .to-red-50 { --tw-gradient-to: #fef2f2; }
+    .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+    .text-center { text-align: center; }
+    .font-bold { font-weight: 700; }
+    .text-gray-900 { color: rgb(17 24 39); }
+    .text-amber-600 { color: rgb(217 119 6); }
+    .mb-6 { margin-bottom: 1.5rem; }
+  </style>
+  
+  <title>Poppa's Wooden Creations</title>
+  
+  <!-- ✅ PERFORMANCE: Deferred GTM (Non-blocking) -->
+  <script>
+    // Defer GTM until after page load
+    window.addEventListener('load', function() {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NQG3DNXR');
+    });
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- GTM noscript fallback -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQG3DNXR"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+</body>
 </html>
