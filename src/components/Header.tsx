@@ -102,18 +102,36 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </nav>
 
           <div className="flex items-center space-x-4">
-            <button className="p-2 text-gray-700 hover:text-amber-600 transition-colors"><Search size={20} /></button>
-            <button onClick={onShowCart} className="relative p-2 text-gray-700 hover:text-amber-600 transition-colors">
+            <button 
+              className="p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label="Search products"
+            >
+              <Search size={20} />
+            </button>
+            <button 
+              onClick={onShowCart} 
+              className="relative p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label={`Shopping cart with ${cartItemCount} items`}
+            >
               <ShoppingCart size={20} />
               {cartItemCount > 0 && (<span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{cartItemCount}</span>)}
             </button>
-            <button onClick={handleAdminClick} className="hidden md:block p-2 text-gray-700 hover:text-amber-600 transition-colors">
+            <button 
+              onClick={handleAdminClick} 
+              className="hidden md:block p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label="Admin access"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
             </button>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors">
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              className="lg:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+            >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
