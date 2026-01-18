@@ -96,12 +96,12 @@ const WoodenToysNZ: React.FC = () => {
             
             <div className="grid md:grid-cols-3 gap-6">
               <button
-                onClick={() => navigate('/wooden-vehicles')}
+                onClick={() => navigate('/wooden-cars')}
                 className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-amber-600 hover:shadow-lg transition-all text-left group"
               >
                 <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🚗</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Wooden Vehicles</h3>
-                <p className="text-gray-600 text-sm">Cars, trucks, planes & more</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Wooden Cars</h3>
+                <p className="text-gray-600 text-sm">Classic toy cars & vehicles</p>
               </button>
 
               <button
@@ -120,6 +120,33 @@ const WoodenToysNZ: React.FC = () => {
                 <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🚂</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Train Sets</h3>
                 <p className="text-gray-600 text-sm">Build railways & spark imagination</p>
+              </button>
+
+              <button
+                onClick={() => navigate('/wooden-trucks')}
+                className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-amber-600 hover:shadow-lg transition-all text-left group"
+              >
+                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🚚</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Trucks</h3>
+                <p className="text-gray-600 text-sm">Dump trucks, fire engines & more</p>
+              </button>
+
+              <button
+                onClick={() => navigate('/wooden-planes-helicopters')}
+                className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-amber-600 hover:shadow-lg transition-all text-left group"
+              >
+                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">✈️</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Planes & Helicopters</h3>
+                <p className="text-gray-600 text-sm">Aviation toys that soar</p>
+              </button>
+
+              <button
+                onClick={() => navigate('/wooden-kitchenware')}
+                className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-amber-600 hover:shadow-lg transition-all text-left group"
+              >
+                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">🍴</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Kitchenware</h3>
+                <p className="text-gray-600 text-sm">Utensils & serving boards</p>
               </button>
             </div>
           </div>
@@ -216,7 +243,7 @@ const WoodenToysNZ: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <button
-                onClick={() => navigate('/wooden-vehicles')}
+                onClick={() => navigate('/wooden-cars')}
                 className="bg-white text-amber-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-50 transition-all shadow-lg"
               >
                 Shop All Toys
