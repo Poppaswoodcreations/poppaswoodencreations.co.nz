@@ -2,9 +2,6 @@ import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-// Import accessibility fixes
-import './accessibility-fixes.css';
-
 // Components that are needed immediately (above the fold)
 import Header from './components/Header';
 import Footer from './components/Footer';
