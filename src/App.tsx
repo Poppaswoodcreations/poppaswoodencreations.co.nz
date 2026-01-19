@@ -166,6 +166,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                 />
+                <ReviewsSection showAddReview={true} />
               </>
             } />
 
