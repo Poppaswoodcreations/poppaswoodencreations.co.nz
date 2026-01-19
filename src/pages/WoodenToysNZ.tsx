@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
+import ReviewsSection from '../components/Reviews/ReviewsSection';
 
 const WoodenToysNZ: React.FC = () => {
   const navigate = useNavigate();
@@ -235,8 +236,8 @@ const WoodenToysNZ: React.FC = () => {
             </div>
           </div>
 
-          {/* ✅ FIXED: CTA Section - Improved Contrast for 100/100 Accessibility */}
-          <div className="bg-amber-700 rounded-2xl p-12 text-center text-white shadow-xl">
+          {/* CTA Section */}
+          <div className="bg-amber-700 rounded-2xl p-12 text-center text-white shadow-xl mb-12">
             <h2 className="text-3xl font-bold mb-4">Ready to Choose Quality?</h2>
             <p className="text-xl mb-8">
               Browse our collection of handmade wooden toys and discover the difference that craftsmanship makes.
@@ -259,6 +260,9 @@ const WoodenToysNZ: React.FC = () => {
 
         </div>
       </section>
+
+      {/* ⭐ NEW: Customer Reviews Section */}
+      <ReviewsSection showAddReview={true} />
     </>
   );
 };
