@@ -11,14 +11,16 @@ interface Review {
   verified: boolean;
   helpful: number;
   productId?: string;
+  category?: string; // NEW: Add category field
 }
 
 interface ReviewsSectionProps {
   productId?: string;
+  category?: string; // NEW: Add category filter
   showAddReview?: boolean;
 }
 
-const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddReview = true }) => {
+const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, category, showAddReview = true }) => {
   const [reviews, setReviews] = useState<Review[]>([
     {
       id: '9',
@@ -28,7 +30,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       comment: 'Absolutely brilliant chopping boards, will look good with some cheese on them!!',
       date: '2024-11-22',
       verified: true,
-      helpful: 0
+      helpful: 0,
+      category: 'wooden-kitchenware'
     },
     {
       id: '10',
@@ -38,7 +41,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       comment: 'Beautiful, high-quality wooden toys and gifts. Perfect for any occasion!',
       date: '2024-11-22',
       verified: true,
-      helpful: 0
+      helpful: 0,
+      category: 'wooden-baby-toys'
     },
     {
       id: '5',
@@ -49,7 +53,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2025-07-29',
       verified: true,
       helpful: 18,
-      productId: 'car-carrier'
+      productId: 'car-carrier',
+      category: 'wooden-cars'
     },
     {
       id: '6',
@@ -60,7 +65,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2025-06-12',
       verified: true,
       helpful: 14,
-      productId: 'trolley-blocks'
+      productId: 'trolley-blocks',
+      category: 'wooden-baby-toys'
     },
     {
       id: '7',
@@ -71,7 +77,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2025-01-13',
       verified: true,
       helpful: 22,
-      productId: 'plane-helicopter'
+      productId: 'plane-helicopter',
+      category: 'wooden-planes-helicopters'
     },
     {
       id: '8',
@@ -82,7 +89,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2024-12-25',
       verified: true,
       helpful: 26,
-      productId: 'plane-helicopter'
+      productId: 'plane-helicopter',
+      category: 'wooden-planes-helicopters'
     },
     {
       id: '1',
@@ -93,7 +101,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2024-01-15',
       verified: true,
       helpful: 12,
-      productId: 'product-3'
+      productId: 'product-3',
+      category: 'wooden-trains'
     },
     {
       id: '2',
@@ -104,7 +113,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2024-01-10',
       verified: true,
       helpful: 8,
-      productId: 'product-1'
+      productId: 'product-1',
+      category: 'wooden-cars'
     },
     {
       id: '3',
@@ -115,7 +125,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2024-01-08',
       verified: true,
       helpful: 15,
-      productId: 'product-9'
+      productId: 'product-9',
+      category: 'wooden-baby-toys'
     },
     {
       id: '4',
@@ -126,7 +137,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: '2024-01-05',
       verified: true,
       helpful: 6,
-      productId: 'product-7'
+      productId: 'product-7',
+      category: 'wooden-baby-toys'
     }
   ]);
 
@@ -139,9 +151,12 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
     comment: ''
   });
 
-  const filteredReviews = productId 
-    ? reviews.filter(review => review.productId === productId)
-    : reviews;
+  // NEW: Filter by category first, then by productId
+  const filteredReviews = reviews.filter(review => {
+    if (category && review.category !== category) return false;
+    if (productId && review.productId !== productId) return false;
+    return true;
+  });
 
   const displayReviews = filterRating > 0 
     ? filteredReviews.filter(review => review.rating === filterRating)
@@ -167,7 +182,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
       date: new Date().toISOString().split('T')[0],
       verified: false,
       helpful: 0,
-      productId
+      productId,
+      category
     };
     setReviews([review, ...reviews]);
     setNewReview({ customerName: '', rating: 5, title: '', comment: '' });
@@ -197,7 +213,7 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">Customer Reviews & Testimonials</h1>
+        <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">Customer Reviews & Testimonials</h2>
         <div className="text-center mb-12">
           <p className="text-gray-600 max-w-2xl mx-auto">
             Read what our customers say about Poppa's Wooden Creations. With over 150 five-star reviews, 
@@ -208,7 +224,7 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
 
         <div className="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Verified Customer Reviews</h2>
+            <h3 className="text-2xl font-bold text-gray-900">Verified Customer Reviews</h3>
             {showAddReview && (
               <button
                 onClick={() => setShowReviewForm(true)}
@@ -271,43 +287,49 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, showAddRevie
 
           {/* Reviews List */}
           <div className="space-y-6">
-            {displayReviews.map((review) => (
-              <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h4 className="font-semibold text-gray-900">{review.customerName}</h4>
-                      {review.verified && (
-                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-                          Verified Purchase
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      {renderStars(review.rating)}
-                      <span className="text-gray-500 text-sm">{review.date}</span>
+            {displayReviews.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No reviews yet for this {category ? 'category' : productId ? 'product' : 'selection'}. Be the first to leave a review!
+              </div>
+            ) : (
+              displayReviews.map((review) => (
+                <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center space-x-3 mb-2">
+                        <h4 className="font-semibold text-gray-900">{review.customerName}</h4>
+                        {review.verified && (
+                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                            Verified Purchase
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        {renderStars(review.rating)}
+                        <span className="text-gray-500 text-sm">{review.date}</span>
+                      </div>
                     </div>
                   </div>
+                  
+                  <h5 className="font-medium text-gray-900 mb-2">{review.title}</h5>
+                  <p className="text-gray-600 mb-3">{review.comment}</p>
+                  
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={() => handleHelpful(review.id)}
+                      className="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      <ThumbsUp size={14} />
+                      <span className="text-sm">Helpful ({review.helpful})</span>
+                    </button>
+                    <button className="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
+                      <MessageCircle size={14} />
+                      <span className="text-sm">Reply</span>
+                    </button>
+                  </div>
                 </div>
-                
-                <h5 className="font-medium text-gray-900 mb-2">{review.title}</h5>
-                <p className="text-gray-600 mb-3">{review.comment}</p>
-                
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={() => handleHelpful(review.id)}
-                    className="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors"
-                  >
-                    <ThumbsUp size={14} />
-                    <span className="text-sm">Helpful ({review.helpful})</span>
-                  </button>
-                  <button className="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors">
-                    <MessageCircle size={14} />
-                    <span className="text-sm">Reply</span>
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           {/* Review Form Modal */}
