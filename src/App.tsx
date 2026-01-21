@@ -11,7 +11,6 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
-import { SEOMetaManager } from './components/SEOMetaManager'; // ← NEW: SEO Manager
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -72,8 +71,6 @@ const AppContent: React.FC = () => {
 
   // ============================================
   // CANONICAL TAG FIX - Updates on route change
-  // NOTE: SEOMetaManager also handles canonicals, so this is redundant
-  // but keeping it for backwards compatibility
   // ============================================
   useEffect(() => {
     const baseUrl = 'https://poppaswoodencreations.co.nz';
@@ -144,16 +141,6 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* ============================================
-          SEO META MANAGER - Manages robots tags and canonicals
-          This component automatically:
-          - Adds proper robots meta tags (index/noindex)
-          - Adds canonical tags
-          - Handles trailing slashes
-          - Prevents accidental noindexing
-          ============================================ */}
-      <SEOMetaManager />
-      
       <Header 
         onShowAdmin={() => setShowAdmin(true)}
         onShowCart={() => setShowCart(true)}
