@@ -1,3 +1,5 @@
+import React from 'react';
+
 const HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent: React.FC = () => (
   <>
     <p className="lead mb-6">
@@ -382,3 +384,46 @@ const HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent: React.FC = () => (
     </div>
   </>
 );
+
+// Add other blog post components here if you have them
+const WhyMontessoriEducatorsChooseWoodenToysContent: React.FC = () => (
+  <>
+    <p className="mb-6">Content for this blog post...</p>
+  </>
+);
+
+const WoodenToysVsPlasticMontessoriPerspectiveContent: React.FC = () => (
+  <>
+    <p className="mb-6">Content for this blog post...</p>
+  </>
+);
+
+const BestWoodenToysEarlyChildhoodDevelopmentContent: React.FC = () => (
+  <>
+    <p className="mb-6">Content for this blog post...</p>
+  </>
+);
+
+const HowToChooseSafeWoodenToysForBabiesContent: React.FC = () => (
+  <>
+    <p className="mb-6">Content for this blog post...</p>
+  </>
+);
+
+// CRITICAL: Export function that maps slugs to components
+export const getBlogContent = (slug: string): React.FC | null => {
+  switch (slug) {
+    case 'how-wooden-toys-help-kids-learn-develop-problem-solving':
+      return HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent;
+    case 'why-montessori-educators-choose-wooden-toys':
+      return WhyMontessoriEducatorsChooseWoodenToysContent;
+    case 'wooden-toys-vs-plastic-montessori-perspective':
+      return WoodenToysVsPlasticMontessoriPerspectiveContent;
+    case 'best-wooden-toys-early-childhood-development':
+      return BestWoodenToysEarlyChildhoodDevelopmentContent;
+    case 'how-to-choose-safe-wooden-toys-babies':
+      return HowToChooseSafeWoodenToysForBabiesContent;
+    default:
+      return null;
+  }
+};
