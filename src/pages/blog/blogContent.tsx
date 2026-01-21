@@ -64,6 +64,14 @@ export const getBlogContent = (slug: string): React.ReactNode => {
 // ==========================================
 const WoodenVsPlasticToysContent: React.FC = () => (
   <>
+    <div className="my-8">
+      <img 
+        src="https://placehold.co/1200x800/D4A574/FFF?text=Wooden+vs+Plastic+Toys&font=roboto" 
+        alt="Natural wooden toys compared to plastic toys showing quality difference" 
+        className="w-full rounded-lg shadow-lg"
+      />
+    </div>
+
     <p className="mb-6">
       As a parent, you want the best for your child—toys that are safe, engaging, and worth the investment. Walk into any toy store, and you'll face a wall of brightly colored plastic options. But more parents are discovering what generations before knew: natural wooden toys offer something fundamentally different.
     </p>
@@ -112,6 +120,17 @@ const WoodenVsPlasticToysContent: React.FC = () => (
       Sensory Development: Why Texture Matters
     </h2>
 
+    <div className="my-8">
+      <img 
+        src="https://placehold.co/1200x800/8B6F47/FFF?text=Sensory+Development&font=roboto" 
+        alt="Child developing motor skills with wooden blocks" 
+        className="w-full rounded-lg shadow-lg"
+      />
+      <p className="text-sm text-gray-600 italic mt-2 text-center">
+        Natural wood provides rich tactile experiences for developing minds
+      </p>
+    </div>
+
     <p className="mb-6">
       Plastic toys feel the same whether they're a car, a block, or a tea set—smooth, uniform, synthetic. Children learn about their world through touch, but plastic offers limited sensory information.
     </p>
@@ -143,6 +162,17 @@ const WoodenVsPlasticToysContent: React.FC = () => (
     <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
       Environmental Impact: Thinking Beyond Today
     </h2>
+
+    <div className="my-8">
+      <img 
+        src="https://placehold.co/1200x800/A0826D/FFF?text=Whangarei+Workshop&font=roboto" 
+        alt="Handcrafting wooden toys in Whangarei workshop" 
+        className="w-full rounded-lg shadow-lg"
+      />
+      <p className="text-sm text-gray-600 italic mt-2 text-center">
+        Sustainable craftsmanship in our Whangarei workshop
+      </p>
+    </div>
 
     <p className="mb-6">
       Plastic toys tell a troubling story. Made from petroleum, manufactured overseas, shipped long distances, then discarded after brief use. Most end up in landfill where they'll sit for 400+ years. Even "recyclable" plastics rarely get recycled—the complex plastics in toys don't fit standard recycling streams.
@@ -802,6 +832,14 @@ const PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent: React.FC =
 // ==========================================
 const BenefitsWoodenToysContent: React.FC = () => (
   <>
+    <div className="my-8">
+      <img 
+        src="https://placehold.co/1200x800/C19A6B/FFF?text=5+Benefits+of+Wooden+Toys&font=roboto" 
+        alt="5 key benefits of wooden toys for child development" 
+        className="w-full rounded-lg shadow-lg"
+      />
+    </div>
+
     <div className="bg-amber-50 border-l-4 border-amber-500 p-6 my-8">
       <h3 className="text-lg font-bold text-gray-900 mb-2">Quick Answer</h3>
       <p className="text-gray-700">
