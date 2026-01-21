@@ -228,7 +228,8 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, category, sh
             {showAddReview && (
               <button
                 onClick={() => setShowReviewForm(true)}
-                className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2"
+                className="bg-amber-700 text-white px-4 py-2 rounded-lg hover:bg-amber-800 transition-colors flex items-center space-x-2"
+                aria-label="Write a review"
               >
                 <Plus size={16} />
                 <span>Write Review</span>
@@ -268,13 +269,18 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, category, sh
             </div>
           </div>
 
-          {/* Filter */}
+          {/* Filter - ACCESSIBILITY FIX: Added label for select element */}
           <div className="flex items-center space-x-4 mb-6">
             <Filter size={16} className="text-gray-500" />
+            <label htmlFor="rating-filter" className="text-sm font-medium text-gray-700">
+              Filter by rating:
+            </label>
             <select
+              id="rating-filter"
               value={filterRating}
               onChange={(e) => setFilterRating(parseInt(e.target.value))}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-700 focus:border-transparent"
+              aria-label="Filter reviews by star rating"
             >
               <option value={0}>All Ratings</option>
               <option value={5}>5 Stars</option>
@@ -394,7 +400,7 @@ const ReviewsSection: React.FC<ReviewsSectionProps> = ({ productId, category, sh
                   <div className="flex space-x-3">
                     <button
                       type="submit"
-                      className="flex-1 bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition-colors"
+                      className="flex-1 bg-amber-700 text-white py-2 rounded-lg hover:bg-amber-800 transition-colors"
                     >
                       Submit Review
                     </button>
