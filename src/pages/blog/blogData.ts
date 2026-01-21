@@ -1,5 +1,6 @@
 // src/pages/blog/blogData.ts
 // Central location for all blog post metadata and FAQs
+// FIXED: Properly escaped all apostrophes
 
 export interface BlogPost {
   slug: string;
@@ -25,7 +26,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How Wooden Toys Help Kids Learn & Develop Problem-Solving',
     metaDescription: 'Discover how wooden toys encourage kids to become problem-solvers. Made in Whangarei, shipped to Auckland families. Montessori-approved, heirloom quality.',
     excerpt: 'After 10 years handcrafting wooden toys in Whangarei, I\'ve learned the science behind why Montessori educators and Auckland parents choose wooden over plastic. It\'s not just nostalgia—wooden toys actively develop problem-solving skills, creativity, and independent thinking in children. Here\'s what the research shows and why it matters for your family.',
-    author: 'Poppa's Wooden Creations',
+    author: 'Poppa\'s Wooden Creations',
     date: '2026-01-21',
     readTime: '8 min',
     category: 'Child Development',
@@ -59,5 +60,36 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
-  // ... rest of your blog posts remain unchanged
+  {
+    slug: 'best-wooden-toys-nz-simple-parents-guide-2026',
+    title: 'Best Wooden Toys NZ: Simple Parent\'s Guide 2026',
+    metaDescription: 'Find the best wooden toys in New Zealand. Easy guide to choosing safe, quality toys made from native NZ wood. Perfect for babies to preschoolers.',
+    excerpt: 'Finding good wooden toys shouldn\'t be hard. This simple guide helps you choose the best wooden toys in New Zealand. Learn which toys are right for each age, why NZ-made toys last longer, and where to buy quality wooden toys from local makers.',
+    author: 'Poppa\'s Wooden Creations',
+    date: '2026-01-17',
+    readTime: '8 min read',
+    category: 'Buying Guide',
+    tags: ['wooden toys nz', 'nz made toys', 'best wooden toys', 'children\'s toys', 'safe toys', 'quality toys'],
+    featuredImage: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/Baby%20Rattle-optimized%20(1).webp',
+    imageAlt: 'Best wooden toys NZ handcrafted baby rattle from native Rimu timber for child development',
+    faqs: [
+      {
+        question: 'What\'s the best wooden toy for a baby?',
+        answer: 'Teething rings made from Rimu wood are perfect for babies. They\'re safe to chew on, help with sore gums, and babies can easily hold them. Start with one teething ring and one simple rattle. That\'s enough for a baby to explore and learn.'
+      },
+      {
+        question: 'Why do wooden toys cost more than plastic toys?',
+        answer: 'Wooden toys cost more because they\'re made by hand from real wood, not machines making plastic. But they last 10-15 years while plastic toys break in 1-2 years. A $90 wooden toy used for 15 years costs only $6 per year. That\'s cheaper than replacing plastic toys every year!'
+      },
+      {
+        question: 'Are wooden toys safe for kids who put everything in their mouth?',
+        answer: 'Yes! Quality wooden toys are very safe. They\'re made from natural wood with food-safe finishes (no chemicals). NZ woods like Rimu even have natural germ-fighting properties. Just make sure the toy is smooth with no splinters, and it\'s safe for chewing.'
+      },
+      {
+        question: 'How do I clean wooden toys?',
+        answer: 'Super easy! Just wipe with a slightly damp cloth, then dry it off completely. Never soak wooden toys in water. Every few months, rub on a little food-safe oil to keep the wood looking nice. That\'s all you need to do!'
+      }
+    ]
+  }
+  // Add rest of your blog posts here...
 ];
