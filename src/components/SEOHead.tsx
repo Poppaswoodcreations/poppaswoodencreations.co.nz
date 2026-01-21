@@ -43,7 +43,13 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
       <link rel="canonical" href={canonicalUrl} />
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      
+      {/* Robots Meta Tag - ALWAYS present to fix Google Search Console indexing issues */}
+      {noindex ? (
+        <meta name="robots" content="noindex, follow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
       
       {/* Open Graph */}
       <meta property="og:title" content={pageTitle} />
