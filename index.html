@@ -1,30 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- ✅ ONLY CRITICAL OPTIMIZATION: Supabase Preconnect -->
-  <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co">
-  
-  <title>Poppa's Wooden Creations</title>
-  
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NQG3DNXR');</script>
-  <!-- End Google Tag Manager -->
-</head>
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQG3DNXR"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PERFORMANCE: Preconnect to critical origins -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://hfirnolwhesjkxshidxo.supabase.co" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Handcrafted wooden toys from native New Zealand timber. Heirloom quality toys made in Whangarei, designed to last generations." />
+    
+    <title>Poppa's Wooden Creations - Handcrafted NZ Wooden Toys</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- PERFORMANCE: Defer Google Tag Manager to after page load -->
+    <script>
+      // Load GTM after page becomes interactive to avoid blocking render
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-NQG3DNXR');
+        }, 2000); // Load 2 seconds after page load
+      });
+    </script>
+  </body>
 </html>
