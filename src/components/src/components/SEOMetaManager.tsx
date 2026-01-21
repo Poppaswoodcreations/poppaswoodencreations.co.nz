@@ -24,11 +24,22 @@ interface SEOConfig {
 }
 
 export function SEOMetaManager() {
+  console.log('🚀 SEOMetaManager: Component mounted!');
   const location = useLocation();
+  console.log('🚀 SEOMetaManager: Current location:', location.pathname);
 
   useEffect(() => {
+    console.log('🚀 SEOMetaManager: useEffect triggered for path:', location.pathname);
     const config = getSEOConfig(location.pathname);
+    console.log('🚀 SEOMetaManager: Config:', config);
     updateMetaTags(config);
+    console.log('🚀 SEOMetaManager: Meta tags should be added now');
+    
+    // Verify tags were added
+    const robotsCheck = document.querySelector('meta[name="robots"]');
+    const canonicalCheck = document.querySelector('link[rel="canonical"]');
+    console.log('🚀 SEOMetaManager: Verification - Robots tag exists:', !!robotsCheck, robotsCheck?.getAttribute('content'));
+    console.log('🚀 SEOMetaManager: Verification - Canonical tag exists:', !!canonicalCheck, (canonicalCheck as HTMLLinkElement)?.href);
   }, [location.pathname]);
 
   return null; // This component doesn't render anything
@@ -159,9 +170,12 @@ function getSEOConfig(pathname: string): SEOConfig {
  * Updates meta tags in the document head
  */
 function updateMetaTags(config: SEOConfig) {
+  console.log('🔧 updateMetaTags called with config:', config);
+  
   // Remove existing robots meta tag
   const existingRobots = document.querySelector('meta[name="robots"]');
   if (existingRobots) {
+    console.log('🔧 Removing existing robots tag:', existingRobots.getAttribute('content'));
     existingRobots.remove();
   }
 
@@ -173,6 +187,7 @@ function updateMetaTags(config: SEOConfig) {
   const followValue = config.shouldFollow ? 'follow' : 'nofollow';
   robotsTag.content = `${indexValue}, ${followValue}`;
   
+  console.log('🔧 Adding robots tag:', robotsTag.content);
   document.head.appendChild(robotsTag);
 
   // Update canonical tag
@@ -180,23 +195,25 @@ function updateMetaTags(config: SEOConfig) {
     let canonicalTag = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     
     if (!canonicalTag) {
+      console.log('🔧 Creating new canonical tag');
       canonicalTag = document.createElement('link');
       canonicalTag.rel = 'canonical';
       document.head.appendChild(canonicalTag);
+    } else {
+      console.log('🔧 Updating existing canonical tag');
     }
     
     canonicalTag.href = config.canonical;
+    console.log('🔧 Canonical tag set to:', canonicalTag.href);
   }
 
-  // Log in development mode
-  if (import.meta.env.DEV) {
-    console.log('🔍 SEO Meta Manager:', {
-      path: window.location.pathname,
-      robots: `${indexValue}, ${followValue}`,
-      canonical: config.canonical,
-      reason: config.reason
-    });
-  }
+  // Always log (not just in dev mode for debugging)
+  console.log('✅ SEO Meta Manager applied:', {
+    path: window.location.pathname,
+    robots: `${indexValue}, ${followValue}`,
+    canonical: config.canonical,
+    reason: config.reason
+  });
 }
 
 /**
