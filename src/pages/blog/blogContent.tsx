@@ -1,6 +1,3 @@
-// CORRECTED BLOG POST COMPONENT - Lines 290-532
-// Replace this entire section in your blogContent.tsx
-
 const HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent: React.FC = () => (
   <>
     <p className="lead mb-6">
