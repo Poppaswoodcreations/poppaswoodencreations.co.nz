@@ -1,7 +1,7 @@
-147.39 KB •2,924 lines
-•
-Formatting may be inconsistent from source
-import React from 'react';
+create_file
+<path>/home/claude/blogContent-FIRST-SECTION.tsx</path>
+<description>Creating the first section of blogContent.tsx with the 3 complete blog posts, stopping right before "How Wooden Toys Help Kids Learn"</description>
+<file_text>import React from 'react';
 
 // This file contains the actual content for each blog post
 // Updated January 22, 2026 with all blog posts
@@ -63,6 +63,952 @@ export const getBlogContent = (slug: string): React.ReactNode => {
       return <p>Content coming soon...</p>;
   }
 };
+
+// ==========================================
+// BLOG POST: Best Wooden Toys NZ Simple Parents Guide 2026
+// ==========================================
+const BestWoodenToysNzSimpleParentsGuide2026Content: React.FC = () => (
+  <>
+    <p className="mb-6">
+      You want the best for your child. You've heard wooden toys are better than plastic, but walking into a toy store (or scrolling online) leaves you overwhelmed. Which wooden toys actually matter? Which are worth the investment?
+    </p>
+
+    <p className="mb-6">
+      This guide cuts through the marketing noise. After 10 years handcrafting wooden toys in Whangarei and watching countless children grow alongside our creations, here's what actually matters when choosing the best wooden toys NZ has to offer.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Start Here: The 3 Questions That Matter
+    </h2>
+
+    <p className="mb-6">
+      Before you buy a single toy, ask yourself:
+    </p>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-2">
+      <li>What developmental stage is my child in right now?</li>
+      <li>What skills are they working on developing?</li>
+      <li>How will this toy grow with them?</li>
+    </ol>
+
+    <p className="mb-6">
+      These questions prevent impulse purchases of toys that look cute but serve no developmental purpose.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Essential Wooden Toys by Age
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      0-12 Months: Sensory Exploration
+    </h3>
+
+    <p className="mb-6">
+      <strong>Best choices:</strong> Teething rings, simple rattles, wooden balls, basic grasping toys
+    </p>
+
+    <p className="mb-6">
+      At this stage, babies explore through mouth and hands. Choose toys made from native NZ timber (Kauri, Rimu) with food-safe oil finishes. Nothing painted, nothing with small parts.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      1-2 Years: Movement and Coordination
+    </h3>
+
+    <p className="mb-6">
+      <strong>Best choices:</strong> Push toys, stacking rings, simple wooden vehicles, basic blocks
+    </p>
+
+    <p className="mb-6">
+      Toddlers need toys supporting their newfound mobility and developing hand-eye coordination. Simple is better—that expensive elaborate playset will overwhelm rather than engage.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      2-3 Years: Imagination Begins
+    </h3>
+
+    <p className="mb-6">
+      <strong>Best choices:</strong> Toy vehicle collections, wooden trains, simple puzzles, expanded block sets
+    </p>
+
+    <p className="mb-6">
+      This is when children start creating stories with their toys. Simple wooden cars, trains, and animals become characters in elaborate stories your child creates.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      3-5 Years: Complex Play
+    </h3>
+
+    <p className="mb-6">
+      <strong>Best choices:</strong> Building sets, wooden kitchen items, construction vehicles, larger puzzles
+    </p>
+
+    <p className="mb-6">
+      Preschoolers are ready for more detailed toys and elaborate pretend play scenarios.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Where to Buy Quality Wooden Toys in NZ
+    </h2>
+
+    <p className="mb-6">
+      <strong>Local craftspeople:</strong> Check out craft markets in places like Whangarei, Nelson, or Christchurch. Talking directly with makers ensures you understand materials and construction.
+    </p>
+
+    <p className="mb-6">
+      <strong>NZ-made online shops:</strong> Look for sites that clearly state timber sources, show real product photos (not stock images), and have detailed safety information.
+    </p>
+
+    <p className="mb-6">
+      <strong>Red flags to avoid:</strong> Mass-produced toys labeled "wooden" but actually plastic or laminate, anything without clear safety information, toys with chemical smell, suspiciously cheap prices for "handcrafted" items.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Choose NZ Native Timbers?
+    </h2>
+
+    <p className="mb-6">
+      New Zealand native timbers like Kauri, Rimu, and Macrocarpa offer unique benefits:
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Natural antimicrobial properties</li>
+      <li>Beautiful grain patterns that make each toy unique</li>
+      <li>Exceptional durability—these toys last generations</li>
+      <li>Support for local sustainable forestry</li>
+      <li>Connection to NZ heritage and place</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Caring for Wooden Toys
+    </h2>
+
+    <p className="mb-6">
+      <strong>Cleaning:</strong> Wipe with damp cloth and mild vinegar solution. Never soak or dishwasher.
+    </p>
+
+    <p className="mb-6">
+      <strong>Maintenance:</strong> Treat with food-safe oil every few months to keep wood nourished.
+    </p>
+
+    <p className="mb-6">
+      <strong>Storage:</strong> Keep in dry area away from direct heat or moisture.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Are Wooden Toys Worth the Cost?
+    </h2>
+
+    <p className="mb-6">
+      Short answer: Yes, absolutely.
+    </p>
+
+    <p className="mb-6">
+      A $40 wooden car that lasts through 3 kids costs less per year than a $15 plastic car replaced every 6 months. Plus wooden toys:
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Retain resale value</li>
+      <li>Can be passed down as heirlooms</li>
+      <li>Don't end up in landfills</li>
+      <li>Support child development better than electronic toys</li>
+      <li>Look beautiful in your home</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Start Your Collection
+    </h2>
+
+    <p className="mb-6">
+      You don't need to buy everything at once. Start with 2-3 quality pieces appropriate for your child's current stage:
+    </p>
+
+    <p className="mb-6">
+      <strong>For babies:</strong> One teething ring + one rattle = $60-80 total
+    </p>
+
+    <p className="mb-6">
+      <strong>For toddlers:</strong> One push toy + basic blocks = $100-150 total
+    </p>
+
+    <p className="mb-6">
+      <strong>For preschoolers:</strong> Vehicle collection + building set = $150-250 total
+    </p>
+
+    <p className="mb-6">
+      Add gradually as your child grows and shows interest in new types of play.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Final Thoughts
+    </h2>
+
+    <p className="mb-6">
+      Choosing the best wooden toys NZ has to offer doesn't require a PhD in child development. Focus on:
+    </p>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-2">
+      <li>Quality materials (solid wood, food-safe finishes)</li>
+      <li>Age-appropriate design</li>
+      <li>Simple, open-ended play potential</li>
+      <li>Local craftsmanship when possible</li>
+      <li>Durability over disposability</li>
+    </ol>
+
+    <p className="mb-6">
+      Your investment in quality wooden toys pays off in child development, environmental responsibility, and toys that become cherished family pieces rather than landfill waste.
+    </p>
+  </>
+);
+
+// ==========================================
+// BLOG POST: Best Wooden Toys NZ Complete 2026 Parents Guide
+// ==========================================
+const BestWoodenToysNzComplete2026ParentsGuideContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      As New Zealand parents increasingly seek sustainable, developmental, and heirloom-quality toys for their children, wooden toys have moved from niche to mainstream. But with this popularity comes confusion: which wooden toys actually deliver on their promises? How do you distinguish quality from marketing hype?
+    </p>
+
+    <p className="mb-6">
+      This comprehensive 2026 guide draws on a decade of crafting wooden toys in Whangarei, serving Montessori schools throughout New Zealand, and watching countless children develop alongside quality wooden playthings.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Complete Wooden Toy Selection Framework
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Material Quality: Beyond "Wooden"
+    </h3>
+
+    <p className="mb-6">
+      Not all wood is created equal. When shopping for wooden toys NZ, understand these distinctions:
+    </p>
+
+    <p className="mb-6">
+      <strong>Solid hardwood (Best):</strong> Native NZ timbers like Kauri, Rimu, Macrocarpa. Imported hardwoods like beech, maple. Advantages: durability, natural antimicrobial properties, beautiful aging, safe for mouthing. Expect to pay: $30-$150 depending on size.
+    </p>
+
+    <p className="mb-6">
+      <strong>Solid softwood (Good):</strong> NZ Pine, cedar. Advantages: more affordable, sustainable, lighter weight. Disadvantages: dents and scratches more easily. Expect to pay: $20-$80.
+    </p>
+
+    <p className="mb-6">
+      <strong>Plywood/Laminate (Acceptable for some uses):</strong> Advantages: less expensive, can be used for larger items. Disadvantages: not as durable, edges can delaminate, less tactile appeal. Expect to pay: $15-$50.
+    </p>
+
+    <p className="mb-6">
+      <strong>MDF/Composite (Avoid for toys):</strong> Often painted to look like wood. Disadvantages: contains glues and resins, not safe for mouthing, breaks easily.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Finish Safety: What's Covering That Beautiful Wood?
+    </h3>
+
+    <p className="mb-6">
+      The finish matters as much as the wood itself:
+    </p>
+
+    <p className="mb-6">
+      <strong>Best: Food-safe natural oils</strong> (mineral oil, beeswax, walnut oil) - Safe for teething, enhances wood grain, easy to reapply, no chemical smell.
+    </p>
+
+    <p className="mb-6">
+      <strong>Good: Water-based non-toxic paints/stains</strong> - Look for EN71 certification (European toy safety standard), should specify "non-toxic" and "lead-free."
+    </p>
+
+    <p className="mb-6">
+      <strong>Avoid: Conventional varnishes, lacquers, or paints</strong> - Contain VOCs and chemicals, not safe for mouthing, often have strong chemical smell.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Developmental Stages: What to Buy When
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Birth to 6 Months
+    </h3>
+
+    <p className="mb-6">
+      <strong>Developmental focus:</strong> Sensory exploration, grasping reflex, visual tracking
+    </p>
+
+    <p className="mb-6">
+      <strong>Best wooden toys:</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Simple wooden rings (large enough to prevent choking)</li>
+      <li>Smooth wooden rattles</li>
+      <li>Wooden mobiles with contrasting elements</li>
+    </ul>
+
+    <p className="mb-6">
+      <strong>What to avoid:</strong> Small parts, painted finishes (everything goes in the mouth), complex mechanisms.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      6-12 Months
+    </h3>
+
+    <p className="mb-6">
+      <strong>Developmental focus:</strong> Object permanence, cause-effect understanding, beginning mobility
+    </p>
+
+    <p className="mb-6">
+      <strong>Best wooden toys:</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Teething rings (native NZ timber with food-safe finish)</li>
+      <li>Simple wooden balls</li>
+      <li>Object permanence boxes</li>
+      <li>Stacking rings (2-3 large pieces)</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      1-2 Years
+    </h3>
+
+    <p className="mb-6">
+      <strong>Developmental focus:</strong> Walking, early problem-solving, language explosion
+    </p>
+
+    <p className="mb-6">
+      <strong>Best wooden toys:</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Push toys (sturdy, appropriate weight)</li>
+      <li>Simple wooden vehicles (cars, trucks)</li>
+      <li>Basic building blocks (15-20 pieces)</li>
+      <li>Simple puzzles with knobs</li>
+      <li>Wooden trolley with blocks</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      2-3 Years
+    </h3>
+
+    <p className="mb-6">
+      <strong>Developmental focus:</strong> Imaginative play, early sorting/categorizing, fine motor refinement
+    </p>
+
+    <p className="mb-6">
+      <strong>Best wooden toys:</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Vehicle collections (6-8 diverse types)</li>
+      <li>Wooden train sets (simple connection system)</li>
+      <li>Building blocks (expand to 30-50 pieces)</li>
+      <li>Shape sorters</li>
+      <li>Simple wooden animals for pretend play</li>
+    </ul>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      3-5 Years
+    </h3>
+
+    <p className="mb-6">
+      <strong>Developmental focus:</strong> Complex imaginative scenarios, early literacy/numeracy, social play
+    </p>
+
+    <p className="mb-6">
+      <strong>Best wooden toys:</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Elaborate building sets</li>
+      <li>Wooden play kitchens and food</li>
+      <li>Construction vehicles with moving parts</li>
+      <li>Larger puzzles (15-30 pieces)</li>
+      <li>Wooden dollhouses or farms</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Open-Ended vs. Specific Purpose Debate
+    </h2>
+
+    <p className="mb-6">
+      One of the biggest decisions when choosing wooden toys: open-ended or specific purpose?
+    </p>
+
+    <p className="mb-6">
+      <strong>Open-ended toys</strong> (blocks, simple vehicles, basic shapes) can be used in infinite ways. A wooden block becomes a phone, a car, part of a building, or whatever your child imagines. These toys "grow" with your child, serving different purposes at different stages.
+    </p>
+
+    <p className="mb-6">
+      <strong>Specific purpose toys</strong> (puzzles, shape sorters, specific play sets) teach particular skills or facilitate specific types of play.
+    </p>
+
+    <p className="mb-6">
+      <strong>Our recommendation:</strong> 70% open-ended, 30% specific purpose. Open-ended toys provide longer-term value and support creativity, while specific purpose toys can be valuable for teaching particular skills.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Budget-Building Strategy
+    </h2>
+
+    <p className="mb-6">
+      You don't need to buy everything at once. Here's a realistic approach:
+    </p>
+
+    <p className="mb-6">
+      <strong>Year 1 (0-12 months): $100-200 total investment</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>2 teething toys ($40-$80)</li>
+      <li>1 simple rattle ($20-$40)</li>
+      <li>1 grasping toy ($20-$40)</li>
+      <li>1 wooden ball ($20-$40)</li>
+    </ul>
+
+    <p className="mb-6">
+      <strong>Year 2 (1-2 years): Add $150-250</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>1 push toy ($60-$100)</li>
+      <li>Basic block set ($40-$80)</li>
+      <li>2-3 simple vehicles ($50-$90)</li>
+    </ul>
+
+    <p className="mb-6">
+      <strong>Year 3 (2-3 years): Add $150-200</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Expand vehicle collection ($60-$100)</li>
+      <li>Simple train set ($50-$80)</li>
+      <li>Additional blocks ($40-$60)</li>
+    </ul>
+
+    <p className="mb-6">
+      <strong>Years 4-5 (3-5 years): Add $200-300</strong>
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Elaborate play set (kitchen/garage) ($100-$150)</li>
+      <li>Complex building set ($60-$100)</li>
+      <li>Specialized items based on interests ($40-$80)</li>
+    </ul>
+
+    <p className="mb-6">
+      Total investment over 5 years: $600-950. Compare this to the typical family spending $200-400 per year on plastic toys that break and get replaced—$1,000-2,000 over 5 years.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Quality Indicators: How to Spot Superior Craftsmanship
+    </h2>
+
+    <p className="mb-6">
+      When examining a wooden toy, check:
+    </p>
+
+    <p className="mb-6">
+      <strong>Weight and density:</strong> Quality hardwood toys have satisfying heft. If it feels too light, it's probably softwood or hollow construction.
+    </p>
+
+    <p className="mb-6">
+      <strong>Finish smoothness:</strong> Run your hand over all surfaces. Should feel silky-smooth with no rough patches. Pay special attention to edges and corners.
+    </p>
+
+    <p className="mb-6">
+      <strong>Joinery:</strong> How are pieces connected? Look for solid construction, tight fits, no visible glue smears or gaps.
+    </p>
+
+    <p className="mb-6">
+      <strong>Moving parts:</strong> Wheels, doors, movable elements should work smoothly but not be loose. Should withstand vigorous play.
+    </p>
+
+    <p className="mb-6">
+      <strong>Smell:</strong> Quality wooden toys smell like wood, not chemicals. If there's a strong varnish or paint smell, pass.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      NZ Native Timbers vs. Imported Woods
+    </h2>
+
+    <p className="mb-6">
+      Each timber offers unique characteristics:
+    </p>
+
+    <p className="mb-6">
+      <strong>Kauri:</strong> Exceptional stability and fine grain. Light golden color. Perfect for toys requiring precise craftsmanship. Premium price justified by performance.
+    </p>
+
+    <p className="mb-6">
+      <strong>Rimu:</strong> Distinctive red-brown color that deepens with age. Slightly heavier than Kauri. Beautiful grain patterns. Natural antibacterial properties.
+    </p>
+
+    <p className="mb-6">
+      <strong>Macrocarpa:</strong> Lighter color, pleasant aroma. More sustainable (faster growing) than Kauri or Rimu. Excellent for larger toys.
+    </p>
+
+    <p className="mb-6">
+      <strong>NZ Pine:</strong> Most affordable option. Lighter, softer wood. Good choice for larger items where hardwood would be prohibitively expensive.
+    </p>
+
+    <p className="mb-6">
+      <strong>Imported hardwoods (Beech, Maple):</strong> Common in imported toys. Quality varies. Lack the connection to place that NZ native timbers provide.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Montessori Connection
+    </h2>
+
+    <p className="mb-6">
+      Many parents seek "Montessori toys" without understanding what this means. True Montessori materials share these characteristics:
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Natural materials (wood, metal, fabric)</li>
+      <li>Single purpose—each toy teaches one concept</li>
+      <li>Self-correcting—child can see when they've succeeded</li>
+      <li>Beautiful and well-crafted</li>
+      <li>Child-sized and accessible</li>
+    </ul>
+
+    <p className="mb-6">
+      Quality wooden toys from native NZ timber naturally align with these principles, even if not explicitly marketed as "Montessori."
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Safety Standards and Certifications
+    </h2>
+
+    <p className="mb-6">
+      In New Zealand, toys must meet specific safety standards:
+    </p>
+
+    <p className="mb-6">
+      <strong>Size requirements:</strong> Small parts regulations prevent choking hazards. For children under 3, no parts smaller than 45mm diameter.
+    </p>
+
+    <p className="mb-6">
+      <strong>Finish safety:</strong> Should comply with AS/NZS ISO 8124 standards for toy safety.
+    </p>
+
+    <p className="mb-6">
+      <strong>Construction integrity:</strong> Must withstand reasonable force without breaking into sharp pieces or small parts.
+    </p>
+
+    <p className="mb-6">
+      Ask makers about compliance. Reputable craftspeople will happily discuss safety standards.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Caring for Your Investment
+    </h2>
+
+    <p className="mb-6">
+      <strong>Regular cleaning:</strong> Damp cloth with water and mild vinegar solution. Dry immediately. Never soak or use dishwasher.
+    </p>
+
+    <p className="mb-6">
+      <strong>Deep cleaning:</strong> For heavily mouthed toys, use food-safe antibacterial wash, rinse thoroughly, dry completely.
+    </p>
+
+    <p className="mb-6">
+      <strong>Oil treatment:</strong> Every 3-6 months, apply food-safe mineral oil or beeswax to nourish wood.
+    </p>
+
+    <p className="mb-6">
+      <strong>Storage:</strong> Dry area, moderate temperature, avoid direct sun (can fade natural stains).
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Environmental Impact
+    </h2>
+
+    <p className="mb-6">
+      Choosing wooden toys NZ makes environmental sense:
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>One wooden toy = prevents 5-10 plastic toys from landfills</li>
+      <li>Local production = significantly lower carbon footprint than imports</li>
+      <li>Sustainable NZ forestry = supports regenerative practices</li>
+      <li>Biodegradable = at end-of-life, returns to earth (though quality toys rarely reach end-of-life)</li>
+    </ul>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Final Recommendations
+    </h2>
+
+    <p className="mb-6">
+      The best wooden toys NZ offers share these qualities:
+    </p>
+
+    <ol className="list-decimal pl-6 mb-6 space-y-2">
+      <li>Made from solid wood (preferably native NZ timber)</li>
+      <li>Finished with food-safe, natural oils</li>
+      <li>Crafted by local artisans who understand child development</li>
+      <li>Simple, open-ended designs that grow with your child</li>
+      <li>Built to last generations, not just years</li>
+    </ol>
+
+    <p className="mb-6">
+      Your investment in quality wooden toys pays dividends in child development, family memories, and environmental responsibility. Choose wisely, buy less, treasure longer.
+    </p>
+  </>
+);
+
+// ==========================================
+// BLOG POST: Best Handmade Wooden Toys from Whangarei New Zealand
+// ==========================================
+const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
+  <>
+    <p className="mb-6">
+      Tucked away in Northland's Whangarei district, a quiet revolution in children's toys has been underway for over a decade. While mass-produced plastic dominates toy stores, local craftspeople continue the tradition of handmaking wooden toys from native New Zealand timbers—creating pieces that become family heirlooms rather than landfill fodder.
+    </p>
+
+    <p className="mb-6">
+      This isn't nostalgia for its own sake. There are compelling developmental, environmental, and economic reasons why parents increasingly seek handmade wooden toys from Whangarei and similar craft communities throughout New Zealand.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Why Whangarei? The Timber Heritage
+    </h2>
+
+    <p className="mb-6">
+      Whangarei's connection to timber runs deep. This region was once the heart of New Zealand's Kauri logging industry. While old-growth logging ceased decades ago, the knowledge, respect for timber, and craftsmanship skills passed down through generations remain vibrant.
+    </p>
+
+    <p className="mb-6">
+      Today's Whangarei craftspeople work with sustainably sourced native timbers—Kauri from managed forests and reclaimed sources, Rimu, Macrocarpa—alongside plantation-grown NZ Pine. They understand wood not as generic material but as individual pieces with character, grain, and history.
+    </p>
+
+    <p className="mb-6">
+      This deep timber knowledge translates into toys that honor the material. A Whangarei craftsperson doesn't just "make a toy car"—they select timber, consider grain direction for strength, plan joinery that will survive decades of play, and finish surfaces to silky perfection.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What Makes Handmade Different?
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Material Selection
+    </h3>
+
+    <p className="mb-6">
+      Mass production uses whatever timber is cheapest at scale. Handcrafters select individual pieces for specific toys.
+    </p>
+
+    <p className="mb-6">
+      When crafting a toy car, the maker examines grain patterns, looking for straight grain that won't split, selecting timber dense enough for durability but not so heavy a toddler can't lift it. For a baby's teething ring, they choose Rimu or Kauri specifically for their natural antimicrobial properties and smooth finish potential.
+    </p>
+
+    <p className="mb-6">
+      This attention to material choice means handmade toys simply perform better—they're stronger, safer, more pleasant to handle.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Construction Quality
+    </h3>
+
+    <p className="mb-6">
+      Factory toys use the cheapest joinery method that meets minimum standards. Handcrafted toys use traditional joinery techniques that have proven themselves over centuries.
+    </p>
+
+    <p className="mb-6">
+      Wheels attach via wooden pegs rather than cheap plastic axles that break. Pieces fit together with precise tolerances—not too loose (falls apart) or too tight (won't move). Edges are hand-sanded, not just machine-smoothed, achieving a finish that invites touch.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Finish and Safety
+    </h3>
+
+    <p className="mb-6">
+      Mass-market wooden toys often use whatever finish is cheapest and fastest-drying. Handcrafters in Whangarei typically use food-safe natural oils—mineral oil, beeswax, natural waxes—applied by hand and buffed to perfection.
+    </p>
+
+    <p className="mb-6">
+      This matters enormously for baby toys. When your infant inevitably mouths that teething ring, you want food-safe oil, not industrial varnish.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Development Advantage
+    </h2>
+
+    <p className="mb-6">
+      Handmade wooden toys support child development in ways mass-produced alternatives often don't.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Sensory Richness
+    </h3>
+
+    <p className="mb-6">
+      Each piece of native timber has unique grain patterns, subtle color variations, distinctive weight and texture. A set of Kauri blocks offers more sensory information than uniform plastic blocks ever could.
+    </p>
+
+    <p className="mb-6">
+      Babies and toddlers learn through sensory exploration. The varied tactile experiences handmade wooden toys provide accelerate sensory integration—the brain's ability to process information from multiple senses simultaneously.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Open-Ended Play
+    </h3>
+
+    <p className="mb-6">
+      Handmade toys tend toward simplicity. A beautifully crafted wooden car doesn't need lights, sounds, or batteries. This simplicity is strength—it invites rather than dictates play.
+    </p>
+
+    <p className="mb-6">
+      The wooden car becomes whatever your child imagines: a race car, a delivery truck, a boat, a building block. This open-ended quality supports creative thinking and problem-solving far better than toys with predetermined functions.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Appropriate Resistance
+    </h3>
+
+    <p className="mb-6">
+      Quality handmade wooden toys have satisfying weight and substance. Grasping requires effort, building grip strength. Stacking challenges balance and coordination. This "appropriate resistance" develops fine motor skills and spatial awareness.
+    </p>
+
+    <p className="mb-6">
+      Lightweight plastic toys don't provide this resistance, missing an opportunity for physical development.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Environmental Responsibility
+    </h2>
+
+    <p className="mb-6">
+      The environmental case for handmade wooden toys from Whangarei is compelling:
+    </p>
+
+    <p className="mb-6">
+      <strong>Local production = minimal transport emissions.</strong> Toys crafted in Whangarei and sold in Auckland travel 160km, not 15,000km from Asian factories.
+    </p>
+
+    <p className="mb-6">
+      <strong>Sustainable materials.</strong> Native NZ timbers come from managed forests or reclaimed sources. NZ Pine from fast-growing plantations. Compare this to petroleum-based plastics.
+    </p>
+
+    <p className="mb-6">
+      <strong>Durability eliminates waste.</strong> One handmade wooden toy lasting 20+ years prevents dozens of plastic toys from reaching landfills.
+    </p>
+
+    <p className="mb-6">
+      <strong>Biodegradable end-of-life.</strong> Eventually, if a wooden toy truly reaches end-of-life, it returns harmlessly to earth. Plastic toys persist for centuries.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Supporting Local Economies
+    </h2>
+
+    <p className="mb-6">
+      Buying handmade toys from Whangarei craftspeople supports:
+    </p>
+
+    <p className="mb-6">
+      <strong>Local families.</strong> Your purchase directly supports craftspeople earning living wages doing meaningful work.
+    </p>
+
+    <p className="mb-6">
+      <strong>Skill preservation.</strong> Traditional woodworking knowledge passes to the next generation only if there's economic reason to learn it.
+    </p>
+
+    <p className="mb-6">
+      <strong>Regional economy.</strong> Money spent on locally made goods circulates through the community, multiplying economic benefits.
+    </p>
+
+    <p className="mb-6">
+      <strong>Quality jobs.</strong> Craftsmanship offers dignified, skilled employment—far preferable to jobs assembling imported goods.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      The Investment Question
+    </h2>
+
+    <p className="mb-6">
+      Handmade wooden toys from Whangarei cost more than mass-produced alternatives. But comparing price tags tells only part of the story.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Cost Per Year of Use
+    </h3>
+
+    <p className="mb-6">
+      A $60 handcrafted wooden car that serves three children over 10 years costs $2 per child-year. A $15 plastic car replaced twice per child costs $10 per child-year. The handmade toy is actually more economical.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Resale Value
+    </h3>
+
+    <p className="mb-6">
+      Quality handmade toys retain value. Used plastic toys are worthless; used handcrafted wooden toys sell for 40-60% of original price. This residual value further reduces true cost.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Intangible Benefits
+    </h3>
+
+    <p className="mb-6">
+      How do you value knowing your child plays with safe, non-toxic materials? Or that your purchases support sustainable practices and local craftsmanship? These benefits have worth, even if not appearing on price tags.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      What to Look For When Buying
+    </h2>
+
+    <p className="mb-6">
+      When seeking handmade wooden toys from Whangarei or elsewhere in NZ, ask:
+    </p>
+
+    <p className="mb-6">
+      <strong>What timber is this made from?</strong> You want specific answers: "Kauri," "Rimu," "NZ Pine"—not vague "hardwood" or "timber."
+    </p>
+
+    <p className="mb-6">
+      <strong>What finish do you use?</strong> Best answer: "Food-safe mineral oil" or "natural beeswax." Red flags: "varnish," "lacquer," or unwillingness to specify.
+    </p>
+
+    <p className="mb-6">
+      <strong>Where was this made?</strong> "Here in Whangarei" or specific location beats "New Zealand" (could be mass-produced in Auckland) and definitely beats silence on origin.
+    </p>
+
+    <p className="mb-6">
+      <strong>How long will it last?</strong> Confident craftspeople answer "generations" or "decades." Vague answers suggest they know their construction won't endure.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Popular Handmade Toy Types from Whangarei
+    </h2>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Wooden Vehicles
+    </h3>
+
+    <p className="mb-6">
+      Cars, trucks, trains, tractors—vehicles are Whangarei specialties. Look for smooth-rolling wheels (not squeaky or stuck), chunky designs perfect for small hands, and simple elegance without unnecessary details.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Building Blocks
+    </h3>
+
+    <p className="mb-6">
+      Traditional unit blocks in various sizes. Best sets use single timber type for consistency, are precisely cut for true stacking, and have slightly rounded edges for safety without sacrificing clean lines.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Baby Toys
+    </h3>
+
+    <p className="mb-6">
+      Teething rings, rattles, grasping toys specifically for 0-12 months. Look for appropriate sizing (large enough to prevent choking), super-smooth finishes, and food-safe oils only.
+    </p>
+
+    <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      Push and Pull Toys
+    </h3>
+
+    <p className="mb-6">
+      Trolleys, wagons, simple animals on wheels. Important features: stability (won't tip easily), appropriate height for child's age, smooth-moving parts.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Caring for Handmade Wooden Toys
+    </h2>
+
+    <p className="mb-6">
+      Proper care ensures your investment lasts:
+    </p>
+
+    <p className="mb-6">
+      <strong>Cleaning:</strong> Wipe with barely damp cloth and mild vinegar solution. Dry immediately. Never soak, never dishwasher.
+    </p>
+
+    <p className="mb-6">
+      <strong>Conditioning:</strong> Every 3-6 months, apply thin coat of food-safe mineral oil. Let absorb, buff excess.
+    </p>
+
+    <p className="mb-6">
+      <strong>Storage:</strong> Dry area with moderate temperature. Avoid direct sun (can fade wood) or moisture (can cause warping).
+    </p>
+
+    <p className="mb-6">
+      <strong>Repairs:</strong> Minor scratches sand out easily. For more significant damage, many Whangarei craftspeople offer repair services.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Beyond Whangarei: NZ's Wooden Toy Community
+    </h2>
+
+    <p className="mb-6">
+      While Whangarei has strong representation, handmade wooden toys come from craftspeople throughout New Zealand:
+    </p>
+
+    <p className="mb-6">
+      Nelson/Tasman region has thriving craft community. Otago Central has makers working with local timbers. Wellington and Auckland have individual craftspeople, though real estate costs make workshops challenging.
+    </p>
+
+    <p className="mb-6">
+      Wherever they're based, quality NZ craftspeople share commitment to natural materials, traditional techniques, and creating toys that last.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Our Commitment at Poppa's Wooden Creations
+    </h2>
+
+    <p className="mb-6">
+      For over a decade, we've crafted wooden toys in our Whangarei workshop using native New Zealand timbers. Every piece is handmade using traditional techniques combined with modern understanding of child development.
+    </p>
+
+    <p className="mb-4"><strong>What sets us apart:</strong></p>
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Exclusive use of native NZ timbers (Kauri, Rimu, Macrocarpa)</li>
+      <li>Hand-finished with food-safe oils only</li>
+      <li>Designed with Montessori principles in mind</li>
+      <li>Built to last generations, not years</li>
+      <li>Each toy individually crafted and inspected</li>
+      <li>Direct relationship with customers—we stand behind every piece</li>
+    </ul>
+
+    <p className="mb-6">
+      Browse our complete collection to discover toys that combine Kiwi craftsmanship, sustainable materials, and timeless design.
+    </p>
+
+    <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-4">
+      Final Thoughts: Investing in Quality Play
+    </h2>
+
+    <p className="mb-6">
+      The best wooden toys NZ offers aren't just playthings—they're tools for development, connections to natural materials, and investments in sustainable childhood experiences.
+    </p>
+
+    <p className="mb-6">
+      When you choose quality wooden toys, especially those handcrafted from native New Zealand timbers, you're:
+    </p>
+
+    <ul className="list-disc pl-6 mb-6 space-y-2">
+      <li>Supporting your child's development through purposeful play</li>
+      <li>Making an environmentally responsible choice</li>
+      <li>Supporting local craftspeople and sustainable forestry</li>
+      <li>Creating potential family heirlooms</li>
+      <li>Teaching children to value quality over quantity</li>
+    </ul>
+
+    <p className="mb-6">
+      Start with a few well-chosen pieces appropriate for your child's current stage, and build your collection gradually. Each toy should earn its place through quality, developmental value, and the joy it brings to your child's play.
+    </p>
+
+    <p className="mb-6">
+      Your child deserves toys as special as they are. Choose wisely, buy quality, and watch the magic of simple, beautiful play unfold.
+    </p>
+  </>
+);
+
+// ==========================================
+</file_text>
+</create_file>
 
 // ==========================================
 // BLOG POST: How Wooden Toys Help Kids Learn & Develop Problem-Solving
