@@ -1004,10 +1004,6 @@ const BestHandmadeWoodenToysFromWhangareiNewZealandContent: React.FC = () => (
 );
 
 // ==========================================
-</file_text>
-</create_file>
-
-// ==========================================
 // BLOG POST: How Wooden Toys Help Kids Learn & Develop Problem-Solving
 // ==========================================
 const HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent: React.FC = () => (
@@ -3856,4 +3852,6 @@ const BabyToyCarsContent: React.FC = () => (
       discover our full collection and bring home a piece of New Zealand craftsmanship that will be 
       treasured for generations to come.
     </p>
-  </>
+     </>
+);
+  
