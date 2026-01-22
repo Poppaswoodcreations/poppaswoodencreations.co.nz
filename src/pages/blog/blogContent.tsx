@@ -1,3 +1,66 @@
+import React from 'react';
+
+// This file contains the actual content for each blog post
+// Updated January 22, 2026 with new problem-solving post
+
+export const getBlogContent = (slug: string): React.ReactNode => {
+  switch (slug) {
+    case 'best-wooden-toys-nz-simple-parents-guide-2026':
+      return <BestWoodenToysNzSimpleParentsGuide2026Content />;
+
+    case 'best-wooden-toys-nz-complete-2026-parents-guide':
+      return <BestWoodenToysNzComplete2026ParentsGuideContent />;
+
+    case 'best-montessori-toys-nz-complete-2026-buying-guide':
+      return <BestMontessoriToysNzComplete2026BuyingGuideContent />;
+
+    case 'best-handmade-wooden-toys-from-whangarei-new-zealand':
+      return <BestHandmadeWoodenToysFromWhangareiNewZealandContent />;
+
+    case 'how-wooden-toys-help-kids-learn-develop-problem-solving':
+      return <HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent />;
+
+    case 'teak-wood-tea-spoons-salt-spoons':
+      return <TeakWoodTeaSpoonsContent />;
+    
+    case 'montessori-wooden-toys-for-babies-what-to-buy-why':
+      return <MontessoriWoodenToysForBabiesContent />;
+    
+    case 'how-to-clean-wooden-toys-naturally-and-safely':
+      return <CleanWoodenToysContent />;
+    
+    case '5-benefits-wooden-toys-child-development':
+      return <BenefitsWoodenToysContent />;
+    
+    case 'best-sensory-wooden-toys-for-babies-a-complete-guide':
+      return <SensoryToysContent />;
+    
+    case 'why-natural-wood-toys-beat-plastic-parents-guide':
+      return <WoodenVsPlasticToysContent />;
+    
+    case 'teething-ring-rimu-handcrafted-natural-baby-toy':
+      return <TeethingRingContent />;
+    
+    case 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks':
+      return <PoppasWoodenCreationsHandmadeWoodenPineTrolleyAndBlocksContent />;
+    
+    case 'montessori-wooden-toys-complete-guide-for-parents-2026':
+      return <HowLongWoodenToysByAgeTheCompleteGuideFor05Years2025gDoWoodenToyCarsActuallyLastContent />;
+    
+    case 'why-kauri-wood-makes-superior-toys-new-zealands':
+      return <WhyKauriWoodMakesSuperiorToysContent />;
+    
+    case 'happy-go-lucky-train':
+      return <HappyGoLuckTrainContent />;
+    
+    case 'baby-toy-cars-handcrafted-new-zealand':
+      return <BabyToyCarsContent />;
+    
+    default:
+      return <p>Content coming soon...</p>;
+  }
+};
+
 // ==========================================
 // BLOG POST: How Wooden Toys Help Kids Learn & Develop Problem-Solving
 // ==========================================
@@ -509,3 +572,14 @@ const HowWoodenToysHelpKidsLearnDevelopProblemSolvingContent: React.FC = () => (
     </p>
   </>
 );
+
+// ==========================================
+// BLOG POST: Why Natural Wood Toys Beat Plastic
+// ==========================================
+const WoodenVsPlasticToysContent: React.FC = () => (
+  <>
+    {/* ... rest of your existing blog posts ... */}
+  </>
+);
+
+// ... [ALL YOUR OTHER EXISTING BLOG POST COMPONENTS CONTINUE HERE] ...
