@@ -1522,7 +1522,7 @@ const WoodenVsPlasticToysContent: React.FC = () => (
   <>
     <div className="my-8">
       <img 
-        src="https://placehold.co/1200x800/D4A574/FFF?text=Wooden+vs+Plastic+Toys&font=roboto" 
+        src="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/TROLLEY%20AND%20BLOCKS.jpg"
         alt="Natural wooden toys compared to plastic toys showing quality difference" 
         className="w-full rounded-lg shadow-lg"
       />
@@ -1578,7 +1578,7 @@ const WoodenVsPlasticToysContent: React.FC = () => (
 
     <div className="my-8">
       <img 
-        src="https://placehold.co/1200x800/8B6F47/FFF?text=Sensory+Development&font=roboto" 
+        src="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/BLOCK-TRAIN-optimized.webp" 
         alt="Child developing motor skills with wooden blocks" 
         className="w-full rounded-lg shadow-lg"
       />
@@ -1621,7 +1621,7 @@ const WoodenVsPlasticToysContent: React.FC = () => (
 
     <div className="my-8">
       <img 
-        src="https://placehold.co/1200x800/A0826D/FFF?text=Whangarei+Workshop&font=roboto" 
+       src="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/wooden%20kauri%20car%2010.jpg"
         alt="Handcrafting wooden toys in Whangarei workshop" 
         className="w-full rounded-lg shadow-lg"
       />
@@ -2839,7 +2839,7 @@ const BenefitsWoodenToysContent: React.FC = () => (
   <>
     <div className="my-8">
       <img 
-        src="https://placehold.co/1200x800/C19A6B/FFF?text=5+Benefits+of+Wooden+Toys&font=roboto" 
+        src="https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/wooden%20kauri%20car%2010.jpg"
         alt="5 key benefits of wooden toys for child development" 
         className="w-full rounded-lg shadow-lg"
       />
