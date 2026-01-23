@@ -49,9 +49,9 @@ const BlogListView: React.FC = () => {
         if (data) {
           setBlogPosts(data);
           
-          // Extract unique categories
+          // Extract unique categories, filtering out null/undefined
           const uniqueCategories = Array.from(
-            new Set(data.map(post => post.category))
+            new Set(data.map(post => post.category).filter(cat => cat))
           );
           setCategories(['all', ...uniqueCategories]);
         }
@@ -129,7 +129,7 @@ const BlogListView: React.FC = () => {
                     : 'bg-white text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {category && category.charAt(0).toUpperCase() + category.slice(1)}
               </button>
             ))}
           </div>
