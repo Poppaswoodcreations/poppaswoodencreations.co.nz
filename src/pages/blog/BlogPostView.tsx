@@ -38,6 +38,12 @@ const BlogPostView: React.FC = () => {
 
       try {
         setLoading(true);
+        
+        // Check if supabase client is initialized
+        if (!supabase) {
+          throw new Error('Supabase client not initialized. Please check your environment variables.');
+        }
+
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
@@ -48,7 +54,7 @@ const BlogPostView: React.FC = () => {
         setPost(data);
       } catch (err) {
         console.error('Error fetching blog post:', err);
-        setError('Post not found');
+        setError(err instanceof Error ? err.message : 'Post not found');
       } finally {
         setLoading(false);
       }
