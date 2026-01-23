@@ -13,12 +13,12 @@ export const supabase = (
   supabaseAnonKey.length > 20
 ) ? createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    autoRefreshToken: false,  // Changed: You're not using auth
-    persistSession: false      // Changed: You're not using auth
+    autoRefreshToken: false,
+    persistSession: false
   },
   realtime: {
     params: {
-      eventsPerSecond: 0       // New: Disable realtime completely
+      eventsPerSecond: 0
     }
   },
   global: {
@@ -42,12 +42,11 @@ export const supabaseAdmin = (
   },
   realtime: {
     params: {
-      eventsPerSecond: 0       // New: Disable realtime completely
+      eventsPerSecond: 0
     }
   }
 }) : null
 
-// Remove all the console.log statements - they're just bloat
 if (!supabase || !supabaseAdmin) {
   console.warn('Supabase not configured, using local storage mode')
 }
