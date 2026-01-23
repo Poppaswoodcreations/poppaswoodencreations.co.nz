@@ -159,7 +159,7 @@ export interface Database {
           image_alt: string
           category: string
           author: string
-          date: string
+          published_at: string
           read_time: string
           meta_description: string
           tags: string[]
@@ -180,7 +180,7 @@ export interface Database {
           image_alt: string
           category: string
           author: string
-          date: string
+          published_at: string
           read_time: string
           meta_description: string
           tags?: string[]
@@ -201,7 +201,7 @@ export interface Database {
           image_alt?: string
           category?: string
           author?: string
-          date?: string
+          published_at?: string
           read_time?: string
           meta_description?: string
           tags?: string[]
