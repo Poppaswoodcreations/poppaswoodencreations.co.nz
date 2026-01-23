@@ -14,7 +14,7 @@ interface BlogPost {
   image_alt: string;
   category: string;
   author: string;
-  date: string;
+  published_at: string;
   read_time: string;
   meta_description: string;
   tags: string[];
@@ -96,7 +96,7 @@ const BlogPostView: React.FC = () => {
     "headline": post.title,
     "description": post.meta_description,
     "image": post.featured_image,
-    "datePublished": post.date,
+    "datePublished": post.published_at,
     "dateModified": post.updated_at,
     "author": {
       "@type": "Organization",
@@ -205,8 +205,8 @@ const BlogPostView: React.FC = () => {
               <div className="flex items-center justify-center gap-6 text-white text-sm">
                 <span>{post.author}</span>
                 <span>•</span>
-                <time dateTime={post.date}>
-                  {post.date}
+                <time dateTime={post.published_at}>
+                  {new Date(post.published_at).toLocaleDateString()}
                 </time>
                 <span>•</span>
                 <span>{post.read_time}</span>
