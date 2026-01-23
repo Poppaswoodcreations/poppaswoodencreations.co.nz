@@ -33,6 +33,12 @@ const BlogListView: React.FC = () => {
     const fetchBlogPosts = async () => {
       try {
         setLoading(true);
+        
+        // Check if supabase client is initialized
+        if (!supabase) {
+          throw new Error('Supabase client not initialized. Please check your environment variables.');
+        }
+
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
@@ -51,7 +57,7 @@ const BlogListView: React.FC = () => {
         }
       } catch (err) {
         console.error('Error fetching blog posts:', err);
-        setError('Failed to load blog posts. Please try again later.');
+        setError(err instanceof Error ? err.message : 'Failed to load blog posts. Please try again later.');
       } finally {
         setLoading(false);
       }
