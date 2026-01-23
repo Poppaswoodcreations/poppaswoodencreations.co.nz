@@ -148,6 +148,70 @@ export interface Database {
           updated_at?: string
         }
       }
+      blog_posts: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          excerpt: string
+          content: string
+          featured_image: string
+          image_alt: string
+          category: string
+          author: string
+          date: string
+          read_time: string
+          meta_description: string
+          tags: string[]
+          faqs: Array<{
+            question: string
+            answer: string
+          }> | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          excerpt: string
+          content: string
+          featured_image: string
+          image_alt: string
+          category: string
+          author: string
+          date: string
+          read_time: string
+          meta_description: string
+          tags?: string[]
+          faqs?: Array<{
+            question: string
+            answer: string
+          }> | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          excerpt?: string
+          content?: string
+          featured_image?: string
+          image_alt?: string
+          category?: string
+          author?: string
+          date?: string
+          read_time?: string
+          meta_description?: string
+          tags?: string[]
+          faqs?: Array<{
+            question: string
+            answer: string
+          }> | null
+          updated_at?: string
+        }
+      }
     }
   }
 }
