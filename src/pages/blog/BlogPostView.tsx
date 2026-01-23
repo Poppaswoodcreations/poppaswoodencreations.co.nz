@@ -160,7 +160,7 @@ const BlogPostView: React.FC = () => {
       <Helmet>
         <title>{post.title} | Poppa's Wooden Creations</title>
         <meta name="description" content={post.meta_description} />
-        <meta name="keywords" content={post.tags.join(', ')} />
+        <meta name="keywords" content={post.tags ? post.tags.join(', ') : ''} />
         
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.meta_description} />
@@ -234,9 +234,9 @@ const BlogPostView: React.FC = () => {
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Tags:</h3>
               <div className="flex flex-wrap gap-2">
-                {post.tags.map(tag => (
+                {post.tags.map((tag, index) => (
                   <span
-                    key={tag}
+                    key={`${tag}-${index}`}
                     className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
                   >
                     {tag}
