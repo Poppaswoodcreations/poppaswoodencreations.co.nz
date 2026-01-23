@@ -14,7 +14,7 @@ interface BlogPost {
   image_alt: string;
   category: string;
   author: string;
-  date: string;
+  published_at: string;
   read_time: string;
   tags: string[];
   created_at: string;
@@ -42,7 +42,7 @@ const BlogListView: React.FC = () => {
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
-          .order('date', { ascending: false });
+          .order('published_at', { ascending: false });
 
         if (error) throw error;
 
@@ -71,7 +71,7 @@ const BlogListView: React.FC = () => {
     : blogPosts.filter(post => post.category === selectedCategory);
 
   const sortedPosts = [...filteredPosts].sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
+    new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
   );
 
   if (loading) {
@@ -159,7 +159,7 @@ const BlogListView: React.FC = () => {
                   <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <span>{post.author}</span>
-                    <span>{post.date}</span>
+                    <span>{new Date(post.published_at).toLocaleDateString()}</span>
                   </div>
                 </div>
               </Link>
