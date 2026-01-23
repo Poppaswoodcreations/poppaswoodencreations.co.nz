@@ -1,20 +1,81 @@
 // src/pages/blog/BlogPostView.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { blogPosts } from './blogData';
-import { getBlogContent } from './blogContent';
+import { supabase } from '../../lib/supabase';
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  featured_image: string;
+  image_alt: string;
+  category: string;
+  author: string;
+  date: string;
+  read_time: string;
+  meta_description: string;
+  tags: string[];
+  faqs?: Array<{
+    question: string;
+    answer: string;
+  }>;
+  created_at: string;
+  updated_at: string;
+}
 
 const BlogPostView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find(p => p.slug === slug);
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!post) {
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (!slug) return;
+
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('slug', slug)
+          .single();
+
+        if (error) throw error;
+        setPost(data);
+      } catch (err) {
+        console.error('Error fetching blog post:', err);
+        setError('Post not found');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading post...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !post) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
-          <p className="text-gray-600 mb-4">Looking for: <code className="bg-gray-200 px-2 py-1 rounded">{slug}</code></p>
+          <p className="text-gray-600 mb-4">
+            Looking for: <code className="bg-gray-200 px-2 py-1 rounded">{slug}</code>
+          </p>
           <Link to="/blog" className="text-amber-600 hover:text-amber-700">
             ← Back to Blog
           </Link>
@@ -23,16 +84,14 @@ const BlogPostView: React.FC = () => {
     );
   }
 
-  const content = getBlogContent(slug!);
-
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": post.title,
-    "description": post.metaDescription,
-    "image": post.featuredImage,
+    "description": post.meta_description,
+    "image": post.featured_image,
     "datePublished": post.date,
-    "dateModified": post.date,
+    "dateModified": post.updated_at,
     "author": {
       "@type": "Organization",
       "name": "Poppa's Wooden Creations",
@@ -52,7 +111,7 @@ const BlogPostView: React.FC = () => {
     }
   };
 
-  const faqSchema = post.faqs ? {
+  const faqSchema = post.faqs && post.faqs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": post.faqs.map(faq => ({
@@ -94,19 +153,19 @@ const BlogPostView: React.FC = () => {
     <>
       <Helmet>
         <title>{post.title} | Poppa's Wooden Creations</title>
-        <meta name="description" content={post.metaDescription} />
+        <meta name="description" content={post.meta_description} />
         <meta name="keywords" content={post.tags.join(', ')} />
         
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.metaDescription} />
-        <meta property="og:image" content={post.featuredImage} />
+        <meta property="og:description" content={post.meta_description} />
+        <meta property="og:image" content={post.featured_image} />
         <meta property="og:url" content={`https://poppaswoodencreations.co.nz/blog/${slug}`} />
         <meta property="og:type" content="article" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.metaDescription} />
-        <meta name="twitter:image" content={post.featuredImage} />
+        <meta name="twitter:description" content={post.meta_description} />
+        <meta name="twitter:image" content={post.featured_image} />
         
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
@@ -124,8 +183,8 @@ const BlogPostView: React.FC = () => {
       <article className="min-h-screen bg-white">
         <div className="relative h-[400px] bg-gray-900">
           <img
-            src={post.featuredImage}
-            alt={post.imageAlt}
+            src={post.featured_image}
+            alt={post.image_alt}
             className="w-full h-full object-cover opacity-60"
           />
           
@@ -144,7 +203,7 @@ const BlogPostView: React.FC = () => {
                   {post.date}
                 </time>
                 <span>•</span>
-                <span>{post.readTime}</span>
+                <span>{post.read_time}</span>
               </div>
             </div>
           </div>
@@ -159,9 +218,11 @@ const BlogPostView: React.FC = () => {
             <span className="text-gray-600">{post.title}</span>
           </nav>
 
-          <div className="prose prose-lg max-w-none">
-            {content}
-          </div>
+          {/* Blog post content - rendered as HTML from Supabase */}
+          <div 
+            className="prose prose-lg max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
 
           {post.tags && post.tags.length > 0 && (
             <div className="mt-12 pt-8 border-t border-gray-200">
