@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {siteSettings.hero_title || 'Handmade Wooden Toys'}
               <span className="block text-amber-600 mt-2">
-                {siteSettings.hero_subtitle || 'New Zealand'}
+                {siteSettings.hero_subtitle || 'Whangarei, New Zealand'}
               </span>
             </h1>
             
