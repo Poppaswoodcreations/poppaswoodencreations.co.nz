@@ -154,8 +154,8 @@ const AppContent: React.FC = () => {
             <Route path="/" element={
               <>
                 <SEOHead 
-                  title="Handmade Wooden Toys NZ | Premium New Zealand Wooden Toys | Poppa's Wooden Creations"
-                  description="Premium handmade wooden toys crafted in New Zealand from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000."
+                  title="Handmade Wooden Toys Whangarei | Montessori Toys NZ | Poppa's Wooden Creations"
+                  description="Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000."
                   ogImage="https://poppaswoodencreations.co.nz/hero-image.jpg"
                 />
                 <HomePageSchema />
