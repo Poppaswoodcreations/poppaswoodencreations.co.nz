@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-gray-900 text-gray-200">
-      {/* ✅ FIXED: Trust Badges Section - Better Contrast */}
+      {/* Trust Badges Section */}
       <div className="bg-amber-700 text-white py-6">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
             <div className="flex flex-col items-center space-y-2">
               <Package className="w-8 h-8" />
               <div className="text-sm font-bold">Free Shipping</div>
-              <div className="text-xs">Orders Over $75</div>
+              <div className="text-xs">Orders Over $1000</div>
             </div>
 
             {/* Trust Badge 4 */}
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
               Every toy is handcrafted from native NZ timber in Whangarei.
             </p>
             
-            {/* ✅ FIXED: Quality Badges - Better Contrast */}
+            {/* Quality Badges */}
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-xs">
                 <span className="bg-green-700 text-white px-2 py-1 rounded font-semibold">Food-Safe Finish</span>
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* ✅ FIXED: Payment Methods - Better Contrast */}
+            {/* Payment Methods */}
             <div className="pt-4">
               <p className="text-xs text-gray-400 mb-2">We Accept:</p>
               <div className="flex items-center space-x-3">
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Shop - Using <Link> instead of buttons */}
+          {/* Column 2: Shop */}
           <div>
             <h4 className="font-semibold text-white mb-4">Shop by Category</h4>
             <ul className="space-y-2">
@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Quick Links - Using <Link> instead of buttons */}
+          {/* Column 3: Quick Links - UPDATED WITH SEPARATE POLICY LINKS */}
           <div>
             <h4 className="font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -150,7 +150,12 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/shipping" className="text-sm hover:text-amber-500 transition-colors">
-                  Shipping & Returns
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/returns" className="text-sm hover:text-amber-500 transition-colors">
+                  Returns & Refunds
                 </Link>
               </li>
               <li>
