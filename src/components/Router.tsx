@@ -4,6 +4,10 @@ import App from '../App';
 import ProductDetail from './ProductDetail';
 import PayPalSuccess from './PayPalSuccess';
 import NotFound from './NotFound';
+import ShippingPolicy from './ShippingPolicy';
+import ReturnsRefunds from './ReturnsRefunds';
+import PrivacyPolicy from './PrivacyPolicy';
+import TermsOfService from './TermsOfService';
 import { Product } from '../types';
 
 interface RouterProps {
@@ -27,6 +31,8 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
           } 
         />
         <Route path="/paypal-success" element={<PayPalSuccess />} />
+        
+        {/* Category Routes */}
         <Route path="/wooden-trains" element={<App />} />
         <Route path="/wooden-baby-toys" element={<App />} />
         <Route path="/wooden-trucks" element={<App />} />
@@ -35,13 +41,20 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
         <Route path="/wooden-kitchenware" element={<App />} />
         <Route path="/wooden-tractors-boats" element={<App />} />
         <Route path="/wooden-other-toys" element={<App />} />
+        
+        {/* General Pages */}
         <Route path="/about" element={<App />} />
         <Route path="/contact" element={<App />} />
         <Route path="/reviews" element={<App />} />
-        <Route path="/shipping" element={<App />} />
-        <Route path="/privacy" element={<App />} />
-        <Route path="/terms" element={<App />} />
         <Route path="/search" element={<App />} />
+        
+        {/* Policy Pages - DEDICATED COMPONENTS */}
+        <Route path="/shipping" element={<ShippingPolicy />} />
+        <Route path="/returns" element={<ReturnsRefunds />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        
+        {/* 404 */}
         <Route path="*" element={<NotFound onGoHome={() => window.location.href = '/'} />} />
       </Routes>
     </BrowserRouter>
