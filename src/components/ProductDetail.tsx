@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import { Product } from '../types';
 import LazyImage from './LazyImage';
+import { useSEO } from './SEOMetaManager';
 
 interface ProductDetailProps {
   products: Product[];
@@ -124,33 +124,47 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   
   const product = products.find(p => p.id === productId);
   
+  // Handle not found case
   if (!product) {
+    useSEO({
+      title: 'Product Not Found',
+      description: 'The product you\'re looking for is not available. Browse our collection of handcrafted wooden toys.',
+      noindex: true
+    });
+
     return (
-      <>
-        <Helmet>
-          <title>Product Not Found | Poppa's Wooden Creations</title>
-          <meta name="description" content="The product you're looking for is not available. Browse our collection of handcrafted wooden toys." />
-          <link rel="canonical" href={`https://poppaswoodencreations.co.nz/products/${productId}`} />
-          <meta name="robots" content="noindex, follow" />
-        </Helmet>
-        <div className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-            <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
-            <button
-              onClick={() => navigate('/')}
-              className="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
-            >
-              Back to Home
-            </button>
-          </div>
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
+          >
+            Back to Home
+          </button>
         </div>
-      </>
+      </div>
     );
   }
 
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
+
+  // Smart noindex logic - only noindex if product is incomplete or out of stock
+  const shouldNoIndex = !product.inStock || 
+                        !product.description || 
+                        product.description.length < 100;
+
+  // SEO Meta Tags - handled by SEOMetaManager
+  useSEO({
+    title: `${product.name} | Handcrafted Wooden Toy`,
+    description: product.description.substring(0, 160),
+    image: productImage,
+    type: 'product',
+    canonical: canonicalUrl,
+    noindex: shouldNoIndex
+  });
 
   // Generate Product Schema WITH REVIEWS
   const productSchema = {
@@ -243,34 +257,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
 
   return (
     <>
-      <Helmet>
-        <title>{product.name} | Handcrafted Wooden Toy | Poppa's Wooden Creations</title>
-        <meta name="description" content={`${product.description.substring(0, 160)}...`} />
-        <meta name="keywords" content={`${product.name}, wooden toy, handcrafted, New Zealand made`} />
-        <link rel="canonical" href={canonicalUrl} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={product.name} />
-        <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={productImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="product" />
-        
-        {/* Product Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(productSchema)}
-        </script>
-
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-
-        {/* FAQ Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
-      </Helmet>
+      {/* Structured Data Schemas */}
+      <script type="application/ld+json">
+        {JSON.stringify(productSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(faqSchema)}
+      </script>
 
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
