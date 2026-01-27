@@ -40,8 +40,12 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // FIXED: Safer password validation
     const validPasswords = ['Adrianbar1?', 'admin', 'poppa', 'password', 'poppas'];
-    if (validPasswords.includes(password.trim())) {
+    const trimmedPassword = typeof password === 'string' ? password.trim() : '';
+    
+    if (trimmedPassword && validPasswords.includes(trimmedPassword)) {
       onShowAdmin();
       setShowPasswordPrompt(false);
       setPassword('');
