@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
 import { Product } from '../types';
@@ -124,7 +124,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   
   const product = products.find(p => p.id === productId);
   
-  // Handle not found case
+  // Handle not found case - SEO for 404
   if (!product) {
     useSEO({
       title: 'Product Not Found',
@@ -148,15 +148,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
     );
   }
 
+  // Product exists - prepare data for SEO
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
-  // Smart noindex logic - uses actual database field names
-  const shouldNoIndex = !product.in_stock || 
+  // Smart noindex logic - FIXED to properly check product data
+  // Only noindex if: out of stock OR no description OR description too short
+  const shouldNoIndex = product.in_stock === false || 
                         !product.description || 
-                        product.description.length < 100;
+                        (product.description && product.description.length < 100);
 
-  // SEO Meta Tags - handled by SEOMetaManager
+  // Apply SEO - this now runs AFTER product data is confirmed to exist
   useSEO({
     title: `${product.name} | Handcrafted Wooden Toy`,
     description: product.description ? product.description.substring(0, 160) : 
