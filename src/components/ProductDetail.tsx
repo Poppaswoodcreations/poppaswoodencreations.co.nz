@@ -151,7 +151,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
-  // Smart noindex logic - only noindex if product is incomplete or out of stock
+  // Smart noindex logic - ADJUSTED TO MATCH YOUR ACTUAL NEEDS
+  // Only noindex if:
+  // 1. Product is out of stock, OR
+  // 2. Product has no description, OR  
+  // 3. Product description is too short (less than 100 characters)
   const shouldNoIndex = !product.inStock || 
                         !product.description || 
                         product.description.length < 100;
@@ -159,7 +163,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   // SEO Meta Tags - handled by SEOMetaManager
   useSEO({
     title: `${product.name} | Handcrafted Wooden Toy`,
-    description: product.description.substring(0, 160),
+    description: product.description ? product.description.substring(0, 160) : 
+                 `Handcrafted wooden ${product.name} from native New Zealand timber. Made in Whangarei.`,
     image: productImage,
     type: 'product',
     canonical: canonicalUrl,
@@ -171,7 +176,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "description": product.description,
+    "description": product.description || `Handcrafted ${product.name} from premium New Zealand timber`,
     "image": product.images || [productImage],
     "sku": product.id,
     "brand": {
@@ -212,7 +217,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
         "worstRating": "1"
       }
     })),
-    "category": product.category
+    "category": product.category || "Wooden Toys"
   };
 
   // Generate Breadcrumb Schema
@@ -229,8 +234,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
       {
         "@type": "ListItem",
         "position": 2,
-        "name": product.category.replace('-', ' '),
-        "item": `https://poppaswoodencreations.co.nz/${product.category}`
+        "name": product.category ? product.category.replace('-', ' ') : 'Products',
+        "item": `https://poppaswoodencreations.co.nz/${product.category || 'products'}`
       },
       {
         "@type": "ListItem",
@@ -274,13 +279,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
             <button onClick={() => navigate('/')} className="hover:text-amber-600">Home</button>
             <span>/</span>
-            <button 
-              onClick={() => navigate(`/${product.category}`)} 
-              className="hover:text-amber-600 capitalize"
-            >
-              {product.category.replace('-', ' ')}
-            </button>
-            <span>/</span>
+            {product.category && (
+              <>
+                <button 
+                  onClick={() => navigate(`/${product.category}`)} 
+                  className="hover:text-amber-600 capitalize"
+                >
+                  {product.category.replace('-', ' ')}
+                </button>
+                <span>/</span>
+              </>
+            )}
             <span className="text-gray-900">{product.name}</span>
           </nav>
 
@@ -338,9 +347,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                 </div>
               </div>
 
-              <div className="prose prose-gray max-w-none">
-                <p className="text-gray-600 leading-relaxed">{product.description}</p>
-              </div>
+              {product.description && (
+                <div className="prose prose-gray max-w-none">
+                  <p className="text-gray-600 leading-relaxed">{product.description}</p>
+                </div>
+              )}
 
               {/* Product Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -373,12 +384,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Product Details</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-600">Category:</span>
-                    <span className="font-medium text-gray-900 ml-2 capitalize">
-                      {product.category.replace('-', ' ')}
-                    </span>
-                  </div>
+                  {product.category && (
+                    <div>
+                      <span className="text-gray-600">Category:</span>
+                      <span className="font-medium text-gray-900 ml-2 capitalize">
+                        {product.category.replace('-', ' ')}
+                      </span>
+                    </div>
+                  )}
                   <div>
                     <span className="text-gray-600">Stock:</span>
                     <span className={`font-medium ml-2 ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
