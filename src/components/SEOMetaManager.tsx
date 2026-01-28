@@ -11,6 +11,34 @@ interface SEOMetaProps {
 }
 
 /**
+ * Helper function to safely convert value to string
+ */
+function safeString(value: any): string {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  return String(value);
+}
+
+/**
+ * Helper function to update or create meta tags - SAFE VERSION
+ */
+function updateMetaTag(attribute: string, value: string, content: any) {
+  // FIXED: Safely convert content to string
+  const safeContent = safeString(content);
+  
+  let element = document.querySelector(`meta[${attribute}="${value}"]`) as HTMLMetaElement;
+  
+  if (element) {
+    element.content = safeContent;
+  } else {
+    element = document.createElement('meta');
+    element.setAttribute(attribute, value);
+    element.content = safeContent;
+    document.head.appendChild(element);
+  }
+}
+
+/**
  * SEO Meta Manager Component
  * Handles all meta tags, canonical URLs, and prevents duplicate content issues
  */
@@ -35,12 +63,12 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       canonicalUrl = `${baseUrl}${pathname}`;
     }
 
-    // Set document title
+    // Set document title - SAFE
     if (title) {
-      document.title = `${title} | Poppa's Wooden Creations`;
+      document.title = `${safeString(title)} | Poppa's Wooden Creations`;
     }
 
-    // Update or create meta tags
+    // Update or create meta tags - ALL SAFE NOW
     updateMetaTag('name', 'description', description || '');
     updateMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     
@@ -82,22 +110,6 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
 };
 
 /**
- * Helper function to update or create meta tags
- */
-function updateMetaTag(attribute: string, value: string, content: string) {
-  let element = document.querySelector(`meta[${attribute}="${value}"]`) as HTMLMetaElement;
-  
-  if (element) {
-    element.content = content;
-  } else {
-    element = document.createElement('meta');
-    element.setAttribute(attribute, value);
-    element.content = content;
-    document.head.appendChild(element);
-  }
-}
-
-/**
  * Hook for easy SEO management in functional components
  */
 export const useSEO = (props: SEOMetaProps) => {
@@ -108,12 +120,12 @@ export const useSEO = (props: SEOMetaProps) => {
     const pathname = location.pathname.replace(/\/$/, '');
     const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
 
-    // Set title
+    // Set title - SAFE
     if (props.title) {
-      document.title = `${props.title} | Poppa's Wooden Creations`;
+      document.title = `${safeString(props.title)} | Poppa's Wooden Creations`;
     }
 
-    // Meta tags
+    // Meta tags - ALL SAFE NOW
     updateMetaTag('name', 'description', props.description || '');
     updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
     
