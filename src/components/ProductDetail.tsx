@@ -152,9 +152,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
-  // Smart noindex logic - FIXED to properly check product data
+  // Smart noindex logic - Using inStock field from Product interface
   // Only noindex if: out of stock OR no description OR description too short
-  const shouldNoIndex = product.in_stock === false || 
+  const shouldNoIndex = product.inStock === false || 
                         !product.description || 
                         (product.description && product.description.length < 100);
 
@@ -186,7 +186,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
       "url": canonicalUrl,
       "priceCurrency": "NZD",
       "price": product.price,
-      "availability": product.in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
         "name": "Poppa's Wooden Creations"
@@ -392,8 +392,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                   )}
                   <div>
                     <span className="text-gray-600">Stock:</span>
-                    <span className={`font-medium ml-2 ${product.in_stock ? 'text-green-600' : 'text-red-600'}`}>
-                      {product.in_stock ? 'In Stock' : 'Out of Stock'}
+                    <span className={`font-medium ml-2 ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+                      {product.inStock ? 'In Stock' : 'Out of Stock'}
                     </span>
                   </div>
                   <div>
@@ -411,11 +411,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
               <div className="space-y-4">
                 <button
                   onClick={() => onAddToCart(product)}
-                  disabled={!product.in_stock}
+                  disabled={!product.inStock}
                   className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
                   <ShoppingCart size={20} />
-                  <span>{product.in_stock ? 'Add to Cart' : 'Out of Stock'}</span>
+                  <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
                 </button>
                 
                 <button
