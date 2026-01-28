@@ -1,463 +1,378 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { supabase, supabaseAdmin } from '../lib/supabase';
 import { Product } from '../types';
-import LazyImage from './LazyImage';
-import { useSEO } from '../components/SEOMetaManager';
+import { autoRestoreProducts, saveProductsToStorage, loadProductsFromStorage } from '../utils/productStorage';
+import { products as staticProducts } from '../data/products';
 
-interface ProductDetailProps {
-  products: Product[];
-  onAddToCart: (product: Product) => void;
-}
+export const useProducts = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-// REAL CUSTOMER REVIEWS DATA
-const CUSTOMER_REVIEWS = [
-  {
-    author: "David R.",
-    rating: 5,
-    date: "2024-01-05",
-    title: "Sustainable and safe",
-    text: "Love that these toys are made from sustainable materials. They feel safe for my baby and the craftsmanship is top-notch.",
-    verified: true
-  },
-  {
-    author: "Emma L.",
-    rating: 5,
-    date: "2024-01-08",
-    title: "Great quality, fast shipping",
-    text: "Really impressed with the quality of the wooden toys. Shipping was fast and packaging was excellent. My daughter loves her new kitchen set!",
-    verified: true
-  },
-  {
-    author: "Mike T.",
-    rating: 5,
-    date: "2024-01-10",
-    title: "Perfect gift",
-    text: "Bought this as a gift for my nephew. The attention to detail is amazing and it's clearly built to last. Highly recommended!",
-    verified: true
-  },
-  {
-    author: "Sarah M.",
-    rating: 5,
-    date: "2024-01-15",
-    title: "Beautiful craftsmanship!",
-    text: "Absolutely love this wooden train set. The quality is outstanding and my 3-year-old plays with it every day. Worth every penny!",
-    verified: true
-  },
-  {
-    author: "Monika Roache",
-    rating: 5,
-    date: "2024-12-25",
-    title: "Amazing craftsmanship!",
-    text: "Amazing craftsmanship, my toddler was thrilled to open this on Christmas morning and I'm sure we'll have many years of enjoyment. Very fast postage too, thanks so much!",
-    verified: true
-  },
-  {
-    author: "Stana Moes",
-    rating: 5,
-    date: "2025-01-13",
-    title: "Perfect birthday present!",
-    text: "This is the perfect birthday present for my 2 year old who is obsessed with helicopters. I love that it's handmade from native timber. It came really fast in the post which I was especially thankful for as it was around Xmas/new year time!",
-    verified: true
-  },
-  {
-    author: "Craig Howat",
-    rating: 5,
-    date: "2025-06-12",
-    title: "Awesome trolley, very well made",
-    text: "Awesome trolley, very well made. The quality and craftsmanship is outstanding.",
-    verified: true
-  },
-  {
-    author: "Donna Bradford",
-    rating: 5,
-    date: "2025-07-29",
-    title: "Perfect baby gifts!",
-    text: "I bought 2 car carriers as baby gifts and both sets of parents were so happy with the product. I loved that is was made in NZ and was really affordable. The service was fantastic.",
-    verified: true
-  },
-  {
-    author: "Anna Cardy",
-    rating: 5,
-    date: "2024-11-22",
-    title: "Beautiful, high-quality wooden toys",
-    text: "Beautiful, high-quality wooden toys and gifts. Perfect for any occasion!",
-    verified: true
-  },
-  {
-    author: "bradley spraggen",
-    rating: 4,
-    date: "2024-11-22",
-    title: "Absolutely brilliant chopping boards",
-    text: "Absolutely brilliant chopping boards, will look good with some cheese on them!!",
-    verified: true
-  }
-];
+  // Load products from Supabase or fallback to localStorage
+  const loadProducts = async () => {
+    setLoading(true);
+    setError(null);
+    console.log('🔄 useProducts: Loading products from storage...');
 
-// FAQ DATA for wooden toys
-const PRODUCT_FAQS = [
-  {
-    question: "What wood is used to make these toys?",
-    answer: "We use premium New Zealand native timbers including Kauri, Rimu, Macrocarpa, and sustainably sourced Pine. Each piece showcases the natural beauty and durability of these exceptional woods."
-  },
-  {
-    question: "Are these toys safe for babies and toddlers?",
-    answer: "Yes! All our toys are finished with non-toxic, food-safe oils and are designed with child safety in mind. They have no small parts that could be a choking hazard and are suitable for children from birth onwards."
-  },
-  {
-    question: "How do I clean and care for wooden toys?",
-    answer: "Simply wipe with a damp cloth and mild soap if needed. Avoid soaking in water or using harsh chemicals. Occasionally treat with food-safe mineral oil to maintain the wood's natural beauty."
-  },
-  {
-    question: "How long will these wooden toys last?",
-    answer: "Our handcrafted wooden toys are built to last generations. With proper care, they can be passed down as heirloom pieces, unlike plastic toys that break or wear out quickly."
-  },
-  {
-    question: "Do you ship worldwide?",
-    answer: "Yes! We ship worldwide from our Whangarei workshop in New Zealand. Free shipping is available on orders over $1000 NZD within New Zealand."
-  }
-];
+    try {
+      // If admin is connected, try to load from Supabase first
+      if (supabaseAdmin) {
+        console.log('🔐 Admin connected, loading from Supabase...');
+        
+        try {
+          const { data, error } = await supabaseAdmin
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: false });
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) => {
-  const { productId } = useParams<{ productId: string }>();
-  const navigate = useNavigate();
-  
-  const product = products.find(p => p.id === productId);
-  
-  // Handle not found case - SEO for 404
-  if (!product) {
-    useSEO({
-      title: 'Product Not Found',
-      description: 'The product you\'re looking for is not available. Browse our collection of handcrafted wooden toys.',
-      noindex: true
-    });
+          if (error) {
+            console.error('❌ Supabase load error:', error);
+            throw error;
+          }
 
-    return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
-          <button
-            onClick={() => navigate('/')}
-            className="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
-          >
-            Back to Home
-          </button>
-        </div>
-      </div>
-    );
-  }
+          if (data && data.length > 0) {
+            console.log(`✅ Loaded ${data.length} products from Supabase`);
+            
+            // Convert database format to Product format
+            const convertedProducts: Product[] = data.map(dbProduct => {
+              // Parse images if it's a string
+              let parsedImages = dbProduct.images;
+              if (typeof dbProduct.images === 'string') {
+                try {
+                  parsedImages = JSON.parse(dbProduct.images);
+                } catch (e) {
+                  parsedImages = [dbProduct.images];
+                }
+              }
 
-  // Product exists - prepare data for SEO
-  const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
-  const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
+              return {
+                id: dbProduct.id,
+                name: dbProduct.name,
+                description: dbProduct.description,
+                price: dbProduct.price,
+                category: dbProduct.category,
+                images: Array.isArray(parsedImages) ? parsedImages : [parsedImages],
+                inStock: dbProduct.in_stock,
+                featured: dbProduct.featured,
+                weight: dbProduct.weight || 0.5,
+                stockQuantity: dbProduct.stock_quantity || 5,
+                seoTitle: dbProduct.seo_title || '',
+                seoDescription: dbProduct.seo_description || '',
+                seoKeywords: dbProduct.seo_keywords || '',
+                createdAt: dbProduct.created_at,
+                updatedAt: dbProduct.updated_at
+              };
+            });
 
-  // Smart noindex logic - Using inStock field from Product interface
-  // Only noindex if: out of stock OR no description OR description too short
-  const shouldNoIndex = product.inStock === false || 
-                        !product.description || 
-                        (product.description && product.description.length < 100);
-
-  // Apply SEO - this now runs AFTER product data is confirmed to exist
-  useSEO({
-    title: `${product.name} | Handcrafted Wooden Toy`,
-    description: product.description ? product.description.substring(0, 160) : 
-                 `Handcrafted wooden ${product.name} from native New Zealand timber. Made in Whangarei.`,
-    image: productImage,
-    type: 'product',
-    canonical: canonicalUrl,
-    noindex: shouldNoIndex
-  });
-
-  // Generate Product Schema WITH REVIEWS
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": product.name,
-    "description": product.description || `Handcrafted ${product.name} from premium New Zealand timber`,
-    "image": product.images || [productImage],
-    "sku": product.id,
-    "brand": {
-      "@type": "Brand",
-      "name": "Poppa's Wooden Creations"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": canonicalUrl,
-      "priceCurrency": "NZD",
-      "price": product.price,
-      "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      "seller": {
-        "@type": "Organization",
-        "name": "Poppa's Wooden Creations"
+            setProducts(convertedProducts);
+            // Also save to localStorage as backup
+            saveProductsToStorage(convertedProducts);
+            setLoading(false);
+            console.log('✅ useProducts: Product loading from Supabase completed');
+            return;
+          } else {
+            console.log('📦 No products in Supabase, falling back to localStorage...');
+          }
+        } catch (supabaseError) {
+          console.error('❌ Supabase error, falling back to localStorage:', supabaseError);
+        }
       }
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "10",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": CUSTOMER_REVIEWS.map(review => ({
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": review.author
-      },
-      "datePublished": review.date,
-      "reviewBody": review.text,
-      "name": review.title,
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": review.rating.toString(),
-        "bestRating": "5",
-        "worstRating": "1"
+
+      // Fallback to localStorage (saved products)
+      console.log('📦 Checking localStorage for saved products...');
+      const savedProducts = loadProductsFromStorage();
+      
+      if (savedProducts.length > 0) {
+        console.log(`✅ Found ${savedProducts.length} saved products in localStorage`);
+        setProducts(savedProducts);
+      } else {
+        console.log('📦 No saved products, using static products as fallback...');
+        setProducts(staticProducts);
+        // Save static products to localStorage for future edits
+        saveProductsToStorage(staticProducts);
       }
-    })),
-    "category": product.category || "Wooden Toys"
+    } catch (error) {
+      console.error('❌ Error loading products:', error);
+      // Fallback to static products if everything fails
+      setProducts(staticProducts);
+      setError('Failed to load products');
+    } finally {
+      setLoading(false);
+      console.log('✅ useProducts: Product loading completed');
+    }
   };
 
-  // Generate Breadcrumb Schema
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://poppaswoodencreations.co.nz"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": product.category ? product.category.replace('-', ' ') : 'Products',
-        "item": `https://poppaswoodencreations.co.nz/${product.category || 'products'}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": product.name,
-        "item": canonicalUrl
+  // Save product to Supabase using admin client
+  const saveProduct = async (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      console.log('💾 Saving product with admin client:', product.name);
+      
+      if (supabaseAdmin) {
+        console.log('🔐 Admin client available, proceeding with save...');
+        
+        // Convert Product format to database format
+        const dbProduct = {
+          id: `product-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          name: product.name,
+          description: product.description,
+          price: Number(product.price),
+          category: product.category,
+          images: Array.isArray(product.images) ? product.images : [product.images || ''],
+          in_stock: product.inStock,
+          featured: product.featured,
+          weight: Number(product.weight || 0.5),
+          stock_quantity: Number(product.stockQuantity || 5),
+          seo_title: product.seoTitle || null,
+          seo_description: product.seoDescription || null,
+          seo_keywords: product.seoKeywords || null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+        
+        console.log('📝 Database insert payload:', dbProduct);
+        
+        const { data, error } = await supabaseAdmin
+          .from('products')
+          .insert([dbProduct])
+          .select()
+          .single();
+
+        if (error) {
+          console.error('❌ Database insert error details:', error);
+          throw new Error(`Database save failed: ${error.message}`);
+        }
+
+        console.log('✅ Product saved to Supabase successfully:', data);
+        await loadProducts(); // Reload all products
+        return data;
+      } else {
+        console.error('❌ Admin client not available');
+        throw new Error('Supabase admin client not connected');
       }
-    ]
+    } catch (error) {
+      console.error('❌ DETAILED SAVE ERROR:', error);
+      throw error;
+    }
   };
 
-  // FAQ Schema
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": PRODUCT_FAQS.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
+  // Update product in Supabase using admin client
+  const updateProduct = async (productId: string, updates: Partial<Product>) => {
+    try {
+      if (supabaseAdmin) {
+        console.log('🔐 Using admin client to update product:', productId);
+        
+        // Convert Product format to database format
+        const dbUpdates: any = {};
+        
+        if (updates.name !== undefined) dbUpdates.name = updates.name;
+        if (updates.description !== undefined) dbUpdates.description = updates.description;
+        if (updates.price !== undefined) dbUpdates.price = Number(updates.price);
+        if (updates.category !== undefined) dbUpdates.category = updates.category;
+        if (updates.images !== undefined) {
+          // Ensure images is an array
+          dbUpdates.images = Array.isArray(updates.images) ? updates.images : [updates.images || ''];
+        }
+        if (updates.inStock !== undefined) dbUpdates.in_stock = updates.inStock;
+        if (updates.featured !== undefined) dbUpdates.featured = updates.featured;
+        if (updates.weight !== undefined) dbUpdates.weight = Number(updates.weight);
+        if (updates.stockQuantity !== undefined) dbUpdates.stock_quantity = Number(updates.stockQuantity);
+        if (updates.seoTitle !== undefined) dbUpdates.seo_title = updates.seoTitle;
+        if (updates.seoDescription !== undefined) dbUpdates.seo_description = updates.seoDescription;
+        if (updates.seoKeywords !== undefined) dbUpdates.seo_keywords = updates.seoKeywords;
+        
+        // Always update the timestamp
+        dbUpdates.updated_at = new Date().toISOString();
+        
+        console.log('📝 Database update payload:', dbUpdates);
+        
+        const { data, error } = await supabaseAdmin
+          .from('products')
+          .update(dbUpdates)
+          .eq('id', productId)
+          .select()
+          .single();
+
+        if (error) {
+          console.error('❌ Database update error details:', error);
+          throw new Error(`Database update failed: ${error.message}`);
+        }
+
+        console.log('✅ Product updated in Supabase with admin client:', data);
+        await loadProducts(); // Reload all products
+        return data;
+      } else {
+        throw new Error('Supabase admin client not connected');
       }
-    }))
+    } catch (error) {
+      console.error('❌ Error updating product:', error);
+      throw error;
+    }
   };
 
-  return (
-    <>
-      {/* Structured Data Schemas */}
-      <script type="application/ld+json">
-        {JSON.stringify(productSchema)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(breadcrumbSchema)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(faqSchema)}
-      </script>
+  // Helper function to extract file path from Supabase Storage URL
+  const extractStoragePathFromUrl = (url: string): string | null => {
+    try {
+      // Match pattern: https://[project].supabase.co/storage/v1/object/public/[bucket]/[path]
+      const match = url.match(/\/storage\/v1\/object\/public\/[^/]+\/(.+)$/);
+      return match ? match[1] : null;
+    } catch (error) {
+      console.error('Error extracting storage path:', error);
+      return null;
+    }
+  };
 
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8">
-          {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-            <button onClick={() => navigate('/')} className="hover:text-amber-600">Home</button>
-            <span>/</span>
-            {product.category && (
-              <>
-                <button 
-                  onClick={() => navigate(`/${product.category}`)} 
-                  className="hover:text-amber-600 capitalize"
-                >
-                  {product.category.replace('-', ' ')}
-                </button>
-                <span>/</span>
-              </>
-            )}
-            <span className="text-gray-900">{product.name}</span>
-          </nav>
+  // Delete product from Supabase using admin client
+  const deleteProduct = async (productId: string) => {
+    try {
+      if (supabaseAdmin) {
+        console.log('🔐 Using admin client to delete product:', productId);
+        
+        // STEP 1: Get the product to find its images
+        const { data: productData, error: fetchError } = await supabaseAdmin
+          .from('products')
+          .select('images')
+          .eq('id', productId)
+          .single();
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Product Images */}
-            <div className="space-y-4">
-              <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
-                <LazyImage
-                  src={productImage}
-                  alt={`${product.name} - Handcrafted wooden toy by Poppa's Wooden Creations`}
-                  className="w-full h-full object-cover"
-                  width="600"
-                  height="600"
-                  priority={true}
-                />
-              </div>
+        if (fetchError) {
+          console.error('❌ Error fetching product for deletion:', fetchError);
+          throw fetchError;
+        }
+
+        // STEP 2: Delete images from Supabase Storage
+        if (productData && productData.images) {
+          let imageUrls: string[] = [];
+          
+          // Parse images if it's a string
+          if (typeof productData.images === 'string') {
+            try {
+              imageUrls = JSON.parse(productData.images);
+            } catch (e) {
+              imageUrls = [productData.images];
+            }
+          } else if (Array.isArray(productData.images)) {
+            imageUrls = productData.images;
+          }
+
+          console.log('🗑️ Deleting images from Storage:', imageUrls);
+
+          // Delete each image from Storage
+          for (const imageUrl of imageUrls) {
+            // Only delete if it's a Supabase Storage URL
+            if (imageUrl && imageUrl.includes('/storage/v1/object/public/')) {
+              const filePath = extractStoragePathFromUrl(imageUrl);
               
-              {product.images && product.images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {product.images.slice(1, 5).map((image, index) => (
-                    <div key={index} className="aspect-square bg-white rounded-lg shadow overflow-hidden">
-                      <LazyImage
-                        src={image}
-                        alt={`${product.name} view ${index + 2}`}
-                        className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                        width="150"
-                        height="150"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+              if (filePath) {
+                try {
+                  // Extract bucket name from URL (assuming format: /bucket/path)
+                  const bucketMatch = imageUrl.match(/\/storage\/v1\/object\/public\/([^/]+)\//);
+                  const bucketName = bucketMatch ? bucketMatch[1] : 'product-images';
+                  
+                  console.log(`🗑️ Deleting from bucket "${bucketName}":`, filePath);
+                  
+                  const { error: deleteError } = await supabaseAdmin.storage
+                    .from(bucketName)
+                    .remove([filePath]);
 
-            {/* Product Info */}
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
-                <div className="flex items-center space-x-4 mb-4">
-                  <span className="text-3xl font-bold text-amber-600">${product.price.toFixed(2)} NZD</span>
-                  {product.featured && (
-                    <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
-                  )}
-                </div>
-                
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400 fill-current" />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">4.9/5 (150+ reviews)</span>
-                  </div>
-                </div>
-              </div>
+                  if (deleteError) {
+                    console.warn('⚠️ Failed to delete image from Storage:', deleteError);
+                    // Don't throw - continue with product deletion even if image deletion fails
+                  } else {
+                    console.log('✅ Image deleted from Storage:', filePath);
+                  }
+                } catch (storageError) {
+                  console.warn('⚠️ Storage deletion error:', storageError);
+                  // Continue anyway
+                }
+              }
+            }
+          }
+        }
 
-              {product.description && (
-                <div className="prose prose-gray max-w-none">
-                  <p className="text-gray-600 leading-relaxed">{product.description}</p>
-                </div>
-              )}
+        // STEP 3: Delete the product record from database
+        const { error: deleteError } = await supabaseAdmin
+          .from('products')
+          .delete()
+          .eq('id', productId);
 
-              {/* Product Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-                  <Shield className="text-green-600" size={20} />
-                  <div>
-                    <div className="font-medium text-gray-900">Child Safe</div>
-                    <div className="text-sm text-gray-600">Non-toxic finish</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-                  <Award className="text-blue-600" size={20} />
-                  <div>
-                    <div className="font-medium text-gray-900">Handcrafted</div>
-                    <div className="text-sm text-gray-600">Made in NZ</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
-                  <Truck className="text-purple-600" size={20} />
-                  <div>
-                    <div className="font-medium text-gray-900">Free Shipping</div>
-                    <div className="text-sm text-gray-600">Orders over $1000</div>
-                  </div>
-                </div>
-              </div>
+        if (deleteError) {
+          console.error('❌ Database deletion error:', deleteError);
+          throw deleteError;
+        }
 
-              {/* Product Details */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Product Details</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  {product.category && (
-                    <div>
-                      <span className="text-gray-600">Category:</span>
-                      <span className="font-medium text-gray-900 ml-2 capitalize">
-                        {product.category.replace('-', ' ')}
-                      </span>
-                    </div>
-                  )}
-                  <div>
-                    <span className="text-gray-600">Stock:</span>
-                    <span className={`font-medium ml-2 ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-                      {product.inStock ? 'In Stock' : 'Out of Stock'}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">SKU:</span>
-                    <span className="font-medium text-gray-900 ml-2">{product.id}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Material:</span>
-                    <span className="font-medium text-gray-900 ml-2">Premium NZ Timber</span>
-                  </div>
-                </div>
-              </div>
+        console.log('✅ Product and associated images deleted from Supabase');
+        await loadProducts(); // Reload all products
+      } else {
+        throw new Error('Supabase admin client not connected');
+      }
+    } catch (error) {
+      console.error('❌ Error deleting product:', error);
+      throw error;
+    }
+  };
 
-              {/* Add to Cart */}
-              <div className="space-y-4">
-                <button
-                  onClick={() => onAddToCart(product)}
-                  disabled={!product.inStock}
-                  className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                >
-                  <ShoppingCart size={20} />
-                  <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
-                </button>
-                
-                <button
-                  onClick={() => navigate(-1)}
-                  className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
-                >
-                  <ArrowLeft size={16} />
-                  <span>Back to Products</span>
-                </button>
-              </div>
+  // Bulk import products to Supabase using admin client
+  const bulkImportProducts = async (newProducts: Product[]) => {
+    try {
+      if (supabaseAdmin) {
+        console.log('🔐 Using admin client to bulk import products:', newProducts.length);
 
-              {/* Shipping Info */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-medium text-blue-900 mb-2">Shipping Information</h4>
-                <div className="text-sm text-blue-800 space-y-1">
-                  <p>• Free shipping on orders over $1000 NZD</p>
-                  <p>• Free pickup available from our Whangarei workshop</p>
-                  <p>• Worldwide shipping available</p>
-                  <p>• Processing time: 1-2 business days</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        const supabaseProducts = newProducts.map(product => ({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          category: product.category,
+          images: product.images,
+          in_stock: product.inStock,
+          featured: product.featured,
+          weight: product.weight,
+          stock_quantity: product.stockQuantity || 5,
+          seo_title: product.seoTitle,
+          seo_description: product.seoDescription,
+          seo_keywords: product.seoKeywords
+        }));
 
-          {/* FAQ Section */}
-          <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {PRODUCT_FAQS.map((faq, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        const { data, error } = await supabaseAdmin
+          .from('products')
+          .insert(supabaseProducts)
+          .select();
+
+        if (error) throw error;
+
+        console.log(`✅ Bulk imported ${data.length} products to Supabase with admin client`);
+        await loadProducts(); // Reload all products
+        return data;
+      } else {
+        throw new Error('Supabase admin client not connected');
+      }
+    } catch (error) {
+      console.error('❌ Error bulk importing products:', error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  // Add a function to force reload products
+  const forceReload = () => {
+    console.log('🔄 useProducts: Force reloading products...');
+    loadProducts();
+  };
+  
+  return {
+    products,
+    loading,
+    error,
+    loadProducts,
+    forceReload,
+    saveProduct,
+    updateProduct,
+    deleteProduct,
+    bulkImportProducts,
+    isSupabaseConnected: !!supabase,
+    isAdminConnected: !!supabaseAdmin
+  };
 };
-
-export default ProductDetail;
