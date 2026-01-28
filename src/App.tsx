@@ -137,7 +137,8 @@ const AppContent: React.FC = () => {
     );
   }
 
-  const featuredProducts = products.filter(p => p.featured).slice(0, 8);
+  // FIXED: Show all products on homepage, not just 8 featured
+  const featuredProducts = products;
 
   return (
     <div className="min-h-screen bg-gray-50">
