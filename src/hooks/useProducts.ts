@@ -13,13 +13,13 @@ export const useProducts = () => {
   const loadProducts = async () => {
     setLoading(true);
     setError(null);
-
     console.log('🔄 useProducts: Loading products from storage...');
 
     try {
       // If admin is connected, try to load from Supabase first
       if (supabaseAdmin) {
         console.log('🔐 Admin connected, loading from Supabase...');
+        
         try {
           const { data, error } = await supabaseAdmin
             .from('products')
@@ -33,6 +33,7 @@ export const useProducts = () => {
 
           if (data && data.length > 0) {
             console.log(`✅ Loaded ${data.length} products from Supabase`);
+            
             // Convert database format to Product format
             const convertedProducts: Product[] = data.map(dbProduct => {
               // Parse images if it's a string
@@ -63,6 +64,7 @@ export const useProducts = () => {
                 updatedAt: dbProduct.updated_at
               };
             });
+
             setProducts(convertedProducts);
             // Also save to localStorage as backup
             saveProductsToStorage(convertedProducts);
@@ -80,7 +82,7 @@ export const useProducts = () => {
       // Fallback to localStorage (saved products)
       console.log('📦 Checking localStorage for saved products...');
       const savedProducts = loadProductsFromStorage();
-
+      
       if (savedProducts.length > 0) {
         console.log(`✅ Found ${savedProducts.length} saved products in localStorage`);
         setProducts(savedProducts);
@@ -90,7 +92,6 @@ export const useProducts = () => {
         // Save static products to localStorage for future edits
         saveProductsToStorage(staticProducts);
       }
-
     } catch (error) {
       console.error('❌ Error loading products:', error);
       // Fallback to static products if everything fails
@@ -316,6 +317,7 @@ export const useProducts = () => {
     try {
       if (supabaseAdmin) {
         console.log('🔐 Using admin client to bulk import products:', newProducts.length);
+
         const supabaseProducts = newProducts.map(product => ({
           name: product.name,
           description: product.description,
