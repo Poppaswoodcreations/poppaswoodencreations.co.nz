@@ -88,7 +88,6 @@ const AppContent: React.FC = () => {
     }
   }, [location.pathname]);
   // ============================================
-
   const handleCategorySelect = (category: string) => {
     navigate(`/${category}`);
   };
