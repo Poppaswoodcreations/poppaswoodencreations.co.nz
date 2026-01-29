@@ -1,107 +1,431 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- ========================================
-       HOMEPAGE - Highest Priority
-       ======================================== -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ======================================== -->
+  <!-- STATIC PAGES -->
+  <!-- ======================================== -->
   <url>
     <loc>https://poppaswoodencreations.co.nz/</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- ========================================
-       MAIN CATEGORY PAGES - Very High Priority
-       ======================================== -->
   <url>
     <loc>https://poppaswoodencreations.co.nz/products</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- ========================================
-       PRODUCT CATEGORIES - High Priority
-       ======================================== -->
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-cars</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-trucks</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-trains</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-planes-helicopters</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-baby-toys</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-tractors-boats</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/wooden-kitchenware</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- ========================================
-       INDIVIDUAL PRODUCT PAGES
-       NOTE: Add your actual product URLs here
-       Example format shown below
-       ======================================== -->
   <url>
-    <loc>https://poppaswoodencreations.co.nz/products/rubbish-truck</loc>
-    <lastmod>2025-12-27</lastmod>
+    <loc>https://poppaswoodencreations.co.nz/about</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/contact</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/reviews</loc>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- 
-    TODO: Add all your product URLs here in this format:
-    <url>
-      <loc>https://poppaswoodencreations.co.nz/products/[product-id]</loc>
-      <lastmod>2025-12-27</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.7</priority>
-    </url>
-  -->
-
-  <!-- ========================================
-       BLOG PAGE - High Priority
-       ======================================== -->
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/shipping</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog</loc>
-    <lastmod>2025-12-27</lastmod>
+    <lastmod>2026-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ========================================
-       BLOG POSTS - Good Priority
-       ======================================== -->
+  <!-- ======================================== -->
+  <!-- PRODUCT PAGES (59 total) -->
+  <!-- ======================================== -->
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/2-by-4-car-steering-wheel</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/2-by-4-pine-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/2-by-4-pine-car-with-roof</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/2-by-4-pine-tow-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/baby-blocks-native-rimu-8-pack</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/backhoe</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/bongo-drum</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/bowl</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/butter-knife</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/car-carrier</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/cargo-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/chopping-board</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/dump-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/fire-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/front-end-loader</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/garbage-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/gliders</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/happy-go-lucky-train</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/helicopter-macrocarpa</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/humming-top</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/ice-cream-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/kauri-bowl</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/kauri-helicopter</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/kauri-planes</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/log-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/mini-buss-rimu</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/paddle-boat</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/pine-plane</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/police-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/pull-along-duck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/race-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/rattle</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/rimu-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/rimu-salad-bowl</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/rimu-teething-ring</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/rubbish-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/salad-servers</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/school-bus-small</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/sedan</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/skateboard</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/small-pine-cars</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/small-pine-train</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/small-road-trains</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/small-sports-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/sports-car</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/stacking-toy</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/submarine</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/tanker-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/the-block-train-made-from-kauri</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/tipper-truck</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/toaster-tongs</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/tour-bus</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/tractor-exquisite</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/trolley-and-blocks</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poppaswoodencreations.co.nz/products/wooden-kauri-car-6</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ======================================== -->
+  <!-- BLOG POSTS -->
+  <!-- ======================================== -->
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/wooden-toys-by-age</loc>
     <lastmod>2025-12-25</lastmod>
@@ -118,101 +442,67 @@
     <loc>https://poppaswoodencreations.co.nz/blog/happy-go-luck-train</loc>
     <lastmod>2025-12-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/wooden-pine-trolley-and-blocks</loc>
     <lastmod>2025-12-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/rimu-teething-ring</loc>
     <lastmod>2025-12-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/wooden-rubbish-truck-kauri-macrocarpa</loc>
     <lastmod>2025-12-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/choosing-best-wooden-toy-cars</loc>
     <lastmod>2025-12-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/tractor-exquisite</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/how-to-clean-wooden-toys-naturally</loc>
     <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/benefits-wooden-toys-child-development</loc>
     <lastmod>2024-11-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/best-sensory-wooden-toys-babies</loc>
     <lastmod>2024-11-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poppaswoodencreations.co.nz/blog/baby-toy-cars-discovering-magic</loc>
     <lastmod>2024-06-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- ========================================
-       INFORMATION PAGES
-       ======================================== -->
-  <url>
-    <loc>https://poppaswoodencreations.co.nz/about</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://poppaswoodencreations.co.nz/contact</loc>
-    <lastmod>2025-12-27</lastmod>
+    <loc>https://poppaswoodencreations.co.nz/blog/the-benefits-of-wooden-toys-the-block-train-made-from-kauri</loc>
+    <lastmod>2026-01-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://poppaswoodencreations.co.nz/reviews</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://poppaswoodencreations.co.nz/shipping</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://poppaswoodencreations.co.nz/privacy</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://poppaswoodencreations.co.nz/terms</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
 
 </urlset>
