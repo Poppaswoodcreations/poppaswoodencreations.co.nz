@@ -404,7 +404,7 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            <Route path="/wooden-trains" element={
+          <Route path="/wooden-trains" element={
               <>
                 <SEOHead 
                   title="Wooden Trains - Classic Train Sets"
@@ -417,6 +417,23 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
+                />
+              </>
+            } />
+
+            <Route path="/wooden-crosses" element={
+              <>
+                <SEOHead 
+                  title="Wooden Crosses - Handcrafted Religious Gifts NZ"
+                  description="Handcrafted wooden crosses made from New Zealand native timber. Beautiful religious gifts and heirloom pieces from Whangarei."
+                  canonicalPath="/wooden-crosses"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products.filter(p => p.category === 'wooden-crosses')} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-crosses"
                 />
               </>
             } />
