@@ -1,0 +1,49 @@
+# Netlify Redirects File for Poppa's Wooden Creations
+# Place this in your public folder as _redirects
+
+# Remove trailing slashes (consolidate URLs)
+/reviews/            /reviews           301!
+/contact/            /contact           301!
+/shipping/           /shipping          301!
+/wooden-planes-helicopters/  /wooden-planes-helicopters  301!
+
+# Consolidate product URL variations
+/products/pine-plane/         /products/pine-plane        301!
+/products/wooden-train-set/   /products/wooden-train-set  301!
+/products/rubbish-truck/      /products/rubbish-truck     301!
+
+# Redirect old generic product IDs to main products page
+/products/product-1    /products  301
+/products/product-2    /products  301
+/products/product-3    /products  301
+/products/product-4    /products  301
+/products/product-5    /products  301
+/products/product-6    /products  301
+/products/product-7    /products  301
+/products/product-8    /products  301
+/products/product-9    /products  301
+/products/product-10   /products  301
+
+# Redirect old Square IDs to products page (these appear to be old/inactive)
+/products/SQ9676964    /products  301
+/products/SQ3125023    /products  301
+/products/SQ5482464    /products  301
+/products/SQ1701393    /products  301
+/products/SQ1723314    /products  301
+/products/SQ3933926    /products  301
+/products/SQ3510542    /products  301
+/products/SQ5579942    /products  301
+/products/SQ9349386    /products  301
+/products/SQ5255450    /products  301
+/products/SQ5864083    /products  301
+/products/SQ7430780    /products  301
+/products/SQ9750889    /products  301
+/products/SQ7397988    /products  301
+/products/SQ3795605    /products  301
+/products/SQ1108316    /products  301
+
+# Block search template URL
+/search?q=%7Bsearch_term_string%7D  /products  301
+
+# SPA fallback
+/*  /index.html  200
