@@ -11,6 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
+import ErrorMonitor from './components/ErrorMonitor';  // ← ADDED THIS LINE
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -146,6 +147,8 @@ const AppContent: React.FC = () => {
         onShowCart={() => setShowCart(true)}
         cartItemCount={getCartItemCount()}
       />
+      <ErrorMonitor />
+      {/* ↑ ADDED ERROR MONITOR HERE */}
       
       <main>
         <Suspense fallback={<LoadingFallback />}>
