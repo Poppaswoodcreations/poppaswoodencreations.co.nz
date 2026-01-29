@@ -49,13 +49,21 @@ export const categories: Category[] = [
     image: 'https://i.ibb.co/jZ3pySpt/e7af5ed802b8.webp',
     productCount: 12
   },
-  {
+ {
     id: '7',
     name: 'Wooden Tractors & Boats',
     slug: 'wooden-tractors-boats',
     description: 'Farm tractors and sailing boats for adventure play',
     image: 'https://i.ibb.co/nNc2v93N/bb7e68c9550f.webp',
     productCount: 4
+  },
+  {
+    id: '8',
+    name: 'Wooden Crosses',
+    slug: 'wooden-crosses',
+    description: 'Handcrafted wooden crosses made from native New Zealand timber. Beautiful religious gifts and heirloom pieces.',
+    image: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RIMU_WOODEN_CROSS.jpg',
+    productCount: 1
   }
 ];
 
