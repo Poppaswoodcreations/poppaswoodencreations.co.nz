@@ -24,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     { slug: 'wooden-trains', name: 'Trains' },
     { slug: 'wooden-planes-helicopters', name: 'Planes & Helicopters' },
     { slug: 'wooden-kitchenware', name: 'Kitchenware' },
+    { slug: 'wooden-crosses', name: 'Crosses' },
   ];
 
   // Policy/Help links for dropdown
