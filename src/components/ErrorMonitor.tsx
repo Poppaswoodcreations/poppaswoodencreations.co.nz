@@ -4,7 +4,7 @@ import { useProducts } from '../hooks/useProducts';
 /**
  * ErrorMonitor Component
  * Detects and reports critical website issues
- * Add this to your App.tsx
+ * FIXED: Now checks Grid 3 where products actually are
  */
 export const ErrorMonitor: React.FC = () => {
   const { products } = useProducts();
@@ -49,17 +49,31 @@ export const ErrorMonitor: React.FC = () => {
     const checkProductCount = () => {
       // Wait for DOM to be ready
       setTimeout(() => {
-        const productElements = document.querySelectorAll('[class*="grid"]')[0]?.children.length || 0;
+        // Find the grid that contains products (has h3 tags)
+        const allGrids = document.querySelectorAll('[class*="grid"]');
+        let productGrid = null;
+        let productCount = 0;
+
+        // Find the grid with the most h3 tags (product names)
+        allGrids.forEach((grid) => {
+          const h3Count = grid.querySelectorAll('h3').length;
+          if (h3Count > productCount) {
+            productCount = h3Count;
+            productGrid = grid;
+          }
+        });
+
         const databaseProducts = products.length;
 
         console.log('📊 Product Count Check:');
         console.log('  - Database:', databaseProducts);
-        console.log('  - Displayed:', productElements);
+        console.log('  - Displayed:', productCount);
+        console.log('  - Product grid found:', !!productGrid);
 
         // Alert if major mismatch (allowing for some variation due to layout)
-        if (databaseProducts > 20 && productElements < databaseProducts * 0.5) {
+        if (databaseProducts > 20 && productCount < databaseProducts * 0.5) {
           console.warn('⚠️ PRODUCT DISPLAY ISSUE DETECTED!');
-          console.warn(`Only ${productElements} of ${databaseProducts} products are showing`);
+          console.warn(`Only ${productCount} of ${databaseProducts} products are showing`);
           
           // Show admin alert
           if (window.location.pathname === '/') {
@@ -78,7 +92,7 @@ export const ErrorMonitor: React.FC = () => {
             `;
             warningDiv.innerHTML = `
               <strong>⚠️ Product Display Warning</strong><br/>
-              <small>Only ${productElements}/${databaseProducts} products showing on homepage</small><br/>
+              <small>Only ${productCount}/${databaseProducts} products showing on homepage</small><br/>
               <button onclick="this.parentElement.remove()" 
                       style="margin-top:10px;background:white;color:#f59e0b;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">
                 Dismiss
@@ -86,6 +100,8 @@ export const ErrorMonitor: React.FC = () => {
             `;
             document.body.appendChild(warningDiv);
           }
+        } else if (productCount >= databaseProducts * 0.9) {
+          console.log('✅ Product display looks good!');
         }
       }, 3000);
     };
