@@ -11,6 +11,42 @@ interface SEOMetaManagerProps {
   structuredData?: any;
 }
 
+interface SEOMetaProps {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+  image?: string;
+  type?: string;
+}
+
+/**
+ * Helper function to safely convert value to string
+ */
+function safeString(value: any): string {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  return String(value);
+}
+
+/**
+ * Helper function to update or create meta tags - PREVENTS DUPLICATES
+ */
+function updateMetaTag(attribute: string, value: string, content: any) {
+  const safeContent = safeString(content);
+  
+  // Remove ALL existing tags with this attribute to prevent duplicates
+  const existingTags = document.querySelectorAll(`meta[${attribute}="${value}"]`);
+  existingTags.forEach(tag => tag.remove());
+  
+  // Create new tag
+  const element = document.createElement('meta');
+  element.setAttribute(attribute, value);
+  element.content = safeContent;
+  element.setAttribute('data-rh', 'true');
+  document.head.appendChild(element);
+}
+
 const SEOMetaManager = ({
   title = 'Handmade Wooden Toys NZ | Montessori Toys | Poppa\'s',
   description = 'Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000.',
@@ -23,50 +59,34 @@ const SEOMetaManager = ({
   const location = useLocation();
 
   useEffect(() => {
-    // Update title
+    // Update title - DO NOT append "| Poppa's Wooden Creations" as it's already in the title
     document.title = title;
 
-    // Helper function to safely update or create meta tags
-    const updateMetaTag = (property: string, content: string, isProperty = false) => {
-      const attribute = isProperty ? 'property' : 'name';
-      
-      // Remove ALL existing tags with this property/name (including those with data-rh="true")
-      const existingTags = document.querySelectorAll(`meta[${attribute}="${property}"]`);
-      existingTags.forEach(tag => tag.remove());
-      
-      // Create new tag
-      const meta = document.createElement('meta');
-      meta.setAttribute(attribute, property);
-      meta.setAttribute('content', content);
-      meta.setAttribute('data-rh', 'true');
-      document.head.appendChild(meta);
-    };
-
     // Update basic meta tags
-    updateMetaTag('description', description);
-    updateMetaTag('keywords', keywords);
-    updateMetaTag('robots', 'index, follow');
+    updateMetaTag('name', 'description', description);
+    updateMetaTag('name', 'keywords', keywords);
+    updateMetaTag('name', 'robots', 'index, follow');
 
     // Update Open Graph tags
-    updateMetaTag('og:type', ogType, true);
-    updateMetaTag('og:title', title, true);
-    updateMetaTag('og:description', description, true);
-    updateMetaTag('og:image', ogImage, true);
-    updateMetaTag('og:url', canonicalUrl || `https://poppaswoodencreations.co.nz${location.pathname}`, true);
-    updateMetaTag('og:site_name', 'Poppa\'s Wooden Creations', true);
+    updateMetaTag('property', 'og:type', ogType);
+    updateMetaTag('property', 'og:title', title);
+    updateMetaTag('property', 'og:description', description);
+    updateMetaTag('property', 'og:image', ogImage);
+    updateMetaTag('property', 'og:url', canonicalUrl || `https://poppaswoodencreations.co.nz${location.pathname}`);
+    updateMetaTag('property', 'og:site_name', 'Poppa\'s Wooden Creations');
 
     // Update Twitter Card tags
-    updateMetaTag('twitter:card', 'summary_large_image');
-    updateMetaTag('twitter:title', title);
-    updateMetaTag('twitter:description', description);
-    updateMetaTag('twitter:image', ogImage);
+    updateMetaTag('name', 'twitter:card', 'summary_large_image');
+    updateMetaTag('name', 'twitter:title', title);
+    updateMetaTag('name', 'twitter:description', description);
+    updateMetaTag('name', 'twitter:image', ogImage);
 
     // Update other important meta tags
-    updateMetaTag('author', 'Poppa\'s Wooden Creations');
-    updateMetaTag('geo.region', 'NZ-NTL');
-    updateMetaTag('geo.placename', 'Whangarei');
-    updateMetaTag('geo.position', '-35.7256;174.3186');
-    updateMetaTag('ICBM', '-35.7256, 174.3186');
+    updateMetaTag('name', 'author', 'Poppa\'s Wooden Creations');
+    updateMetaTag('name', 'geo.region', 'NZ-NTL');
+    updateMetaTag('name', 'geo.placename', 'Whangarei');
+    updateMetaTag('name', 'geo.position', '-35.7256;174.3186');
+    updateMetaTag('name', 'ICBM', '-35.7256, 174.3186');
 
     // Update canonical URL - Remove ALL existing canonical links first
     const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
@@ -95,6 +115,58 @@ const SEOMetaManager = ({
   }, [title, description, keywords, ogImage, ogType, canonicalUrl, structuredData, location.pathname]);
 
   return null;
+};
+
+/**
+ * Hook for easy SEO management in functional components
+ */
+export const useSEO = (props: SEOMetaProps) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const baseUrl = 'https://poppaswoodencreations.co.nz';
+    const pathname = location.pathname.replace(/\/$/, '');
+    const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
+
+    // Set title - append site name if not already present
+    if (props.title) {
+      const titleText = props.title.includes('Poppa\'s') 
+        ? props.title 
+        : `${safeString(props.title)} | Poppa's Wooden Creations`;
+      document.title = titleText;
+    }
+
+    // Meta tags - PREVENTS DUPLICATES
+    updateMetaTag('name', 'description', props.description || '');
+    updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
+    
+    // OG tags
+    updateMetaTag('property', 'og:title', props.title || '');
+    updateMetaTag('property', 'og:description', props.description || '');
+    updateMetaTag('property', 'og:url', canonicalUrl);
+    updateMetaTag('property', 'og:type', props.type || 'website');
+    if (props.image) {
+      updateMetaTag('property', 'og:image', props.image);
+    }
+
+    // Twitter tags
+    updateMetaTag('name', 'twitter:card', 'summary_large_image');
+    updateMetaTag('name', 'twitter:title', props.title || '');
+    updateMetaTag('name', 'twitter:description', props.description || '');
+    if (props.image) {
+      updateMetaTag('name', 'twitter:image', props.image);
+    }
+
+    // Canonical - PREVENT DUPLICATES
+    const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    existingCanonicals.forEach(link => link.remove());
+    
+    const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = canonicalUrl;
+    canonicalLink.setAttribute('data-rh', 'true');
+    document.head.appendChild(canonicalLink);
+  }, [props, location]);
 };
 
 export default SEOMetaManager;
