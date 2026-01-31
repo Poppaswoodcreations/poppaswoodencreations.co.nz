@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu, X, ShoppingCart, Search, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../contexts/CartContext';
 import SearchModal from './SearchModal';
 
 const Header = () => {
