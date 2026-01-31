@@ -79,9 +79,9 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
               </span>
             </div>
             
-            <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               Handmade Wooden Toys & Kitchenware from New Zealand
-            </div>
+            </h1>
             
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
               Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. 
