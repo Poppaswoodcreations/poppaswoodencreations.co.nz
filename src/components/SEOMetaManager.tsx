@@ -1,16 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-interface SEOMetaManagerProps {
-  title?: string;
-  description?: string;
-  keywords?: string;
-  ogImage?: string;
-  ogType?: string;
-  canonicalUrl?: string;
-  structuredData?: any;
-}
-
 interface SEOMetaProps {
   title?: string;
   description?: string;
@@ -33,6 +23,7 @@ function safeString(value: any): string {
  * Helper function to update or create meta tags - PREVENTS DUPLICATES
  */
 function updateMetaTag(attribute: string, value: string, content: any) {
+  // Safely convert content to string
   const safeContent = safeString(content);
   
   // Remove ALL existing tags with this attribute to prevent duplicates
@@ -47,74 +38,74 @@ function updateMetaTag(attribute: string, value: string, content: any) {
   document.head.appendChild(element);
 }
 
-const SEOMetaManager = ({
-  title = 'Handmade Wooden Toys NZ | Montessori Toys | Poppa\'s',
-  description = 'Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools and eco-conscious families. Shop childrens wooden toys, baby toys & kitchenware. Free shipping over $1000.',
-  keywords = 'handcrafted wooden toys, New Zealand, eco-friendly, Montessori, heirloom toys',
-  ogImage = 'https://poppaswoodencreations.co.nz/og-image.jpg',
-  ogType = 'website',
-  canonicalUrl,
-  structuredData
-}: SEOMetaManagerProps) => {
+/**
+ * SEO Meta Manager Component
+ * Handles all meta tags, canonical URLs, and prevents duplicate content issues
+ */
+export const SEOMetaManager: React.FC<SEOMetaProps> = ({
+  title,
+  description,
+  canonical,
+  noindex = false,
+  image,
+  type = 'website'
+}) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Update title - DO NOT append "| Poppa's Wooden Creations" as it's already in the title
-    document.title = title;
+    // Build canonical URL
+    const baseUrl = 'https://poppaswoodencreations.co.nz';
+    let canonicalUrl = canonical;
+    
+    if (!canonicalUrl) {
+      // Remove trailing slash and create canonical
+      const pathname = location.pathname.replace(/\/$/, '');
+      canonicalUrl = `${baseUrl}${pathname}`;
+    }
 
-    // Update basic meta tags
-    updateMetaTag('name', 'description', description);
-    updateMetaTag('name', 'keywords', keywords);
-    updateMetaTag('name', 'robots', 'index, follow');
+    // Set document title - SAFE
+    if (title) {
+      document.title = `${safeString(title)} | Poppa's Wooden Creations`;
+    }
 
-    // Update Open Graph tags
-    updateMetaTag('property', 'og:type', ogType);
-    updateMetaTag('property', 'og:title', title);
-    updateMetaTag('property', 'og:description', description);
-    updateMetaTag('property', 'og:image', ogImage);
-    updateMetaTag('property', 'og:url', canonicalUrl || `https://poppaswoodencreations.co.nz${location.pathname}`);
-    updateMetaTag('property', 'og:site_name', 'Poppa\'s Wooden Creations');
+    // Update or create meta tags - ALL SAFE NOW
+    updateMetaTag('name', 'description', description || '');
+    updateMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    
+    // Open Graph tags
+    updateMetaTag('property', 'og:title', title || '');
+    updateMetaTag('property', 'og:description', description || '');
+    updateMetaTag('property', 'og:url', canonicalUrl);
+    updateMetaTag('property', 'og:type', type);
+    if (image) {
+      updateMetaTag('property', 'og:image', image);
+    }
 
-    // Update Twitter Card tags
+    // Twitter Card tags
     updateMetaTag('name', 'twitter:card', 'summary_large_image');
-    updateMetaTag('name', 'twitter:title', title);
-    updateMetaTag('name', 'twitter:description', description);
-    updateMetaTag('name', 'twitter:image', ogImage);
+    updateMetaTag('name', 'twitter:title', title || '');
+    updateMetaTag('name', 'twitter:description', description || '');
+    if (image) {
+      updateMetaTag('name', 'twitter:image', image);
+    }
 
-    // Update other important meta tags
-    updateMetaTag('name', 'author', 'Poppa\'s Wooden Creations');
-    updateMetaTag('name', 'geo.region', 'NZ-NTL');
-    updateMetaTag('name', 'geo.placename', 'Whangarei');
-    updateMetaTag('name', 'geo.position', '-35.7256;174.3186');
-    updateMetaTag('name', 'ICBM', '-35.7256, 174.3186');
-
-    // Update canonical URL - Remove ALL existing canonical links first
+    // Handle canonical link - PREVENT DUPLICATES
     const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
     existingCanonicals.forEach(link => link.remove());
     
-    // Create new canonical link
-    const canonical = document.createElement('link');
-    canonical.setAttribute('rel', 'canonical');
-    canonical.setAttribute('href', canonicalUrl || `https://poppaswoodencreations.co.nz${location.pathname}`);
-    canonical.setAttribute('data-rh', 'true');
-    document.head.appendChild(canonical);
+    const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = canonicalUrl;
+    canonicalLink.setAttribute('data-rh', 'true');
+    document.head.appendChild(canonicalLink);
 
-    // Update structured data
-    if (structuredData) {
-      // Remove existing structured data with data-rh attribute
-      const existingScripts = document.querySelectorAll('script[type="application/ld+json"][data-rh="true"]');
-      existingScripts.forEach(script => script.remove());
+    // Cleanup function
+    return () => {
+      // Optional: cleanup if needed
+    };
+  }, [title, description, canonical, noindex, image, type, location]);
 
-      // Add new structured data
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-rh', 'true');
-      script.text = JSON.stringify(structuredData);
-      document.head.appendChild(script);
-    }
-  }, [title, description, keywords, ogImage, ogType, canonicalUrl, structuredData, location.pathname]);
-
-  return null;
+  return null; // This component doesn't render anything
 };
 
 /**
@@ -128,15 +119,12 @@ export const useSEO = (props: SEOMetaProps) => {
     const pathname = location.pathname.replace(/\/$/, '');
     const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
 
-    // Set title - append site name if not already present
+    // Set title - SAFE
     if (props.title) {
-      const titleText = props.title.includes('Poppa\'s') 
-        ? props.title 
-        : `${safeString(props.title)} | Poppa's Wooden Creations`;
-      document.title = titleText;
+      document.title = `${safeString(props.title)} | Poppa's Wooden Creations`;
     }
 
-    // Meta tags - PREVENTS DUPLICATES
+    // Meta tags - ALL SAFE NOW
     updateMetaTag('name', 'description', props.description || '');
     updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
     
