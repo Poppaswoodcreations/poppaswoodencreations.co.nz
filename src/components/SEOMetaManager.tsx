@@ -20,11 +20,19 @@ function safeString(value: any): string {
 }
 
 /**
- * Helper function to update or create meta tags - SAFE VERSION
+ * Helper function to update or create meta tags - PREVENTS DUPLICATES
  */
 function updateMetaTag(attribute: string, value: string, content: any) {
-  // FIXED: Safely convert content to string
   const safeContent = safeString(content);
+  
+  // Remove ALL existing tags with this attribute to prevent duplicates
+  const existingTags = document.querySelectorAll(`meta[${attribute}="${value}"]`);
+  existingTags.forEach((tag, index) => {
+    // Keep only the first one, remove all others
+    if (index > 0) {
+      tag.remove();
+    }
+  });
   
   let element = document.querySelector(`meta[${attribute}="${value}"]`) as HTMLMetaElement;
   
@@ -63,12 +71,12 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       canonicalUrl = `${baseUrl}${pathname}`;
     }
 
-    // Set document title - SAFE
+    // Set document title
     if (title) {
       document.title = `${safeString(title)} | Poppa's Wooden Creations`;
     }
 
-    // Update or create meta tags - ALL SAFE NOW
+    // Update or create meta tags - PREVENTS DUPLICATES
     updateMetaTag('name', 'description', description || '');
     updateMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     
@@ -89,7 +97,15 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       updateMetaTag('name', 'twitter:image', image);
     }
 
-    // Handle canonical link
+    // Handle canonical link - PREVENT DUPLICATES
+    const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    existingCanonicals.forEach((link, index) => {
+      // Keep only the first one, remove all others
+      if (index > 0) {
+        link.remove();
+      }
+    });
+    
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (canonicalLink) {
       canonicalLink.href = canonicalUrl;
@@ -120,12 +136,12 @@ export const useSEO = (props: SEOMetaProps) => {
     const pathname = location.pathname.replace(/\/$/, '');
     const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
 
-    // Set title - SAFE
+    // Set title
     if (props.title) {
       document.title = `${safeString(props.title)} | Poppa's Wooden Creations`;
     }
 
-    // Meta tags - ALL SAFE NOW
+    // Meta tags - PREVENTS DUPLICATES
     updateMetaTag('name', 'description', props.description || '');
     updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
     
@@ -146,7 +162,14 @@ export const useSEO = (props: SEOMetaProps) => {
       updateMetaTag('name', 'twitter:image', props.image);
     }
 
-    // Canonical
+    // Canonical - PREVENT DUPLICATES
+    const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    existingCanonicals.forEach((link, index) => {
+      if (index > 0) {
+        link.remove();
+      }
+    });
+    
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (canonicalLink) {
       canonicalLink.href = canonicalUrl;
