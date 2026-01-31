@@ -80,10 +80,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              {siteSettings.hero_title || 'Handmade Wooden Toys'}
-              <span className="block text-amber-600 mt-2">
-                {siteSettings.hero_subtitle || 'Whangarei, New Zealand'}
-              </span>
+              Handmade Wooden Toys & Kitchenware from New Zealand
             </h1>
             
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
@@ -92,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </p>
             
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
-              From our Whangarei workshop, we create childrens wooden toys that inspire imaginative play and develop 
+              From our Whangarei workshop, we create children's wooden toys that inspire imaginative play and develop 
               fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.
             </p>
             
@@ -138,7 +135,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
               {heroImage && (
                 <img
                   src={heroImage}
-                  alt="Handmade wooden toys New Zealand - Premium childrens wooden toys"
+                  alt="Handmade wooden toys New Zealand - Premium children's wooden toys"
                   className={`w-full h-full object-cover transition-opacity duration-500 ${
                     imageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
