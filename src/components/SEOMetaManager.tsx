@@ -63,9 +63,15 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       canonicalUrl = `${baseUrl}${pathname}`;
     }
 
-    // Set document title - SAFE
+    // Set document title - SAFE - NO DUPLICATION
     if (title) {
-      document.title = `${safeString(title)} | Poppa's Wooden Creations`;
+      const titleStr = safeString(title);
+      // Only append suffix if title doesn't already contain "Poppa's" or "Creations"
+      if (titleStr.includes("Poppa's") || titleStr.includes('Creations')) {
+        document.title = titleStr;
+      } else {
+        document.title = `${titleStr} | Poppa's Wooden Creations`;
+      }
     }
 
     // Update or create meta tags - ALL SAFE NOW
@@ -119,9 +125,15 @@ export const useSEO = (props: SEOMetaProps) => {
     const pathname = location.pathname.replace(/\/$/, '');
     const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
 
-    // Set title - SAFE
+    // Set title - SAFE - NO DUPLICATION
     if (props.title) {
-      document.title = `${safeString(props.title)} | Poppa's Wooden Creations`;
+      const titleStr = safeString(props.title);
+      // Only append suffix if title doesn't already contain "Poppa's" or "Creations"
+      if (titleStr.includes("Poppa's") || titleStr.includes('Creations')) {
+        document.title = titleStr;
+      } else {
+        document.title = `${titleStr} | Poppa's Wooden Creations`;
+      }
     }
 
     // Meta tags - ALL SAFE NOW
