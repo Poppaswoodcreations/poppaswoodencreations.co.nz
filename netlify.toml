@@ -1,6 +1,18 @@
-command = "npm run build"
-publish = "dist"
+[build]
+  publish = "dist"
+
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
+
+Remove the `command = "npm run build"` line - Netlify will detect it automatically.
+
+---
+
+## And Simplify _redirects
+
+Make sure `_redirects` file has ONLY:
+```
+/*  /index.html  200
