@@ -11,7 +11,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
-import ErrorMonitor from './components/ErrorMonitor';  // ← ADDED THIS LINE
+import ErrorMonitor from './components/ErrorMonitor';
+import CanonicalUrl from './components/CanonicalUrl';  // ← ADDED THIS
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -71,24 +72,9 @@ const AppContent: React.FC = () => {
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
 
   // ============================================
-  // CANONICAL TAG FIX - Updates on route change
+  // REMOVED OLD CANONICAL TAG LOGIC - Now handled by CanonicalUrl component
   // ============================================
-  useEffect(() => {
-    const baseUrl = 'https://poppaswoodencreations.co.nz';
-    const currentUrl = baseUrl + location.pathname;
-    
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    
-    if (canonical) {
-      canonical.href = currentUrl;
-    } else {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      canonical.href = currentUrl;
-      document.head.appendChild(canonical);
-    }
-  }, [location.pathname]);
-  // ============================================
+
   const handleCategorySelect = (category: string) => {
     navigate(`/${category}`);
   };
@@ -142,13 +128,15 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <CanonicalUrl />
+      {/* ↑ ADDED CANONICAL URL COMPONENT - Automatically handles all pages */}
+      
       <Header 
         onShowAdmin={() => setShowAdmin(true)}
         onShowCart={() => setShowCart(true)}
         cartItemCount={getCartItemCount()}
       />
       <ErrorMonitor />
-      {/* ↑ ADDED ERROR MONITOR HERE */}
       
       <main>
         <Suspense fallback={<LoadingFallback />}>
