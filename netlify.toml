@@ -7,12 +7,4 @@
   status = 200
 ```
 
-Remove the `command = "npm run build"` line - Netlify will detect it automatically.
 
----
-
-## And Simplify _redirects
-
-Make sure `_redirects` file has ONLY:
-```
-/*  /index.html  200
