@@ -1,11 +1,11 @@
-[[redirects]]
-  from = "/*/"
-  to = "/:splat"
-  status = 301
-  force = false
-  conditions = {Role = ["public"]}
+[build]
+  command = "npm run build"
+  publish = "dist"
 
-# Specific category redirects (with force to override React Router)
+[build.environment]
+  NODE_VERSION = "18"
+
+# Remove trailing slashes from category pages
 [[redirects]]
   from = "/wooden-baby-toys/"
   to = "/wooden-baby-toys"
@@ -25,6 +25,18 @@
   force = true
 
 [[redirects]]
+  from = "/wooden-cars/"
+  to = "/wooden-cars"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wooden-trucks/"
+  to = "/wooden-trucks"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/wooden-planes-helicopters/"
   to = "/wooden-planes-helicopters"
   status = 301
@@ -36,14 +48,67 @@
   status = 301
   force = true
 
+# Remove trailing slashes from policy pages
 [[redirects]]
-  from = "/wooden-other-toys/"
-  to = "/wooden-other-toys"
+  from = "/shipping/"
+  to = "/shipping"
   status = 301
   force = true
 
-# SPA fallback - must be last
+[[redirects]]
+  from = "/returns/"
+  to = "/returns"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy/"
+  to = "/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms/"
+  to = "/terms"
+  status = 301
+  force = true
+
+# Remove trailing slashes from info pages
+[[redirects]]
+  from = "/about/"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact/"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reviews/"
+  to = "/reviews"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/"
+  to = "/blog"
+  status = 301
+  force = true
+
+# SPA fallback for React Router - MUST BE LAST
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
