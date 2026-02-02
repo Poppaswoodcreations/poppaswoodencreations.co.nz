@@ -65,5 +65,4 @@ Use the Site Editor in the Admin Dashboard to customize:
 - Content
 
 ## License
-
-All rights reserved.
+Last updated: January 27, 2026
