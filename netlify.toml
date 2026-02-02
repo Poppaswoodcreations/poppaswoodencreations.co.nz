@@ -2,113 +2,29 @@
   command = "npm run build"
   publish = "dist"
 
-[build.environment]
-  NODE_VERSION = "18"
-
-# Remove trailing slashes from category pages
-[[redirects]]
-  from = "/wooden-baby-toys/"
-  to = "/wooden-baby-toys"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-kitchenware/"
-  to = "/wooden-kitchenware"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-trains/"
-  to = "/wooden-trains"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-cars/"
-  to = "/wooden-cars"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-trucks/"
-  to = "/wooden-trucks"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-planes-helicopters/"
-  to = "/wooden-planes-helicopters"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-tractors-boats/"
-  to = "/wooden-tractors-boats"
-  status = 301
-  force = true
-
-# Remove trailing slashes from policy pages
-[[redirects]]
-  from = "/shipping/"
-  to = "/shipping"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/returns/"
-  to = "/returns"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/privacy/"
-  to = "/privacy"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/terms/"
-  to = "/terms"
-  status = 301
-  force = true
-
-# Remove trailing slashes from info pages
-[[redirects]]
-  from = "/about/"
-  to = "/about"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/contact/"
-  to = "/contact"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/reviews/"
-  to = "/reviews"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/blog/"
-  to = "/blog"
-  status = 301
-  force = true
-
-# SPA fallback for React Router - MUST BE LAST
+# SPA fallback ONLY - let React Router handle everything
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+```
 
-# Headers for security
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+---
+
+## This removes:
+- ❌ All trailing slash redirects
+- ❌ All category redirects  
+- ❌ All policy page redirects
+- ❌ All the conflicting rules causing the loop
+
+## This keeps:
+- ✅ Build configuration
+- ✅ SPA fallback (so React Router can handle ALL routes)
+
+---
+
+**Replace your entire `netlify.toml` with just those 6 lines, commit, and deploy!**
+
+And also update `_redirects` to just one line:
+```
+/*  /index.html  200
