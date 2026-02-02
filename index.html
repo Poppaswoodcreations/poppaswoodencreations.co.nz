@@ -5,8 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Handmade Wooden Toys NZ | Poppa's Creations</title>
+    
+    <!-- Style to hide fallback H1 from view but keep it for crawlers -->
+    <style>
+      #fallback-h1 {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
+    <!-- Fallback H1 for Bing and other crawlers -->
+    <h1 id="fallback-h1">Handmade Wooden Toys NZ - Poppa's Wooden Creations</h1>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
