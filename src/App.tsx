@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense, useEffect } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -12,7 +12,6 @@ import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
 import ErrorMonitor from './components/ErrorMonitor';
-import CanonicalUrl from './components/CanonicalUrl';
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -124,8 +123,6 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <CanonicalUrl />
-      
       <Header 
         onShowAdmin={() => setShowAdmin(true)}
         onShowCart={() => setShowCart(true)}
@@ -308,7 +305,7 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* POLICY PAGES - FIXED */}
+            {/* POLICY PAGES */}
             <Route path="/shipping" element={
               <>
                 <SEOHead 
