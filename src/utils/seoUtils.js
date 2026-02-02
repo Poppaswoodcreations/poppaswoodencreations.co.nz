@@ -15,18 +15,84 @@ export const getCanonicalUrl = (pathname) => {
   return `${baseUrl}${cleanPath}`;
 };
 
+// List of valid product slugs (your real products)
+const VALID_PRODUCT_SLUGS = [
+  '2-by-4-car-steering-wheel',
+  '2-by-4-pine-car',
+  '2-by-4-pine-car-with-roof',
+  '2-by-4-pine-tow-truck',
+  'baby-blocks-native-rimu-8-pack',
+  'backhoe',
+  'bongo-drum',
+  'bowl',
+  'butter-knife',
+  'car-carrier',
+  'cargo-truck',
+  'chopping-board',
+  'dump-truck',
+  'fire-truck',
+  'front-end-loader',
+  'garbage-truck',
+  'gliders',
+  'happy-go-lucky-train',
+  'helicopter-macrocarpa',
+  'humming-top',
+  'ice-cream-truck',
+  'kauri-bowl',
+  'kauri-helicopter',
+  'kauri-planes',
+  'log-truck',
+  'mini-buss-rimu',
+  'paddle-boat',
+  'pine-plane',
+  'police-car',
+  'pull-along-duck',
+  'race-car',
+  'rattle',
+  'rimu-car',
+  'rimu-salad-bowl',
+  'rimu-teething-ring',
+  'rubbish-truck',
+  'salad-servers',
+  'school-bus-small',
+  'sedan',
+  'skateboard',
+  'small-pine-cars',
+  'small-pine-train',
+  'small-road-trains',
+  'small-sports-car',
+  'sports-car',
+  'stacking-toy',
+  'submarine',
+  'tanker-truck',
+  'the-block-train-made-from-kauri',
+  'tipper-truck',
+  'toaster-tongs',
+  'tour-bus',
+  'tractor-exquisite',
+  'trolley-and-blocks',
+  'wooden-kauri-car-6'
+];
+
 export const shouldNoIndex = (pathname, productId) => {
-  // Don't index old product patterns
-  if (pathname.includes('/products/product-')) return true;
-  if (pathname.includes('/products/SQ')) return true;
+  // Extract the product slug from the pathname
+  const productSlug = pathname.split('/products/')[1]?.replace(/\/$/, '');
   
-  // Don't index search templates
-  if (pathname.includes('search_term_string')) return true;
-  
-  // Don't index if product ID matches old patterns
-  if (productId && (productId.startsWith('product-') || productId.startsWith('SQ'))) {
-    return true;
+  if (!productSlug) {
+    return false; // Not a product page
   }
+  
+  // If it's in our valid products list, do NOT noindex
+  if (VALID_PRODUCT_SLUGS.includes(productSlug)) {
+    return false;
+  }
+  
+  // Block old product patterns that are NOT in valid list
+  if (productSlug.startsWith('product-')) return true;
+  if (productSlug.startsWith('SQ')) return true;
+  
+  // Block search templates
+  if (pathname.includes('search_term_string')) return true;
   
   return false;
 };
