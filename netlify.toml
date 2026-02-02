@@ -1,30 +1,6 @@
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-# SPA fallback ONLY - let React Router handle everything
+command = "npm run build"
+publish = "dist"
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
----
-
-## This removes:
-- ❌ All trailing slash redirects
-- ❌ All category redirects  
-- ❌ All policy page redirects
-- ❌ All the conflicting rules causing the loop
-
-## This keeps:
-- ✅ Build configuration
-- ✅ SPA fallback (so React Router can handle ALL routes)
-
----
-
-**Replace your entire `netlify.toml` with just those 6 lines, commit, and deploy!**
-
-And also update `_redirects` to just one line:
-```
-/*  /index.html  200
+from = "/*"
+to = "/index.html"
+status = 200
