@@ -82,7 +82,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     <header className="bg-white shadow-md sticky top-0 z-30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <a 
             href="/"
             onClick={(e) => { e.preventDefault(); handleCategoryClick('home'); }}
@@ -97,9 +96,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </div>
           </a>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
-            {/* Shop Dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Shop
@@ -107,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 {productCategories.map((category) => (
-                  
+                  <a
                     key={category.slug}
                     href={`/${category.slug}`}
                     onClick={(e) => { e.preventDefault(); handleCategoryClick(category.slug); }}
@@ -119,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </div>
             </div>
 
-            
+            <a
               href="/about"
               onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
@@ -127,7 +124,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               About
             </a>
 
-            
+            <a
               href="/blog"
               onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
@@ -135,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               Blog
             </a>
 
-            
+            <a
               href="/contact"
               onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
@@ -143,7 +140,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               Contact
             </a>
 
-            {/* Help Dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Help
@@ -151,7 +147,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 {helpLinks.map((link) => (
-                  
+                  <a
                     key={link.slug}
                     href={`/${link.slug}`}
                     onClick={(e) => { e.preventDefault(); handleCategoryClick(link.slug); }}
@@ -164,7 +160,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </div>
           </nav>
 
-          {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
             <button 
               className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
@@ -208,11 +203,10 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
-              
+              <a
                 href="/"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('home'); }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -220,12 +214,11 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 Home
               </a>
 
-              {/* Mobile Shop Section */}
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Shop by Category</div>
                 <div className="pl-4 space-y-1">
                   {productCategories.map((category) => (
-                    
+                    <a
                       key={category.slug}
                       href={`/${category.slug}`}
                       onClick={(e) => { e.preventDefault(); handleCategoryClick(category.slug); }}
@@ -237,7 +230,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </div>
               </div>
 
-              
+              <a
                 href="/about"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -245,7 +238,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 About Us
               </a>
 
-              
+              <a
                 href="/blog"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -253,7 +246,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 Blog
               </a>
 
-              
+              <a
                 href="/contact"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
@@ -261,12 +254,11 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 Contact
               </a>
 
-              {/* Mobile Help Section */}
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Help</div>
                 <div className="pl-4 space-y-1">
                   {helpLinks.map((link) => (
-                    
+                    <a
                       key={link.slug}
                       href={`/${link.slug}`}
                       onClick={(e) => { e.preventDefault(); handleCategoryClick(link.slug); }}
@@ -282,7 +274,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
         )}
       </div>
 
-      {/* Admin Password Modal */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
