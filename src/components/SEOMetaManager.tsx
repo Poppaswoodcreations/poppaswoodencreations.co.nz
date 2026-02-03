@@ -23,7 +23,6 @@ function safeString(value: any): string {
  * Helper function to update or create meta tags - PREVENTS DUPLICATES
  */
 function updateMetaTag(attribute: string, value: string, content: any) {
-  // Safely convert content to string
   const safeContent = safeString(content);
   
   // Remove ALL existing tags with this attribute to prevent duplicates
@@ -58,12 +57,11 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
     let canonicalUrl = canonical;
     
     if (!canonicalUrl) {
-      // Remove trailing slash and create canonical
       const pathname = location.pathname.replace(/\/$/, '');
       canonicalUrl = `${baseUrl}${pathname}`;
     }
 
-    // Set document title - SAFE - NO DUPLICATION
+    // ✅ FIX: Set document title - PREVENT DUPLICATION
     if (title) {
       const titleStr = safeString(title);
       // Only append suffix if title doesn't already contain "Poppa's" or "Creations"
@@ -72,15 +70,21 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       } else {
         document.title = `${titleStr} | Poppa's Wooden Creations`;
       }
+    } else {
+      // ✅ FIX: Default homepage title (57 characters)
+      document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    // Update or create meta tags - ALL SAFE NOW
-    updateMetaTag('name', 'description', description || '');
+    // ✅ FIX: Shortened default description (155 characters)
+    const defaultDescription = description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
+    
+    // Update meta tags - ALL SAFE NOW
+    updateMetaTag('name', 'description', defaultDescription);
     updateMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     
     // Open Graph tags
-    updateMetaTag('property', 'og:title', title || '');
-    updateMetaTag('property', 'og:description', description || '');
+    updateMetaTag('property', 'og:title', title || document.title);
+    updateMetaTag('property', 'og:description', defaultDescription);
     updateMetaTag('property', 'og:url', canonicalUrl);
     updateMetaTag('property', 'og:type', type);
     if (image) {
@@ -89,8 +93,8 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
 
     // Twitter Card tags
     updateMetaTag('name', 'twitter:card', 'summary_large_image');
-    updateMetaTag('name', 'twitter:title', title || '');
-    updateMetaTag('name', 'twitter:description', description || '');
+    updateMetaTag('name', 'twitter:title', title || document.title);
+    updateMetaTag('name', 'twitter:description', defaultDescription);
     if (image) {
       updateMetaTag('name', 'twitter:image', image);
     }
@@ -105,13 +109,9 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
     canonicalLink.setAttribute('data-rh', 'true');
     document.head.appendChild(canonicalLink);
 
-    // Cleanup function
-    return () => {
-      // Optional: cleanup if needed
-    };
   }, [title, description, canonical, noindex, image, type, location]);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 /**
@@ -125,24 +125,28 @@ export const useSEO = (props: SEOMetaProps) => {
     const pathname = location.pathname.replace(/\/$/, '');
     const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
 
-    // Set title - SAFE - NO DUPLICATION
+    // ✅ FIX: Set title - PREVENT DUPLICATION
     if (props.title) {
       const titleStr = safeString(props.title);
-      // Only append suffix if title doesn't already contain "Poppa's" or "Creations"
       if (titleStr.includes("Poppa's") || titleStr.includes('Creations')) {
         document.title = titleStr;
       } else {
         document.title = `${titleStr} | Poppa's Wooden Creations`;
       }
+    } else {
+      document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    // Meta tags - ALL SAFE NOW
-    updateMetaTag('name', 'description', props.description || '');
+    // ✅ FIX: Shortened description
+    const defaultDescription = props.description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
+
+    // Meta tags
+    updateMetaTag('name', 'description', defaultDescription);
     updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
     
     // OG tags
-    updateMetaTag('property', 'og:title', props.title || '');
-    updateMetaTag('property', 'og:description', props.description || '');
+    updateMetaTag('property', 'og:title', props.title || document.title);
+    updateMetaTag('property', 'og:description', defaultDescription);
     updateMetaTag('property', 'og:url', canonicalUrl);
     updateMetaTag('property', 'og:type', props.type || 'website');
     if (props.image) {
@@ -151,8 +155,8 @@ export const useSEO = (props: SEOMetaProps) => {
 
     // Twitter tags
     updateMetaTag('name', 'twitter:card', 'summary_large_image');
-    updateMetaTag('name', 'twitter:title', props.title || '');
-    updateMetaTag('name', 'twitter:description', props.description || '');
+    updateMetaTag('name', 'twitter:title', props.title || document.title);
+    updateMetaTag('name', 'twitter:description', defaultDescription);
     if (props.image) {
       updateMetaTag('name', 'twitter:image', props.image);
     }
