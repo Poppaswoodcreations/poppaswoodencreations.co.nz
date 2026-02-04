@@ -165,7 +165,32 @@ const Reviews: React.FC = () => {
       photoCount: 0
     },
 
-    // === WEBSITE REVIEWS (8) ===
+    // === WEBSITE REVIEWS (10) ===
+    // NOTE: bradley spraggon and Anna Cardy also left Google reviews
+    {
+      id: 'web-0a',
+      author: 'bradley spraggon',
+      rating: 5,
+      title: 'Absolutely brilliant chopping boards',
+      text: 'Absolutely brilliant chopping boards, will look good with some cheese on them!!',
+      date: '22 Nov 2024',
+      source: 'website',
+      verified: true,
+      category: 'wooden-kitchenware',
+      productName: 'Chopping Boards'
+    },
+    {
+      id: 'web-0b',
+      author: 'Anna Cardy',
+      rating: 5,
+      title: 'Beautiful, high-quality wooden toys',
+      text: 'Beautiful, high-quality wooden toys and gifts. Perfect for any occasion!',
+      date: '22 Nov 2024',
+      source: 'website',
+      verified: true,
+      category: 'wooden-baby-toys',
+      productName: 'Wooden Toys'
+    },
     {
       id: 'web-1',
       author: 'Donna Bradford',
@@ -275,7 +300,7 @@ const Reviews: React.FC = () => {
   const googleReviews = allReviews.filter(r => r.source === 'google').length;
   const websiteReviews = allReviews.filter(r => r.source === 'website').length;
   
-  // Calculate average (20 five-stars + 1 four-star = 4.95 average)
+  // Calculate average (22 five-stars + 1 four-star = 4.96 average)
   const totalStars = allReviews.reduce((sum, r) => sum + r.rating, 0);
   const averageRating = (totalStars / totalReviews).toFixed(1);
 
