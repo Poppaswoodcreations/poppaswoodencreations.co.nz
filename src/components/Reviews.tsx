@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Star, ExternalLink, Filter, Calendar, Award, CheckCircle } from 'lucide-react';
+import ReviewsSchema from './ReviewsSchema';
 
 interface Review {
   id: string;
@@ -327,7 +328,12 @@ const Reviews: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <ReviewsSchema 
+        ratingValue={parseFloat(averageRating)} 
+        reviewCount={totalReviews}
+      />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-amber-700 to-amber-900 text-white py-16">
         <div className="container mx-auto px-4">
@@ -563,7 +569,8 @@ const Reviews: React.FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
-}; 
+};
 
 export default Reviews;
