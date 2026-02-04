@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
-import ReviewsSection from '../components/Reviews/ReviewsSection';
+import ReviewsSection from '../components/ReviewsSection';
 
 const WoodenToysNZ: React.FC = () => {
   const navigate = useNavigate();
@@ -261,7 +261,7 @@ const WoodenToysNZ: React.FC = () => {
         </div>
       </section>
 
-      {/* ⭐ NEW: Customer Reviews Section */}
+      {/* ⭐ Customer Reviews Section */}
       <ReviewsSection showAddReview={true} />
     </>
   );
