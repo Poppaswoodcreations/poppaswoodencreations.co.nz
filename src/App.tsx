@@ -24,6 +24,7 @@ const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./components/TermsOfService'));
 const ReviewsSection = lazy(() => import('./components/ReviewsSection'));
 const Reviews = lazy(() => import('./components/Reviews'));
+const FeaturedReviews = lazy(() => import('./components/FeaturedReviews'));
 const Cart = lazy(() => import('./components/Cart/Cart'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
@@ -150,7 +151,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                 />
-                <ReviewsSection showAddReview={true} />
+                <FeaturedReviews />
               </>
             } />
 
