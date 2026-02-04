@@ -22,7 +22,7 @@ const ShippingPolicy = lazy(() => import('./components/ShippingPolicy'));
 const ReturnsRefunds = lazy(() => import('./components/ReturnsRefunds'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./components/TermsOfService'));
-const ReviewsSection = lazy(() => import('./components/Reviews/ReviewsSection'));
+const ReviewsSection = lazy(() => import('./components/ReviewsSection'));
 const Cart = lazy(() => import('./components/Cart/Cart'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
