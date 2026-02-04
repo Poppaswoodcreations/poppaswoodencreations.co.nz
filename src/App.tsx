@@ -23,6 +23,7 @@ const ReturnsRefunds = lazy(() => import('./components/ReturnsRefunds'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./components/TermsOfService'));
 const ReviewsSection = lazy(() => import('./components/ReviewsSection'));
+const Reviews = lazy(() => import('./components/Reviews'));
 const Cart = lazy(() => import('./components/Cart/Cart'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
@@ -343,10 +344,10 @@ const AppContent: React.FC = () => {
             <Route path="/reviews" element={
               <>
                 <SEOHead 
-                  title="Customer Reviews - 4.9/5 Stars"
-                  description="Read reviews from our happy customers. Over 150 5-star reviews for our handcrafted wooden toys and kitchenware."
+                  title="Customer Reviews - 5.0/5 Stars"
+                  description="Read all 23 verified reviews from our happy customers. 13 Google reviews and 10 website reviews for our handcrafted wooden toys and kitchenware."
                 />
-                <ReviewsSection />
+                <Reviews />
               </>
             } />
 
