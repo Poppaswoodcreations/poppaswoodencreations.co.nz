@@ -8,6 +8,7 @@ import ShippingPolicy from './ShippingPolicy';
 import ReturnsRefunds from './ReturnsRefunds';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
+import Reviews from './Reviews';
 import { Product } from '../types';
 
 interface RouterProps {
@@ -21,6 +22,7 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
+        
         <Route 
           path="/products/:productId" 
           element={
@@ -30,6 +32,7 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
             />
           } 
         />
+        
         <Route path="/paypal-success" element={<PayPalSuccess />} />
         
         {/* Category Routes */}
@@ -45,8 +48,10 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
         {/* General Pages */}
         <Route path="/about" element={<App />} />
         <Route path="/contact" element={<App />} />
-        <Route path="/reviews" element={<App />} />
         <Route path="/search" element={<App />} />
+        
+        {/* Reviews Page - DEDICATED COMPONENT */}
+        <Route path="/reviews" element={<Reviews />} />
         
         {/* Policy Pages - DEDICATED COMPONENTS */}
         <Route path="/shipping" element={<ShippingPolicy />} />
