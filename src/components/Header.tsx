@@ -133,6 +133,14 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </a>
 
             <a
+              href="/reviews"
+              onClick={(e) => { e.preventDefault(); handleCategoryClick('reviews'); }}
+              className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
+            >
+              Reviews
+            </a>
+
+            <a
               href="/contact"
               onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
@@ -244,6 +252,14 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Blog
+              </a>
+
+              <a
+                href="/reviews"
+                onClick={(e) => { e.preventDefault(); handleCategoryClick('reviews'); }}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+              >
+                Reviews
               </a>
 
               <a
