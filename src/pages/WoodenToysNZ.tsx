@@ -9,11 +9,11 @@ const WoodenToysNZ: React.FC = () => {
   return (
     <>
       <SEOHead 
-        title="Handmade Wooden Toys NZ | Premium New Zealand Wooden Toys"
-        description="Discover premium handmade wooden toys in New Zealand. Crafted from native Kauri, Rimu & Macrocarpa timber. Safe, sustainable childrens wooden toys trusted by Montessori schools. Shop now!"
+        title="Handmade Wooden Toys NZ"
+        description="Premium handmade wooden toys crafted from native NZ timber. Safe, sustainable, Montessori-approved. Shop cars, trains, baby toys & more."
         canonicalPath="/wooden-toys-nz"
         ogType="website"
-        ogImage="https://poppaswoodencreations.co.nz/hero-image.jpg"
+        image="https://poppaswoodencreations.co.nz/hero-image.jpg"
       />
 
       {/* Hero Section */}
