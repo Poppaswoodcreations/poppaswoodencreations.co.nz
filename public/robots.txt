@@ -1,31 +1,9 @@
-# robots.txt for Poppa's Wooden Creations
 User-agent: *
 Allow: /
 
-# Block old product ID patterns
-Disallow: /products/product-*
-Disallow: /products/SQ*
-
-# Block admin and API endpoints
 Disallow: /admin/
 Disallow: /api/
-
-# Block cart and checkout
 Disallow: /cart
 Disallow: /checkout
 
-# Explicitly allow search (including with query parameters)
-Allow: /search
-Allow: /search?
-Allow: /search?q=
-
-# Allow important pages
-Allow: /products$
-Allow: /products/pine-plane
-Allow: /products/wooden-train-set
-Allow: /products/rubbish-truck
-Allow: /blog/
-Allow: /wooden-planes-helicopters
-
-# Sitemaps
 Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
