@@ -1,11 +1,6 @@
 # robots.txt for Poppa's Wooden Creations
-
 User-agent: *
 Allow: /
-
-# Block search results and template URLs
-Disallow: /search?q=
-Disallow: /search?
 
 # Block old product ID patterns
 Disallow: /products/product-*
@@ -26,6 +21,7 @@ Allow: /products/wooden-train-set
 Allow: /products/rubbish-truck
 Allow: /blog/
 Allow: /wooden-planes-helicopters
+Allow: /search
 
 # Sitemaps
 Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
