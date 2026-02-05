@@ -16,6 +16,7 @@ import ErrorMonitor from './components/ErrorMonitor';
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
 const ProductDetail = lazy(() => import('./components/ProductDetail'));
+const ProductSearch = lazy(() => import('./components/ProductSearch'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const ContactForm = lazy(() => import('./components/ContactForm'));
 const ShippingPolicy = lazy(() => import('./components/ShippingPolicy'));
@@ -349,6 +350,22 @@ const AppContent: React.FC = () => {
                   description="Read all 23 verified reviews from our happy customers. 13 Google reviews and 10 website reviews for our handcrafted wooden toys and kitchenware."
                 />
                 <Reviews />
+              </>
+            } />
+
+            {/* Search Page */}
+            <Route path="/search" element={
+              <>
+                <SEOHead 
+                  title="Search Products | Poppa's Wooden Creations"
+                  description="Search our collection of handcrafted wooden toys made in New Zealand"
+                />
+                <ProductSearch
+                  products={products}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  initialSearchTerm=""
+                />
               </>
             } />
 
