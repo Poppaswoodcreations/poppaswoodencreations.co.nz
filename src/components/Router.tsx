@@ -9,6 +9,7 @@ import ReturnsRefunds from './ReturnsRefunds';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import Reviews from './Reviews';
+import SearchResultsPage from '../pages/SearchResultsPage';
 import { Product } from '../types';
 
 interface RouterProps {
@@ -48,7 +49,9 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
         {/* General Pages */}
         <Route path="/about" element={<App />} />
         <Route path="/contact" element={<App />} />
-        <Route path="/search" element={<App />} />
+        
+        {/* Search Results Page - DEDICATED COMPONENT */}
+        <Route path="/search" element={<SearchResultsPage />} />
         
         {/* Reviews Page - DEDICATED COMPONENT */}
         <Route path="/reviews" element={<Reviews />} />
