@@ -34,7 +34,7 @@ const SearchResultsPage: React.FC = () => {
   };
 
   const handleProductSelect = (product: Product) => {
-    navigate(`/product/${product.id}`);
+    navigate(`/products/${product.id}`);
   };
 
   const handleAddToCart = (product: Product) => {
