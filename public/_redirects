@@ -1,1 +1,27 @@
-/*  /index.html  200
+# Redirect old shopcars URLs to new product URLs (must come BEFORE the SPA fallback)
+/shopcars/freaky-ford-coaster /products/2-by-4-pine-car 301
+/shopcars/puzzle-train /products/block-train 301
+/shopcars/2-by-4-set-5 /products/2-by-4-set-5 301
+/shopcars/rolling-pin-1 /products/big-spatula-flat 301
+/shopcars/small-bus /products/small-pine-bus 301
+/shopcars/rolling-pin /products/big-spatula-flat 301
+/shopcars/small-car /products/small-pine-car 301
+/shopcars/2-by-4-ute /products/2-by-4-pine-ute 301
+/shopcars/* / 301
+
+# Redirect old SQ product IDs to homepage
+/products/SQ* / 301
+
+# Fix trailing slash issues
+/wooden-cars/ /wooden-cars 301
+/wooden-trucks/ /wooden-trucks 301
+/wooden-kitchenware/ /wooden-kitchenware 301
+
+# Serve robots.txt directly
+/robots.txt /robots.txt 200
+
+# Serve sitemap directly
+/sitemap.xml /sitemap.xml 200
+
+# SPA fallback for everything else (MUST BE LAST)
+/* /index.html 200
