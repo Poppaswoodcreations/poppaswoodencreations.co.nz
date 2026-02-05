@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, Package, Mail, Phone } from 'lucide-react';
 
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 const PayPalSuccess: React.FC = () => {
   const [orderData, setOrderData] = useState<any>(null);
 
@@ -12,8 +19,32 @@ const PayPalSuccess: React.FC = () => {
         const data = JSON.parse(stored);
         setOrderData(data);
         
+        // Track purchase in Google Analytics
+        if (window.gtag && data.items && data.total) {
+          window.gtag('event', 'purchase', {
+            transaction_id: `order_${Date.now()}`,
+            value: data.total,
+            currency: 'NZD',
+            items: data.items.map((item: any) => ({
+              item_id: item.id || item.name,
+              item_name: item.name,
+              price: item.price,
+              quantity: item.quantity
+            }))
+          });
+          
+          console.log('Purchase tracked in Google Analytics:', {
+            transaction_id: `order_${Date.now()}`,
+            value: data.total,
+            items: data.items.length
+          });
+        }
+        
         // Clear the stored data
         localStorage.removeItem('paypal-order-data');
+        
+        // Also clear the cart
+        localStorage.removeItem('cart');
       }
     } catch (error) {
       console.error('Error loading order data:', error);
