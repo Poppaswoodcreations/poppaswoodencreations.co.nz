@@ -14,6 +14,11 @@ Disallow: /api/
 Disallow: /cart
 Disallow: /checkout
 
+# Explicitly allow search (including with query parameters)
+Allow: /search
+Allow: /search?
+Allow: /search?q=
+
 # Allow important pages
 Allow: /products$
 Allow: /products/pine-plane
@@ -21,7 +26,6 @@ Allow: /products/wooden-train-set
 Allow: /products/rubbish-truck
 Allow: /blog/
 Allow: /wooden-planes-helicopters
-Allow: /search
 
 # Sitemaps
 Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
