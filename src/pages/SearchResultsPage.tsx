@@ -13,10 +13,25 @@ const SearchResultsPage: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCart, setShowCart] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const searchTerm = searchParams.get('q') || '';
 
   useEffect(() => {
     fetchProducts();
+    
+    // Listen for cart updates
+    const handleCartUpdate = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartItemCount(cart.reduce((sum: number, item: any) => sum + item.quantity, 0));
+    };
+    
+    handleCartUpdate();
+    window.addEventListener('cartUpdated', handleCartUpdate);
+    
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdate);
+    };
   }, []);
 
   const fetchProducts = async () => {
@@ -40,15 +55,43 @@ const SearchResultsPage: React.FC = () => {
   };
 
   const handleAddToCart = (product: Product) => {
-    // Add to cart functionality
-    const event = new CustomEvent('addToCart', { detail: product });
-    window.dispatchEvent(event);
+    // Get existing cart
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Check if product already in cart
+    const existingIndex = cart.findIndex((item: any) => item.id === product.id);
+    
+    if (existingIndex >= 0) {
+      cart[existingIndex].quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+    
+    // Save and update
+    localStorage.setItem('cart', JSON.stringify(cart));
+    setCartItemCount(cart.reduce((sum: number, item: any) => sum + item.quantity, 0));
+    
+    // Dispatch event for other components
+    window.dispatchEvent(new Event('cartUpdated'));
+  };
+
+  const handleShowAdmin = () => {
+    // Admin functionality - you can implement this or leave empty
+    console.log('Admin clicked');
+  };
+
+  const handleShowCart = () => {
+    setShowCart(!showCart);
   };
 
   if (loading) {
     return (
       <>
-        <Header cartItemCount={0} onSearch={() => {}} />
+        <Header 
+          onShowAdmin={handleShowAdmin}
+          onShowCart={handleShowCart}
+          cartItemCount={cartItemCount}
+        />
         <div className="flex justify-center items-center min-h-screen">
           <LoadingSpinner />
         </div>
@@ -73,7 +116,11 @@ const SearchResultsPage: React.FC = () => {
         canonicalUrl={`https://poppaswoodencreations.co.nz/search${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`}
       />
       <div className="min-h-screen flex flex-col">
-        <Header cartItemCount={0} onSearch={() => {}} />
+        <Header 
+          onShowAdmin={handleShowAdmin}
+          onShowCart={handleShowCart}
+          cartItemCount={cartItemCount}
+        />
         <main className="flex-grow">
           <ProductSearch
             products={products}
