@@ -23,21 +23,17 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   const baseUrl = 'https://poppaswoodencreations.co.nz';
   const siteName = "Poppa's Wooden Creations";
   
-  // Build canonical URL
   const canonicalUrl = canonicalPath 
     ? `${baseUrl}${canonicalPath}`
     : baseUrl;
   
-  // Optimize title (45-50 chars for Bing)
   const pageTitle = title 
     ? `${title} | ${siteName}`
     : "Handmade Wooden Toys NZ | Poppa's Creations";
   
-  // Optimize description (140-155 chars for Bing)
   const defaultDesc = "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei.";
   const pageDescription = description || defaultDesc;
   
-  // Robots
   const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow';
   
   return (
@@ -64,10 +60,3 @@ const SEOHead: React.FC<SEOHeadProps> = ({
 };
 
 export default SEOHead;
-```
-
-## Step 2: Delete `SEOMetaManager.tsx`
-
-This file is causing conflicts. Delete it entirely:
-```
-src/components/SEOMetaManager.tsx
