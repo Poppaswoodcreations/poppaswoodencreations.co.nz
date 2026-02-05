@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import ProductSearch from '../components/ProductSearch';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { Product } from '../types';
 import { supabase } from '../lib/supabase';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -45,9 +47,13 @@ const SearchResultsPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <LoadingSpinner />
-      </div>
+      <>
+        <Header cartItemCount={0} onSearch={() => {}} />
+        <div className="flex justify-center items-center min-h-screen">
+          <LoadingSpinner />
+        </div>
+        <Footer />
+      </>
     );
   }
 
@@ -66,12 +72,18 @@ const SearchResultsPage: React.FC = () => {
         description={pageDescription}
         canonicalUrl={`https://poppaswoodencreations.co.nz/search${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`}
       />
-      <ProductSearch
-        products={products}
-        onProductSelect={handleProductSelect}
-        onAddToCart={handleAddToCart}
-        initialSearchTerm={searchTerm}
-      />
+      <div className="min-h-screen flex flex-col">
+        <Header cartItemCount={0} onSearch={() => {}} />
+        <main className="flex-grow">
+          <ProductSearch
+            products={products}
+            onProductSelect={handleProductSelect}
+            onAddToCart={handleAddToCart}
+            initialSearchTerm={searchTerm}
+          />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 };
