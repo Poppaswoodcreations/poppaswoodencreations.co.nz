@@ -7,10 +7,16 @@ interface ProductSearchProps {
   products: Product[];
   onProductSelect: (product: Product) => void;
   onAddToCart: (product: Product) => void;
+  initialSearchTerm?: string;
 }
 
-const ProductSearch: React.FC<ProductSearchProps> = ({ products, onProductSelect, onAddToCart }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const ProductSearch: React.FC<ProductSearchProps> = ({ 
+  products, 
+  onProductSelect, 
+  onAddToCart,
+  initialSearchTerm = ''
+}) => {
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [sortBy, setSortBy] = useState('name');
