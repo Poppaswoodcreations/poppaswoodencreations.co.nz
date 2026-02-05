@@ -5,29 +5,11 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Primary Meta Tags -->
+    <!-- Basic Meta Tags (will be replaced by React Helmet) -->
     <title>Handmade Wooden Toys NZ | Poppa's Creations</title>
-    <meta name="description" content="Handcrafted wooden toys and kitchenware made in Whangarei, NZ. Heirloom-quality pieces from native Kauri, Rimu & Macrocarpa. Safe, sustainable, loved by Montessori schools." />
-    <meta name="keywords" content="wooden toys nz, handmade toys new zealand, kauri toys, montessori toys nz, wooden kitchenware, sustainable toys" />
+    <meta name="description" content="Handcrafted wooden toys made in Whangarei, NZ from native Kauri, Rimu & Macrocarpa timber. Safe, sustainable, Montessori-approved." />
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://poppaswoodencreations.co.nz/" />
-    <meta property="og:title" content="Handmade Wooden Toys NZ | Poppa's Creations" />
-    <meta property="og:description" content="Handcrafted wooden toys and kitchenware made in Whangarei, NZ. Heirloom-quality pieces from native Kauri, Rimu & Macrocarpa." />
-    <meta property="og:image" content="https://poppaswoodencreations.co.nz/og-image.jpg" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://poppaswoodencreations.co.nz/" />
-    <meta property="twitter:title" content="Handmade Wooden Toys NZ | Poppa's Creations" />
-    <meta property="twitter:description" content="Handcrafted wooden toys and kitchenware made in Whangarei, NZ. Heirloom-quality pieces from native Kauri, Rimu & Macrocarpa." />
-    <meta property="twitter:image" content="https://poppaswoodencreations.co.nz/og-image.jpg" />
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://poppaswoodencreations.co.nz/" />
-    
-    <!-- Schema.org Structured Data -->
+    <!-- Schema.org Structured Data (static, won't be duplicated) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,7 +23,7 @@
         "width": 250,
         "height": 60
       },
-      "description": "Handmade wooden toys and kitchenware from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Specializing in children's wooden toys, Montessori educational toys, and premium wooden baby toys. Serving eco-conscious families across New Zealand since 2015.",
+      "description": "Handmade wooden toys and kitchenware from native New Zealand timbers. Specializing in children's wooden toys, Montessori educational toys, and premium wooden baby toys. Serving eco-conscious families across New Zealand since 2015.",
       "foundingDate": "2015",
       "address": {
         "@type": "PostalAddress",
@@ -70,7 +52,7 @@
       "@id": "https://poppaswoodencreations.co.nz/#store",
       "name": "Poppa's Wooden Creations",
       "image": "https://poppaswoodencreations.co.nz/og-image.jpg",
-      "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Trusted supplier to Montessori schools across New Zealand.",
+      "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Whangarei",
@@ -104,10 +86,10 @@
     </script>
   </head>
   <body>
-    <!-- Hidden H1 for search engine crawlers (replaced by React on load) -->
-    <h1 style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
-      Handmade Wooden Toys & Kitchenware from New Zealand
-    </h1>
+    <!-- Single H1 for crawlers (will be hidden when React loads) -->
+    <noscript>
+      <h1>Handmade Wooden Toys & Kitchenware from New Zealand</h1>
+    </noscript>
     
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
