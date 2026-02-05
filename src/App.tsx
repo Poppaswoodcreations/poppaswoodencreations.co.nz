@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense } from 'react';
-import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Components that are needed immediately (above the fold)
@@ -61,6 +61,21 @@ const BlogPostWrapper: React.FC = () => {
     <Suspense fallback={<LoadingFallback />}>
       <BlogPostView />
     </Suspense>
+  );
+};
+
+// Search Page Wrapper Component
+const SearchPageWrapper: React.FC<{ products: Product[], onProductSelect: (p: Product) => void, onAddToCart: (p: Product) => void }> = ({ products, onProductSelect, onAddToCart }) => {
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get('q') || '';
+  
+  return (
+    <ProductSearch
+      products={products}
+      onProductSelect={onProductSelect}
+      onAddToCart={onAddToCart}
+      initialSearchTerm={searchTerm}
+    />
   );
 };
 
@@ -360,11 +375,10 @@ const AppContent: React.FC = () => {
                   title="Search Products | Poppa's Wooden Creations"
                   description="Search our collection of handcrafted wooden toys made in New Zealand"
                 />
-                <ProductSearch
+                <SearchPageWrapper 
                   products={products}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
-                  initialSearchTerm=""
                 />
               </>
             } />
