@@ -139,7 +139,7 @@ const AppContent: React.FC = () => {
             <Route path="/" element={
               <>
                 <SEOHead 
-                  title="Handmade Wooden Toys Whangarei | Montessori Toys NZ"
+                  title="Handmade Wooden Toys NZ"
                   description="Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools. Free shipping over $1000."
                   image="https://poppaswoodencreations.co.nz/hero-image.jpg"
                 />
