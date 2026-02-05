@@ -76,29 +76,12 @@ const SearchResultsPage: React.FC = () => {
   };
 
   const handleShowAdmin = () => {
-    // Admin functionality - you can implement this or leave empty
     console.log('Admin clicked');
   };
 
   const handleShowCart = () => {
     setShowCart(!showCart);
   };
-
-  if (loading) {
-    return (
-      <>
-        <Header 
-          onShowAdmin={handleShowAdmin}
-          onShowCart={handleShowCart}
-          cartItemCount={cartItemCount}
-        />
-        <div className="flex justify-center items-center min-h-screen">
-          <LoadingSpinner />
-        </div>
-        <Footer />
-      </>
-    );
-  }
 
   const pageTitle = searchTerm 
     ? `Search Results for "${searchTerm}" | Poppa's Wooden Creations`
@@ -115,22 +98,26 @@ const SearchResultsPage: React.FC = () => {
         description={pageDescription}
         canonicalUrl={`https://poppaswoodencreations.co.nz/search${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`}
       />
-      <div className="min-h-screen flex flex-col">
-        <Header 
-          onShowAdmin={handleShowAdmin}
-          onShowCart={handleShowCart}
-          cartItemCount={cartItemCount}
+      <Header 
+        onShowAdmin={handleShowAdmin}
+        onShowCart={handleShowCart}
+        cartItemCount={cartItemCount}
+      />
+      
+      {loading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <ProductSearch
+          products={products}
+          onProductSelect={handleProductSelect}
+          onAddToCart={handleAddToCart}
+          initialSearchTerm={searchTerm}
         />
-        <main className="flex-grow">
-          <ProductSearch
-            products={products}
-            onProductSelect={handleProductSelect}
-            onAddToCart={handleAddToCart}
-            initialSearchTerm={searchTerm}
-          />
-        </main>
-        <Footer />
-      </div>
+      )}
+      
+      <Footer />
     </>
   );
 };
