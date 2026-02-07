@@ -5,7 +5,6 @@ import { supabase } from '../lib/supabaseClient';
 const ReviewForm: React.FC = () => {
   const [formData, setFormData] = useState({
     author_name: '',
-    email: '',
     rating: 5,
     review_title: '',
     review_text: '',
@@ -46,7 +45,6 @@ const ReviewForm: React.FC = () => {
       // Reset form
       setFormData({
         author_name: '',
-        email: '',
         rating: 5,
         review_title: '',
         review_text: '',
@@ -142,22 +140,6 @@ const ReviewForm: React.FC = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="John Smith"
               />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                placeholder="john@example.com"
-              />
-              <p className="text-sm text-gray-500 mt-1">We'll never share your email publicly</p>
             </div>
 
             {/* Rating */}
