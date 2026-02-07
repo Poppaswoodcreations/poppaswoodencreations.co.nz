@@ -31,6 +31,8 @@ const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 const BlogListView = lazy(() => import('./pages/blog/BlogListView'));
 const BlogPostView = lazy(() => import('./pages/blog/BlogPostView'));
 const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
+const ReviewForm = lazy(() => import('./components/ReviewForm'));
+const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -358,6 +360,7 @@ const AppContent: React.FC = () => {
               </>
             } />
 
+            {/* REVIEWS PAGES */}
             <Route path="/reviews" element={
               <>
                 <SEOHead 
@@ -365,6 +368,25 @@ const AppContent: React.FC = () => {
                   description="Read all 23 verified reviews from our happy customers. 13 Google reviews and 10 website reviews for our handcrafted wooden toys and kitchenware."
                 />
                 <Reviews />
+              </>
+            } />
+
+            {/* Customer Review Submission Form */}
+            <Route path="/write-review" element={
+              <>
+                <SEOHead 
+                  title="Write a Review - Share Your Experience"
+                  description="Share your experience with Poppa's Wooden Creations. Your feedback helps other families discover our handcrafted wooden toys."
+                />
+                <ReviewForm />
+              </>
+            } />
+
+            {/* Admin Reviews Management */}
+            <Route path="/admin/reviews" element={
+              <>
+                <SEOHead title="Manage Reviews" noindex={true} />
+                <ReviewsAdmin />
               </>
             } />
 
