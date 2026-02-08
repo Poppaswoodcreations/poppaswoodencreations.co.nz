@@ -36,7 +36,16 @@ const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 
 // FAQ Component and Data
 import FAQSection from './components/FAQSection';
-import { homepageFAQs } from './data/faqData';
+import { 
+  homepageFAQs,
+  babyToysFAQs,
+  trucksFAQs,
+  carsFAQs,
+  trainsFAQs,
+  planesFAQs,
+  kitchenwareFAQs,
+  tractorsBoatsFAQs
+} from './data/faqData';
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -211,6 +220,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-trucks"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={trucksFAQs}
+                    title="Wooden Trucks Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -228,6 +243,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-cars"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={carsFAQs}
+                    title="Wooden Cars Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -245,6 +266,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={trainsFAQs}
+                    title="Wooden Trains Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -262,6 +289,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-planes-helicopters"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={planesFAQs}
+                    title="Wooden Planes & Helicopters Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -279,6 +312,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-baby-toys"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={babyToysFAQs}
+                    title="Wooden Baby Toys Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -296,6 +335,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchenware"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={kitchenwareFAQs}
+                    title="Wooden Kitchenware Questions"
+                  />
+                </div>
               </>
             } />
 
@@ -313,6 +358,12 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-tractors-boats"
                 />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={tractorsBoatsFAQs}
+                    title="Wooden Tractors & Boats Questions"
+                  />
+                </div>
               </>
             } />
 
