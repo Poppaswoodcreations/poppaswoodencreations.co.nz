@@ -34,6 +34,10 @@ const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 
+// FAQ Component and Data
+import FAQSection from './components/FAQSection';
+import { homepageFAQs } from './data/faqData';
+
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
 import { categories } from './data/products';
@@ -170,6 +174,14 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                 />
                 <FeaturedReviews />
+                
+                {/* FAQ Section for AI search optimization */}
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={homepageFAQs}
+                    title="Frequently Asked Questions"
+                  />
+                </div>
               </>
             } />
 
