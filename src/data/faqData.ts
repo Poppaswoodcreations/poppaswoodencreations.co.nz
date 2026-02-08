@@ -25,27 +25,107 @@ export const homepageFAQs: FAQItem[] = [
   }
 ];
 
-// Wooden Toys Category FAQs
-export const woodenToysFAQs: FAQItem[] = [
+// Baby Toys Category FAQs
+export const babyToysFAQs: FAQItem[] = [
   {
-    question: "What age range are your wooden toys suitable for?",
-    answer: "Our wooden toys cater to children from 6 months through primary school age. Simple push toys and teethers suit babies 6-18 months, while our wooden cars, trucks, and trains engage toddlers aged 18 months to 5 years. More complex building sets and intricate vehicles appeal to children 3-8 years old. Each product listing specifies recommended ages, but wooden toys' open-ended nature means children often enjoy them well beyond typical age ranges. Montessori schools use our toys across multiple age groups because quality wooden toys grow with the child rather than becoming obsolete."
+    question: "Are your wooden baby toys safe for teething?",
+    answer: "Yes, all our wooden baby toys are completely safe for teething. We use only food-safe, non-toxic natural oils with no chemicals, paints, or varnishes. Every piece is hand-sanded to a smooth finish that's gentle on baby's gums. Native New Zealand hardwoods like Rimu and Macrocarpa are naturally antibacterial and durable enough to withstand teething without splintering. Many families choose our wooden baby toys specifically as teethers because they're safer than plastic alternatives that can contain harmful chemicals or break into sharp pieces."
   },
   {
-    question: "Are your wooden toys safe for babies and toddlers?",
-    answer: "Yes, all our wooden toys are designed with child safety as the top priority. We use only food-safe, non-toxic finishes - natural oils with no harmful chemicals, paint, or varnish. Every piece is hand-sanded smooth to eliminate splinters and sharp edges. Our toys are made from solid hardwood with no small detachable parts that could pose choking hazards for younger children. We follow Montessori safety principles and New Zealand safety standards. Over 30 Montessori schools trust our toys for their youngest learners, and many families use them as safe teething toys for babies."
+    question: "What age are your baby toys suitable for?",
+    answer: "Our wooden baby toys are designed for infants from 6 months onwards. Simple push toys and teethers suit babies 6-18 months who are exploring through touch and mouth. Larger grip toys work well for 12-24 months as babies develop motor skills. Each product listing specifies recommended ages, but wooden toys grow with your baby - the same toy that's a teether at 8 months becomes a push toy at 12 months and an imaginative play item at 2 years. This longevity makes wooden baby toys an excellent investment compared to age-specific plastic toys."
   },
   {
-    question: "How do wooden toys compare to plastic for Montessori learning?",
-    answer: "Wooden toys align perfectly with Montessori principles while plastic toys often contradict them. Montessori education emphasizes natural materials, sensory experiences, and reality-based learning - wooden toys provide authentic weight, texture, and temperature that engage multiple senses. Plastic toys with electronic features do the playing for children, while wooden toys require active imagination and problem-solving. The simplicity of wooden toys helps children develop concentration without overstimulation. Montessori classrooms across New Zealand choose our wooden toys because they support independent play, fine motor development, and open-ended exploration - core Montessori objectives that plastic toys rarely achieve."
+    question: "How do I clean wooden baby toys?",
+    answer: "Cleaning wooden baby toys is simple and safe. Wipe with a damp cloth and mild soap, then dry immediately with a towel. Never soak wooden toys or put them in the dishwasher as this can cause warping or cracking. For deeper cleaning, use a solution of equal parts water and white vinegar. The natural antimicrobial properties of our native timber help resist bacteria. Our food-safe oil finish can be refreshed monthly with a light application of mineral oil to keep the wood nourished and protected. Proper care ensures our wooden baby toys last through multiple children and even become family heirlooms."
   },
   {
-    question: "What types of wooden toys do you offer?",
-    answer: "We craft a comprehensive range of wooden toys including push and pull toys for babies, wooden cars and trucks in various sizes, train sets and individual carriages, building blocks and construction sets, pretend play items like wooden food and kitchen sets, and sensory toys for early learners. Popular items include our handcrafted wooden utes (utility vehicles), logging trucks, race cars, and farm vehicles - all inspired by real New Zealand vehicles children see in their daily lives. Each toy is made from native timber including Rimu, Kauri, and Macrocarpa, showcasing the natural grain and character of New Zealand wood."
+    question: "Why choose wooden baby toys over plastic?",
+    answer: "Wooden baby toys offer significant advantages for infant development and safety. Natural wood provides varied textures and temperatures that stimulate sensory exploration, unlike uniform plastic surfaces. Wooden toys are free from BPA, phthalates, and other harmful chemicals found in many plastic baby toys. The weight and solidity of wood helps babies develop grip strength and spatial awareness. Wooden toys don't break into sharp pieces like plastic can, making them safer for mouthing and throwing. Most importantly, quality wooden baby toys from native NZ timber are built to last generations rather than ending up in landfills after a few months of use."
   }
 ];
 
-// Kitchenware Category FAQs
+// Wooden Trucks Category FAQs
+export const trucksFAQs: FAQItem[] = [
+  {
+    question: "What types of wooden trucks do you make?",
+    answer: "We craft a wide range of wooden toy trucks inspired by real New Zealand vehicles. Our collection includes logging trucks, fire engines, dump trucks, tow trucks, construction vehicles, and classic utes (utility vehicles). Each truck is handcrafted from native timbers like Rimu, Kauri, and Macrocarpa, featuring realistic details and sturdy construction. Popular items include our Kiwi-style wooden utes and working dump trucks with movable beds. All trucks are sized perfectly for small hands and built tough enough for both indoor and outdoor play."
+  },
+  {
+    question: "Are wooden toy trucks durable enough for rough play?",
+    answer: "Absolutely! Our wooden trucks are built to withstand years of active play. We use solid native New Zealand hardwoods - not softwoods or composites - which are naturally strong and impact-resistant. Each truck is hand-sanded smooth and finished with food-safe oils that protect against moisture and wear. Unlike plastic trucks that crack or break, wooden trucks develop character over time while remaining structurally sound. Many Montessori schools choose our wooden trucks specifically because they last through hundreds of children. We've had customers tell us their trucks are still going strong after 10+ years of daily play."
+  },
+  {
+    question: "What age are wooden toy trucks suitable for?",
+    answer: "Our wooden trucks are designed for children aged 18 months and up, with many enjoyed well into primary school. Toddlers love the simple push-and-roll action for developing motor skills, while preschoolers engage in complex imaginative play scenarios. Larger trucks with no small parts are safe for younger toddlers, while trucks with more intricate details appeal to older children. The open-ended nature of wooden trucks means they grow with your child - a simple push toy at 2 becomes part of elaborate construction sites at 5. This longevity makes wooden trucks a better investment than age-specific plastic alternatives."
+  },
+  {
+    question: "Do wooden trucks have moving parts?",
+    answer: "Yes, many of our wooden trucks feature functional moving parts. Dump trucks have tilting beds, tow trucks have working hooks, and fire engines have ladders that extend. All moving parts are designed with safety in mind - no small pieces that can detach, and mechanisms that are smooth and splinter-free. The moving parts are simple and durable, teaching children about cause and effect while encouraging creative play. Unlike battery-powered plastic trucks that do everything for the child, our wooden trucks require kids to actively engage, developing fine motor skills and imagination through hands-on play."
+  }
+];
+
+// Wooden Cars Category FAQs
+export const carsFAQs: FAQItem[] = [
+  {
+    question: "What makes your wooden cars special?",
+    answer: "Our wooden cars are handcrafted from native New Zealand timbers - Kauri, Rimu, and Macrocarpa - each piece showcasing unique natural grain patterns. Unlike mass-produced toys, every car is individually shaped and finished in our Whangarei workshop with over 15 years of woodworking expertise. We use simple, timeless designs that encourage imagination rather than dictating how children should play. The natural weight and balance of solid hardwood creates realistic rolling action that plastic cars can't match. Our wooden cars are built to become heirloom toys, lasting generations rather than ending up in landfills after a few months."
+  },
+  {
+    question: "Are wooden cars safe for toddlers?",
+    answer: "Yes, our wooden cars are specifically designed with toddler safety in mind. We use solid pieces with no small detachable parts that could pose choking hazards. Every car is hand-sanded to a smooth, splinter-free finish that's safe for mouthing and teething. Our food-safe, non-toxic oil finish contains no harmful chemicals, paints, or varnishes. The cars are sized appropriately for small hands and robust enough to withstand dropping, throwing, and rough play. Many Montessori schools trust our wooden cars for their youngest learners because they meet strict safety standards while providing developmental benefits plastic cars can't offer."
+  },
+  {
+    question: "How big are your wooden toy cars?",
+    answer: "Our wooden cars range from palm-sized vehicles (around 8-10cm long) perfect for little hands, to larger models (15-20cm) that provide more detailed play. The size varies by design, with each listing showing specific dimensions. We intentionally make our cars substantial enough to grip easily but not so large they're unwieldy for toddlers. The weight of solid native hardwood gives even our smaller cars a satisfying heft that encourages careful, deliberate play. Unlike lightweight plastic cars that feel cheap, our wooden cars have the substance and quality that children instinctively recognize and value."
+  },
+  {
+    question: "Can wooden cars be used outdoors?",
+    answer: "Yes, our wooden cars can be used outdoors, though we recommend bringing them inside after play. The food-safe oil finish provides moisture resistance for occasional outdoor use, but prolonged exposure to rain or direct sunlight can eventually affect the wood. If cars do get wet, simply dry them with a towel and allow them to air dry completely. For outdoor play, wooden cars work wonderfully on patios, decks, sandboxes, and dry grass. The durability of native hardwoods like Rimu and Macrocarpa means they handle outdoor adventures much better than plastic cars, which can crack in sun or cold. A light reapplication of mineral oil every few months keeps outdoor-played cars looking beautiful."
+  }
+];
+
+// Wooden Trains Category FAQs
+export const trainsFAQs: FAQItem[] = [
+  {
+    question: "Do your wooden trains connect together?",
+    answer: "Yes, our wooden train sets include engines and carriages that connect together with simple, durable coupling systems. The connections are designed to be easy enough for toddlers to manage while staying secure during play. Unlike complex plastic train systems with tiny connectors that break, our wooden train connections use solid hardwood pegs or magnetic couplings that last for years. Children can build trains as long or short as they want, encouraging planning, sequencing, and problem-solving skills. The simple connection system means kids focus on creative play rather than struggling with finicky mechanisms."
+  },
+  {
+    question: "Are your wooden trains compatible with other track systems?",
+    answer: "Our wooden trains are freestanding and don't require track systems, making them more versatile than track-dependent plastic trains. Children can push them on any smooth surface - floors, tables, outdoor patios - encouraging imaginative play without limitations. However, many of our trains are sized similarly to standard wooden railway systems, so they often work with tracks families already own. We intentionally design freestanding trains because this open-ended approach aligns with Montessori principles, letting children create their own play scenarios rather than being confined to predetermined track layouts."
+  },
+  {
+    question: "What age are wooden trains suitable for?",
+    answer: "Our wooden trains suit children from 18 months through early primary school. Younger toddlers enjoy the simple push-and-pull action, developing gross motor skills and spatial awareness. Preschoolers engage in more complex play, creating elaborate railway scenarios and combining trains with other toys. Older children appreciate the realistic details and use trains in sophisticated imaginative play. The beauty of solid wooden trains is they grow with your child - unlike plastic trains that lose appeal quickly, quality wooden trains remain engaging across developmental stages. Many families report their wooden trains being enjoyed by multiple children over 10+ years."
+  },
+  {
+    question: "How many carriages come in a train set?",
+    answer: "Our wooden train sets typically include an engine and 2-4 carriages, though this varies by product. Each listing shows exactly what's included. We also sell individual engines and carriages so families can expand their collection over time, building custom trains as long as they want. This approach is more economical than buying large sets upfront and more educational - children learn about addition, sequencing, and patterns as they grow their train collection. The modular nature of our trains means they're perfect for gift-giving too, with grandparents and relatives able to add compatible pieces for birthdays and holidays."
+  }
+];
+
+// Wooden Planes & Helicopters Category FAQs
+export const planesFAQs: FAQItem[] = [
+  {
+    question: "Are wooden planes safe for young children?",
+    answer: "Yes, our wooden planes and helicopters are designed with young children's safety as the priority. We use solid construction with no small detachable parts like wheels or propellers that could pose choking hazards. Every plane is hand-sanded to a smooth, splinter-free finish and treated with food-safe, non-toxic oils. The simplified designs mean no sharp points or edges that could cause injury during active play. Native hardwoods like Rimu and Macrocarpa are strong enough to withstand crashes and drops without breaking into dangerous pieces like plastic planes often do. Montessori schools trust our wooden planes for children as young as 18 months."
+  },
+  {
+    question: "Do the propellers or rotors spin?",
+    answer: "Some of our wooden planes feature propellers or rotors that spin, while others have fixed designs for maximum safety. Spinning parts are always securely attached and designed to be safe - no small pieces that can detach or pinch little fingers. We carefully balance functionality with safety, creating just enough movement to be engaging without compromising durability. For younger children (under 3), we recommend our fixed-propeller designs. For older children who enjoy more interactive features, our spinning-propeller planes add an extra element of realistic play while maintaining the simplicity and safety wooden toys are known for."
+  },
+  {
+    question: "What types of aircraft do you make?",
+    answer: "We craft a variety of wooden aircraft inspired by both classic and modern designs. Our collection includes simple passenger planes, fighter jets, biplanes, seaplanes, and helicopters. Each aircraft is handcrafted from native New Zealand timber, showcasing the natural grain and character of Kauri, Rimu, or Macrocarpa. Designs range from simplified, toddler-friendly shapes to more detailed models for older children. All our aircraft feature the realistic weight and balance that only solid hardwood provides, creating satisfying flight play that lightweight plastic planes can't match. The timeless designs ensure our wooden planes never go out of style."
+  },
+  {
+    question: "Can wooden planes be used in water play?",
+    answer: "While our wooden planes can handle brief water exposure (like puddle splashing or beach play), they're not designed for prolonged submersion like bath toys. The food-safe oil finish provides some water resistance, but extended soaking can cause wood to swell or crack. If planes do get wet, simply dry them thoroughly with a towel and let them air dry completely. For water-based play, our wooden boats are a better choice as they're designed specifically for floating. However, wooden planes work wonderfully for sandbox play, outdoor adventures, and imaginative scenarios near water without being in it. Occasional re-oiling maintains water resistance."
+  }
+];
+
+// Wooden Kitchenware Category FAQs
 export const kitchenwareFAQs: FAQItem[] = [
   {
     question: "Why choose wooden cutting boards over plastic or glass?",
@@ -62,5 +142,25 @@ export const kitchenwareFAQs: FAQItem[] = [
   {
     question: "Where can I find unique wooden home decor in New Zealand?",
     answer: "Poppa's Wooden Creations specializes in unique, handcrafted wooden home decor made from native New Zealand timber. Our collection includes decorative serving boards, wooden bowls, utensil holders, knife blocks, and custom pieces that showcase the natural beauty of Kauri, Rimu, and Macrocarpa. Each item is individually handcrafted in our Whangarei workshop, ensuring no two pieces are identical. Unlike mass-produced imported decor, our items feature authentic New Zealand character with visible grain patterns and natural timber variations. We ship throughout New Zealand, bringing quality handcrafted wooden decor to homes and commercial kitchens nationwide. Browse our kitchenware collection at poppaswood.co.nz to find statement pieces that combine functionality with native timber artistry."
+  }
+];
+
+// Wooden Tractors & Boats Category FAQs
+export const tractorsBoatsFAQs: FAQItem[] = [
+  {
+    question: "Do your wooden boats actually float?",
+    answer: "Yes! Our wooden boats are designed to float and work wonderfully for bath time, paddling pools, and calm water play. We craft them from naturally buoyant native timbers and treat them with water-resistant, food-safe oils. The solid hardwood construction makes them more stable in water than hollow plastic boats that tip easily. While they're built for water play, we recommend drying them thoroughly after each use and re-oiling monthly to maintain water resistance. Wooden boats teach children about buoyancy, balance, and water displacement - concepts plastic boats can't demonstrate as effectively. They're durable enough for both indoor imaginative play and outdoor water adventures."
+  },
+  {
+    question: "What types of tractors do you make?",
+    answer: "We craft various wooden farm tractors inspired by real agricultural vehicles children see in rural New Zealand. Our collection includes classic farm tractors, small hobby farm tractors, and vintage-style models. Each tractor is handmade from native timber like Rimu, Kauri, or Macrocarpa, featuring realistic proportions and sturdy construction. Some tractors have movable parts like steering wheels or lifting arms, while others are simplified for younger children. The solid wood construction creates realistic weight and rolling action that lightweight plastic tractors can't match. Our wooden tractors are perfect for farm-themed play, combining well with wooden animals, fences, and other farm accessories."
+  },
+  {
+    question: "Are wooden tractors and boats durable?",
+    answer: "Extremely durable! We use solid native New Zealand hardwoods - Rimu, Kauri, and Macrocarpa - which are naturally strong and impact-resistant. Unlike plastic toys that crack, fade, or break, our wooden vehicles develop character through years of play while remaining structurally sound. The boats handle water exposure without warping when properly cared for, and tractors withstand rough farm-style play indoors and out. We've had customers report our wooden vehicles lasting 15+ years through multiple children. The combination of quality materials, solid construction, and thoughtful design means our tractors and boats often become treasured family heirlooms passed down through generations."
+  },
+  {
+    question: "What age are tractors and boats suitable for?",
+    answer: "Our wooden tractors and boats are designed for children aged 18 months and up. Younger toddlers enjoy simple push-and-pull play, developing motor skills and hand-eye coordination. Preschoolers engage in more complex imaginative scenarios - farming operations with tractors or harbor adventures with boats. Older children appreciate the realistic details and incorporate them into elaborate play worlds. The open-ended nature of wooden toys means they grow with your child rather than being outgrown. Many families find that wooden tractors and boats remain engaging well into primary school, particularly for children interested in farming, boats, or vehicles. The timeless designs never go out of style."
   }
 ];
