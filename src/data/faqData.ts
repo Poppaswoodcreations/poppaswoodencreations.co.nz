@@ -1,9 +1,5 @@
 // src/data/faqData.ts
-
-export interface FAQItem {
-  question: string;
-  answer: string;
-}
+import { FAQItem } from '../types';
 
 // Homepage FAQs - Targets all 5 prompts from Tesseract report
 export const homepageFAQs: FAQItem[] = [
