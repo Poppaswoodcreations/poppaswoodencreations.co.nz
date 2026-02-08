@@ -164,3 +164,23 @@ export const tractorsBoatsFAQs: FAQItem[] = [
     answer: "Our wooden tractors and boats are designed for children aged 18 months and up. Younger toddlers enjoy simple push-and-pull play, developing motor skills and hand-eye coordination. Preschoolers engage in more complex imaginative scenarios - farming operations with tractors or harbor adventures with boats. Older children appreciate the realistic details and incorporate them into elaborate play worlds. The open-ended nature of wooden toys means they grow with your child rather than being outgrown. Many families find that wooden tractors and boats remain engaging well into primary school, particularly for children interested in farming, boats, or vehicles. The timeless designs never go out of style."
   }
 ];
+
+// Wooden Crosses Category FAQs
+export const crossesFAQs: FAQItem[] = [
+  {
+    question: "What types of wooden crosses do you make?",
+    answer: "We handcraft wooden crosses from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Our collection includes wall crosses for home display, memorial crosses for remembrance, decorative crosses for gifts, and standing crosses. Each cross is individually crafted in our Whangarei workshop, showcasing the natural grain and character of the wood. Sizes range from small hand-held crosses to larger wall-mounted pieces. We can also create custom crosses to your specifications, incorporating specific dimensions, timber types, or personalized elements. Every cross is finished with food-safe natural oils that enhance the timber's beauty while protecting it for years to come."
+  },
+  {
+    question: "Can you make custom memorial crosses?",
+    answer: "Yes, we specialize in creating personalized memorial crosses. We can incorporate custom sizes, specific timber types that held meaning for your loved one, and optional engraving or woodburning for names and dates. Our memorial crosses are crafted with care and respect, using solid native hardwoods that will last for generations. Many families choose Rimu for its warm, reddish tones or Kauri for its historical significance and beautiful grain. We work with you to create a meaningful tribute that honors your loved one. Contact us to discuss your requirements - we understand the importance of these pieces and give each memorial cross the attention and craftsmanship it deserves."
+  },
+  {
+    question: "How do I care for a wooden cross?",
+    answer: "Wooden crosses require minimal maintenance to stay beautiful for decades. For wall-mounted crosses, simply dust occasionally with a soft, dry cloth. Avoid placing in direct sunlight or areas with high moisture, as this can affect the wood over time. If the finish appears dry, you can apply a light coat of furniture oil or food-safe mineral oil once or twice a year - wipe on with a soft cloth and buff off excess. For outdoor memorial crosses, we recommend bringing them inside during harsh weather or treating them with outdoor-grade wood oil every 6 months. The natural durability of Rimu, Kauri, and Macrocarpa means your wooden cross will develop a beautiful patina while maintaining its structural integrity for generations."
+  },
+  {
+    question: "What sizes of wooden crosses are available?",
+    answer: "Our wooden crosses range from small hand-held sizes (approximately 10-15cm) to larger wall-mounted pieces (up to 60cm or more). Popular sizes include 20cm for bedside or shelf display, 30-40cm for wall mounting in homes, and larger memorial crosses for outdoor use or prominent indoor display. Each product listing shows specific dimensions. We also offer custom sizing - if you need a cross in a specific size for a particular space or purpose, we can craft it to your exact requirements. The beauty of handcrafted wooden crosses is that each can be made to order, ensuring you get exactly what you need whether it's for personal devotion, home decor, or memorial purposes."
+  }
+];
