@@ -200,10 +200,13 @@ const AppContent: React.FC = () => {
 
             {/* Product Pages */}
             <Route path="/products/:productId" element={
-              <ProductDetail 
-                products={products}
-                onAddToCart={handleAddToCart}
-              />
+              <>
+                {/* Products should be indexed for SEO */}
+                <ProductDetail 
+                  products={products}
+                  onAddToCart={handleAddToCart}
+                />
+              </>
             } />
 
             {/* Category Pages */}
@@ -294,6 +297,30 @@ const AppContent: React.FC = () => {
                   <FAQSection 
                     faqs={planesFAQs}
                     title="Wooden Planes & Helicopters Questions"
+                  />
+                </div>
+              </>
+            } />
+
+            {/* Redirect /wooden-planes to /wooden-planes-helicopters */}
+            <Route path="/wooden-planes" element={
+              <>
+                <SEOHead 
+                  title="Wooden Planes - Aviation Toys"
+                  description="Handcrafted wooden toy planes made from New Zealand native timber. Spark imagination with premium quality aviation toys."
+                  canonical="https://poppaswoodencreations.co.nz/wooden-planes-helicopters"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products.filter(p => p.category === 'wooden-planes-helicopters')} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-planes"
+                />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={planesFAQs}
+                    title="Wooden Planes Questions"
                   />
                 </div>
               </>
