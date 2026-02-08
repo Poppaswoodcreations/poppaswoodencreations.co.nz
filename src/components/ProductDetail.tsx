@@ -152,21 +152,21 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
 
-  // Smart noindex logic - Using inStock field from Product interface
-  // Only noindex if: out of stock OR no description OR description too short
-  const shouldNoIndex = product.inStock === false || 
-                        !product.description || 
-                        (product.description && product.description.length < 100);
+  // FIXED: Only noindex if product has ZERO description or is a test product
+  // Out of stock products should still be indexed for SEO!
+  const isTestProduct = product.id.startsWith('SQ') || product.id === 'product-8';
+  const hasNoDescription = !product.description || product.description.length < 50;
+  const shouldNoIndex = isTestProduct || hasNoDescription;
 
   // Apply SEO - this now runs AFTER product data is confirmed to exist
   useSEO({
-    title: `${product.name} | Handcrafted Wooden Toy`,
-    description: product.description ? product.description.substring(0, 160) : 
-                 `Handcrafted wooden ${product.name} from native New Zealand timber. Made in Whangarei.`,
+    title: product.seoTitle || `${product.name} | Handcrafted Wooden Toy`,
+    description: product.seoDescription || (product.description ? product.description.substring(0, 160) : 
+                 `Handcrafted wooden ${product.name} from native New Zealand timber. Made in Whangarei.`),
     image: productImage,
     type: 'product',
     canonical: canonicalUrl,
-    noindex: shouldNoIndex
+    noindex: shouldNoIndex  // Only test products or products with no description
   });
 
   // Generate Product Schema WITH REVIEWS
