@@ -12,6 +12,7 @@ import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
 import ErrorMonitor from './components/ErrorMonitor';
+import TrailingSlashRedirect from './components/TrailingSlashRedirect';
 
 // Lazy load components that aren't needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -157,6 +158,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <TrailingSlashRedirect />
       <Header 
         onShowAdmin={() => setShowAdmin(true)}
         onShowCart={() => setShowCart(true)}
