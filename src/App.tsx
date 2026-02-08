@@ -44,7 +44,8 @@ import {
   trainsFAQs,
   planesFAQs,
   kitchenwareFAQs,
-  tractorsBoatsFAQs
+  tractorsBoatsFAQs,
+  crossesFAQs
 } from './data/faqData';
 
 import { useProducts } from './hooks/useProducts';
@@ -362,6 +363,29 @@ const AppContent: React.FC = () => {
                   <FAQSection 
                     faqs={tractorsBoatsFAQs}
                     title="Wooden Tractors & Boats Questions"
+                  />
+                </div>
+              </>
+            } />
+
+            <Route path="/wooden-crosses" element={
+              <>
+                <SEOHead 
+                  title="Wooden Crosses - Handcrafted Memorial & Decorative Crosses"
+                  description="Handcrafted wooden crosses made from native New Zealand timber. Memorial crosses, wall crosses, and decorative crosses from Kauri, Rimu, and Macrocarpa."
+                  canonicalPath="/wooden-crosses"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products.filter(p => p.category === 'wooden-crosses')} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-crosses"
+                />
+                <div className="container mx-auto px-4 py-12">
+                  <FAQSection 
+                    faqs={crossesFAQs}
+                    title="Wooden Crosses Questions"
                   />
                 </div>
               </>
