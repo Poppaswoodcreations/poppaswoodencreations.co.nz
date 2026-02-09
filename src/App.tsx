@@ -1,6 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { usePageTracking } from './hooks/usePageTracking';
+import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -21,73 +23,89 @@ import AdminReviews from './pages/admin/Reviews';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 
-// App content component - must be inside Router to use useLocation
-function AppContent() {
-  // Track pageviews on route changes
-  usePageTracking();
+// Track pageviews on route changes
+function usePageTracking() {
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('config', 'G-VM9XERD2RB', {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
+}
 
+// App content - must be inside Router to use useLocation
+function AppContent() {
+  usePageTracking();
+  
   return (
     <HelmetProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Public routes */}
-          <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:slug" element={<ProductDetail />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="blog/:slug" element={<BlogPost />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              {/* Public routes */}
+              <Route index element={<Home />} />
+              <Route path="products" element={<Products />} />
+              <Route path="products/:slug" element={<ProductDetail />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="blog" element={<Blog />} />
+              <Route path="blog/:slug" element={<BlogPost />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
 
-          {/* Protected routes */}
-          <Route path="checkout" element={
-            <PrivateRoute>
-              <Checkout />
-            </PrivateRoute>
-          } />
-          <Route path="profile" element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          } />
-          <Route path="orders" element={
-            <PrivateRoute>
-              <OrderHistory />
-            </PrivateRoute>
-          } />
+              {/* Protected routes */}
+              <Route path="checkout" element={
+                <PrivateRoute>
+                  <Checkout />
+                </PrivateRoute>
+              } />
+              <Route path="profile" element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              } />
+              <Route path="orders" element={
+                <PrivateRoute>
+                  <OrderHistory />
+                </PrivateRoute>
+              } />
 
-          {/* Admin routes */}
-          <Route path="admin" element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          } />
-          <Route path="admin/products" element={
-            <AdminRoute>
-              <AdminProducts />
-            </AdminRoute>
-          } />
-          <Route path="admin/orders" element={
-            <AdminRoute>
-              <AdminOrders />
-            </AdminRoute>
-          } />
-          <Route path="admin/blog" element={
-            <AdminRoute>
-              <AdminBlog />
-            </AdminRoute>
-          } />
-          <Route path="admin/reviews" element={
-            <AdminRoute>
-              <AdminReviews />
-            </AdminRoute>
-          } />
+              {/* Admin routes */}
+              <Route path="admin" element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              } />
+              <Route path="admin/products" element={
+                <AdminRoute>
+                  <AdminProducts />
+                </AdminRoute>
+              } />
+              <Route path="admin/orders" element={
+                <AdminRoute>
+                  <AdminOrders />
+                </AdminRoute>
+              } />
+              <Route path="admin/blog" element={
+                <AdminRoute>
+                  <AdminBlog />
+                </AdminRoute>
+              } />
+              <Route path="admin/reviews" element={
+                <AdminRoute>
+                  <AdminReviews />
+                </AdminRoute>
+              } />
 
-          {/* Catch all - redirect to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
+              {/* Catch all - redirect to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
     </HelmetProvider>
   );
 }
