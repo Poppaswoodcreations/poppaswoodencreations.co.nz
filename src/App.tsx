@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import { usePageTracking } from './hooks/usePageTracking';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -23,23 +23,9 @@ import AdminReviews from './pages/admin/Reviews';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 
-// Analytics tracking hook - tracks pageviews on route changes
-function usePageTracking() {
-  const location = useLocation();
-
-  useEffect(() => {
-    // Send pageview to Google Analytics when route changes
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('config', 'G-VM9XERD2RB', {
-        page_path: location.pathname + location.search,
-      });
-    }
-  }, [location]);
-}
-
 // App content component - must be inside Router to use useLocation
 function AppContent() {
-  // Track pageviews
+  // Track pageviews on route changes
   usePageTracking();
 
   return (
