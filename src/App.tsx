@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
 import { usePageTracking } from './hooks/usePageTracking';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -30,70 +28,66 @@ function AppContent() {
 
   return (
     <HelmetProvider>
-      <AuthProvider>
-        <CartProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              {/* Public routes */}
-              <Route index element={<Home />} />
-              <Route path="products" element={<Products />} />
-              <Route path="products/:slug" element={<ProductDetail />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="blog" element={<Blog />} />
-              <Route path="blog/:slug" element={<BlogPost />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* Public routes */}
+          <Route index element={<Home />} />
+          <Route path="products" element={<Products />} />
+          <Route path="products/:slug" element={<ProductDetail />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="blog/:slug" element={<BlogPost />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
 
-              {/* Protected routes */}
-              <Route path="checkout" element={
-                <PrivateRoute>
-                  <Checkout />
-                </PrivateRoute>
-              } />
-              <Route path="profile" element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              } />
-              <Route path="orders" element={
-                <PrivateRoute>
-                  <OrderHistory />
-                </PrivateRoute>
-              } />
+          {/* Protected routes */}
+          <Route path="checkout" element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          } />
+          <Route path="profile" element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          } />
+          <Route path="orders" element={
+            <PrivateRoute>
+              <OrderHistory />
+            </PrivateRoute>
+          } />
 
-              {/* Admin routes */}
-              <Route path="admin" element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              } />
-              <Route path="admin/products" element={
-                <AdminRoute>
-                  <AdminProducts />
-                </AdminRoute>
-              } />
-              <Route path="admin/orders" element={
-                <AdminRoute>
-                  <AdminOrders />
-                </AdminRoute>
-              } />
-              <Route path="admin/blog" element={
-                <AdminRoute>
-                  <AdminBlog />
-                </AdminRoute>
-              } />
-              <Route path="admin/reviews" element={
-                <AdminRoute>
-                  <AdminReviews />
-                </AdminRoute>
-              } />
+          {/* Admin routes */}
+          <Route path="admin" element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          } />
+          <Route path="admin/products" element={
+            <AdminRoute>
+              <AdminProducts />
+            </AdminRoute>
+          } />
+          <Route path="admin/orders" element={
+            <AdminRoute>
+              <AdminOrders />
+            </AdminRoute>
+          } />
+          <Route path="admin/blog" element={
+            <AdminRoute>
+              <AdminBlog />
+            </AdminRoute>
+          } />
+          <Route path="admin/reviews" element={
+            <AdminRoute>
+              <AdminReviews />
+            </AdminRoute>
+          } />
 
-              {/* Catch all - redirect to home */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Route>
-          </Routes>
-        </CartProvider>
-      </AuthProvider>
+          {/* Catch all - redirect to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
     </HelmetProvider>
   );
 }
