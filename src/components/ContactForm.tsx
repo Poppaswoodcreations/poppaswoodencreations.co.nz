@@ -107,6 +107,20 @@ const ContactForm: React.FC = () => {
                 </div>
               </div>
 
+              {/* Google Maps Embed */}
+              <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3227.8845399999997!2d174.3241753!3d-35.6927778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0bb6c7e3d3d3d3%3A0x3d3d3d3d3d3d3d3d!2s102%20Kiripaka%20Road%2C%20Whangarei%200110%2C%20New%20Zealand!5e0!3m2!1sen!2snz!4v1234567890123!5m2!1sen!2snz"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Poppa's Wooden Creations Location"
+                ></iframe>
+              </div>
+
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Clock className="text-purple-600" size={20} />
