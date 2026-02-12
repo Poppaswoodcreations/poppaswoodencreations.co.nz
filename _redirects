@@ -1,8 +1,30 @@
-# Serve robots.txt directly
-/robots.txt    /robots.txt    200
+# Serve static files directly
+/robots.txt              /robots.txt              200
+/sitemap.xml             /sitemap.xml             200
 
-# Serve sitemap if you have one
-/sitemap.xml   /sitemap.xml   200
+# Specific category pages - serve index.html without redirect
+/wooden-trucks           /index.html              200
+/wooden-cars             /index.html              200
+/wooden-trains           /index.html              200
+/wooden-planes-helicopters /index.html            200
+/wooden-baby-toys        /index.html              200
+/wooden-kitchenware      /index.html              200
+/wooden-tractors-boats   /index.html              200
+/products                /index.html              200
+/about                   /index.html              200
+/contact                 /index.html              200
+/shipping                /index.html              200
+/returns                 /index.html              200
+/reviews                 /index.html              200
+/write-review            /index.html              200
+/blog                    /index.html              200
+/blog/*                  /index.html              200
+/products/*              /index.html              200
+/search                  /index.html              200
+/wooden-toys-nz          /index.html              200
+
+# Admin routes
+/admin/*                 /index.html              200
 
 # SPA fallback for everything else
-/*    /index.html   200
+/*                       /index.html              200
