@@ -190,9 +190,36 @@ const AppContent: React.FC = () => {
             } />
 
             {/* SEO Landing Page */}
-            <Route path="/wooden-toys-nz" element={<WoodenToysNZ />} />
+            <Route path="/wooden-toys-nz" element={
+              <>
+                <SEOHead 
+                  title="Wooden Toys NZ - Handcrafted Native Timber Toys"
+                  description="Premium handcrafted wooden toys made in New Zealand from native Kauri, Rimu & Macrocarpa. Trusted by Montessori schools nationwide."
+                  canonicalPath="/wooden-toys-nz"
+                  ogType="website"
+                />
+                <WoodenToysNZ />
+              </>
+            } />
 
-            {/* Product Pages */}
+            {/* All Products Page */}
+            <Route path="/products" element={
+              <>
+                <SEOHead 
+                  title="All Products - Wooden Toys & Kitchenware"
+                  description="Browse our complete collection of handcrafted wooden toys and kitchenware made from New Zealand native timber."
+                  canonicalPath="/products"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                />
+              </>
+            } />
+
+            {/* Product Detail Pages */}
             <Route path="/products/:productId" element={
               <ProductDetail 
                 products={products}
@@ -326,6 +353,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="About Us - Handcrafted in Whangarei"
                   description="Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware in Whangarei since 2015."
+                  canonicalPath="/about"
+                  ogType="website"
                 />
                 <AboutSection />
               </>
@@ -336,6 +365,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Contact Us - Get in Touch"
                   description="Get in touch with Poppa's Wooden Creations. We're here to help with orders, custom requests, and questions."
+                  canonicalPath="/contact"
+                  ogType="website"
                 />
                 <ContactForm />
               </>
@@ -347,6 +378,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Shipping Policy | Poppa's Wooden Creations"
                   description="Learn about our worldwide shipping, delivery times, and free shipping offers for handcrafted wooden toys from New Zealand."
+                  canonicalPath="/shipping"
+                  ogType="website"
                 />
                 <ShippingPolicy />
               </>
@@ -357,6 +390,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Returns & Refunds Policy | Poppa's Wooden Creations"
                   description="Our 30-day return policy and quality guarantee for handcrafted wooden toys. Easy returns, full refunds, and lifetime craftsmanship guarantee."
+                  canonicalPath="/returns"
+                  ogType="website"
                 />
                 <ReturnsRefunds />
               </>
@@ -382,6 +417,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Customer Reviews - 5.0/5 Stars"
                   description="Read all 23 verified reviews from our happy customers. 13 Google reviews and 10 website reviews for our handcrafted wooden toys and kitchenware."
+                  canonicalPath="/reviews"
+                  ogType="website"
                 />
                 <Reviews />
               </>
@@ -393,6 +430,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Write a Review - Share Your Experience"
                   description="Share your experience with Poppa's Wooden Creations. Your feedback helps other families discover our handcrafted wooden toys."
+                  canonicalPath="/write-review"
+                  ogType="website"
                 />
                 <ReviewForm />
               </>
@@ -412,6 +451,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Search Products | Poppa's Wooden Creations"
                   description="Search our collection of handcrafted wooden toys made in New Zealand"
+                  canonicalPath="/search"
+                  ogType="website"
                 />
                 <SearchPageWrapper 
                   products={products}
@@ -427,6 +468,8 @@ const AppContent: React.FC = () => {
                 <SEOHead 
                   title="Blog - Wooden Toy Tips & Parenting Guides"
                   description="Tips and guides for wooden toys, Montessori education, and sustainable parenting. Expert advice from Poppa's Wooden Creations."
+                  canonicalPath="/blog"
+                  ogType="website"
                 />
                 <BlogListView />
               </>
