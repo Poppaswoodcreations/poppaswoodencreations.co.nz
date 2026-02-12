@@ -1,27 +1,20 @@
-# Netlify Configuration for Performance Optimization
 [build]
   publish = "dist"
   command = "npm run build"
 
-# Headers for caching and performance
 [[headers]]
   for = "/*"
   [headers.values]
-    # Security headers
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    
-    # Performance headers
     X-XSS-Protection = "1; mode=block"
 
-# Cache static assets for 1 year
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Cache images for 1 year
 [[headers]]
   for = "/*.jpg"
   [headers.values]
@@ -42,19 +35,16 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Don't cache HTML
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# SPA redirect - handles client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Enable asset optimization but DISABLE pretty_urls
 [build.processing]
   skip_processing = false
 
@@ -71,30 +61,3 @@
 
 [build.processing.images]
   compress = true
-```
-
----
-
-## **STEP 3: Update your `_headers` file:**
-
-Your current `_headers` file is missing cache control. Replace with:
-```
-/*
-  Link: <https://hfirnolwhesjkxshidxo.supabase.co>; rel=preconnect; crossorigin
-  Link: <https://i.ibb.co>; rel=preconnect; crossorigin
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Cache-Control: public, max-age=0, must-revalidate
-
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
