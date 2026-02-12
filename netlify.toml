@@ -6,12 +6,4 @@
   from = "/*"
   to = "/index.html"
   status = 200
-```
 
-**That's it - NOTHING else.** No headers, no processing config, nothing.
-
----
-
-**THEN create `public/_redirects` file with ONLY this:**
-```
-/*    /index.html   200
