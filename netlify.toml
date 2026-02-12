@@ -1,5 +1,4 @@
 # Netlify Configuration for Performance Optimization
-
 [build]
   publish = "dist"
   command = "npm run build"
@@ -49,11 +48,12 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Redirects
+# SPA redirect - handles client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 # Enable asset optimization
 [build.processing]
