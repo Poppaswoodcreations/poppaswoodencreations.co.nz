@@ -41,6 +41,54 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[redirects]]
+  from = "/wooden-trucks"
+  to = "/wooden-trucks"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-cars"
+  to = "/wooden-cars"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-trains"
+  to = "/wooden-trains"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-planes-helicopters"
+  to = "/wooden-planes-helicopters"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-baby-toys"
+  to = "/wooden-baby-toys"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-kitchenware"
+  to = "/wooden-kitchenware"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wooden-tractors-boats"
+  to = "/wooden-tractors-boats"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/products"
+  to = "/products"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
