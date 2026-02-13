@@ -176,6 +176,7 @@ const AppContent: React.FC = () => {
                   title="Handmade Wooden Toys NZ"
                   description="Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools. Free shipping over $1000."
                   image="https://poppaswoodencreations.co.nz/hero-image.jpg"
+                  canonicalPath="/"
                 />
                 <HomePageSchema />
                 <Hero onCategorySelect={handleCategorySelect} products={products} />
@@ -343,6 +344,38 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-tractors-boats"
+                />
+              </>
+            } />
+
+            {/* Redirect old/incorrect URLs to correct pages */}
+            <Route path="/wooden-other-toys" element={
+              <>
+                <SEOHead 
+                  title="Wooden Toys"
+                  canonicalPath="/products"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                />
+              </>
+            } />
+
+            <Route path="/kitchen-utensils" element={
+              <>
+                <SEOHead 
+                  title="Wooden Kitchenware"
+                  canonicalPath="/wooden-kitchenware"
+                  ogType="website"
+                />
+                <ProductGrid 
+                  products={products.filter(p => p.category === 'wooden-kitchenware')} 
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-kitchenware"
                 />
               </>
             } />
