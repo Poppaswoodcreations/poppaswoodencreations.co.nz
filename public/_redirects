@@ -4,11 +4,6 @@
 # Redirect old SQ product IDs to homepage  
 /products/SQ* / 301
 
-# Fix trailing slash issues
-/wooden-cars/ /wooden-cars 301
-/wooden-trucks/ /wooden-trucks 301
-/wooden-kitchenware/ /wooden-kitchenware 301
-
 # Serve robots.txt directly
 /robots.txt /robots.txt 200
 
