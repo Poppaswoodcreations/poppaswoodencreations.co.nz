@@ -174,7 +174,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead 
                   title="Handmade Wooden Toys NZ"
-                  description="Premium handmade wooden toys crafted in Whangarei from native Kauri, Rimu & Macrocarpa timber. Trusted by Montessori schools. Free shipping over $1000."
+                  description="Premium handcrafted wooden toys from native NZ timber. Safe, sustainable, educational. Trusted by Montessori schools. Free shipping over $150."
                   image="https://poppaswoodencreations.co.nz/hero-image.jpg"
                   canonicalPath="/"
                 />
