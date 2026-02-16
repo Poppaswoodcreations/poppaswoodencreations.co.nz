@@ -33,6 +33,7 @@ const BlogPostView = lazy(() => import('./pages/blog/BlogPostView'));
 const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
+const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -187,6 +188,19 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                 />
                 <FeaturedReviews />
+              </>
+            } />
+
+            {/* Order Confirmation Page */}
+            <Route path="/order-confirmation" element={
+              <>
+                <SEOHead 
+                  title="Order Confirmation - Thank You!"
+                  description="Thank you for your order from Poppa's Wooden Creations."
+                  canonicalPath="/order-confirmation"
+                  noindex={true}
+                />
+                <OrderConfirmation />
               </>
             } />
 
