@@ -70,12 +70,23 @@ const Cart: React.FC<CartProps> = ({
     return true;
   };
 
+  const calculateDeliveryDate = () => {
+    const date = new Date();
+    // Add 7 business days for NZ, 14 for international
+    const daysToAdd = formData.country === 'NZ' ? 7 : 14;
+    date.setDate(date.getDate() + daysToAdd);
+    return date.toISOString().split('T')[0]; // YYYY-MM-DD format
+  };
+
   const handlePayPalRedirect = () => {
     if (!validateForm()) return;
 
     console.log('🚀 PAYPAL: Starting PayPal redirect');
     
+    const orderId = `PAY-${Date.now()}`;
+    
     const orderData = {
+      orderId: orderId,
       total: grandTotal,
       subtotal: total,
       shipping: shipping,
@@ -94,28 +105,38 @@ const Cart: React.FC<CartProps> = ({
         country: formData.country,
         deliveryMethod: formData.deliveryMethod
       },
+      deliveryDate: calculateDeliveryDate(),
       timestamp: new Date().toISOString()
     };
     
-    localStorage.setItem('paypal-order-data', JSON.stringify(orderData));
+    // Store order data for confirmation page
+    localStorage.setItem('pending-order', JSON.stringify(orderData));
     
     sendOrderNotification({
       orderTotal: grandTotal,
       items: items,
       customer: formData,
       paymentMethod: 'PayPal',
-      orderNumber: `PAY-${Date.now()}`
+      orderNumber: orderId
     }).catch(error => {
       console.error('Failed to send order notification:', error);
     });
     
-    const returnUrl = encodeURIComponent(`${window.location.origin}/#/paypal-success`);
+    // NEW: Updated return URL to order confirmation page
+    const returnUrl = encodeURIComponent(
+      `${window.location.origin}/order-confirmation?` +
+      `order_id=${orderId}&` +
+      `email=${encodeURIComponent(formData.email)}&` +
+      `delivery_date=${calculateDeliveryDate()}&` +
+      `source=paypal`
+    );
+    
     const cancelUrl = encodeURIComponent(window.location.origin);
     const itemName = encodeURIComponent(`Wooden Toys Order - ${items.length} item${items.length !== 1 ? 's' : ''}`);
     
     const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?` +
       `cmd=_xclick&` +
-      `business=your-paypal-email@example.com&` +
+      `business=poppas.wooden.creations@gmail.com&` +
       `item_name=${itemName}&` +
       `amount=${grandTotal.toFixed(2)}&` +
       `currency_code=NZD&` +
