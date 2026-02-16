@@ -11,6 +11,9 @@
     <!-- Base meta description - React Helmet will override this on specific pages -->
     <meta name="description" content="Premium handcrafted wooden toys and kitchenware made from native New Zealand timber. Trusted by Montessori schools. Made in Whangarei since 2015." />
     
+    <!-- Google Customer Reviews Badge Script -->
+    <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+    
     <!-- CRITICAL: Static Schema Markup for AI Bots and Search Engines -->
     <!-- This ensures bots see structured data BEFORE React loads -->
     
@@ -305,9 +308,23 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
+    <!-- Google Customer Reviews Badge Initialization -->
+    <script>
+      window.addEventListener('load', function() {
+        if (typeof merchantWidgetScript !== 'undefined') {
+          merchantWidgetScript.addEventListener('load', function () {
+            merchantwidget.start({
+              merchant_id: 5719804723,
+              position: 'BOTTOM_RIGHT',
+              region: 'AU'
+            });
+          });
+        }
+      });
+    </script>
+    
     <!-- Load Google Tag Manager AFTER page load -->
     <script>
-      // Delay GTM until page is interactive
       window.addEventListener('load', function() {
         setTimeout(function() {
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -320,7 +337,7 @@
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-VM9XERD2RB');
-        }, 3000); // Load GTM 3 seconds after page load
+        }, 3000);
       });
     </script>
   </body>
