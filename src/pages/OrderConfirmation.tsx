@@ -6,21 +6,18 @@ const OrderConfirmation: React.FC = () => {
   const [searchParams] = useSearchParams();
   
   useEffect(() => {
-    // Get order details from URL parameters
     const orderId = searchParams.get('order_id');
     const email = searchParams.get('email');
     const deliveryDate = searchParams.get('delivery_date');
     
     if (!orderId || !email) return;
 
-    // Load Google Customer Reviews script
     const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/platform.js?onload=renderOptIn';
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
 
-    // Render the opt-in survey
     (window as any).renderOptIn = function() {
       (window as any).gapi.load('surveyoptin', function() {
         (window as any).gapi.surveyoptin.render({
@@ -54,12 +51,8 @@ const OrderConfirmation: React.FC = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">
               <CheckCircle className="text-green-600" size={48} />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Thank You for Your Order!
-            </h1>
-            <p className="text-green-50 text-lg">
-              Your payment has been received
-            </p>
+            <h1 className="text-3xl font-bold text-white mb-2">Thank You for Your Order!</h1>
+            <p className="text-green-50 text-lg">Your payment has been received</p>
           </div>
 
           <div className="p-8">
@@ -68,21 +61,15 @@ const OrderConfirmation: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Order ID:</span>
-                  <span className="font-mono font-semibold text-gray-900">
-                    {searchParams.get('order_id')}
-                  </span>
+                  <span className="font-mono font-semibold text-gray-900">{searchParams.get('order_id')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Email:</span>
-                  <span className="font-semibold text-gray-900">
-                    {searchParams.get('email')}
-                  </span>
+                  <span className="font-semibold text-gray-900">{searchParams.get('email')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Estimated Delivery:</span>
-                  <span className="font-semibold text-gray-900">
-                    {searchParams.get('delivery_date') || calculateDeliveryDate()}
-                  </span>
+                  <span className="font-semibold text-gray-900">{searchParams.get('delivery_date') || calculateDeliveryDate()}</span>
                 </div>
               </div>
             </div>
@@ -96,9 +83,7 @@ const OrderConfirmation: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Order Confirmation Email</h3>
-                    <p className="text-gray-600 text-sm">
-                      You'll receive a confirmation email at {searchParams.get('email')} within the next few minutes.
-                    </p>
+                    <p className="text-gray-600 text-sm">You will receive a confirmation email within the next few minutes.</p>
                   </div>
                 </div>
 
@@ -108,9 +93,7 @@ const OrderConfirmation: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Handcrafting Your Order</h3>
-                    <p className="text-gray-600 text-sm">
-                      We'll begin crafting your wooden toys with care and precision in our Whangarei workshop.
-                    </p>
+                    <p className="text-gray-600 text-sm">We will begin crafting your wooden toys with care and precision in our Whangarei workshop.</p>
                   </div>
                 </div>
 
@@ -120,9 +103,7 @@ const OrderConfirmation: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Shipping Notification</h3>
-                    <p className="text-gray-600 text-sm">
-                      We'll send you tracking information once your order ships.
-                    </p>
+                    <p className="text-gray-600 text-sm">We will send you tracking information once your order ships.</p>
                   </div>
                 </div>
               </div>
@@ -132,28 +113,17 @@ const OrderConfirmation: React.FC = () => {
               <div id="google-customer-reviews-container"></div>
             </div>
 
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
               <h3 className="font-semibold text-gray-900 mb-3">Questions About Your Order?</h3>
-              <p className="text-gray-700 text-sm mb-3">
-                We're here to help! Contact us anytime:
-              </p>
+              <p className="text-gray-700 text-sm mb-3">We are here to help! Contact us anytime:</p>
               <div className="space-y-2 text-sm">
-                <p className="text-gray-700">
-                  📧 Email: <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">poppas.wooden.creations@gmail.com</a>
-                </p>
-                <p className="text-gray-700">
-                  📞 Phone: <a href="tel:0210228166" className="text-amber-600 hover:text-amber-700 font-medium">021 022 8166</a>
-                </p>
+                <p className="text-gray-700">Email: poppas.wooden.creations@gmail.com</p>
+                <p className="text-gray-700">Phone: 021 022 8166</p>
               </div>
             </div>
 
-            <div className="mt-8 text-center">
-              
-                href="/"
-                className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-amber-700 transition-colors"
-              >
-                Continue Shopping
-              </a>
+            <div className="text-center">
+              <a href="/" className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-amber-700 transition-colors">Continue Shopping</a>
             </div>
           </div>
         </div>
