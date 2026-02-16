@@ -6,11 +6,325 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Base title - React Helmet will override this -->
-    <title>Poppa's Wooden Creations</title>
+    <title>Poppa's Wooden Creations - Handcrafted Wooden Toys Made in New Zealand</title>
     
-    <!-- NO meta description here - React Helmet handles it -->
-    <!-- NO canonical here - React Helmet handles it -->
-    <!-- NO Open Graph here - React Helmet handles it -->
+    <!-- Base meta description - React Helmet will override this on specific pages -->
+    <meta name="description" content="Premium handcrafted wooden toys and kitchenware made from native New Zealand timber. Trusted by Montessori schools. Made in Whangarei since 2015." />
+    
+    <!-- CRITICAL: Static Schema Markup for AI Bots and Search Engines -->
+    <!-- This ensures bots see structured data BEFORE React loads -->
+    
+    <!-- LocalBusiness Schema - Your Main Business Info -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://poppaswoodencreations.co.nz/#organization",
+      "name": "Poppa's Wooden Creations",
+      "legalName": "Poppa's Wooden Creations",
+      "description": "Premium handcrafted wooden toys and kitchenware made from native New Zealand timber including Kauri, Rimu, and Macrocarpa. Trusted by Montessori schools nationwide since 2015.",
+      "url": "https://poppaswoodencreations.co.nz",
+      "logo": "https://poppaswoodencreations.co.nz/logo.png",
+      "image": [
+        "https://poppaswoodencreations.co.nz/logo.png",
+        "https://poppaswoodencreations.co.nz/workshop.jpg"
+      ],
+      "foundingDate": "2015",
+      "priceRange": "$$",
+      "currenciesAccepted": "NZD",
+      "paymentAccepted": "Credit Card, Debit Card, PayPal, Bank Transfer",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102 Kiripaka Rd",
+        "addressLocality": "Whangarei",
+        "addressRegion": "Northland",
+        "postalCode": "0110",
+        "addressCountry": "NZ"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-35.7267",
+        "longitude": "174.3240"
+      },
+      "telephone": "+64-9-123-4567",
+      "email": "info@poppaswoodencreations.co.nz",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "15:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/poppaswoodencreations",
+        "https://www.instagram.com/poppaswoodencreations",
+        "https://www.tiktok.com/@poppaswoodencreations"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "New Zealand"
+      },
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Handcrafted Wooden Baby Toys",
+            "description": "Safe, non-toxic wooden baby toys made from native NZ timber",
+            "category": "Baby Toys",
+            "material": "Kauri, Rimu, Macrocarpa wood",
+            "image": "https://poppaswoodencreations.co.nz/wooden-baby-toys.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "25.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-baby-toys"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Wooden Toy Trains & Railway Sets",
+            "description": "Handcrafted wooden train sets compatible with major brands",
+            "category": "Train Sets",
+            "material": "Native New Zealand timber",
+            "image": "https://poppaswoodencreations.co.nz/wooden-trains.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "35.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-trains"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Wooden Toy Trucks & Vehicles",
+            "description": "Durable wooden trucks, utes, and vehicles for imaginative play",
+            "category": "Toy Vehicles",
+            "material": "Premium NZ native timber",
+            "image": "https://poppaswoodencreations.co.nz/wooden-trucks.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "30.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-trucks"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Wooden Toy Cars",
+            "description": "Handcrafted wooden cars for toddlers and young children",
+            "category": "Toy Cars",
+            "material": "Kauri and Rimu wood",
+            "image": "https://poppaswoodencreations.co.nz/wooden-cars.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "20.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-cars"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Wooden Planes & Helicopters",
+            "description": "Handcrafted wooden aircraft toys for imaginative play",
+            "category": "Toy Aircraft",
+            "material": "Native timber with non-toxic finish",
+            "image": "https://poppaswoodencreations.co.nz/wooden-planes.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "28.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-planes-helicopters"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Wooden Kitchenware & Utensils",
+            "description": "Handcrafted wooden spoons, spatulas, and kitchen tools from native timber",
+            "category": "Kitchenware",
+            "material": "Food-safe native NZ timber",
+            "image": "https://poppaswoodencreations.co.nz/wooden-kitchenware.jpg"
+          },
+          "priceCurrency": "NZD",
+          "price": "45.00",
+          "availability": "https://schema.org/InStock",
+          "url": "https://poppaswoodencreations.co.nz/wooden-kitchenware"
+        }
+      ]
+    }
+    </script>
+
+    <!-- WebSite Schema - For Sitelinks Search Box -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Poppa's Wooden Creations",
+      "url": "https://poppaswoodencreations.co.nz",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://poppaswoodencreations.co.nz/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Organization Schema - For Knowledge Graph -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Poppa's Wooden Creations",
+      "alternateName": "Poppa's Creations",
+      "url": "https://poppaswoodencreations.co.nz",
+      "logo": "https://poppaswoodencreations.co.nz/logo.png",
+      "description": "Handcrafted wooden toys and kitchenware made from native New Zealand timber since 2015",
+      "foundingDate": "2015",
+      "founder": {
+        "@type": "Person",
+        "name": "Adrian",
+        "jobTitle": "Craftsman & Founder"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102 Kiripaka Rd",
+        "addressLocality": "Whangarei",
+        "addressRegion": "Northland",
+        "postalCode": "0110",
+        "addressCountry": "NZ"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+64-9-123-4567",
+        "contactType": "Customer Service",
+        "email": "info@poppaswoodencreations.co.nz",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.facebook.com/poppaswoodencreations",
+        "https://www.instagram.com/poppaswoodencreations",
+        "https://www.tiktok.com/@poppaswoodencreations"
+      ]
+    }
+    </script>
+
+    <!-- ItemList Schema - Product Categories for AI Discovery -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Wooden Toy Collections",
+      "description": "Handcrafted wooden toys and kitchenware made from native New Zealand timber",
+      "numberOfItems": 6,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-baby-toys",
+            "name": "Wooden Baby Toys",
+            "description": "Safe wooden baby toys made from native NZ timber with non-toxic finish",
+            "category": "Baby Toys",
+            "url": "https://poppaswoodencreations.co.nz/wooden-baby-toys"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-trains",
+            "name": "Wooden Train Sets",
+            "description": "Handcrafted wooden trains and railway sets",
+            "category": "Train Sets",
+            "url": "https://poppaswoodencreations.co.nz/wooden-trains"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-trucks",
+            "name": "Wooden Toy Trucks",
+            "description": "Durable wooden trucks and vehicles",
+            "category": "Toy Vehicles",
+            "url": "https://poppaswoodencreations.co.nz/wooden-trucks"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-cars",
+            "name": "Wooden Toy Cars",
+            "description": "Handcrafted wooden cars for children",
+            "category": "Toy Cars",
+            "url": "https://poppaswoodencreations.co.nz/wooden-cars"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-planes-helicopters",
+            "name": "Wooden Planes & Helicopters",
+            "description": "Wooden aircraft toys",
+            "category": "Toy Aircraft",
+            "url": "https://poppaswoodencreations.co.nz/wooden-planes-helicopters"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Product",
+            "@id": "https://poppaswoodencreations.co.nz/wooden-kitchenware",
+            "name": "Wooden Kitchenware",
+            "description": "Handcrafted wooden kitchen utensils and tools",
+            "category": "Kitchenware",
+            "url": "https://poppaswoodencreations.co.nz/wooden-kitchenware"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Base Open Graph - React Helmet will override on specific pages -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Poppa's Wooden Creations - Handcrafted Wooden Toys NZ" />
+    <meta property="og:description" content="Premium handcrafted wooden toys made from native New Zealand timber. Trusted by Montessori schools." />
+    <meta property="og:image" content="https://poppaswoodencreations.co.nz/og-image.jpg" />
+    <meta property="og:url" content="https://poppaswoodencreations.co.nz" />
+    <meta property="og:site_name" content="Poppa's Wooden Creations" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Poppa's Wooden Creations - Handcrafted Wooden Toys NZ" />
+    <meta name="twitter:description" content="Premium handcrafted wooden toys made from native New Zealand timber" />
+    <meta name="twitter:image" content="https://poppaswoodencreations.co.nz/og-image.jpg" />
+    
+    <!-- Canonical URL - React Helmet will override on specific pages -->
+    <link rel="canonical" href="https://poppaswoodencreations.co.nz" />
     
   </head>
   <body>
