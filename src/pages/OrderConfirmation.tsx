@@ -42,15 +42,14 @@ const OrderConfirmation: React.FC = () => {
 
   const calculateDeliveryDate = () => {
     const date = new Date();
-    date.setDate(date.getDate() + 7); // 7 days from now
-    return date.toISOString().split('T')[0]; // YYYY-MM-DD format
+    date.setDate(date.getDate() + 7);
+    return date.toISOString().split('T')[0];
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 py-12 px-4">
       <div className="container mx-auto max-w-2xl">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Success Header */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">
               <CheckCircle className="text-green-600" size={48} />
@@ -63,7 +62,6 @@ const OrderConfirmation: React.FC = () => {
             </p>
           </div>
 
-          {/* Order Details */}
           <div className="p-8">
             <div className="bg-gray-50 border-2 border-gray-200 rounded-lg p-6 mb-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Confirmation</h2>
@@ -89,7 +87,6 @@ const OrderConfirmation: React.FC = () => {
               </div>
             </div>
 
-            {/* What Happens Next */}
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">What Happens Next?</h2>
               <div className="space-y-4">
@@ -131,12 +128,10 @@ const OrderConfirmation: React.FC = () => {
               </div>
             </div>
 
-            {/* Google Customer Reviews Opt-in appears here */}
             <div className="mb-8">
               <div id="google-customer-reviews-container"></div>
             </div>
 
-            {/* Contact Info */}
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
               <h3 className="font-semibold text-gray-900 mb-3">Questions About Your Order?</h3>
               <p className="text-gray-700 text-sm mb-3">
@@ -152,7 +147,6 @@ const OrderConfirmation: React.FC = () => {
               </div>
             </div>
 
-            {/* Back to Shop Button */}
             <div className="mt-8 text-center">
               
                 href="/"
