@@ -49,7 +49,7 @@ export const categories: Category[] = [
     image: 'https://i.ibb.co/jZ3pySpt/e7af5ed802b8.webp',
     productCount: 12
   },
- {
+  {
     id: '7',
     name: 'Wooden Tractors & Boats',
     slug: 'wooden-tractors-boats',
@@ -64,6 +64,14 @@ export const categories: Category[] = [
     description: 'Handcrafted wooden crosses made from native New Zealand timber. Beautiful religious gifts and heirloom pieces.',
     image: 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RIMU_WOODEN_CROSS.jpg',
     productCount: 1
+  },
+  {
+    id: '9',
+    name: 'Wooden Pens',
+    slug: 'wooden-pens',
+    description: 'Handcrafted wooden pens turned from native New Zealand timber. Unique gifts and heirloom writing instruments.',
+    image: 'https://i.ibb.co/jZ3pySpt/e7af5ed802b8.webp',
+    productCount: 0
   }
 ];
 
@@ -409,7 +417,7 @@ export const products: Product[] = [
     name: 'hammer set',
     description: 'Wooden hammer tool set perfect for construction play',
     price: 40.00,
-    category: 'wooden-cars',
+    category: 'wooden-baby-toys',
     images: ['https://i.ibb.co/HwPMf7z/FB-IMG-1641578711652-1-optimized.webp'],
     inStock: true,
     featured: false,
@@ -420,8 +428,8 @@ export const products: Product[] = [
   },
   {
     id: 'big-spatula-flat-2',
-    name: 'BIG SPATULER FLAT',
-    description: 'Large flat wooden spatula perfect for cooking',
+    name: 'BIG SPATULER CURVE',
+    description: 'Large curved wooden spatula perfect for cooking',
     price: 20.00,
     category: 'wooden-kitchenware',
     images: ['https://i.ibb.co/rRTH8z2c/FB-IMG-1641578366807-optimized.webp'],
@@ -451,7 +459,7 @@ export const products: Product[] = [
     name: 'NOISE MAKER',
     description: 'Wooden noise maker toy perfect for musical play',
     price: 40.00,
-    category: 'wooden-cars',
+    category: 'wooden-baby-toys',
     images: ['https://i.ibb.co/KpZMSVm0/FB-IMG-1641578276716-optimized.webp'],
     inStock: true,
     featured: false,
@@ -465,7 +473,7 @@ export const products: Product[] = [
     name: 'FLOOR NOISE MAKER',
     description: 'Large floor wooden noise maker for musical play',
     price: 30.00,
-    category: 'wooden-cars',
+    category: 'wooden-baby-toys',
     images: ['https://i.ibb.co/wrYsZ0SF/FB-IMG-1641578267890-optimized.webp'],
     inStock: true,
     featured: false,
@@ -933,6 +941,20 @@ export const products: Product[] = [
     featured: false,
     stockQuantity: 6,
     weight: 0.35,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'rimu-wooden-cross',
+    name: 'Rimu Wooden Cross',
+    description: 'Handcrafted Rimu wooden cross, a beautiful heirloom piece made from native New Zealand timber. Perfect as a religious gift or decorative piece.',
+    price: 45.00,
+    category: 'wooden-crosses',
+    images: ['https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RIMU_WOODEN_CROSS.jpg'],
+    inStock: true,
+    featured: true,
+    stockQuantity: 5,
+    weight: 0.3,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
