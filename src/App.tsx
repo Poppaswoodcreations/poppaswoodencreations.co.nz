@@ -86,14 +86,11 @@ const SearchPageWrapper: React.FC<{
 };
 
 // ─── UTM CANONICAL CLEANER ────────────────────────────────────────────────────
-// Strips UTM params and other tracking params from canonical URLs so Google
-// doesn't index /products/car-carrier?utm_source=medium as a separate page.
 
 function useCleanCanonical() {
   const location = useLocation();
   useEffect(() => {
     const baseUrl = 'https://poppaswoodencreations.co.nz';
-    // Use only pathname — no search params, no hash
     const cleanUrl = baseUrl + location.pathname.replace(/\/$/, '') || baseUrl + '/';
 
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
@@ -130,7 +127,7 @@ const AppContent: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
 
   usePageTracking();
-  useCleanCanonical(); // ← strips UTM params from canonical tags
+  useCleanCanonical();
 
   const { products, loading, error, loadProducts } = useProducts();
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
@@ -355,17 +352,43 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* ── LEGACY URL REDIRECTS ──────────────────────────────────────────
-                These old URLs were causing "Alternate page with proper canonical
-                tag" errors in Google Search Console because they rendered content
-                with a canonical pointing elsewhere. Hard redirects fix this
-                permanently — Google will update its index within a few weeks.
-            ─────────────────────────────────────────────────────────────────── */}
+            {/* ── NEW CATEGORIES ── */}
+            <Route path="/wooden-crosses" element={
+              <>
+                <SEOHead
+                  title="Wooden Crosses - Handcrafted NZ Timber"
+                  description="Handcrafted wooden crosses made from native New Zealand Rimu timber. Beautiful religious gifts and heirloom pieces from Poppa's Wooden Creations."
+                  canonicalPath="/wooden-crosses"
+                  ogType="website"
+                />
+                <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-crosses')}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-crosses"
+                />
+              </>
+            } />
 
-            {/* /wooden-other-toys → /products (was rendering with canonicalPath="/products") */}
+            <Route path="/wooden-pens" element={
+              <>
+                <SEOHead
+                  title="Wooden Pens - Handcrafted NZ Timber"
+                  description="Handcrafted wooden pens turned from native New Zealand timber. Unique gifts and heirloom writing instruments from Poppa's Wooden Creations."
+                  canonicalPath="/wooden-pens"
+                  ogType="website"
+                />
+                <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-pens')}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-pens"
+                />
+              </>
+            } />
+
+            {/* ── LEGACY URL REDIRECTS ── */}
             <Route path="/wooden-other-toys" element={<Navigate to="/products" replace />} />
-
-            {/* /kitchen-utensils → /wooden-kitchenware (was rendering with canonicalPath="/wooden-kitchenware") */}
             <Route path="/kitchen-utensils" element={<Navigate to="/wooden-kitchenware" replace />} />
 
             {/* ── INFO PAGES ── */}
