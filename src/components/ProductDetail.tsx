@@ -9,6 +9,7 @@ import { useSEO } from '../components/SEOMetaManager';
 interface ProductDetailProps {
   products: Product[];
   onAddToCart: (product: Product) => void;
+  isLoading?: boolean;
 }
 
 // REAL CUSTOMER REVIEWS DATA
@@ -119,25 +120,33 @@ const PRODUCT_FAQS = [
   }
 ];
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) => {
+const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, isLoading = false }) => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
-  
-  const product = products.find(p => p.id === productId);
-  
-  // Handle not found case - SEO for 404
-  if (!product) {
-    useSEO({
-      title: 'Product Not Found',
-      description: 'The product you\'re looking for is not available. Browse our collection of handcrafted wooden toys.',
-      noindex: true
-    });
 
+  const product = products.find(p => p.id === productId);
+
+  // ─── LOADING STATE ────────────────────────────────────────────────────────────
+  // Show spinner while Supabase is fetching — prevents premature "Not Found" page.
+  if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-16">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading product...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── NOT FOUND STATE ──────────────────────────────────────────────────────────
+  // Only shown after loading is complete and product genuinely doesn't exist.
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
+          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist or may have been removed.</p>
           <button
             onClick={() => navigate('/')}
             className="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
@@ -149,16 +158,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
     );
   }
 
-  // Product exists - prepare data for SEO
+  // ─── PRODUCT EXISTS ───────────────────────────────────────────────────────────
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
   const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
   const fullImageUrl = productImage.startsWith('http') ? productImage : `https://poppaswoodencreations.co.nz${productImage}`;
 
-  // Extract timber type from product name or description for material specification
   const extractMaterial = (name: string, desc?: string): string => {
     const text = `${name} ${desc || ''}`.toLowerCase();
     const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
-    
     for (const material of materials) {
       if (text.includes(material)) {
         return material.charAt(0).toUpperCase() + material.slice(1) + ' wood';
@@ -169,28 +176,24 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
 
   const productMaterial = extractMaterial(product.name, product.description);
 
-  // Determine age range from product category and name
   const getAgeRange = (name: string, category?: string): string => {
     const text = `${name} ${category || ''}`.toLowerCase();
     if (text.includes('baby') || text.includes('infant') || text.includes('rattle')) return '0-12 months';
     if (text.includes('toddler')) return '1-3 years';
     if (text.includes('preschool')) return '3-5 years';
-    return '0-8 years'; // Default range for wooden toys
+    return '0-8 years';
   };
 
   const ageRange = getAgeRange(product.name, product.category);
 
-  // FIXED: Only noindex if product has ZERO description or is a test product
   const isTestProduct = product.id.startsWith('SQ') || product.id === 'product-8';
   const hasNoDescription = !product.description || product.description.length < 50;
   const shouldNoIndex = isTestProduct || hasNoDescription;
 
-  // Enhanced product description for AI - combines product description with benefits
-  const enhancedDescription = product.description 
+  const enhancedDescription = product.description
     ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide. Built to last generations as an heirloom piece.`
     : `Handcrafted ${product.name} from ${productMaterial}. Made in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
 
-  // Apply SEO - this now runs AFTER product data is confirmed to exist
   useSEO({
     title: product.seoTitle || `${product.name} | Handcrafted Wooden Toy | Made in NZ`,
     description: product.seoDescription || enhancedDescription.substring(0, 160),
@@ -200,18 +203,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
     noindex: shouldNoIndex
   });
 
-  // COMPREHENSIVE Product Schema - Optimized for AI Shopping Assistants
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
     "description": enhancedDescription,
-    "image": product.images?.map(img => 
+    "image": product.images?.map(img =>
       img.startsWith('http') ? img : `https://poppaswoodencreations.co.nz${img}`
     ) || [fullImageUrl],
     "sku": product.id,
-    "mpn": product.id, // Manufacturer Part Number
-    "gtin": product.id, // Global Trade Item Number (using SKU as fallback)
+    "mpn": product.id,
     "brand": {
       "@type": "Brand",
       "name": "Poppa's Wooden Creations",
@@ -235,9 +236,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
       "url": canonicalUrl,
       "priceCurrency": "NZD",
       "price": product.price.toFixed(2),
-      "priceValidUntil": "2026-12-31", // Price valid until end of next year
-      "availability": product.inStock 
-        ? "https://schema.org/InStock" 
+      "priceValidUntil": "2026-12-31",
+      "availability": product.inStock
+        ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       "itemCondition": "https://schema.org/NewCondition",
       "shippingDetails": {
@@ -282,10 +283,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
     },
     "review": CUSTOMER_REVIEWS.map(review => ({
       "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": review.author
-      },
+      "author": { "@type": "Person", "name": review.author },
       "datePublished": review.date,
       "reviewBody": review.text,
       "name": review.title,
@@ -304,101 +302,56 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
       "suggestedMaxAge": ageRange.split('-')[1]?.trim().replace(/[^0-9]/g, '') || "8"
     },
     "additionalProperty": [
-      {
-        "@type": "PropertyValue",
-        "name": "Finish",
-        "value": "Non-toxic food-safe oil"
-      },
-      {
-        "@type": "PropertyValue",
-        "name": "Origin",
-        "value": "Handcrafted in New Zealand"
-      },
-      {
-        "@type": "PropertyValue",
-        "name": "Suitable For",
-        "value": "Montessori education, early childhood development"
-      },
-      {
-        "@type": "PropertyValue",
-        "name": "Sustainability",
-        "value": "Sustainable native timber, eco-friendly alternative to plastic"
-      }
-    ],
-    "isRelatedTo": {
-      "@type": "Product",
-      "name": "Wooden Toys Collection",
-      "url": "https://poppaswoodencreations.co.nz"
-    }
+      { "@type": "PropertyValue", "name": "Finish", "value": "Non-toxic food-safe oil" },
+      { "@type": "PropertyValue", "name": "Origin", "value": "Handcrafted in New Zealand" },
+      { "@type": "PropertyValue", "name": "Suitable For", "value": "Montessori education, early childhood development" },
+      { "@type": "PropertyValue", "name": "Sustainability", "value": "Sustainable native timber, eco-friendly alternative to plastic" }
+    ]
   };
 
-  // Generate Breadcrumb Schema
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://poppaswoodencreations.co.nz"
-      },
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://poppaswoodencreations.co.nz" },
       {
         "@type": "ListItem",
         "position": 2,
         "name": product.category ? product.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Products',
         "item": `https://poppaswoodencreations.co.nz/${product.category || 'products'}`
       },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": product.name,
-        "item": canonicalUrl
-      }
+      { "@type": "ListItem", "position": 3, "name": product.name, "item": canonicalUrl }
     ]
   };
 
-  // FAQ Schema
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": PRODUCT_FAQS.map(faq => ({
       "@type": "Question",
       "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
+      "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
     }))
   };
 
   return (
     <>
-      {/* Structured Data Schemas - IN HEAD FOR AI BOTS */}
       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(productSchema)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
-          {/* Breadcrumb Navigation */}
+
+          {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8" aria-label="Breadcrumb">
             <button onClick={() => navigate('/')} className="hover:text-amber-600">Home</button>
             <span>/</span>
             {product.category && (
               <>
-                <button 
-                  onClick={() => navigate(`/${product.category}`)} 
-                  className="hover:text-amber-600 capitalize"
-                >
+                <button onClick={() => navigate(`/${product.category}`)} className="hover:text-amber-600 capitalize">
                   {product.category.replace(/-/g, ' ')}
                 </button>
                 <span>/</span>
@@ -408,6 +361,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-12">
+
             {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
@@ -420,7 +374,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                   priority={true}
                 />
               </div>
-              
               {product.images && product.images.length > 1 && (
                 <div className="grid grid-cols-4 gap-2">
                   {product.images.slice(1, 5).map((image, index) => (
@@ -445,12 +398,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                 <div className="flex items-center space-x-4 mb-4">
                   <span className="text-3xl font-bold text-amber-600">${product.price.toFixed(2)} NZD</span>
                   {product.featured && (
-                    <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
+                    <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">Featured</span>
                   )}
                 </div>
-                
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
@@ -467,7 +417,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                 </div>
               )}
 
-              {/* Product Features */}
+              {/* Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
                   <Shield className="text-green-600" size={20} />
@@ -476,7 +426,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                     <div className="text-sm text-gray-600">Non-toxic finish</div>
                   </div>
                 </div>
-                
                 <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
                   <Award className="text-blue-600" size={20} />
                   <div>
@@ -484,7 +433,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                     <div className="text-sm text-gray-600">Made in NZ</div>
                   </div>
                 </div>
-                
                 <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
                   <Truck className="text-purple-600" size={20} />
                   <div>
@@ -494,16 +442,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                 </div>
               </div>
 
-              {/* Product Details - Enhanced for AI */}
+              {/* Product Details */}
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Product Details</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   {product.category && (
                     <div>
                       <span className="text-gray-600">Category:</span>
-                      <span className="font-medium text-gray-900 ml-2 capitalize">
-                        {product.category.replace(/-/g, ' ')}
-                      </span>
+                      <span className="font-medium text-gray-900 ml-2 capitalize">{product.category.replace(/-/g, ' ')}</span>
                     </div>
                   )}
                   <div>
@@ -549,7 +495,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                   <ShoppingCart size={20} />
                   <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
                 </button>
-                
                 <button
                   onClick={() => navigate(-1)}
                   className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
@@ -575,9 +520,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
 
           {/* FAQ Section */}
           <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              Frequently Asked Questions
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {PRODUCT_FAQS.map((faq, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-6">
@@ -590,9 +533,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
 
           {/* Customer Reviews Section */}
           <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              Customer Reviews
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Customer Reviews</h2>
             <div className="space-y-4">
               {CUSTOMER_REVIEWS.slice(0, 5).map((review, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-6">
@@ -600,9 +541,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
                     <div className="flex items-center space-x-2">
                       <span className="font-semibold text-gray-900">{review.author}</span>
                       {review.verified && (
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-                          Verified Purchase
-                        </span>
+                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified Purchase</span>
                       )}
                     </div>
                     <span className="text-sm text-gray-500">{review.date}</span>
@@ -618,6 +557,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart }) 
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </>
