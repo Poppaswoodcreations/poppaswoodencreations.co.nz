@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, useParams, useSearchParams, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Components needed immediately (above the fold)
@@ -85,6 +85,29 @@ const SearchPageWrapper: React.FC<{
   );
 };
 
+// ─── UTM CANONICAL CLEANER ────────────────────────────────────────────────────
+// Strips UTM params and other tracking params from canonical URLs so Google
+// doesn't index /products/car-carrier?utm_source=medium as a separate page.
+
+function useCleanCanonical() {
+  const location = useLocation();
+  useEffect(() => {
+    const baseUrl = 'https://poppaswoodencreations.co.nz';
+    // Use only pathname — no search params, no hash
+    const cleanUrl = baseUrl + location.pathname.replace(/\/$/, '') || baseUrl + '/';
+
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (canonical) {
+      canonical.href = cleanUrl;
+    } else {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      canonical.href = cleanUrl;
+      document.head.appendChild(canonical);
+    }
+  }, [location.pathname]);
+}
+
 // ─── PAGE TRACKING ────────────────────────────────────────────────────────────
 
 function usePageTracking() {
@@ -107,22 +130,15 @@ const AppContent: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
 
   usePageTracking();
+  useCleanCanonical(); // ← strips UTM params from canonical tags
 
   const { products, loading, error, loadProducts } = useProducts();
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
-
-  // ── KEY FIX: removed the full-screen loading/error splash that was blocking
-  // all routes (including /products/:id) from rendering during Supabase fetch.
-  // Instead, each route receives products (possibly empty []) and loading state,
-  // so product pages can show their own spinner while data loads.
-  // This means Google can crawl /products/:id and wait for the spinner to resolve
-  // rather than receiving a blank page or being blocked entirely. ──
 
   const handleCategorySelect = (category: string) => navigate(`/${category}`);
   const handleProductSelect = (product: Product) => addToCart(product);
   const handleAddToCart = (product: Product) => addToCart(product);
 
-  // Show a non-blocking error banner if Supabase fails — site still renders
   const ErrorBanner = error ? (
     <div className="bg-red-50 border-b border-red-200 px-4 py-2 text-center text-sm text-red-700">
       ⚠️ Some products may not be loading correctly.{' '}
@@ -210,7 +226,7 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* ── PRODUCT DETAIL ── KEY FIX: isLoading prop passed here ── */}
+            {/* ── PRODUCT DETAIL ── */}
             <Route path="/products/:productId" element={
               <ProductDetail
                 products={products}
@@ -339,28 +355,18 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            <Route path="/wooden-other-toys" element={
-              <>
-                <SEOHead title="Wooden Toys" canonicalPath="/products" ogType="website" />
-                <ProductGrid
-                  products={products}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                />
-              </>
-            } />
+            {/* ── LEGACY URL REDIRECTS ──────────────────────────────────────────
+                These old URLs were causing "Alternate page with proper canonical
+                tag" errors in Google Search Console because they rendered content
+                with a canonical pointing elsewhere. Hard redirects fix this
+                permanently — Google will update its index within a few weeks.
+            ─────────────────────────────────────────────────────────────────── */}
 
-            <Route path="/kitchen-utensils" element={
-              <>
-                <SEOHead title="Wooden Kitchenware" canonicalPath="/wooden-kitchenware" ogType="website" />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-kitchenware')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-kitchenware"
-                />
-              </>
-            } />
+            {/* /wooden-other-toys → /products (was rendering with canonicalPath="/products") */}
+            <Route path="/wooden-other-toys" element={<Navigate to="/products" replace />} />
+
+            {/* /kitchen-utensils → /wooden-kitchenware (was rendering with canonicalPath="/wooden-kitchenware") */}
+            <Route path="/kitchen-utensils" element={<Navigate to="/wooden-kitchenware" replace />} />
 
             {/* ── INFO PAGES ── */}
             <Route path="/about" element={
