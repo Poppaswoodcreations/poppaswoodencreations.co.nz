@@ -96,7 +96,7 @@ const CUSTOMER_REVIEWS = [
   }
 ];
 
-// FAQ DATA for wooden toys
+// FAQ DATA
 const PRODUCT_FAQS = [
   {
     question: "What wood is used to make these toys?",
@@ -120,14 +120,76 @@ const PRODUCT_FAQS = [
   }
 ];
 
+// ─── HELPER FUNCTIONS (outside component — no hook rules) ────────────────────
+const extractMaterial = (name: string, desc?: string): string => {
+  const text = `${name} ${desc || ''}`.toLowerCase();
+  const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
+  for (const material of materials) {
+    if (text.includes(material)) {
+      return material.charAt(0).toUpperCase() + material.slice(1) + ' wood';
+    }
+  }
+  return 'Premium New Zealand native timber';
+};
+
+const getAgeRange = (name: string, category?: string): string => {
+  const text = `${name} ${category || ''}`.toLowerCase();
+  if (text.includes('baby') || text.includes('infant') || text.includes('rattle')) return '0-12 months';
+  if (text.includes('toddler')) return '1-3 years';
+  if (text.includes('preschool')) return '3-5 years';
+  return '0-8 years';
+};
+
+// ─── COMPONENT ────────────────────────────────────────────────────────────────
 const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, isLoading = false }) => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
 
+  // Find the product
   const product = products.find(p => p.id === productId);
 
-  // ─── LOADING STATE ────────────────────────────────────────────────────────────
-  // Show spinner while Supabase is fetching — prevents premature "Not Found" page.
+  // ── Pre-compute values needed by useSEO ──────────────────────────────────
+  // Must be computed BEFORE useSEO is called, even when product is undefined.
+  const productMaterial = product
+    ? extractMaterial(product.name, product.description)
+    : 'Premium New Zealand native timber';
+
+  const ageRange = product
+    ? getAgeRange(product.name, product.category)
+    : '0-8 years';
+
+  const canonicalUrl = product
+    ? `https://poppaswoodencreations.co.nz/products/${product.id}`
+    : 'https://poppaswoodencreations.co.nz';
+
+  const productImage = product?.images?.[0] || '/FB_IMG_1640827671355.jpg';
+
+  const fullImageUrl = productImage.startsWith('http')
+    ? productImage
+    : `https://poppaswoodencreations.co.nz${productImage}`;
+
+  const isTestProduct = product
+    ? (product.id.startsWith('SQ') || product.id === 'product-8')
+    : false;
+
+  const hasNoDescription = !product?.description || product.description.length < 50;
+  const shouldNoIndex = isTestProduct || hasNoDescription || !product;
+
+  const enhancedDescription = product?.description
+    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide. Built to last generations as an heirloom piece.`
+    : `Handcrafted wooden toy from ${productMaterial}. Made in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
+
+  // ── useSEO CALLED HERE — before any early returns. This fixes error #310. ─
+  useSEO({
+    title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : "Product | Poppa's Wooden Creations"),
+    description: (product?.seoDescription || enhancedDescription).substring(0, 160),
+    image: fullImageUrl,
+    type: 'product',
+    canonical: canonicalUrl,
+    noindex: shouldNoIndex
+  });
+
+  // ── LOADING — safe to early-return after all hooks are called ─────────────
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -139,8 +201,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
-  // ─── NOT FOUND STATE ──────────────────────────────────────────────────────────
-  // Only shown after loading is complete and product genuinely doesn't exist.
+  // ── NOT FOUND — safe to early-return after all hooks are called ───────────
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -158,51 +219,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
-  // ─── PRODUCT EXISTS ───────────────────────────────────────────────────────────
-  const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${product.id}`;
-  const productImage = product.images?.[0] || '/FB_IMG_1640827671355.jpg';
-  const fullImageUrl = productImage.startsWith('http') ? productImage : `https://poppaswoodencreations.co.nz${productImage}`;
-
-  const extractMaterial = (name: string, desc?: string): string => {
-    const text = `${name} ${desc || ''}`.toLowerCase();
-    const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
-    for (const material of materials) {
-      if (text.includes(material)) {
-        return material.charAt(0).toUpperCase() + material.slice(1) + ' wood';
-      }
-    }
-    return 'Premium New Zealand native timber';
-  };
-
-  const productMaterial = extractMaterial(product.name, product.description);
-
-  const getAgeRange = (name: string, category?: string): string => {
-    const text = `${name} ${category || ''}`.toLowerCase();
-    if (text.includes('baby') || text.includes('infant') || text.includes('rattle')) return '0-12 months';
-    if (text.includes('toddler')) return '1-3 years';
-    if (text.includes('preschool')) return '3-5 years';
-    return '0-8 years';
-  };
-
-  const ageRange = getAgeRange(product.name, product.category);
-
-  const isTestProduct = product.id.startsWith('SQ') || product.id === 'product-8';
-  const hasNoDescription = !product.description || product.description.length < 50;
-  const shouldNoIndex = isTestProduct || hasNoDescription;
-
-  const enhancedDescription = product.description
-    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide. Built to last generations as an heirloom piece.`
-    : `Handcrafted ${product.name} from ${productMaterial}. Made in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
-
-  useSEO({
-    title: product.seoTitle || `${product.name} | Handcrafted Wooden Toy | Made in NZ`,
-    description: product.seoDescription || enhancedDescription.substring(0, 160),
-    image: fullImageUrl,
-    type: 'product',
-    canonical: canonicalUrl,
-    noindex: shouldNoIndex
-  });
-
+  // ── PRODUCT EXISTS ────────────────────────────────────────────────────────
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -317,7 +334,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
       {
         "@type": "ListItem",
         "position": 2,
-        "name": product.category ? product.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Products',
+        "name": product.category ? product.category.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'Products',
         "item": `https://poppaswoodencreations.co.nz/${product.category || 'products'}`
       },
       { "@type": "ListItem", "position": 3, "name": product.name, "item": canonicalUrl }
