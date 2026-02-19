@@ -189,7 +189,7 @@ const Footer: React.FC = () => {
               {/* Phone */}
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                <a href="tel:+6421022816 6" className="text-sm hover:text-amber-500 transition-colors">
+                <a href="tel:+64210228166" className="text-sm hover:text-amber-500 transition-colors">
                   +64 21 022 8166
                 </a>
               </div>
@@ -232,7 +232,7 @@ const Footer: React.FC = () => {
                     <Instagram size={18} />
                   </a>
                   <a 
-                    href="https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=adrian-barber-816923332" 
+                    href="https://www.linkedin.com/in/adrian-barber-816923332" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-800 rounded-full hover:bg-amber-600 transition-colors"
