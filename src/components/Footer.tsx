@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Instagram, Mail, Phone, MapPin, Shield, Award, Package, Heart } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin, Shield, Award, Package, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Quick Links - UPDATED WITH SEPARATE POLICY LINKS */}
+          {/* Column 3: Quick Links */}
           <div>
             <h4 className="font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -230,6 +230,15 @@ const Footer: React.FC = () => {
                     aria-label="Visit our Instagram page"
                   >
                     <Instagram size={18} />
+                  </a>
+                  <a 
+                    href="https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=adrian-barber-816923332" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-2 bg-gray-800 rounded-full hover:bg-amber-600 transition-colors"
+                    aria-label="Follow us on LinkedIn"
+                  >
+                    <Linkedin size={18} />
                   </a>
                 </div>
               </div>
