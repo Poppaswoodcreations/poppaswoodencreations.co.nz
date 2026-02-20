@@ -238,7 +238,7 @@ const Reviews: React.FC = () => {
                       <span>Write a Review</span>
                     </a>
                     <a
-                      href="https://search.google.com/local/writereview?placeid=ChIJSwtQNMg5C20Ra5Qe0mq3_ZE"
+                      href="https://g.page/r/CZH9mv2q0p5aEBM/review"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 whitespace-nowrap"
@@ -351,7 +351,7 @@ const Reviews: React.FC = () => {
                     Write a Review
                   </a>
                   <a
-                    href="https://search.google.com/local/writereview?placeid=ChIJSwtQNMg5C20Ra5Qe0mq3_ZE"
+                    href="https://g.page/r/CZH9mv2q0p5aEBM/review"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold"
