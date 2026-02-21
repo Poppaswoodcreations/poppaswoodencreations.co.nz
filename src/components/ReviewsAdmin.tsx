@@ -23,6 +23,18 @@ interface Review {
   owner_reply_date?: string;
 }
 
+const renderStars = (rating: number) => (
+  <div className="flex gap-1">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Star
+        key={star}
+        size={16}
+        className={star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+      />
+    ))}
+  </div>
+);
+
 const ReviewsAdmin: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [pendingReviews, setPendingReviews] = useState<Review[]>([]);
@@ -33,7 +45,6 @@ const ReviewsAdmin: React.FC = () => {
   const [replyText, setReplyText] = useState('');
   const [savingReply, setSavingReply] = useState(false);
 
-  // Form state
   const [formData, setFormData] = useState({
     author_name: '',
     rating: 5,
@@ -121,7 +132,6 @@ const ReviewsAdmin: React.FC = () => {
         .from('reviews')
         .update({ is_visible: true })
         .eq('id', id);
-
       if (error) throw error;
       fetchReviews();
       alert('Review approved and published!');
@@ -136,7 +146,6 @@ const ReviewsAdmin: React.FC = () => {
         .from('reviews')
         .update({ is_visible: !currentVisibility })
         .eq('id', id);
-
       if (error) throw error;
       fetchReviews();
     } catch (error) {
@@ -151,7 +160,6 @@ const ReviewsAdmin: React.FC = () => {
         .from('reviews')
         .delete()
         .eq('id', id);
-
       if (error) throw error;
       fetchReviews();
     } catch (error) {
@@ -183,7 +191,6 @@ const ReviewsAdmin: React.FC = () => {
           owner_reply_date: new Date().toISOString()
         })
         .eq('id', id);
-
       if (error) throw error;
       setReplyingTo(null);
       setReplyText('');
@@ -202,177 +209,14 @@ const ReviewsAdmin: React.FC = () => {
     try {
       const { error } = await supabase
         .from('reviews')
-        .update({
-          owner_reply: null,
-          owner_reply_date: null
-        })
+        .update({ owner_reply: null, owner_reply_date: null })
         .eq('id', id);
-
       if (error) throw error;
       fetchReviews();
     } catch (error) {
       console.error('Error deleting reply:', error);
     }
   };
-
-  const renderStars = (rating: number) => (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <Star
-          key={star}
-          size={16}
-          className={star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-        />
-      ))}
-    </div>
-  );
-
-  const ReviewCard = ({ review, isPending = false }: { review: Review; isPending?: boolean }) => (
-    <div className={`p-6 ${isPending ? 'bg-yellow-50' : !review.is_visible ? 'bg-gray-50' : 'bg-white'}`}>
-      <div className="flex justify-between items-start">
-        <div className="flex-1">
-          <div className="flex items-center gap-4 mb-2 flex-wrap">
-            <h3 className="font-semibold text-lg">{review.author_name}</h3>
-            {renderStars(review.rating)}
-            <span className="text-sm text-gray-500">
-              {new Date(review.review_date).toLocaleDateString('en-NZ')}
-            </span>
-            {isPending && (
-              <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-semibold">
-                PENDING APPROVAL
-              </span>
-            )}
-            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-              {review.source}
-            </span>
-            {!review.is_visible && !isPending && (
-              <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Hidden</span>
-            )}
-            {review.owner_reply && (
-              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                ✓ Replied
-              </span>
-            )}
-          </div>
-          {review.review_title && (
-            <h4 className="font-medium text-gray-900 mb-1">{review.review_title}</h4>
-          )}
-          {review.product_name && (
-            <p className="text-sm text-gray-600 mb-2">Product: {review.product_name}</p>
-          )}
-          <p className="text-gray-700 leading-relaxed">
-            {review.review_text || <span className="italic text-gray-400">No written review</span>}
-          </p>
-
-          {/* Existing Reply Display */}
-          {review.owner_reply && replyingTo !== review.id && (
-            <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
-              <p className="text-xs font-semibold text-amber-800 mb-1">
-                Owner response — Poppa's Wooden Creations
-              </p>
-              <p className="text-gray-700 text-sm">{review.owner_reply}</p>
-              <div className="flex gap-2 mt-2">
-                <button
-                  onClick={() => startReply(review)}
-                  className="text-xs text-amber-700 hover:text-amber-900 underline"
-                >
-                  Edit reply
-                </button>
-                <span className="text-xs text-gray-400">•</span>
-                <button
-                  onClick={() => deleteReply(review.id)}
-                  className="text-xs text-red-600 hover:text-red-800 underline"
-                >
-                  Delete reply
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Reply Input Box */}
-          {replyingTo === review.id && (
-            <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-              <p className="text-sm font-semibold text-gray-700 mb-2">
-                Your reply (as Poppa's Wooden Creations):
-              </p>
-              <textarea
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
-                placeholder="Write your reply here..."
-                autoFocus
-              />
-              <div className="flex gap-2 mt-2">
-                <button
-                  onClick={() => saveReply(review.id)}
-                  disabled={savingReply}
-                  className="flex items-center gap-1 px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 disabled:opacity-50 font-medium"
-                >
-                  <Check size={14} />
-                  {savingReply ? 'Saving...' : 'Save Reply'}
-                </button>
-                <button
-                  onClick={cancelReply}
-                  className="flex items-center gap-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 font-medium"
-                >
-                  <X size={14} />
-                  Cancel
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="flex gap-2 ml-4 flex-shrink-0">
-          {isPending ? (
-            <>
-              <button
-                onClick={() => approveReview(review.id)}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium whitespace-nowrap text-sm"
-              >
-                Approve & Publish
-              </button>
-              <button
-                onClick={() => deleteReview(review.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm"
-              >
-                Reject
-              </button>
-            </>
-          ) : (
-            <>
-              {replyingTo !== review.id && (
-                <button
-                  onClick={() => startReply(review)}
-                  className="flex items-center gap-1 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm whitespace-nowrap"
-                >
-                  <MessageSquare size={14} />
-                  {review.owner_reply ? 'Edit Reply' : 'Reply'}
-                </button>
-              )}
-              <button
-                onClick={() => toggleVisibility(review.id, review.is_visible)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm ${
-                  review.is_visible
-                    ? 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-                    : 'bg-green-600 hover:bg-green-700 text-white'
-                }`}
-              >
-                {review.is_visible ? 'Hide' : 'Show'}
-              </button>
-              <button
-                onClick={() => deleteReview(review.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm"
-              >
-                Delete
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
 
   if (loading) {
     return (
@@ -400,9 +244,7 @@ const ReviewsAdmin: React.FC = () => {
           <button
             onClick={() => setActiveTab('pending')}
             className={`px-6 py-3 font-semibold border-b-2 transition-colors ${
-              activeTab === 'pending'
-                ? 'border-amber-600 text-amber-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+              activeTab === 'pending' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             Pending Reviews ({pendingReviews.length})
@@ -410,9 +252,7 @@ const ReviewsAdmin: React.FC = () => {
           <button
             onClick={() => setActiveTab('all')}
             className={`px-6 py-3 font-semibold border-b-2 transition-colors ${
-              activeTab === 'all'
-                ? 'border-amber-600 text-amber-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+              activeTab === 'all' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             All Reviews ({reviews.length})
@@ -426,23 +266,15 @@ const ReviewsAdmin: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.author_name}
+                <input type="text" required value={formData.author_name}
                   onChange={(e) => setFormData({...formData, author_name: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  placeholder="John Smith"
-                />
+                  placeholder="John Smith" />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                <select
-                  value={formData.rating}
-                  onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                >
+                <select value={formData.rating} onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                   <option value={5}>5 Stars - Excellent</option>
                   <option value={4}>4 Stars - Very Good</option>
                   <option value={3}>3 Stars - Good</option>
@@ -450,122 +282,79 @@ const ReviewsAdmin: React.FC = () => {
                   <option value={1}>1 Star - Poor</option>
                 </select>
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Review Text</label>
-                <textarea
-                  value={formData.review_text}
-                  onChange={(e) => setFormData({...formData, review_text: e.target.value})}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  placeholder="Write the review here..."
-                />
+                <textarea value={formData.review_text} onChange={(e) => setFormData({...formData, review_text: e.target.value})}
+                  rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="Write the review here..." />
               </div>
-
               {formData.source === 'website' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Review Title (optional)</label>
-                  <input
-                    type="text"
-                    value={formData.review_title}
+                  <input type="text" value={formData.review_title}
                     onChange={(e) => setFormData({...formData, review_title: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    placeholder="e.g., Amazing quality!"
-                  />
+                    placeholder="e.g., Amazing quality!" />
                 </div>
               )}
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Review Date</label>
-                  <input
-                    type="date"
-                    required
-                    value={formData.review_date}
+                  <input type="date" required value={formData.review_date}
                     onChange={(e) => setFormData({...formData, review_date: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  />
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Source</label>
-                  <select
-                    value={formData.source}
-                    onChange={(e) => setFormData({...formData, source: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  >
+                  <select value={formData.source} onChange={(e) => setFormData({...formData, source: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                     <option value="google">Google</option>
                     <option value="website">Website</option>
                     <option value="manual">Manual Entry</option>
                   </select>
                 </div>
               </div>
-
               {formData.source === 'google' && (
                 <div className="grid grid-cols-3 gap-4 p-4 bg-blue-50 rounded-lg">
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.local_guide}
-                        onChange={(e) => setFormData({...formData, local_guide: e.target.checked})}
-                        className="rounded border-gray-300 text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="text-sm font-medium text-gray-700">Local Guide</span>
-                    </label>
-                  </div>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" checked={formData.local_guide}
+                      onChange={(e) => setFormData({...formData, local_guide: e.target.checked})}
+                      className="rounded border-gray-300 text-amber-600 focus:ring-amber-500" />
+                    <span className="text-sm font-medium text-gray-700">Local Guide</span>
+                  </label>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Review Count</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={formData.review_count}
+                    <input type="number" min="0" value={formData.review_count}
                       onChange={(e) => setFormData({...formData, review_count: parseInt(e.target.value) || 0})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    />
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Photo Count</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={formData.photo_count}
+                    <input type="number" min="0" value={formData.photo_count}
                       onChange={(e) => setFormData({...formData, photo_count: parseInt(e.target.value) || 0})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    />
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                   </div>
                 </div>
               )}
-
               {formData.source === 'website' && (
                 <div className="grid grid-cols-2 gap-4 p-4 bg-amber-50 rounded-lg">
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.verified}
-                        onChange={(e) => setFormData({...formData, verified: e.target.checked})}
-                        className="rounded border-gray-300 text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="text-sm font-medium text-gray-700">Verified Purchase</span>
-                    </label>
-                  </div>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" checked={formData.verified}
+                      onChange={(e) => setFormData({...formData, verified: e.target.checked})}
+                      className="rounded border-gray-300 text-amber-600 focus:ring-amber-500" />
+                    <span className="text-sm font-medium text-gray-700">Verified Purchase</span>
+                  </label>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-                    <input
-                      type="text"
-                      value={formData.product_name}
+                    <input type="text" value={formData.product_name}
                       onChange={(e) => setFormData({...formData, product_name: e.target.value})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="e.g., Wooden Train Set"
-                    />
+                      placeholder="e.g., Wooden Train Set" />
                   </div>
                   <div className="col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({...formData, category: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    >
+                    <select value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                       <option value="">Select category...</option>
                       <option value="wooden-baby-toys">Wooden Baby Toys</option>
                       <option value="wooden-cars">Wooden Cars</option>
@@ -576,11 +365,7 @@ const ReviewsAdmin: React.FC = () => {
                   </div>
                 </div>
               )}
-
-              <button
-                type="submit"
-                className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-              >
+              <button type="submit" className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold">
                 Add Review
               </button>
             </form>
@@ -591,28 +376,124 @@ const ReviewsAdmin: React.FC = () => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
             <h2 className="text-lg font-semibold">
-              {activeTab === 'pending'
-                ? `Pending Reviews (${pendingReviews.length})`
-                : `All Published Reviews (${reviews.length})`}
+              {activeTab === 'pending' ? `Pending Reviews (${pendingReviews.length})` : `All Published Reviews (${reviews.length})`}
             </h2>
           </div>
 
           {activeTab === 'pending' && pendingReviews.length === 0 && (
             <div className="p-8 text-center text-gray-500">No pending reviews. All caught up! 🎉</div>
           )}
-
           {activeTab === 'all' && reviews.length === 0 && (
             <div className="p-8 text-center text-gray-500">No reviews yet. Add your first review!</div>
           )}
 
           <div className="divide-y divide-gray-200">
-            {activeTab === 'pending'
-              ? pendingReviews.map((review) => (
-                  <ReviewCard key={review.id} review={review} isPending={true} />
-                ))
-              : reviews.map((review) => (
-                  <ReviewCard key={review.id} review={review} />
-                ))}
+            {activeTab === 'pending' && pendingReviews.map((review) => (
+              <div key={review.id} className="p-6 bg-yellow-50">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4 mb-2 flex-wrap">
+                      <h3 className="font-semibold text-lg">{review.author_name}</h3>
+                      {renderStars(review.rating)}
+                      <span className="text-sm text-gray-500">{new Date(review.review_date).toLocaleDateString('en-NZ')}</span>
+                      <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-semibold">PENDING APPROVAL</span>
+                      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">{review.source}</span>
+                    </div>
+                    {review.review_title && <h4 className="font-medium text-gray-900 mb-1">{review.review_title}</h4>}
+                    {review.product_name && <p className="text-sm text-gray-600 mb-2">Product: {review.product_name}</p>}
+                    <p className="text-gray-700 leading-relaxed">{review.review_text}</p>
+                  </div>
+                  <div className="flex gap-2 ml-4 flex-shrink-0">
+                    <button onClick={() => approveReview(review.id)}
+                      className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium whitespace-nowrap text-sm">
+                      Approve & Publish
+                    </button>
+                    <button onClick={() => deleteReview(review.id)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {activeTab === 'all' && reviews.map((review) => (
+              <div key={review.id} className={`p-6 ${!review.is_visible ? 'bg-gray-50' : 'bg-white'}`}>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4 mb-2 flex-wrap">
+                      <h3 className="font-semibold text-lg">{review.author_name}</h3>
+                      {renderStars(review.rating)}
+                      <span className="text-sm text-gray-500">{new Date(review.review_date).toLocaleDateString('en-NZ')}</span>
+                      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">{review.source}</span>
+                      {!review.is_visible && <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Hidden</span>}
+                      {review.owner_reply && <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">✓ Replied</span>}
+                    </div>
+                    {review.review_title && <h4 className="font-medium text-gray-900 mb-1">{review.review_title}</h4>}
+                    {review.product_name && <p className="text-sm text-gray-600 mb-2">Product: {review.product_name}</p>}
+                    <p className="text-gray-700 leading-relaxed">{review.review_text}</p>
+
+                    {review.owner_reply && replyingTo !== review.id && (
+                      <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                        <p className="text-xs font-semibold text-amber-800 mb-1">Owner response — Poppa's Wooden Creations</p>
+                        <p className="text-gray-700 text-sm">{review.owner_reply}</p>
+                        <div className="flex gap-2 mt-2">
+                          <button onClick={() => startReply(review)} className="text-xs text-amber-700 hover:text-amber-900 underline">Edit reply</button>
+                          <span className="text-xs text-gray-400">•</span>
+                          <button onClick={() => deleteReply(review.id)} className="text-xs text-red-600 hover:text-red-800 underline">Delete reply</button>
+                        </div>
+                      </div>
+                    )}
+
+                    {replyingTo === review.id && (
+                      <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                        <p className="text-sm font-semibold text-gray-700 mb-2">Your reply (as Poppa's Wooden Creations):</p>
+                        <textarea
+                          value={replyText}
+                          onChange={(e) => setReplyText(e.target.value)}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                          placeholder="Write your reply here..."
+                          autoFocus
+                        />
+                        <div className="flex gap-2 mt-2">
+                          <button onClick={() => saveReply(review.id)} disabled={savingReply}
+                            className="flex items-center gap-1 px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 disabled:opacity-50 font-medium">
+                            <Check size={14} />
+                            {savingReply ? 'Saving...' : 'Save Reply'}
+                          </button>
+                          <button onClick={cancelReply}
+                            className="flex items-center gap-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 font-medium">
+                            <X size={14} />
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2 ml-4 flex-shrink-0">
+                    {replyingTo !== review.id && (
+                      <button onClick={() => startReply(review)}
+                        className="flex items-center gap-1 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm whitespace-nowrap">
+                        <MessageSquare size={14} />
+                        {review.owner_reply ? 'Edit Reply' : 'Reply'}
+                      </button>
+                    )}
+                    <button onClick={() => toggleVisibility(review.id, review.is_visible)}
+                      className={`px-4 py-2 rounded-lg font-medium text-sm ${
+                        review.is_visible ? 'bg-gray-200 hover:bg-gray-300 text-gray-700' : 'bg-green-600 hover:bg-green-700 text-white'
+                      }`}>
+                      {review.is_visible ? 'Hide' : 'Show'}
+                    </button>
+                    <button onClick={() => deleteReview(review.id)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
