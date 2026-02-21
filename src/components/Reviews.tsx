@@ -17,6 +17,8 @@ interface Review {
   verified?: boolean;
   category?: string;
   product_name?: string;
+  owner_reply?: string;
+  owner_reply_date?: string;
 }
 
 const Reviews: React.FC = () => {
@@ -25,7 +27,6 @@ const Reviews: React.FC = () => {
   const [filterRating, setFilterRating] = useState(0);
   const [filterSource, setFilterSource] = useState<'all' | 'google' | 'website'>('all');
 
-  // Fetch reviews from Supabase
   useEffect(() => {
     fetchReviews();
   }, []);
@@ -47,7 +48,6 @@ const Reviews: React.FC = () => {
     }
   };
 
-  // Filter logic
   const filteredReviews = allReviews.filter(review => {
     if (filterRating > 0 && review.rating !== filterRating) return false;
     if (filterSource !== 'all' && review.source !== filterSource) return false;
@@ -57,20 +57,13 @@ const Reviews: React.FC = () => {
   const totalReviews = allReviews.length;
   const googleReviews = allReviews.filter(r => r.source === 'google').length;
   const websiteReviews = allReviews.filter(r => r.source === 'website').length;
-  
-  // Calculate average
   const totalStars = allReviews.reduce((sum, r) => sum + r.rating, 0);
   const averageRating = totalReviews > 0 ? (totalStars / totalReviews).toFixed(1) : '5.0';
 
-  const ratingDistribution = [
-    { rating: 5, count: allReviews.filter(r => r.rating === 5).length },
-    { rating: 4, count: allReviews.filter(r => r.rating === 4).length },
-    { rating: 3, count: allReviews.filter(r => r.rating === 3).length },
-    { rating: 2, count: allReviews.filter(r => r.rating === 2).length },
-    { rating: 1, count: allReviews.filter(r => r.rating === 1).length }
-  ].map(item => ({
-    ...item,
-    percentage: totalReviews > 0 ? (item.count / totalReviews) * 100 : 0
+  const ratingDistribution = [5, 4, 3, 2, 1].map(rating => ({
+    rating,
+    count: allReviews.filter(r => r.rating === rating).length,
+    percentage: totalReviews > 0 ? (allReviews.filter(r => r.rating === rating).length / totalReviews) * 100 : 0
   }));
 
   const renderStars = (rating: number, size: number = 16) => (
@@ -88,15 +81,13 @@ const Reviews: React.FC = () => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(Math.abs(now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
     const diffWeeks = Math.floor(diffDays / 7);
 
     if (diffDays < 1) return 'Today';
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffWeeks < 8) return `${diffWeeks} weeks ago`;
-    
     return date.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' });
   };
 
@@ -110,8 +101,8 @@ const Reviews: React.FC = () => {
 
   return (
     <>
-      <ReviewsSchema 
-        ratingValue={parseFloat(averageRating)} 
+      <ReviewsSchema
+        ratingValue={parseFloat(averageRating)}
         reviewCount={totalReviews}
       />
       <div className="min-h-screen bg-gray-50">
@@ -129,12 +120,11 @@ const Reviews: React.FC = () => {
                   <p className="text-xl opacity-90">Based on {totalReviews} verified reviews</p>
                 </div>
               </div>
-              
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
                 Customer Reviews & Testimonials
               </h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                See why Whangarei families trust Poppa's Wooden Creations for handcrafted, 
+                See why Whangarei families trust Poppa's Wooden Creations for handcrafted,
                 heirloom-quality toys made from native NZ timber
               </p>
             </div>
@@ -145,7 +135,7 @@ const Reviews: React.FC = () => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              
+
               {/* Trust Badges */}
               <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
@@ -181,9 +171,7 @@ const Reviews: React.FC = () => {
                           style={{ width: `${percentage}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm font-medium text-gray-700 w-12 text-right">
-                        {count}
-                      </span>
+                      <span className="text-sm font-medium text-gray-700 w-12 text-right">{count}</span>
                     </div>
                   ))}
                 </div>
@@ -195,9 +183,7 @@ const Reviews: React.FC = () => {
                   <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center space-x-3">
                       <Filter size={20} className="text-gray-500" />
-                      <label htmlFor="rating-filter" className="text-sm font-medium text-gray-700">
-                        Rating:
-                      </label>
+                      <label htmlFor="rating-filter" className="text-sm font-medium text-gray-700">Rating:</label>
                       <select
                         id="rating-filter"
                         value={filterRating}
@@ -205,18 +191,13 @@ const Reviews: React.FC = () => {
                         className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-amber-700 focus:border-transparent"
                       >
                         <option value={0}>All Ratings</option>
-                        <option value={5}>5 Stars ({ratingDistribution[0].count})</option>
-                        <option value={4}>4 Stars ({ratingDistribution[1].count})</option>
-                        <option value={3}>3 Stars ({ratingDistribution[2].count})</option>
-                        <option value={2}>2 Stars ({ratingDistribution[3].count})</option>
-                        <option value={1}>1 Star ({ratingDistribution[4].count})</option>
+                        {ratingDistribution.map(({ rating, count }) => (
+                          <option key={rating} value={rating}>{rating} Stars ({count})</option>
+                        ))}
                       </select>
                     </div>
-
                     <div className="flex items-center space-x-3">
-                      <label htmlFor="source-filter" className="text-sm font-medium text-gray-700">
-                        Source:
-                      </label>
+                      <label htmlFor="source-filter" className="text-sm font-medium text-gray-700">Source:</label>
                       <select
                         id="source-filter"
                         value={filterSource}
@@ -229,7 +210,6 @@ const Reviews: React.FC = () => {
                       </select>
                     </div>
                   </div>
-
                   <div className="flex gap-4">
                     <a
                       href="/write-review"
@@ -258,8 +238,6 @@ const Reviews: React.FC = () => {
                       <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
                           <h3 className="font-semibold text-gray-900 text-lg">{review.author_name}</h3>
-                          
-                          {/* Source Badges */}
                           {review.source === 'google' && review.local_guide && (
                             <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
                               Google Local Guide
@@ -277,8 +255,7 @@ const Reviews: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        
-                        {/* Review Stats (for Google reviews) */}
+
                         {review.source === 'google' && (
                           <div className="flex items-center space-x-2 text-sm text-gray-500 mb-3">
                             {review.review_count !== undefined && review.review_count > 0 && (
@@ -293,11 +270,8 @@ const Reviews: React.FC = () => {
                           </div>
                         )}
 
-                        {/* Product Name (for website reviews) */}
                         {review.source === 'website' && review.product_name && (
-                          <div className="text-sm text-gray-500 mb-3">
-                            Product: {review.product_name}
-                          </div>
+                          <div className="text-sm text-gray-500 mb-3">Product: {review.product_name}</div>
                         )}
 
                         <div className="flex items-center space-x-3 mb-3">
@@ -309,38 +283,37 @@ const Reviews: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Review Title (website reviews only) */}
+
                     {review.review_title && (
                       <h4 className="font-semibold text-gray-900 mb-2">{review.review_title}</h4>
                     )}
-                    
-                    {/* Review Text */}
+
                     {review.review_text && review.review_text.trim() !== '' ? (
-                      <p className="text-gray-700 leading-relaxed mb-4">{review.review_text}</p>
+                      <p className="text-gray-700 leading-relaxed">{review.review_text}</p>
                     ) : (
-                      <p className="text-gray-400 italic leading-relaxed mb-4">
+                      <p className="text-gray-400 italic leading-relaxed">
                         {review.author_name} gave {review.rating} stars but didn't leave a written review
                       </p>
                     )}
-                    
-                    {/* Owner Response */}
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <p className="text-sm text-gray-500 italic">
-                        Owner response: Thank you for your review!
-                      </p>
-                    </div>
+
+                    {/* Owner Reply */}
+                    {review.owner_reply && (
+                      <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                        <p className="text-xs font-semibold text-amber-800 mb-1">
+                          Response from Poppa's Wooden Creations
+                        </p>
+                        <p className="text-gray-700 text-sm leading-relaxed">{review.owner_reply}</p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
 
               {/* Call to Action */}
               <div className="bg-amber-50 border-2 border-amber-200 rounded-lg p-8 text-center mt-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Love Your Wooden Toy?
-                </h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Love Your Wooden Toy?</h2>
                 <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-                  Share your experience and help other Kiwi families discover the quality 
+                  Share your experience and help other Kiwi families discover the quality
                   and craftsmanship of Poppa's Wooden Creations. Every review helps us grow!
                 </p>
                 <div className="flex gap-4 justify-center">
