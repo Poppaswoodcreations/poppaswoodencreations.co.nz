@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Save, Eye, FileEdit } from 'lucide-react';
+import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Save, Eye, FileEdit, Star } from 'lucide-react';
 import { Product } from '../../types';
 import { saveProductsToStorage } from '../../utils/productStorage';
 import ProductForm from './ProductForm';
@@ -37,12 +37,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     backgroundImage: "https://i.ibb.co/FkkjBShk/image.jpg"
   });
   
-  // Check if Supabase is connected
   const { isSupabaseConnected, isAdminConnected, saveProduct, updateProduct, deleteProduct } = useProducts();
 
   const tabs = [
     { id: 'products', label: '📦 Product Manager', icon: Package },
     { id: 'blog-admin', label: '📝 Blog Manager', icon: FileEdit },
+    { id: 'reviews', label: '⭐ Reviews', icon: Star },
     { id: 'orders', label: '📋 Orders', icon: BarChart3 },
     { id: 'hero-editor', label: '🎨 Edit Hero', icon: Edit3 },
     { id: 'footer-editor', label: '📄 Edit Footer', icon: Settings },
@@ -56,7 +56,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     { id: 'category-images', label: '🖼️ Category Images', icon: Image }
   ];
 
-  // Load saved hero data
   useEffect(() => {
     try {
       const saved = localStorage.getItem('poppas-hero-settings');
@@ -86,17 +85,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           await deleteProduct(productId);
           console.log('✅ Product deleted from database');
         } else {
-          // Fallback to local delete
           const updatedProducts = products.filter(p => p.id !== productId);
           onProductsUpdate(updatedProducts);
           saveProductsToStorage(updatedProducts);
           console.log('✅ Product deleted locally');
         }
-        // Reload page to show changes
         window.location.reload();
       } catch (error) {
         console.error('❌ Delete failed:', error);
-        // Fallback to local delete
         const updatedProducts = products.filter(p => p.id !== productId);
         onProductsUpdate(updatedProducts);
         saveProductsToStorage(updatedProducts);
@@ -107,7 +103,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleSaveProduct = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
     console.log('💾 ADMIN: Saving product:', productData.name);
-
     try {
       if (editingProduct) {
         console.log('✏️ ADMIN: Updating existing product:', editingProduct.id);
@@ -115,15 +110,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           await updateProduct(editingProduct.id, productData);
           console.log('✅ ADMIN: Database update successful');
         } else {
-          // Fallback to local update
           const updatedProducts = products.map(p =>
             p.id === editingProduct.id
-              ? {
-                  ...productData,
-                  id: editingProduct.id,
-                  createdAt: editingProduct.createdAt,
-                  updatedAt: new Date().toISOString()
-                }
+              ? { ...productData, id: editingProduct.id, createdAt: editingProduct.createdAt, updatedAt: new Date().toISOString() }
               : p
           );
           onProductsUpdate(updatedProducts);
@@ -136,7 +125,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           await saveProduct(productData);
           console.log('✅ ADMIN: Database create successful');
         } else {
-          // Fallback to local save
           const newProduct: Product = {
             ...productData,
             id: `product-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -153,13 +141,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       console.log('✅ ADMIN: Product save completed successfully');
       setShowProductForm(false);
       setEditingProduct(null);
-
-      // Show success message
       alert(`✅ Product "${productData.name}" saved successfully! The page will reload to show your changes.`);
-      
-      // Reload page to show the new product
       window.location.reload();
-
     } catch (error) {
       console.error('❌ ADMIN: Save failed:', error);
       alert(`❌ Save failed: ${error instanceof Error ? error.message : 'Unknown error'}\n\nPlease try again or check the browser console for details.`);
@@ -169,7 +152,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleStockToggle = async (productId: string) => {
     const product = products.find(p => p.id === productId);
     if (!product) return;
-
     try {
       if (isAdminConnected) {
         await updateProduct(productId, { inStock: !product.inStock });
@@ -190,7 +172,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleBulkStockUpdate = async (inStock: boolean) => {
     try {
       if (isAdminConnected) {
-        // Update each product in the database
         for (const product of products) {
           await updateProduct(product.id, {
             inStock,
@@ -217,18 +198,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleUpdateStockQuantity = async (productId: string, quantity: number) => {
     try {
       if (isAdminConnected) {
-        await updateProduct(productId, {
-          stockQuantity: quantity,
-          inStock: quantity > 0
-        });
+        await updateProduct(productId, { stockQuantity: quantity, inStock: quantity > 0 });
       } else {
         const updatedProducts = products.map(product =>
           product.id === productId
-            ? {
-                ...product,
-                stockQuantity: quantity,
-                inStock: quantity > 0
-              }
+            ? { ...product, stockQuantity: quantity, inStock: quantity > 0 }
             : product
         );
         onProductsUpdate(updatedProducts);
@@ -254,6 +228,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const renderTabContent = () => {
     switch (activeTab) {
+
+      case 'reviews':
+        return (
+          <div className="space-y-4">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+              <h3 className="text-2xl font-bold text-amber-900 mb-3">⭐ Reviews Manager</h3>
+              <p className="text-amber-700 mb-6">
+                Manage customer reviews, reply to them, approve pending submissions, and add new reviews from Google My Business.
+              </p>
+              <a
+                href="/admin/reviews"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors font-semibold text-lg"
+              >
+                <Star size={20} />
+                Open Reviews Manager
+              </a>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h4 className="font-semibold text-gray-900 mb-3">What you can do in Reviews Manager:</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li>⭐ <strong>Reply</strong> to any review — your reply shows publicly under the review</li>
+                <li>✅ <strong>Approve</strong> pending reviews submitted through your website</li>
+                <li>👁️ <strong>Hide/Show</strong> reviews without deleting them</li>
+                <li>➕ <strong>Add</strong> reviews manually from Google My Business</li>
+                <li>🗑️ <strong>Delete</strong> reviews you don't want to display</li>
+              </ul>
+            </div>
+          </div>
+        );
+
       case 'blog-admin':
         return (
           <div className="space-y-6">
@@ -271,7 +277,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <span>Create New Blog Post</span>
               </button>
             </div>
-
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h4 className="font-semibold text-gray-900 mb-4">Current Blog Posts:</h4>
               <ul className="space-y-2 text-gray-700">
@@ -280,18 +285,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <li>✅ Best Sensory Wooden Toys for Babies</li>
                 <li>✅ How to Clean Wooden Toys Naturally</li>
               </ul>
-              <a 
+              <a
                 href="https://poppaswoodencreations.co.nz"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open('https://poppaswoodencreations.co.nz', '_blank');
-                }}
+                onClick={(e) => { e.preventDefault(); window.open('https://poppaswoodencreations.co.nz', '_blank'); }}
                 className="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
               >
                 View Blog →
               </a>
             </div>
-
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">💡 How It Works:</h4>
               <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
@@ -317,7 +318,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <p><strong>✅ Orders:</strong> Email notifications to adrianbarber8@gmail.com</p>
               </div>
             </div>
-            
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">Product Management</h3>
@@ -331,7 +331,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <span>Add New Product</span>
               </button>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product) => (
                 <div key={product.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -340,36 +339,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       src={product.images?.[0] || '/FB_IMG_1640827671355.jpg'}
                       alt={product.name}
                       className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '/FB_IMG_1640827671355.jpg';
-                      }}
+                      onError={(e) => { const target = e.target as HTMLImageElement; target.src = '/FB_IMG_1640827671355.jpg'; }}
                     />
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-gray-900 truncate">{product.name}</h4>
-                      <p className="text-sm text-gray-600 capitalize">
-                        {product.category.replace(/-/g, ' ')}
-                      </p>
-                      <p className="text-lg font-bold text-amber-600">
-                        ${product.price.toFixed(2)} NZD
-                      </p>
+                      <p className="text-sm text-gray-600 capitalize">{product.category.replace(/-/g, ' ')}</p>
+                      <p className="text-lg font-bold text-amber-600">${product.price.toFixed(2)} NZD</p>
                       <div className="flex items-center space-x-2 mt-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          product.inStock 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {product.inStock ? 'In Stock' : 'Out of Stock'}
                         </span>
                         {product.featured && (
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-                            Featured
-                          </span>
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Featured</span>
                         )}
                       </div>
                     </div>
                   </div>
-                  
                   <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => handleEditProduct(product)}
@@ -405,67 +390,43 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <span>Save Hero Changes</span>
               </button>
             </div>
-            
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-4">Hero Content</h4>
-              
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Main Title</label>
-                  <input
-                    type="text"
-                    value={heroData.title}
+                  <input type="text" value={heroData.title}
                     onChange={(e) => setHeroData({ ...heroData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  />
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle/Description</label>
-                  <textarea
-                    rows={4}
-                    value={heroData.subtitle}
+                  <textarea rows={4} value={heroData.subtitle}
                     onChange={(e) => setHeroData({ ...heroData, subtitle: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  />
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Button Text</label>
-                  <input
-                    type="text"
-                    value={heroData.ctaText}
+                  <input type="text" value={heroData.ctaText}
                     onChange={(e) => setHeroData({ ...heroData, ctaText: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  />
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Hero Background Image</label>
-                  <input
-                    type="text"
-                    value={heroData.backgroundImage}
+                  <input type="text" value={heroData.backgroundImage}
                     onChange={(e) => setHeroData({ ...heroData, backgroundImage: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    placeholder="Image URL or upload from Image Manager"
-                  />
+                    placeholder="Image URL or upload from Image Manager" />
                   {heroData.backgroundImage && (
                     <div className="mt-2">
-                      <img
-                        src={heroData.backgroundImage}
-                        alt="Hero preview"
+                      <img src={heroData.backgroundImage} alt="Hero preview"
                         className="w-32 h-24 object-cover rounded border"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = '/FB_IMG_1640827671355.jpg';
-                        }}
-                      />
+                        onError={(e) => { const target = e.target as HTMLImageElement; target.src = '/FB_IMG_1640827671355.jpg'; }} />
                     </div>
                   )}
                 </div>
               </div>
             </div>
-
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">💡 Hero Section Tips</h4>
               <ul className="text-sm text-blue-800 space-y-1">
@@ -533,21 +494,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </p>
               </div>
               <div className="space-x-2">
-                <button
-                  onClick={() => handleBulkStockUpdate(true)}
-                  className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700"
-                >
+                <button onClick={() => handleBulkStockUpdate(true)}
+                  className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
                   All In Stock
                 </button>
-                <button
-                  onClick={() => handleBulkStockUpdate(false)}
-                  className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
-                >
+                <button onClick={() => handleBulkStockUpdate(false)}
+                  className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
                   All Out of Stock
                 </button>
               </div>
             </div>
-            
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -563,43 +519,26 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <tr key={product.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <img
-                            src={product.images?.[0] || '/FB_IMG_1640827671355.jpg'}
-                            alt={product.name}
+                          <img src={product.images?.[0] || '/FB_IMG_1640827671355.jpg'} alt={product.name}
                             className="w-10 h-10 rounded-lg object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = '/FB_IMG_1640827671355.jpg';
-                            }}
-                          />
+                            onError={(e) => { const target = e.target as HTMLImageElement; target.src = '/FB_IMG_1640827671355.jpg'; }} />
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.name}</div>
                             <div className="text-sm text-gray-500">{product.category.replace(/-/g, ' ')}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        ${product.price.toFixed(2)} NZD
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${product.price.toFixed(2)} NZD</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <input
-                          type="number"
-                          min="0"
-                          max="999"
-                          value={product.stockQuantity || 0}
+                        <input type="number" min="0" max="999" value={product.stockQuantity || 0}
                           onChange={(e) => handleUpdateStockQuantity(product.id, parseInt(e.target.value) || 0)}
-                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                        />
+                          className="w-20 px-2 py-1 border border-gray-300 rounded text-center focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          onClick={() => handleStockToggle(product.id)}
+                        <button onClick={() => handleStockToggle(product.id)}
                           className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            product.inStock
-                              ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                              : 'bg-red-100 text-red-800 hover:bg-red-200'
-                          }`}
-                        >
+                            product.inStock ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'
+                          }`}>
                           {product.inStock ? '✅ In Stock' : '❌ Out of Stock'}
                         </button>
                       </td>
@@ -615,7 +554,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         return (
           <CSVImporter
             onImport={(importedProducts) => {
-              // Add imported products to existing ones
               const combinedProducts = [...products, ...importedProducts];
               onProductsUpdate(combinedProducts);
               saveProductsToStorage(combinedProducts);
@@ -652,23 +590,19 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="flex items-center justify-between p-6 border-b">
           <div className="flex items-center space-x-4">
             <h2 className="text-2xl font-bold text-gray-900">🔐 Admin Dashboard</h2>
-            {isAdminConnected && (
+            {isAdminConnected ? (
               <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 <span>✅ Supabase Connected!</span>
               </div>
-            )}
-            {!isAdminConnected && (
+            ) : (
               <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
                 <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
                 <span>⚠️ Local Storage Mode</span>
               </div>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
-          >
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -700,7 +634,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* Product Form Modal */}
       {showProductForm && (
         <ProductForm
           product={editingProduct}
@@ -712,7 +645,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         />
       )}
 
-      {/* Blog Admin Modal */}
       {showBlogAdmin && (
         <BlogAdmin onClose={() => setShowBlogAdmin(false)} />
       )}
