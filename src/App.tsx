@@ -185,7 +185,6 @@ const AppContent: React.FC = () => {
                   canonicalPath="/"
                 />
                 <HomePageSchema />
-                <HiddenH1 text="Handmade Wooden Toys NZ - Poppa's Wooden Creations" />
                 <Hero onCategorySelect={handleCategorySelect} products={products} />
                 <CategoryGrid categories={categories} onCategorySelect={handleCategorySelect} />
                 <ProductGrid
