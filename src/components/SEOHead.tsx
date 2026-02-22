@@ -22,20 +22,20 @@ const SEOHead: React.FC<SEOHeadProps> = ({
 }) => {
   const baseUrl = 'https://poppaswoodencreations.co.nz';
   const siteName = "Poppa's Wooden Creations";
-  
-  const canonicalUrl = canonicalPath 
+
+  const canonicalUrl = canonicalPath
     ? `${baseUrl}${canonicalPath}`
     : baseUrl;
-  
-  const pageTitle = title 
+
+  const pageTitle = title
     ? `${title} | ${siteName}`
     : "Handmade Wooden Toys NZ | Poppa's Creations";
-  
+
   const defaultDesc = "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei.";
   const pageDescription = description || defaultDesc;
-  
+
   const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow';
-  
+
   return (
     <Helmet>
       <title>{pageTitle}</title>
@@ -43,14 +43,14 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={robotsContent} />
       <link rel="canonical" href={canonicalUrl} />
-      
+
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:image" content={image} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteName} />
-      
+
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
