@@ -8,6 +8,10 @@
     <!-- Base title - React Helmet will override this -->
     <title>Poppa's Wooden Creations - Handcrafted Wooden Toys Made in New Zealand</title>
     
+    <!-- Static meta for Bing crawler (React Helmet overrides after JS loads) -->
+    <meta name="description" content="Premium handcrafted wooden toys and kitchenware made from native New Zealand timber. Trusted by Montessori schools. Made in Whangarei since 2015." />
+    <link rel="canonical" href="https://poppaswoodencreations.co.nz/" />
+    
     <!-- Google Customer Reviews Badge Script -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
     
@@ -299,6 +303,9 @@
     
   </head>
   <body>
+
+    <!-- Static H1 for Bing crawler (Hero component renders the visible H1 after JS loads) -->
+    <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Handmade Wooden Toys NZ - Poppa's Wooden Creations Whangarei</h1>
 
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
