@@ -118,6 +118,22 @@ function usePageTracking() {
   }, [location]);
 }
 
+// ─── VISUALLY HIDDEN H1 (for SEO, invisible to users) ────────────────────────
+
+const HiddenH1: React.FC<{ text: string }> = ({ text }) => (
+  <h1 style={{
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    padding: 0,
+    margin: '-1px',
+    overflow: 'hidden',
+    clip: 'rect(0,0,0,0)',
+    whiteSpace: 'nowrap',
+    border: 0
+  }}>{text}</h1>
+);
+
 // ─── MAIN APP CONTENT ─────────────────────────────────────────────────────────
 
 const AppContent: React.FC = () => {
@@ -169,6 +185,7 @@ const AppContent: React.FC = () => {
                   canonicalPath="/"
                 />
                 <HomePageSchema />
+                <HiddenH1 text="Handmade Wooden Toys NZ - Poppa's Wooden Creations" />
                 <Hero onCategorySelect={handleCategorySelect} products={products} />
                 <CategoryGrid categories={categories} onCategorySelect={handleCategorySelect} />
                 <ProductGrid
@@ -326,6 +343,7 @@ const AppContent: React.FC = () => {
                   canonicalPath="/wooden-kitchenware"
                   ogType="website"
                 />
+                <HiddenH1 text="Handcrafted Wooden Kitchenware NZ - Rimu Spatulas & Utensils" />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-kitchenware')}
                   onProductSelect={handleProductSelect}
@@ -460,7 +478,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Customer Reviews - 5.0/5 Stars"
-                  description="Read all 23 verified reviews from our happy customers. 13 Google reviews and 10 website reviews for our handcrafted wooden toys and kitchenware."
+                  description="Read all 31 verified reviews from our happy customers. Handcrafted wooden toys and kitchenware loved by Kiwi families."
                   canonicalPath="/reviews"
                   ogType="website"
                 />
