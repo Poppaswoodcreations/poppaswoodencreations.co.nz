@@ -8,10 +8,10 @@ interface ProductGridProps {
   onProductSelect: (product: Product) => void;
   onAddToCart: (product: Product) => void;
   category?: string;
+  loading?: boolean;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSelect, onAddToCart, category }) => {
-  // Add SEO for category pages
+const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSelect, onAddToCart, category, loading = false }) => {
   const getCategoryTitle = (cat: string) => {
     const categoryNames: { [key: string]: string } = {
       'wooden-trains': 'Wooden Train Sets & Railway Toys',
@@ -21,18 +21,30 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSelect, on
       'wooden-planes-helicopters': 'Wooden Airplane & Helicopter Toys',
       'wooden-kitchenware': 'Wooden Kitchen Toys & Utensils',
       'wooden-tractors-boats': 'Wooden Tractor & Boat Toys',
-      'wooden-other-toys': 'Educational Wooden Toys'
+      'wooden-other-toys': 'Educational Wooden Toys',
+      'wooden-pens': 'Handcrafted Wooden Pens',
+      'wooden-crosses': 'Handcrafted Wooden Crosses',
     };
     return categoryNames[cat] || 'Wooden Toys';
   };
 
-  if (products.length === 0) {
+  // Show spinner while loading
+  if (loading || products.length === 0) {
     return (
       <div className="container mx-auto px-4">
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">🪵</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">No Products Found</h2>
-          <p className="text-gray-500 mb-4">No products in this category yet</p>
+          {loading ? (
+            <>
+              <div className="inline-block w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-gray-500">Loading products...</p>
+            </>
+          ) : (
+            <>
+              <div className="text-6xl mb-4">🪵</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">No Products Found</h2>
+              <p className="text-gray-500 mb-4">No products in this category yet</p>
+            </>
+          )}
         </div>
       </div>
     );
