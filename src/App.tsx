@@ -306,12 +306,12 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-planes-helicopters" element={
               <>
                 <WoodenPlanesHelicoptersPage />
-                <ProductGrid
-                  products={(products || []).filter(p => p.category === 'wooden-planes-helicopters')}
+                {products.length > 0 && <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-planes-helicopters')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-planes-helicopters"
-                />
+                />}
               </>
             } />
 
@@ -371,24 +371,24 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-crosses" element={
               <>
                 <WoodenCrossesPage />
-                <ProductGrid
-                  products={(products || []).filter(p => p.category === 'wooden-crosses')}
+                {products.length > 0 && <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-crosses')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-crosses"
-                />
+                />}
               </>
             } />
 
             <Route path="/wooden-pens" element={
               <>
                 <WoodenPensPage />
-                <ProductGrid
-                  products={(products || []).filter(p => p.category === 'wooden-pens')}
+                {products.length > 0 && <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-pens')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-pens"
-                />
+                />}
               </>
             } />
 
