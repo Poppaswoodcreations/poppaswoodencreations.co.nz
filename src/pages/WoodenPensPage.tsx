@@ -1,14 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { Product } from '../types';
-import ProductGrid from '../components/ProductGrid';
 
-interface WoodenPensPageProps {
-  products: Product[];
-  onProductSelect: (p: Product) => void;
-  onAddToCart: (p: Product) => void;
-}
-
-const WoodenPensPage = ({ products, onProductSelect, onAddToCart }: WoodenPensPageProps) => {
+const WoodenPensPage = () => {
   const collectionPageSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -231,12 +223,6 @@ const WoodenPensPage = ({ products, onProductSelect, onAddToCart }: WoodenPensPa
 
         </div>
 
-        <ProductGrid
-            products={products}
-            onProductSelect={onProductSelect}
-            onAddToCart={onAddToCart}
-            category="wooden-pens"
-          />
       </div>
     </>
   );
