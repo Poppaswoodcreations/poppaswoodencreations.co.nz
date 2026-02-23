@@ -1,9 +1,19 @@
 User-agent: *
 Allow: /
-
 Disallow: /admin/
 Disallow: /api/
 Disallow: /cart
 Disallow: /checkout
-
+Disallow: /search
+Disallow: /products/SQ
+Disallow: /products/product-1
+Disallow: /products/product-2
+Disallow: /products/product-3
+Disallow: /products/product-4
+Disallow: /products/product-5
+Disallow: /products/product-6
+Disallow: /products/product-7
+Disallow: /products/product-8
+Disallow: /products/product-9
+Disallow: /products/product-10
 Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
