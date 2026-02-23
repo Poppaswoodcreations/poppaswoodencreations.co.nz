@@ -34,6 +34,9 @@ const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
+const WoodenPlanesHelicoptersPage = lazy(() => import('./pages/WoodenPlanesHelicoptersPage'));
+const WoodenPensPage = lazy(() => import('./pages/WoodenPensPage'));
+const WoodenCrossesPage = lazy(() => import('./pages/WoodenCrossesPage'));
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -301,20 +304,11 @@ const AppContent: React.FC = () => {
             } />
 
             <Route path="/wooden-planes-helicopters" element={
-              <>
-                <SEOHead
-                  title="Wooden Planes & Helicopters - Aviation Toys"
-                  description="Handcrafted wooden toy planes and helicopters made from New Zealand native timber. Spark imagination with premium quality aviation toys."
-                  canonicalPath="/wooden-planes-helicopters"
-                  ogType="website"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-planes-helicopters')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-planes-helicopters"
-                />
-              </>
+              <WoodenPlanesHelicoptersPage
+                products={products.filter(p => p.category === 'wooden-planes-helicopters')}
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+              />
             } />
 
             <Route path="/wooden-baby-toys" element={
@@ -369,39 +363,21 @@ const AppContent: React.FC = () => {
               </>
             } />
 
-            {/* ── NEW CATEGORIES ── */}
+            {/* ── RICH CONTENT CATEGORY PAGES ── */}
             <Route path="/wooden-crosses" element={
-              <>
-                <SEOHead
-                  title="Wooden Crosses - Handcrafted NZ Timber"
-                  description="Handcrafted wooden crosses made from native New Zealand Rimu timber. Beautiful religious gifts and heirloom pieces from Poppa's Wooden Creations."
-                  canonicalPath="/wooden-crosses"
-                  ogType="website"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-crosses')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-crosses"
-                />
-              </>
+              <WoodenCrossesPage
+                products={products.filter(p => p.category === 'wooden-crosses')}
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+              />
             } />
 
             <Route path="/wooden-pens" element={
-              <>
-                <SEOHead
-                  title="Wooden Pens - Handcrafted NZ Timber"
-                  description="Handcrafted wooden pens turned from native New Zealand timber. Unique gifts and heirloom writing instruments from Poppa's Wooden Creations."
-                  canonicalPath="/wooden-pens"
-                  ogType="website"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-pens')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-pens"
-                />
-              </>
+              <WoodenPensPage
+                products={products.filter(p => p.category === 'wooden-pens')}
+                onProductSelect={handleProductSelect}
+                onAddToCart={handleAddToCart}
+              />
             } />
 
             {/* ── LEGACY URL REDIRECTS ── */}
