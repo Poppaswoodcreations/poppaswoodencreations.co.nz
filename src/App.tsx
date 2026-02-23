@@ -305,13 +305,14 @@ const AppContent: React.FC = () => {
 
             <Route path="/wooden-planes-helicopters" element={
               <>
-                <WoodenPlanesHelicoptersPage />
-                {products.length > 0 && <ProductGrid
+                <ProductGrid
                   products={products.filter(p => p.category === 'wooden-planes-helicopters')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-planes-helicopters"
-                />}
+                  loading={loading}
+                />
+                <WoodenPlanesHelicoptersPage />
               </>
             } />
 
@@ -370,25 +371,27 @@ const AppContent: React.FC = () => {
             {/* ── RICH CONTENT CATEGORY PAGES ── */}
             <Route path="/wooden-crosses" element={
               <>
-                <WoodenCrossesPage />
-                {products.length > 0 && <ProductGrid
+                <ProductGrid
                   products={products.filter(p => p.category === 'wooden-crosses')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-crosses"
-                />}
+                  loading={loading}
+                />
+                <WoodenCrossesPage />
               </>
             } />
 
             <Route path="/wooden-pens" element={
               <>
-                <WoodenPensPage />
-                {products.length > 0 && <ProductGrid
+                <ProductGrid
                   products={products.filter(p => p.category === 'wooden-pens')}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-pens"
-                />}
+                  loading={loading}
+                />
+                <WoodenPensPage />
               </>
             } />
 
