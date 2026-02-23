@@ -114,8 +114,7 @@ const WoodenPensPage = () => {
         </script>
       </Helmet>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto mb-12">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
 
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Handcrafted Wooden Pens — New Zealand Native Timber</h1>
@@ -220,8 +219,6 @@ const WoodenPensPage = () => {
               </div>
             </div>
           </section>
-
-        </div>
 
       </div>
     </>
