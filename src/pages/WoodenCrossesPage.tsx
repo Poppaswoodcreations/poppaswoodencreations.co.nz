@@ -114,8 +114,7 @@ const WoodenCrossesPage = () => {
         </script>
       </Helmet>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto mb-12">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
 
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Handcrafted Wooden Crosses — New Zealand Rimu</h1>
@@ -219,8 +218,6 @@ const WoodenCrossesPage = () => {
               </div>
             </div>
           </section>
-
-        </div>
 
       </div>
     </>
