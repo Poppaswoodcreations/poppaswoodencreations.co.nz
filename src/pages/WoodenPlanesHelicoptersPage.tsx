@@ -1,8 +1,6 @@
-import { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Product } from '../types';
-
-const ProductGrid = lazy(() => import('../components/ProductGrid'));
+import ProductGrid from '../components/ProductGrid';
 
 interface WoodenPlanesHelicoptersPageProps {
   products: Product[];
@@ -221,14 +219,12 @@ const WoodenPlanesHelicoptersPage = ({ products, onProductSelect, onAddToCart }:
           </section>
         </div>
 
-        <Suspense fallback={<div className="flex justify-center p-8"><div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div></div>}>
-          <ProductGrid
+        <ProductGrid
             products={products}
             onProductSelect={onProductSelect}
             onAddToCart={onAddToCart}
             category="wooden-planes-helicopters"
           />
-        </Suspense>
       </div>
     </>
   );
