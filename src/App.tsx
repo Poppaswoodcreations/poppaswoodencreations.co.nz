@@ -304,11 +304,15 @@ const AppContent: React.FC = () => {
             } />
 
             <Route path="/wooden-planes-helicopters" element={
-              <WoodenPlanesHelicoptersPage
-                products={products.filter(p => p.category === 'wooden-planes-helicopters')}
-                onProductSelect={handleProductSelect}
-                onAddToCart={handleAddToCart}
-              />
+              <>
+                <WoodenPlanesHelicoptersPage />
+                <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-planes-helicopters')}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-planes-helicopters"
+                />
+              </>
             } />
 
             <Route path="/wooden-baby-toys" element={
@@ -365,19 +369,27 @@ const AppContent: React.FC = () => {
 
             {/* ── RICH CONTENT CATEGORY PAGES ── */}
             <Route path="/wooden-crosses" element={
-              <WoodenCrossesPage
-                products={products.filter(p => p.category === 'wooden-crosses')}
-                onProductSelect={handleProductSelect}
-                onAddToCart={handleAddToCart}
-              />
+              <>
+                <WoodenCrossesPage />
+                <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-crosses')}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-crosses"
+                />
+              </>
             } />
 
             <Route path="/wooden-pens" element={
-              <WoodenPensPage
-                products={products.filter(p => p.category === 'wooden-pens')}
-                onProductSelect={handleProductSelect}
-                onAddToCart={handleAddToCart}
-              />
+              <>
+                <WoodenPensPage />
+                <ProductGrid
+                  products={products.filter(p => p.category === 'wooden-pens')}
+                  onProductSelect={handleProductSelect}
+                  onAddToCart={handleAddToCart}
+                  category="wooden-pens"
+                />
+              </>
             } />
 
             {/* ── LEGACY URL REDIRECTS ── */}
