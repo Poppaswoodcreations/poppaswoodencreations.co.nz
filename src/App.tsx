@@ -34,9 +34,9 @@ const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
-const WoodenPlanesHelicoptersPage = lazy(() => import('./pages/WoodenPlanesHelicoptersPage'));
-const WoodenPensPage = lazy(() => import('./pages/WoodenPensPage'));
-const WoodenCrossesPage = lazy(() => import('./pages/WoodenCrossesPage'));
+import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
+import WoodenPensPage from './pages/WoodenPensPage';
+import WoodenCrossesPage from './pages/WoodenCrossesPage';
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
