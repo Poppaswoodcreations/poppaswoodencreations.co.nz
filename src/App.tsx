@@ -34,6 +34,7 @@ const WoodenToysNZ = lazy(() => import('./pages/WoodenToysNZ'));
 const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
+const CustomOrderPage = lazy(() => import('./pages/CustomOrderPage'));
 import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
 import WoodenPensPage from './pages/WoodenPensPage';
 import WoodenCrossesPage from './pages/WoodenCrossesPage';
@@ -209,6 +210,19 @@ const AppContent: React.FC = () => {
                   noindex={true}
                 />
                 <OrderConfirmation />
+              </>
+            } />
+
+            {/* ── CUSTOM ORDER ── */}
+            <Route path="/custom-order" element={
+              <>
+                <SEOHead
+                  title="Custom Wooden Toy Orders - Made to Your Specs"
+                  description="Order a custom handcrafted wooden toy or kitchenware item from Poppa's Wooden Creations. Choose your timber, size, and finish."
+                  canonicalPath="/custom-order"
+                  ogType="website"
+                />
+                <CustomOrderPage />
               </>
             } />
 
