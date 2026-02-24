@@ -11,28 +11,21 @@ const Footer: React.FC = () => {
       <div className="bg-amber-700 text-white py-6">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {/* Trust Badge 1 */}
             <div className="flex flex-col items-center space-y-2">
               <Shield className="w-8 h-8" />
               <div className="text-sm font-bold">Secure Checkout</div>
               <div className="text-xs">SSL Encrypted</div>
             </div>
-
-            {/* Trust Badge 2 */}
             <div className="flex flex-col items-center space-y-2">
               <Award className="w-8 h-8" />
               <div className="text-sm font-bold">Made in NZ 🇳🇿</div>
               <div className="text-xs">Handcrafted Quality</div>
             </div>
-
-            {/* Trust Badge 3 */}
             <div className="flex flex-col items-center space-y-2">
               <Package className="w-8 h-8" />
               <div className="text-sm font-bold">Free Shipping</div>
               <div className="text-xs">Orders Over $1000</div>
             </div>
-
-            {/* Trust Badge 4 */}
             <div className="flex flex-col items-center space-y-2">
               <Heart className="w-8 h-8" />
               <div className="text-sm font-bold">30-Day Returns</div>
@@ -45,7 +38,7 @@ const Footer: React.FC = () => {
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
+
           {/* Column 1: About Company */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
@@ -58,11 +51,9 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Creating beautiful, safe wooden toys with love and attention to detail since 2015. 
+              Creating beautiful, safe wooden toys with love and attention to detail since 2015.
               Every toy is handcrafted from native NZ timber in Whangarei.
             </p>
-            
-            {/* Quality Badges */}
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-xs">
                 <span className="bg-green-700 text-white px-2 py-1 rounded font-semibold">Food-Safe Finish</span>
@@ -74,8 +65,6 @@ const Footer: React.FC = () => {
                 <span className="bg-purple-600 text-white px-2 py-1 rounded font-semibold">Heirloom Quality</span>
               </div>
             </div>
-
-            {/* Payment Methods */}
             <div className="pt-4">
               <p className="text-xs text-gray-400 mb-2">We Accept:</p>
               <div className="flex items-center space-x-3">
@@ -116,6 +105,11 @@ const Footer: React.FC = () => {
                   Planes & Helicopters
                 </Link>
               </li>
+              <li>
+                <Link to="/custom-order" className="text-sm hover:text-amber-500 transition-colors font-medium text-amber-400">
+                  ✦ Custom Orders
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -141,6 +135,11 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/contact" className="text-sm hover:text-amber-500 transition-colors">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/custom-order" className="text-sm hover:text-amber-500 transition-colors">
+                  Custom Orders
                 </Link>
               </li>
               <li>
@@ -175,8 +174,6 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Get in Touch</h4>
             <div className="space-y-3">
-              
-              {/* Address */}
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div className="text-sm">
@@ -185,55 +182,47 @@ const Footer: React.FC = () => {
                   <p>New Zealand</p>
                 </div>
               </div>
-
-              {/* Phone */}
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-amber-500 flex-shrink-0" />
                 <a href="tel:+6421022881660" className="text-sm hover:text-amber-500 transition-colors">
                   +64 21 022 8166 (021 022 88166)
                 </a>
               </div>
-
-              {/* Email */}
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-amber-500 flex-shrink-0" />
                 <a href="mailto:poppas.wooden.creations@gmail.com" className="text-sm hover:text-amber-500 transition-colors">
                   poppas.wooden.creations@gmail.com
                 </a>
               </div>
-
-              {/* Business Hours */}
               <div className="pt-2">
                 <p className="text-xs font-semibold text-white mb-1">Business Hours:</p>
                 <p className="text-xs text-gray-400">Mon-Fri: 9AM-3PM NZST</p>
                 <p className="text-xs text-gray-400">Sat-Sun: Closed</p>
               </div>
-
-              {/* Social Media */}
               <div className="pt-4">
                 <p className="text-xs font-semibold text-white mb-2">Follow Us:</p>
                 <div className="flex space-x-3">
-                  <a 
-                    href="https://facebook.com/poppaswooden" 
-                    target="_blank" 
+                  <a
+                    href="https://facebook.com/poppaswooden"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-800 rounded-full hover:bg-amber-600 transition-colors"
                     aria-label="Visit our Facebook page"
                   >
                     <Facebook size={18} />
                   </a>
-                  <a 
-                    href="https://instagram.com/poppaswooden" 
-                    target="_blank" 
+                  <a
+                    href="https://instagram.com/poppaswooden"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-800 rounded-full hover:bg-amber-600 transition-colors"
                     aria-label="Visit our Instagram page"
                   >
                     <Instagram size={18} />
                   </a>
-                  <a 
-                    href="https://www.linkedin.com/in/adrian-barber-816923332" 
-                    target="_blank" 
+                  <a
+                    href="https://www.linkedin.com/in/adrian-barber-816923332"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-800 rounded-full hover:bg-amber-600 transition-colors"
                     aria-label="Follow us on LinkedIn"
@@ -270,7 +259,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom Bar - Copyright */}
+      {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
