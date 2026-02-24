@@ -17,7 +17,6 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       setSubmitStatus('success');
@@ -78,7 +77,7 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-gray-600">+64 21 022 8166</p>
+                  <p className="text-gray-600">+64 21 022 8166 (021 022 88166)</p>
                   <p className="text-sm text-gray-500">Monday - Friday, 9am - 5pm NZST</p>
                 </div>
               </div>
