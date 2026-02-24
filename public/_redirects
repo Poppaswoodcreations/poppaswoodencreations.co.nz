@@ -1,14 +1,42 @@
+# Ghost product URLs - return 404 so Bing/Google drop them from index
+/products/baby-blocks-native-rimu-8-pack    /404    404
+/products/backhoe                           /404    404
+/products/bongo-drum                        /404    404
+/products/bowl                              /404    404
+/products/butter-knife                      /404    404
+/products/cargo-truck                       /404    404
+/products/chopping-board                    /404    404
+/products/fire-truck                        /404    404
+/products/humming-top                       /404    404
+/products/ice-cream-truck                   /404    404
+/products/kauri-bowl                        /404    404
+/products/kauri-helicopter                  /404    404
+/products/kauri-planes                      /404    404
+/products/mini-buss-rimu                    /404    404
+/products/paddle-boat                       /404    404
+/products/police-car                        /404    404
+/products/pull-along-duck                   /404    404
+/products/race-car                          /404    404
+/products/rimu-car                          /404    404
+/products/rimu-salad-bowl                   /404    404
+/products/salad-servers                     /404    404
+/products/school-bus-small                  /404    404
+/products/sedan                             /404    404
+/products/skateboard                        /404    404
+/products/small-road-trains                 /404    404
+/products/small-sports-car                  /404    404
+/products/stacking-toy                      /404    404
+/products/submarine                         /404    404
+/products/tanker-truck                      /404    404
+/products/tipper-truck                      /404    404
+
 # Redirect old shopcars URLs to homepage
 /shopcars/* / 301
-
 # Redirect old SQ product IDs to homepage  
 /products/SQ* / 301
-
 # Serve robots.txt directly
 /robots.txt /robots.txt 200
-
 # Serve sitemap directly
 /sitemap.xml /sitemap.xml 200
-
 # SPA fallback for everything else (MUST BE LAST)
 /* /index.html 200
