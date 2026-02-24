@@ -74,6 +74,8 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
       navigate('/privacy');
     } else if (categorySlug === 'terms') {
       navigate('/terms');
+    } else if (categorySlug === 'custom-order') {
+      navigate('/custom-order');
     } else {
       navigate(`/${categorySlug}`);
     }
@@ -98,13 +100,16 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </div>
           </a>
 
+          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6">
+
+            {/* Shop dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Shop
                 <ChevronDown size={16} className="ml-1" />
               </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 mt-2 w-52 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 {productCategories.map((category) => (
                   <a
                     key={category.slug}
@@ -115,6 +120,16 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                     {category.name}
                   </a>
                 ))}
+                {/* Divider + Custom Orders */}
+                <div className="border-t border-gray-100 mt-1 pt-1">
+                  <a
+                    href="/custom-order"
+                    onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
+                    className="block px-4 py-2 text-amber-600 hover:bg-amber-50 hover:text-amber-700 transition-colors font-medium"
+                  >
+                    ✦ Custom Orders
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -150,6 +165,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               Contact
             </a>
 
+            {/* Help dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Help
@@ -168,6 +184,16 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 ))}
               </div>
             </div>
+
+            {/* Custom Order CTA button */}
+            <a
+              href="/custom-order"
+              onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
+              className="bg-amber-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-amber-700 transition-colors whitespace-nowrap"
+            >
+              Custom Order
+            </a>
+
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -213,6 +239,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
@@ -270,6 +297,15 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Contact
+              </a>
+
+              {/* Custom Order — prominent in mobile menu */}
+              <a
+                href="/custom-order"
+                onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
+                className="block w-full text-left px-4 py-2 mx-0 text-amber-600 font-semibold hover:bg-amber-50 hover:text-amber-700 transition-colors border-t border-b border-amber-100"
+              >
+                ✦ Custom Orders
               </a>
 
               <div className="px-4 py-2">
