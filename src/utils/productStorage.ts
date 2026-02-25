@@ -4,6 +4,7 @@
 
 import { Product } from '../types';
 import { products as deploymentProducts } from '../data/products';
+import { FALLBACK_PRODUCT_IMAGE } from './constants';
 
 const STORAGE_KEY = 'poppas-products';
 
@@ -19,7 +20,6 @@ export const saveProductsToStorage = (products: Product[]): void => {
     localStorage.removeItem('wooden-toy-products');
     
     const dataToSave = JSON.stringify(products);
-    
     localStorage.setItem(STORAGE_KEY, dataToSave);
     
     console.log(`✅ Saved ${products.length} products successfully`);
@@ -42,14 +42,13 @@ export const loadProductsFromStorage = (): Product[] => {
         console.log('🧹 Found FB_IMG references, cleaning...');
         const cleanedProducts = products.map((product: Product) => ({
           ...product,
-          images: Array.isArray(product.images) 
-            ? product.images.map(img => 
-                img === '/FB_IMG_1640827671355.jpg' ? 'https://i.ibb.co/dw3x0Kmm/image.jpg' : img
+          images: Array.isArray(product.images)
+            ? product.images.map((img: string) =>
+                img === '/FB_IMG_1640827671355.jpg' ? FALLBACK_PRODUCT_IMAGE : img
               )
-            : [product.images || 'https://i.ibb.co/dw3x0Kmm/image.jpg']
+            : [product.images || FALLBACK_PRODUCT_IMAGE]
         }));
         
-        // Save cleaned products back
         saveProductsToStorage(cleanedProducts);
         return cleanedProducts;
       }
@@ -59,11 +58,11 @@ export const loadProductsFromStorage = (): Product[] => {
         ...product,
         images: (() => {
           if (Array.isArray(product.images)) {
-            return product.images.length > 0 ? product.images : ['https://i.ibb.co/dw3x0Kmm/image.jpg'];
+            return product.images.length > 0 ? product.images : [FALLBACK_PRODUCT_IMAGE];
           } else if (typeof product.images === 'string' && product.images.trim()) {
             return [product.images];
           } else {
-            return ['https://i.ibb.co/dw3x0Kmm/image.jpg'];
+            return [FALLBACK_PRODUCT_IMAGE];
           }
         })()
       }));
@@ -82,13 +81,11 @@ export const loadProductsFromStorage = (): Product[] => {
  * Get deployment products - these are embedded in the code for deployment
  */
 const getDeploymentProducts = (): Product[] => {
-  console.log('🚀 DEPLOYMENT: Using embedded products with new cars:', deploymentProducts.length);
-  console.log('🚗 First 5 products:', deploymentProducts.slice(0, 5).map(p => p.name));
+  console.log('🚀 DEPLOYMENT: Using embedded products:', deploymentProducts.length);
   
-  // Ensure all deployment products have proper image arrays
   const normalizedDeploymentProducts = deploymentProducts.map(product => ({
     ...product,
-    images: Array.isArray(product.images) ? product.images : [product.images || 'https://i.ibb.co/FkkjBShk/image.jpg']
+    images: Array.isArray(product.images) ? product.images : [product.images || FALLBACK_PRODUCT_IMAGE]
   }));
   
   return normalizedDeploymentProducts;
@@ -110,12 +107,11 @@ export const autoRestoreProducts = async (): Promise<Product[]> => {
   
   // Fallback to deployment products
   console.log('📦 No localStorage products, using deployment products');
-  const deploymentProducts = getDeploymentProducts();
-  if (deploymentProducts.length > 0) {
-    console.log(`✅ Using ${deploymentProducts.length} deployment products`);
-    // Save to localStorage for future use
-    saveProductsToStorage(deploymentProducts);
-    return deploymentProducts;
+  const deploymentProds = getDeploymentProducts();
+  if (deploymentProds.length > 0) {
+    console.log(`✅ Using ${deploymentProds.length} deployment products`);
+    saveProductsToStorage(deploymentProds);
+    return deploymentProds;
   }
   
   console.log('❌ No products found anywhere');
@@ -147,7 +143,7 @@ export const exportProductsBackup = (products: Product[]): void => {
       productCount: products.length,
       products: products,
       metadata: {
-        source: 'Poppa\'s Wooden Creations Admin Panel',
+        source: "Poppa's Wooden Creations Admin Panel",
         format: 'JSON Backup'
       }
     };
