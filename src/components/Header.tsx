@@ -103,7 +103,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6">
 
-            {/* Shop dropdown */}
+            {/* Shop dropdown — includes Custom Orders at bottom */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Shop
@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                   <a
                     href="/custom-order"
                     onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
-                    className="block px-4 py-2 text-amber-600 hover:bg-amber-50 hover:text-amber-700 transition-colors font-medium"
+                    className="block px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium"
                   >
                     ✦ Custom Orders
                   </a>
@@ -185,14 +185,10 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </div>
             </div>
 
-            {/* Custom Order CTA button */}
-            <a
-              href="/custom-order"
-              onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
-              className="bg-amber-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-amber-700 transition-colors whitespace-nowrap"
-            >
-              Custom Order
-            </a>
+            {/* 
+              ✅ FIXED: Removed duplicate "Custom Order" CTA button that was here.
+              Custom Orders now only appears once — inside the Shop dropdown above.
+            */}
 
           </nav>
 
@@ -303,7 +299,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               <a
                 href="/custom-order"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
-                className="block w-full text-left px-4 py-2 mx-0 text-amber-600 font-semibold hover:bg-amber-50 hover:text-amber-700 transition-colors border-t border-b border-amber-100"
+                className="block w-full text-left px-4 py-2 mx-0 text-amber-700 font-semibold hover:bg-amber-50 hover:text-amber-800 transition-colors border-t border-b border-amber-100"
               >
                 ✦ Custom Orders
               </a>
