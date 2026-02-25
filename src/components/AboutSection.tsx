@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Award, Truck, Shield, Star, Users, Edit, MapPin, Phone, Mail, Building, Calendar, CheckCircle } from 'lucide-react';
+import { Heart, Award, Truck, Shield, Star, Edit, MapPin, Phone, Mail, Building, Calendar, CheckCircle } from 'lucide-react';
+import { FALLBACK_PRODUCT_IMAGE } from '../utils/constants';
+
+const ABOUT_IMAGE_FALLBACK = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
 
 const AboutSection: React.FC = () => {
   const [showImageEditor, setShowImageEditor] = useState(false);
   const [aboutImage, setAboutImage] = useState('');
 
-  // Load saved about image
   useEffect(() => {
     try {
       const savedAboutImage = localStorage.getItem('poppas-about-image');
       if (savedAboutImage) {
-        console.log('🖼️ ABOUT: Found saved about image');
         setAboutImage(savedAboutImage);
       } else {
-        console.log('🖼️ ABOUT: No saved image, using default');
-        setAboutImage('https://i.ibb.co/ynRTChbF/image.jpg');
+        setAboutImage(ABOUT_IMAGE_FALLBACK);
       }
     } catch (error) {
       console.error('Error loading about image:', error);
-      setAboutImage('https://i.ibb.co/ynRTChbF/image.jpg');
+      setAboutImage(ABOUT_IMAGE_FALLBACK);
     }
   }, []);
 
   const handleSaveAboutImage = () => {
     try {
-      console.log('💾 ABOUT: Saving about image:', aboutImage.substring(0, 100) + '...');
-      
       localStorage.setItem('poppas-about-image', aboutImage);
-      setAboutImage(aboutImage);
       
       const verification = localStorage.getItem('poppas-about-image');
       if (verification === aboutImage) {
-        console.log('✅ ABOUT: Image saved successfully');
         setShowImageEditor(false);
         alert('About page image updated successfully!');
       } else {
@@ -167,25 +163,22 @@ const AboutSection: React.FC = () => {
 
           {/* Image */}
           <div className="relative">
-            {/* Edit Button */}
             <button
               onClick={() => setShowImageEditor(true)}
               className="absolute top-2 right-2 sm:top-4 sm:right-4 z-30 bg-amber-600 hover:bg-amber-700 text-white p-2 sm:p-3 rounded-full shadow-lg transition-all"
               title="Edit about page image"
-              style={{ zIndex: 30 }}
             >
               <Edit size={16} className="sm:w-5 sm:h-5" />
             </button>
             
             <div className="aspect-square bg-white rounded-2xl shadow-2xl overflow-hidden">
               <img
-                src={aboutImage || 'https://i.ibb.co/ynRTChbF/image.jpg'}
+                src={aboutImage || ABOUT_IMAGE_FALLBACK}
                 alt="Handcrafted wooden truck toys - Poppa's Wooden Creations"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = 'https://i.ibb.co/ynRTChbF/image.jpg';
-                  target.alt = 'Poppa\'s Wooden Creations truck toys';
+                  target.src = FALLBACK_PRODUCT_IMAGE;
                 }}
               />
             </div>
@@ -204,36 +197,28 @@ const AboutSection: React.FC = () => {
                 <Shield className="text-green-600" size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Safety Certified</h3>
-              <p className="text-gray-600 text-sm">
-                All toys meet NZ safety standards. Non-toxic finishes and smooth edges.
-              </p>
+              <p className="text-gray-600 text-sm">All toys meet NZ safety standards. Non-toxic finishes and smooth edges.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="text-blue-600" size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Quality Guarantee</h3>
-              <p className="text-gray-600 text-sm">
-                30-day return policy. Lifetime craftsmanship guarantee on all products.
-              </p>
+              <p className="text-gray-600 text-sm">30-day return policy. Lifetime craftsmanship guarantee on all products.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="text-purple-600" size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">4.9★ Rating</h3>
-              <p className="text-gray-600 text-sm">
-                Over 150 verified customer reviews. 98% customer satisfaction rate.
-              </p>
+              <p className="text-gray-600 text-sm">Over 150 verified customer reviews. 98% customer satisfaction rate.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="text-amber-600" size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Secure Shipping</h3>
-              <p className="text-gray-600 text-sm">
-                Tracked shipping worldwide. Secure packaging. Free shipping over $1000.
-              </p>
+              <p className="text-gray-600 text-sm">Tracked shipping worldwide. Secure packaging. Free shipping over $1000.</p>
             </div>
           </div>
         </div>
@@ -290,30 +275,21 @@ const AboutSection: React.FC = () => {
                 <Award className="text-amber-600" size={24} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Kauri</h3>
-              <p className="text-gray-600">
-                Ancient New Zealand timber known for its beautiful grain and durability. 
-                Perfect for heirloom pieces that last generations.
-              </p>
+              <p className="text-gray-600">Ancient New Zealand timber known for its beautiful grain and durability. Perfect for heirloom pieces that last generations.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="text-green-600" size={24} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Rimu</h3>
-              <p className="text-gray-600">
-                Native New Zealand softwood with distinctive red-brown heartwood. 
-                Lightweight yet strong, ideal for children's toys.
-              </p>
+              <p className="text-gray-600">Native New Zealand softwood with distinctive red-brown heartwood. Lightweight yet strong, ideal for children's toys.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="text-blue-600" size={24} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Macrocarpa</h3>
-              <p className="text-gray-600">
-                Sustainable cypress timber with natural resistance to decay. 
-                Smooth texture perfect for safe, child-friendly toys.
-              </p>
+              <p className="text-gray-600">Sustainable cypress timber with natural resistance to decay. Smooth texture perfect for safe, child-friendly toys.</p>
             </div>
           </div>
         </div>
@@ -370,14 +346,13 @@ const AboutSection: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Image URL or Data URL
+                    Image URL
                   </label>
-                  <p className="text-sm text-gray-600">Monday-Friday 9AM-3PM NZST • Established 2015</p>
                   <textarea
                     rows={4}
                     value={aboutImage}
                     onChange={(e) => setAboutImage(e.target.value)}
-                    placeholder="Paste your truck image URL or data URL here..."
+                    placeholder="Paste your image URL here..."
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
                   />
                 </div>
@@ -391,18 +366,14 @@ const AboutSection: React.FC = () => {
                       className="w-full h-32 object-cover rounded border"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = '/FB_IMG_1640827671355.jpg';
+                        target.src = FALLBACK_PRODUCT_IMAGE;
                       }}
                     />
                   </div>
                 )}
                 
                 <div className="bg-blue-50 p-3 rounded text-xs text-blue-800">
-                  <p><strong>How to add your truck:</strong></p>
-                  <p>1. Go to Admin Dashboard → Images → Upload your truck photo</p>
-                  <p>2. Copy the data URL from the uploaded image</p>
-                  <p>3. Paste it in the field above</p>
-                  <p>4. Click "Save Image"</p>
+                  <p><strong>Tip:</strong> Use a Supabase image URL from your product-images bucket for best performance.</p>
                 </div>
               </div>
 
