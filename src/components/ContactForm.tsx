@@ -77,8 +77,8 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-gray-600">+64 21 022 88166 (02102288166)</p>
-                  <p className="text-sm text-gray-500">Monday - Friday, 9am - 5pm NZST</p>
+                  <p className="text-gray-600">+64 21 022 88166</p>
+                  <p className="text-sm text-gray-500">Monday - Friday, 9am - 3pm NZST</p>
                 </div>
               </div>
 
@@ -89,7 +89,7 @@ const ContactForm: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                   <p className="text-gray-600">poppas.wooden.creations@gmail.com</p>
-                  <p className="text-sm text-gray-500">Response within 24 hours • Registered NZ Business</p>
+                  <p className="text-sm text-gray-500">Response within 24 hours</p>
                 </div>
               </div>
 
@@ -102,7 +102,7 @@ const ContactForm: React.FC = () => {
                   <p className="text-gray-600">102 Kiripaka Rd</p>
                   <p className="text-gray-600">Whangarei, Northland 0110</p>
                   <p className="text-gray-600">New Zealand</p>
-                  <p className="text-sm text-gray-500">Registered Business #[Number] • Workshop visits by appointment</p>
+                  <p className="text-sm text-gray-500">Workshop visits by appointment</p>
                 </div>
               </div>
 
@@ -179,7 +179,7 @@ const ContactForm: React.FC = () => {
                 <AlertCircle className="text-red-500 mt-0.5" size={20} />
                 <div className="text-sm text-red-800">
                   <p className="font-medium">Error sending message</p>
-                  <p>Please try again or contact us directly at info@poppaswoodencreations.co.nz</p>
+                  <p>Please try again or contact us directly at poppas.wooden.creations@gmail.com</p>
                 </div>
               </div>
             )}
