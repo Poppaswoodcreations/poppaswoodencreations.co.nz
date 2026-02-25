@@ -1,7 +1,6 @@
 /**
  * Application constants
  */
-
 export const SITE_CONFIG = {
   name: "Poppa's Wooden Creations",
   tagline: "Handcrafted in New Zealand",
@@ -64,6 +63,16 @@ export const PRODUCT_CATEGORIES = [
     description: 'Farm tractors and sailing boats for adventure play'
   },
   {
+    slug: 'wooden-crosses',
+    name: 'Crosses',
+    description: 'Handcrafted wooden crosses made from native NZ timber'
+  },
+  {
+    slug: 'wooden-pens',
+    name: 'Wooden Pens',
+    description: 'Beautifully turned wooden pens crafted from native NZ timber'
+  },
+  {
     slug: 'wooden-other-toys',
     name: 'Other Toys',
     description: 'Unique wooden toys and educational games'
@@ -94,9 +103,8 @@ export const PAYMENT_METHODS = [
 ];
 
 export const ADMIN_PASSWORDS = ['Adrianbar1?', 'admin', 'poppa', 'password', 'poppas'];
-
-export const DEFAULT_PRODUCT_IMAGE = '/FB_IMG_1640827671355.jpg';
-export const FALLBACK_PRODUCT_IMAGE = 'https://i.ibb.co/FkkjBShk/image.jpg';
+export const DEFAULT_PRODUCT_IMAGE = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
+export const FALLBACK_PRODUCT_IMAGE = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
 
 export const SEO_DEFAULTS = {
   title: "Poppa's Wooden Creations - Handcrafted Wooden Toys NZ",
