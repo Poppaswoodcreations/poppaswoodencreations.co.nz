@@ -7,6 +7,14 @@
     
     <!-- Base title - React Helmet will override this -->
     <title>Poppa's Wooden Creations - Handcrafted Wooden Toys Made in New Zealand</title>
+
+    <!-- 
+      ✅ FIXED: Removed unused i.ibb.co preconnect (was flagged by PageSpeed).
+      ✅ FIXED: Supabase preconnect now has correct crossorigin attribute for images.
+      ✅ ADDED: dns-prefetch for GTM to reduce 3rd party latency.
+    -->
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
     <!-- Google Customer Reviews Badge Script -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
