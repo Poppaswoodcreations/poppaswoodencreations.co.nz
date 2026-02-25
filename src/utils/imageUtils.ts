@@ -1,7 +1,8 @@
+import { FALLBACK_PRODUCT_IMAGE } from './constants';
+
 /**
  * Image utilities for handling product images
  */
-
 export interface ImageValidation {
   isValid: boolean;
   error?: string;
@@ -14,19 +15,16 @@ export const validateImageUrl = async (url: string): Promise<ImageValidation> =>
   if (!url || url.trim() === '') {
     return { isValid: false, error: 'Empty URL' };
   }
-
   // Check if it's a data URL
   if (url.startsWith('data:image/')) {
     return { isValid: true };
   }
-
   // Check if it's a valid URL format
   try {
     new URL(url);
   } catch {
     return { isValid: false, error: 'Invalid URL format' };
   }
-
   // Try to load the image
   return new Promise((resolve) => {
     const img = new Image();
@@ -40,7 +38,7 @@ export const validateImageUrl = async (url: string): Promise<ImageValidation> =>
  * Get fallback image URL
  */
 export const getFallbackImage = (): string => {
-  return 'https://i.ibb.co/dw3x0Kmm/image.jpg'; // Updated fallback image
+  return FALLBACK_PRODUCT_IMAGE;
 };
 
 /**
@@ -48,7 +46,7 @@ export const getFallbackImage = (): string => {
  */
 export const processProductImages = async (images: string[]): Promise<string[]> => {
   if (!images || images.length === 0) {
-    return ['https://i.ibb.co/FkkjBShk/image.jpg'];
+    return [FALLBACK_PRODUCT_IMAGE];
   }
 
   const validImages: string[] = [];
@@ -64,7 +62,7 @@ export const processProductImages = async (images: string[]): Promise<string[]> 
 
   // If no valid images found, use fallback
   if (validImages.length === 0) {
-    validImages.push('https://i.ibb.co/FkkjBShk/image.jpg');
+    validImages.push(FALLBACK_PRODUCT_IMAGE);
   }
 
   return validImages;
@@ -95,7 +93,6 @@ export const compressImage = (file: File, maxWidth: number = 800, quality: numbe
     const img = new Image();
     
     img.onload = () => {
-      // Calculate new dimensions
       let { width, height } = img;
       
       if (width > maxWidth) {
@@ -106,7 +103,6 @@ export const compressImage = (file: File, maxWidth: number = 800, quality: numbe
       canvas.width = width;
       canvas.height = height;
       
-      // Draw and compress
       ctx?.drawImage(img, 0, 0, width, height);
       const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
       
