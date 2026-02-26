@@ -151,8 +151,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     ? getAgeRange(product.name, product.category)
     : '0-8 years';
 
-  // ✅ FIXED: Always build canonical from the URL params, never from product state
-  // This means even during loading, the canonical is correct
+  // Always build canonical from URL params — never depends on product state
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${productId}`;
 
   const productImage = product?.images?.[0] || '';
@@ -162,21 +161,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
       ? `https://poppaswoodencreations.co.nz${productImage}`
       : 'https://poppaswoodencreations.co.nz/og-image.jpg';
 
-  // ✅ FIXED: Only noindex known test products by ID
-  // NEVER noindex during loading state — products array may just not be loaded yet
+  // Only noindex known test products — never noindex real products
   const isTestProduct = productId
     ? (productId.startsWith('SQ') || productId === 'product-8')
     : false;
 
-  // ✅ FIXED: shouldNoIndex is NEVER true just because product is undefined
-  // Product might be undefined because it's still loading from Supabase
   const shouldNoIndex = isTestProduct;
 
   const enhancedDescription = product?.description
     ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide.`
     : `Handcrafted wooden toy made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
 
-  // ✅ useSEO always called — canonical always points to product URL
+  // useSEO always called — canonical always correct regardless of loading state
   useSEO({
     title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : `Wooden Toy | Poppa's Wooden Creations`),
     description: (product?.seoDescription || enhancedDescription).substring(0, 160),
@@ -186,7 +182,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     noindex: shouldNoIndex
   });
 
-  if (isLoading) {
+  // ✅ KEY FIX: Show spinner if EITHER explicitly loading OR products haven't arrived yet
+  // This prevents the "Product Not Found" from showing before Supabase responds
+  // Google sees a loading spinner instead of a soft 404
+  if (isLoading || products.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -197,6 +196,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
+  // Only show "Not Found" after products have fully loaded and product still isn't found
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
