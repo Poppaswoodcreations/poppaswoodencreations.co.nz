@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { VitePrerender } from 'vite-plugin-prerender'
-import Renderer from '@prerenderer/renderer-puppeteer'
+import vitePrerender from 'vite-plugin-prerender'
+import path from 'path'
+
+const PuppeteerRenderer = (vitePrerender as any).PuppeteerRenderer
 
 const ROUTES_TO_PRERENDER = [
   // Pages
@@ -102,15 +104,15 @@ const ROUTES_TO_PRERENDER = [
 export default defineConfig({
   plugins: [
     react(),
-    VitePrerender({
-      staticDir: 'dist',
+    vitePrerender({
+      staticDir: path.join(__dirname, 'dist'),
       routes: ROUTES_TO_PRERENDER,
-      renderer: new Renderer({
+      renderer: new PuppeteerRenderer({
         headless: true,
         renderAfterTime: 5000,
         maxConcurrentRoutes: 4,
       }),
-      postProcess(renderedRoute) {
+      postProcess(renderedRoute: any) {
         renderedRoute.html = renderedRoute.html
           .replace(/src="\/assets\//g, 'src="/assets/')
           .replace(/href="\/assets\//g, 'href="/assets/');
