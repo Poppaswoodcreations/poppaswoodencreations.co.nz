@@ -2,8 +2,11 @@
   publish = "dist"
   command = "npm run build"
 
+[[edge_functions]]
+  path = "/products/*"
+  function = "bot-prerender"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
