@@ -120,7 +120,7 @@ const PRODUCT_FAQS = [
   }
 ];
 
-// ─── HELPER FUNCTIONS (outside component — no hook rules) ────────────────────
+// ─── HELPER FUNCTIONS ────────────────────────────────────────────────────────
 const extractMaterial = (name: string, desc?: string): string => {
   const text = `${name} ${desc || ''}`.toLowerCase();
   const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
@@ -145,10 +145,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
 
-  // Find the product
   const product = products.find(p => p.id === productId);
 
-  // ── Pre-compute values needed by useSEO ──────────────────────────────────
   const productMaterial = product
     ? extractMaterial(product.name, product.description)
     : 'Premium New Zealand native timber';
@@ -167,19 +165,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     ? productImage
     : `https://poppaswoodencreations.co.nz${productImage}`;
 
+  // ✅ FIXED: Only noindex actual test/dummy products, never real products
+  // A missing description is NOT a reason to noindex — we generate one below
   const isTestProduct = product
     ? (product.id.startsWith('SQ') || product.id === 'product-8')
     : false;
 
-  // ── FIXED: Only noindex if description is truly empty ────────────────────
-  const hasNoDescription = !product?.description || product.description.trim() === '';
-  const shouldNoIndex = isTestProduct || hasNoDescription || !product;
+  const shouldNoIndex = isTestProduct || !product;
 
   const enhancedDescription = product?.description
     ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide. Built to last generations as an heirloom piece.`
-    : `Handcrafted wooden toy from ${productMaterial}. Made in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
+    : `Handcrafted ${product?.name || 'wooden toy'} made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development. Built to last generations.`;
 
-  // ── useSEO CALLED HERE — before any early returns ────────────────────────
   useSEO({
     title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : "Product | Poppa's Wooden Creations"),
     description: (product?.seoDescription || enhancedDescription).substring(0, 160),
@@ -189,7 +186,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     noindex: shouldNoIndex
   });
 
-  // ── LOADING ───────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -201,7 +197,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
-  // ── NOT FOUND ─────────────────────────────────────────────────────────────
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -219,7 +214,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
-  // ── PRODUCT EXISTS ────────────────────────────────────────────────────────
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
