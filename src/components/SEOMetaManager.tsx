@@ -25,11 +25,9 @@ function safeString(value: any): string {
 function updateMetaTag(attribute: string, value: string, content: any) {
   const safeContent = safeString(content);
   
-  // Remove ALL existing tags with this attribute to prevent duplicates
   const existingTags = document.querySelectorAll(`meta[${attribute}="${value}"]`);
   existingTags.forEach(tag => tag.remove());
   
-  // Create new tag
   const element = document.createElement('meta');
   element.setAttribute(attribute, value);
   element.content = safeContent;
@@ -39,7 +37,6 @@ function updateMetaTag(attribute: string, value: string, content: any) {
 
 /**
  * SEO Meta Manager Component
- * Handles all meta tags, canonical URLs, and prevents duplicate content issues
  */
 export const SEOMetaManager: React.FC<SEOMetaProps> = ({
   title,
@@ -52,37 +49,32 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
   const location = useLocation();
 
   useEffect(() => {
-    // Build canonical URL
     const baseUrl = 'https://poppaswoodencreations.co.nz';
-    let canonicalUrl = canonical;
     
-    if (!canonicalUrl) {
-      const pathname = location.pathname.replace(/\/$/, '');
-      canonicalUrl = `${baseUrl}${pathname}`;
-    }
+    // ✅ FIXED: Always use current URL path as canonical unless explicitly provided
+    // Never fall back to homepage '/' for product pages
+    const pathname = location.pathname.replace(/\/$/, '') || '/';
+    const canonicalUrl = canonical && canonical !== baseUrl && canonical !== `${baseUrl}/`
+      ? canonical
+      : `${baseUrl}${pathname}`;
 
-    // ✅ FIX: Set document title - PREVENT DUPLICATION
     if (title) {
       const titleStr = safeString(title);
-      // Only append suffix if title doesn't already contain "Poppa's" or "Creations"
       if (titleStr.includes("Poppa's") || titleStr.includes('Creations')) {
         document.title = titleStr;
       } else {
         document.title = `${titleStr} | Poppa's Wooden Creations`;
       }
     } else {
-      // ✅ FIX: Default homepage title (57 characters)
       document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    // ✅ FIX: Shortened default description (155 characters)
     const defaultDescription = description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
     
-    // Update meta tags - ALL SAFE NOW
     updateMetaTag('name', 'description', defaultDescription);
+    // ✅ FIXED: Never set noindex unless explicitly true AND canonical is correct
     updateMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     
-    // Open Graph tags
     updateMetaTag('property', 'og:title', title || document.title);
     updateMetaTag('property', 'og:description', defaultDescription);
     updateMetaTag('property', 'og:url', canonicalUrl);
@@ -91,7 +83,6 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       updateMetaTag('property', 'og:image', image);
     }
 
-    // Twitter Card tags
     updateMetaTag('name', 'twitter:card', 'summary_large_image');
     updateMetaTag('name', 'twitter:title', title || document.title);
     updateMetaTag('name', 'twitter:description', defaultDescription);
@@ -99,7 +90,6 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       updateMetaTag('name', 'twitter:image', image);
     }
 
-    // Handle canonical link - PREVENT DUPLICATES
     const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
     existingCanonicals.forEach(link => link.remove());
     
@@ -122,10 +112,13 @@ export const useSEO = (props: SEOMetaProps) => {
 
   useEffect(() => {
     const baseUrl = 'https://poppaswoodencreations.co.nz';
-    const pathname = location.pathname.replace(/\/$/, '');
-    const canonicalUrl = props.canonical || `${baseUrl}${pathname}`;
+    const pathname = location.pathname.replace(/\/$/, '') || '/';
+    
+    // ✅ FIXED: Always use current URL as canonical, never fall back to homepage
+    const canonicalUrl = props.canonical && props.canonical !== baseUrl && props.canonical !== `${baseUrl}/`
+      ? props.canonical
+      : `${baseUrl}${pathname}`;
 
-    // ✅ FIX: Set title - PREVENT DUPLICATION
     if (props.title) {
       const titleStr = safeString(props.title);
       if (titleStr.includes("Poppa's") || titleStr.includes('Creations')) {
@@ -137,14 +130,12 @@ export const useSEO = (props: SEOMetaProps) => {
       document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    // ✅ FIX: Shortened description
     const defaultDescription = props.description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
 
-    // Meta tags
     updateMetaTag('name', 'description', defaultDescription);
-    updateMetaTag('name', 'robots', props.noindex ? 'noindex, nofollow' : 'index, follow');
+    // ✅ FIXED: Only noindex when explicitly true - never noindex loading states
+    updateMetaTag('name', 'robots', props.noindex === true ? 'noindex, nofollow' : 'index, follow');
     
-    // OG tags
     updateMetaTag('property', 'og:title', props.title || document.title);
     updateMetaTag('property', 'og:description', defaultDescription);
     updateMetaTag('property', 'og:url', canonicalUrl);
@@ -153,7 +144,6 @@ export const useSEO = (props: SEOMetaProps) => {
       updateMetaTag('property', 'og:image', props.image);
     }
 
-    // Twitter tags
     updateMetaTag('name', 'twitter:card', 'summary_large_image');
     updateMetaTag('name', 'twitter:title', props.title || document.title);
     updateMetaTag('name', 'twitter:description', defaultDescription);
@@ -161,7 +151,6 @@ export const useSEO = (props: SEOMetaProps) => {
       updateMetaTag('name', 'twitter:image', props.image);
     }
 
-    // Canonical - PREVENT DUPLICATES
     const existingCanonicals = document.querySelectorAll('link[rel="canonical"]');
     existingCanonicals.forEach(link => link.remove());
     
@@ -170,6 +159,7 @@ export const useSEO = (props: SEOMetaProps) => {
     canonicalLink.href = canonicalUrl;
     canonicalLink.setAttribute('data-rh', 'true');
     document.head.appendChild(canonicalLink);
+
   }, [props, location]);
 };
 
