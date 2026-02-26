@@ -12,7 +12,6 @@ interface ProductDetailProps {
   isLoading?: boolean;
 }
 
-// REAL CUSTOMER REVIEWS DATA
 const CUSTOMER_REVIEWS = [
   {
     author: "David R.",
@@ -96,7 +95,6 @@ const CUSTOMER_REVIEWS = [
   }
 ];
 
-// FAQ DATA
 const PRODUCT_FAQS = [
   {
     question: "What wood is used to make these toys?",
@@ -120,7 +118,6 @@ const PRODUCT_FAQS = [
   }
 ];
 
-// ─── HELPER FUNCTIONS ────────────────────────────────────────────────────────
 const extractMaterial = (name: string, desc?: string): string => {
   const text = `${name} ${desc || ''}`.toLowerCase();
   const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
@@ -140,7 +137,6 @@ const getAgeRange = (name: string, category?: string): string => {
   return '0-8 years';
 };
 
-// ─── COMPONENT ────────────────────────────────────────────────────────────────
 const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, isLoading = false }) => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
@@ -155,30 +151,34 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     ? getAgeRange(product.name, product.category)
     : '0-8 years';
 
-  const canonicalUrl = product
-    ? `https://poppaswoodencreations.co.nz/products/${product.id}`
-    : 'https://poppaswoodencreations.co.nz';
+  // ✅ FIXED: Always build canonical from the URL params, never from product state
+  // This means even during loading, the canonical is correct
+  const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${productId}`;
 
-  const productImage = product?.images?.[0] || '/FB_IMG_1640827671355.jpg';
-
+  const productImage = product?.images?.[0] || '';
   const fullImageUrl = productImage.startsWith('http')
     ? productImage
-    : `https://poppaswoodencreations.co.nz${productImage}`;
+    : productImage
+      ? `https://poppaswoodencreations.co.nz${productImage}`
+      : 'https://poppaswoodencreations.co.nz/og-image.jpg';
 
-  // ✅ FIXED: Only noindex actual test/dummy products, never real products
-  // A missing description is NOT a reason to noindex — we generate one below
-  const isTestProduct = product
-    ? (product.id.startsWith('SQ') || product.id === 'product-8')
+  // ✅ FIXED: Only noindex known test products by ID
+  // NEVER noindex during loading state — products array may just not be loaded yet
+  const isTestProduct = productId
+    ? (productId.startsWith('SQ') || productId === 'product-8')
     : false;
 
-  const shouldNoIndex = isTestProduct || !product;
+  // ✅ FIXED: shouldNoIndex is NEVER true just because product is undefined
+  // Product might be undefined because it's still loading from Supabase
+  const shouldNoIndex = isTestProduct;
 
   const enhancedDescription = product?.description
-    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide. Built to last generations as an heirloom piece.`
-    : `Handcrafted ${product?.name || 'wooden toy'} made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development. Built to last generations.`;
+    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide.`
+    : `Handcrafted wooden toy made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
 
+  // ✅ useSEO always called — canonical always points to product URL
   useSEO({
-    title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : "Product | Poppa's Wooden Creations"),
+    title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : `Wooden Toy | Poppa's Wooden Creations`),
     description: (product?.seoDescription || enhancedDescription).substring(0, 160),
     image: fullImageUrl,
     type: 'product',
@@ -356,7 +356,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
 
-          {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8" aria-label="Breadcrumb">
             <button onClick={() => navigate('/')} className="hover:text-amber-600">Home</button>
             <span>/</span>
@@ -373,7 +372,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
 
           <div className="grid lg:grid-cols-2 gap-12">
 
-            {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
                 <LazyImage
@@ -402,7 +400,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
               )}
             </div>
 
-            {/* Product Info */}
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
@@ -428,7 +425,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                 </div>
               )}
 
-              {/* Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
                   <Shield className="text-green-600" size={20} />
@@ -453,7 +449,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                 </div>
               </div>
 
-              {/* Product Details */}
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Product Details</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
@@ -496,7 +491,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                 </div>
               </div>
 
-              {/* Add to Cart */}
               <div className="space-y-4">
                 <button
                   onClick={() => onAddToCart(product)}
@@ -515,7 +509,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                 </button>
               </div>
 
-              {/* Shipping Info */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h4 className="font-medium text-blue-900 mb-2">Shipping Information</h4>
                 <div className="text-sm text-blue-800 space-y-1">
@@ -529,7 +522,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
             </div>
           </div>
 
-          {/* FAQ Section */}
           <div className="mt-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
@@ -542,7 +534,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
             </div>
           </div>
 
-          {/* Customer Reviews Section */}
           <div className="mt-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Customer Reviews</h2>
             <div className="space-y-4">
