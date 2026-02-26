@@ -18,15 +18,8 @@ interface SiteSettings {
 const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   const [siteSettings, setSiteSettings] = useState<SiteSettings>({});
 
-  // Hardcoded instant fallback — shows immediately before ANY data loads
-  const INSTANT_HERO_IMAGE = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
-
-  // Get the featured product image if products are already loaded
   const featuredProduct = products.find(p => p.featured) || products[0];
-  const productImage = featuredProduct?.images?.[0];
-
-  // Priority: site settings override → loaded product image → instant hardcoded fallback
-  const heroImage = siteSettings.hero_bg_image || productImage || INSTANT_HERO_IMAGE;
+  const heroImage = siteSettings.hero_bg_image || featuredProduct?.images?.[0];
 
   // Load site settings in background — does NOT block image render
   useEffect(() => {
@@ -110,7 +103,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
           </div>
 
-          {/* Hero Image — renders immediately, no loading state blocking it */}
+          {/* Hero Image */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl transform lg:rotate-3 transition-transform hover:rotate-0 duration-500">
               {heroImage ? (
