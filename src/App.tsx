@@ -212,7 +212,7 @@ const AppContent: React.FC = () => {
             <Route path="/custom-order" element={
               <>
                 <SEOHead
-                  title="Custom Wooden Toy Orders - Made to Your Specs"
+                  title="Custom Wooden Toy Orders NZ"
                   description="Order a custom handcrafted wooden toy or kitchenware item from Poppa's Wooden Creations. Choose your timber, size, and finish."
                   canonicalPath="/custom-order"
                   ogType="website"
@@ -225,7 +225,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-toys-nz" element={
               <>
                 <SEOHead
-                  title="Wooden Toys NZ - Handcrafted Native Timber Toys"
+                  title="Wooden Toys NZ - Native Timber"
                   description="Premium handcrafted wooden toys made in New Zealand from native Kauri, Rimu & Macrocarpa. Trusted by Montessori schools nationwide."
                   canonicalPath="/wooden-toys-nz"
                   ogType="website"
@@ -238,7 +238,7 @@ const AppContent: React.FC = () => {
             <Route path="/products" element={
               <>
                 <SEOHead
-                  title="All Products - Wooden Toys & Kitchenware"
+                  title="All Wooden Toys & Kitchenware NZ"
                   description="Browse our complete collection of handcrafted wooden toys & kitchenware made from native New Zealand timber. Kauri, Rimu, Macrocarpa. Free shipping over $150."
                   canonicalPath="/products"
                   ogType="website"
@@ -268,7 +268,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-trucks" element={
               <>
                 <SEOHead
-                  title="Wooden Trucks - Toy Trucks & Fire Engines"
+                  title="Wooden Toy Trucks NZ"
                   description="Handcrafted wooden toy trucks made from New Zealand native timber. Durable, realistic, and perfect for construction-themed play."
                   canonicalPath="/wooden-trucks"
                   ogType="website"
@@ -289,7 +289,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-cars" element={
               <>
                 <SEOHead
-                  title="Wooden Cars - Classic Toy Cars"
+                  title="Wooden Toy Cars NZ"
                   description="Handcrafted wooden toy cars made from native New Zealand Kauri and Rimu timber. Timeless heirloom designs that encourage creative, imaginative play in children."
                   canonicalPath="/wooden-cars"
                   ogType="website"
@@ -310,7 +310,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-trains" element={
               <>
                 <SEOHead
-                  title="Wooden Trains - Classic Train Sets"
+                  title="Wooden Train Sets NZ"
                   description="Handcrafted wooden toy trains made from native New Zealand timber. Build railways, spark imagination, and inspire creative play. Montessori-friendly."
                   canonicalPath="/wooden-trains"
                   ogType="website"
@@ -365,7 +365,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-kitchenware" element={
               <>
                 <SEOHead
-                  title="Wooden Kitchenware - Serving Boards & Utensils"
+                  title="Wooden Kitchenware NZ"
                   description="Handcrafted wooden kitchenware made from New Zealand native Rimu and Macrocarpa timber. Beautiful, functional, and built to last a lifetime."
                   canonicalPath="/wooden-kitchenware"
                   ogType="website"
@@ -386,7 +386,7 @@ const AppContent: React.FC = () => {
             <Route path="/wooden-tractors-boats" element={
               <>
                 <SEOHead
-                  title="Wooden Tractors & Boats - Farm & Water Toys"
+                  title="Wooden Tractors & Boats NZ"
                   description="Handcrafted wooden toy tractors and boats made from New Zealand native timber. Perfect for farm and water-themed imaginative play."
                   canonicalPath="/wooden-tractors-boats"
                   ogType="website"
@@ -439,7 +439,7 @@ const AppContent: React.FC = () => {
             <Route path="/about" element={
               <>
                 <SEOHead
-                  title="About Us - Handcrafted in Whangarei"
+                  title="About Us - Made in Whangarei NZ"
                   description="Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015."
                   canonicalPath="/about"
                   ogType="website"
@@ -464,7 +464,7 @@ const AppContent: React.FC = () => {
             <Route path="/shipping" element={
               <>
                 <SEOHead
-                  title="Shipping Policy | Poppa's Wooden Creations"
+                  title="Shipping Policy"
                   description="Learn about our worldwide shipping, delivery times, and free shipping offers for handcrafted wooden toys from New Zealand."
                   canonicalPath="/shipping"
                   ogType="website"
@@ -476,7 +476,7 @@ const AppContent: React.FC = () => {
             <Route path="/returns" element={
               <>
                 <SEOHead
-                  title="Returns & Refunds Policy | Poppa's Wooden Creations"
+                  title="Returns & Refunds Policy"
                   description="Our 30-day return policy and quality guarantee for handcrafted wooden toys. Easy returns, full refunds, and lifetime craftsmanship guarantee."
                   canonicalPath="/returns"
                   ogType="website"
@@ -515,7 +515,7 @@ const AppContent: React.FC = () => {
             <Route path="/write-review" element={
               <>
                 <SEOHead
-                  title="Write a Review - Share Your Experience"
+                  title="Write a Review"
                   description="Share your experience with Poppa's Wooden Creations. Your feedback helps other families discover our handcrafted wooden toys."
                   canonicalPath="/write-review"
                   ogType="website"
@@ -535,7 +535,7 @@ const AppContent: React.FC = () => {
             <Route path="/search" element={
               <>
                 <SEOHead
-                  title="Search Products | Poppa's Wooden Creations"
+                  title="Search Products"
                   description="Search our collection of handcrafted wooden toys and kitchenware made from native New Zealand timber. Find the perfect Montessori-friendly toy for any child."
                   canonicalPath="/search"
                   ogType="website"
@@ -552,7 +552,7 @@ const AppContent: React.FC = () => {
             <Route path="/blog" element={
               <>
                 <SEOHead
-                  title="Blog - Wooden Toy Tips & Parenting Guides"
+                  title="Blog - Wooden Toy Tips"
                   description="Tips and guides for wooden toys, Montessori education, and sustainable parenting. Expert advice from Poppa's Wooden Creations."
                   canonicalPath="/blog"
                   ogType="website"
