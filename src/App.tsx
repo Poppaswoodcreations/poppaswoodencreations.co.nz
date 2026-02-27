@@ -122,20 +122,14 @@ function usePageTracking() {
   }, [location]);
 }
 
-// ─── VISUALLY HIDDEN H1 (for SEO, invisible to users) ────────────────────────
+// ─── CATEGORY PAGE HEADER ─────────────────────────────────────────────────────
+// Visible, SEO-friendly H1 banner for category pages
 
-const HiddenH1: React.FC<{ text: string }> = ({ text }) => (
-  <h1 style={{
-    position: 'absolute',
-    width: '1px',
-    height: '1px',
-    padding: 0,
-    margin: '-1px',
-    overflow: 'hidden',
-    clip: 'rect(0,0,0,0)',
-    whiteSpace: 'nowrap',
-    border: 0
-  }}>{text}</h1>
+const CategoryHeader: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => (
+  <div className="bg-amber-50 border-b border-amber-100 py-8 px-4 text-center">
+    <h1 className="text-3xl sm:text-4xl font-bold text-amber-900">{title}</h1>
+    <p className="text-amber-700 mt-2 text-lg">{subtitle}</p>
+  </div>
 );
 
 // ─── MAIN APP CONTENT ─────────────────────────────────────────────────────────
@@ -180,6 +174,7 @@ const AppContent: React.FC = () => {
           <Routes>
 
             {/* ── HOME ── */}
+            {/* Hero component already contains the visible <h1> tag */}
             <Route path="/" element={
               <>
                 <SEOHead
@@ -248,6 +243,10 @@ const AppContent: React.FC = () => {
                   canonicalPath="/products"
                   ogType="website"
                 />
+                <CategoryHeader
+                  title="All Wooden Toys & Kitchenware"
+                  subtitle="Handcrafted from native New Zealand timber"
+                />
                 <ProductGrid
                   products={products}
                   onProductSelect={handleProductSelect}
@@ -274,6 +273,10 @@ const AppContent: React.FC = () => {
                   canonicalPath="/wooden-trucks"
                   ogType="website"
                 />
+                <CategoryHeader
+                  title="Wooden Toy Trucks NZ"
+                  subtitle="Handcrafted from native New Zealand timber"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-trucks')}
                   onProductSelect={handleProductSelect}
@@ -291,6 +294,10 @@ const AppContent: React.FC = () => {
                   canonicalPath="/wooden-cars"
                   ogType="website"
                 />
+                <CategoryHeader
+                  title="Wooden Toy Cars NZ"
+                  subtitle="Timeless handcrafted designs from native timber"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-cars')}
                   onProductSelect={handleProductSelect}
@@ -307,6 +314,10 @@ const AppContent: React.FC = () => {
                   description="Handcrafted wooden toy trains made from New Zealand native timber. Build railways and spark imagination."
                   canonicalPath="/wooden-trains"
                   ogType="website"
+                />
+                <CategoryHeader
+                  title="Wooden Train Sets NZ"
+                  subtitle="Spark imagination with handcrafted native timber railways"
                 />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-trains')}
@@ -338,6 +349,10 @@ const AppContent: React.FC = () => {
                   canonicalPath="/wooden-baby-toys"
                   ogType="website"
                 />
+                <CategoryHeader
+                  title="Wooden Baby Toys NZ"
+                  subtitle="Safe, natural & non-toxic — crafted from native NZ timber"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-baby-toys')}
                   onProductSelect={handleProductSelect}
@@ -351,11 +366,14 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Wooden Kitchenware - Serving Boards & Utensils"
-                  description="Handcrafted wooden kitchenware made from New Zealand native timber. Beautiful, functional, and built to last."
+                  description="Handcrafted wooden kitchenware made from New Zealand native Rimu and Macrocarpa timber. Beautiful, functional, and built to last a lifetime."
                   canonicalPath="/wooden-kitchenware"
                   ogType="website"
                 />
-                <HiddenH1 text="Handcrafted Wooden Kitchenware NZ - Rimu Spatulas & Utensils" />
+                <CategoryHeader
+                  title="Wooden Kitchenware NZ"
+                  subtitle="Handcrafted from native Rimu & Macrocarpa timber"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-kitchenware')}
                   onProductSelect={handleProductSelect}
@@ -372,6 +390,10 @@ const AppContent: React.FC = () => {
                   description="Handcrafted wooden toy tractors and boats made from New Zealand native timber. Perfect for farm and water-themed imaginative play."
                   canonicalPath="/wooden-tractors-boats"
                   ogType="website"
+                />
+                <CategoryHeader
+                  title="Wooden Tractors & Boats NZ"
+                  subtitle="Farm and water toys handcrafted from native timber"
                 />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-tractors-boats')}
