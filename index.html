@@ -5,27 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Base title - React Helmet will override this -->
+    <!-- Base title - React Helmet will override this per page -->
     <title>Poppa's Wooden Creations - Handcrafted Wooden Toys Made in New Zealand</title>
-    
-    <!-- Base description - React Helmet will override on specific pages -->
-    <meta name="description" content="Premium handcrafted wooden toys and kitchenware from native NZ timber. Safe, sustainable, educational. Trusted by Montessori schools across New Zealand. Free shipping over $150." />
 
-    <!-- 
-      ✅ FIXED: Removed unused i.ibb.co preconnect (was flagged by PageSpeed).
-      ✅ FIXED: Supabase preconnect now has correct crossorigin attribute for images.
-      ✅ ADDED: dns-prefetch for GTM to reduce 3rd party latency.
-    -->
+    <!-- NOTE: No base meta description here — React Helmet manages this per-page -->
+    <!-- Having both causes "duplicate meta description" errors in Bing/SEO tools -->
+
     <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
     <!-- Google Customer Reviews Badge Script -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
     
-    <!-- CRITICAL: Static Schema Markup for AI Bots and Search Engines -->
-    <!-- This ensures bots see structured data BEFORE React loads -->
-    
-    <!-- LocalBusiness Schema - Your Main Business Info -->
+    <!-- LocalBusiness Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -36,10 +28,7 @@
       "description": "Premium handcrafted wooden toys and kitchenware made from native New Zealand timber including Kauri, Rimu, and Macrocarpa. Trusted by Montessori schools nationwide since 2015.",
       "url": "https://poppaswoodencreations.co.nz",
       "logo": "https://poppaswoodencreations.co.nz/logo.png",
-      "image": [
-        "https://poppaswoodencreations.co.nz/logo.png",
-        "https://poppaswoodencreations.co.nz/workshop.jpg"
-      ],
+      "image": ["https://poppaswoodencreations.co.nz/logo.png","https://poppaswoodencreations.co.nz/workshop.jpg"],
       "foundingDate": "2015",
       "priceRange": "$$",
       "currenciesAccepted": "NZD",
@@ -52,41 +41,17 @@
         "postalCode": "0110",
         "addressCountry": "NZ"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "-35.7267",
-        "longitude": "174.3240"
-      },
+      "geo": {"@type": "GeoCoordinates","latitude": "-35.7267","longitude": "174.3240"},
       "telephone": "+64-9-123-4567",
       "email": "info@poppaswoodencreations.co.nz",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "15:00"
-        }
-      ],
-      "sameAs": [
-        "https://www.facebook.com/poppaswoodencreations",
-        "https://www.instagram.com/poppaswoodencreations",
-        "https://www.tiktok.com/@poppaswoodencreations"
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "150",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "New Zealand"
-      }
+      "openingHoursSpecification": [{"@type": "OpeningHoursSpecification","dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens": "09:00","closes": "15:00"}],
+      "sameAs": ["https://www.facebook.com/poppaswoodencreations","https://www.instagram.com/poppaswoodencreations","https://www.tiktok.com/@poppaswoodencreations"],
+      "aggregateRating": {"@type": "AggregateRating","ratingValue": "4.9","reviewCount": "150","bestRating": "5","worstRating": "1"},
+      "areaServed": {"@type": "Country","name": "New Zealand"}
     }
     </script>
 
-    <!-- WebSite Schema - For Sitelinks Search Box -->
+    <!-- WebSite Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -95,16 +60,13 @@
       "url": "https://poppaswoodencreations.co.nz",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://poppaswoodencreations.co.nz/search?q={search_term_string}"
-        },
+        "target": {"@type": "EntryPoint","urlTemplate": "https://poppaswoodencreations.co.nz/search?q={search_term_string}"},
         "query-input": "required name=search_term_string"
       }
     }
     </script>
 
-    <!-- Organization Schema - For Knowledge Graph -->
+    <!-- Organization Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -115,11 +77,7 @@
       "logo": "https://poppaswoodencreations.co.nz/logo.png",
       "description": "Handcrafted wooden toys and kitchenware made from native New Zealand timber since 2015",
       "foundingDate": "2015",
-      "founder": {
-        "@type": "Person",
-        "name": "Adrian",
-        "jobTitle": "Craftsman & Founder"
-      },
+      "founder": {"@type": "Person","name": "Adrian","jobTitle": "Craftsman & Founder"},
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "102 Kiripaka Rd",
@@ -128,22 +86,12 @@
         "postalCode": "0110",
         "addressCountry": "NZ"
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+64-9-123-4567",
-        "contactType": "Customer Service",
-        "email": "info@poppaswoodencreations.co.nz",
-        "availableLanguage": "English"
-      },
-      "sameAs": [
-        "https://www.facebook.com/poppaswoodencreations",
-        "https://www.instagram.com/poppaswoodencreations",
-        "https://www.tiktok.com/@poppaswoodencreations"
-      ]
+      "contactPoint": {"@type": "ContactPoint","telephone": "+64-9-123-4567","contactType": "Customer Service","email": "info@poppaswoodencreations.co.nz","availableLanguage": "English"},
+      "sameAs": ["https://www.facebook.com/poppaswoodencreations","https://www.instagram.com/poppaswoodencreations","https://www.tiktok.com/@poppaswoodencreations"]
     }
     </script>
 
-    <!-- ItemList Schema - Product Categories for AI Discovery -->
+    <!-- ItemList Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -152,144 +100,12 @@
       "description": "Handcrafted wooden toys and kitchenware made from native New Zealand timber",
       "numberOfItems": 6,
       "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-baby-toys",
-            "name": "Wooden Baby Toys",
-            "description": "Safe wooden baby toys made from native NZ timber with non-toxic finish",
-            "category": "Baby Toys",
-            "url": "https://poppaswoodencreations.co.nz/wooden-baby-toys",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "15.00",
-              "highPrice": "50.00",
-              "offerCount": "20"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-trains",
-            "name": "Wooden Train Sets",
-            "description": "Handcrafted wooden trains and railway sets",
-            "category": "Train Sets",
-            "url": "https://poppaswoodencreations.co.nz/wooden-trains",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "25.00",
-              "highPrice": "75.00",
-              "offerCount": "15"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-trucks",
-            "name": "Wooden Toy Trucks",
-            "description": "Durable wooden trucks and vehicles",
-            "category": "Toy Vehicles",
-            "url": "https://poppaswoodencreations.co.nz/wooden-trucks",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "20.00",
-              "highPrice": "60.00",
-              "offerCount": "18"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-cars",
-            "name": "Wooden Toy Cars",
-            "description": "Handcrafted wooden cars for children",
-            "category": "Toy Cars",
-            "url": "https://poppaswoodencreations.co.nz/wooden-cars",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "15.00",
-              "highPrice": "45.00",
-              "offerCount": "25"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-planes-helicopters",
-            "name": "Wooden Planes & Helicopters",
-            "description": "Wooden aircraft toys",
-            "category": "Toy Aircraft",
-            "url": "https://poppaswoodencreations.co.nz/wooden-planes-helicopters",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "20.00",
-              "highPrice": "55.00",
-              "offerCount": "12"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 6,
-          "item": {
-            "@type": "Product",
-            "@id": "https://poppaswoodencreations.co.nz/wooden-kitchenware",
-            "name": "Wooden Kitchenware",
-            "description": "Handcrafted wooden kitchen utensils and tools",
-            "category": "Kitchenware",
-            "url": "https://poppaswoodencreations.co.nz/wooden-kitchenware",
-            "brand": {
-              "@type": "Brand",
-              "name": "Poppa's Wooden Creations"
-            },
-            "offers": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "NZD",
-              "lowPrice": "30.00",
-              "highPrice": "95.00",
-              "offerCount": "22"
-            }
-          }
-        }
+        {"@type":"ListItem","position":1,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-baby-toys","name":"Wooden Baby Toys","url":"https://poppaswoodencreations.co.nz/wooden-baby-toys","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"15.00","highPrice":"50.00","offerCount":"20"}}},
+        {"@type":"ListItem","position":2,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-trains","name":"Wooden Train Sets","url":"https://poppaswoodencreations.co.nz/wooden-trains","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"25.00","highPrice":"75.00","offerCount":"15"}}},
+        {"@type":"ListItem","position":3,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-trucks","name":"Wooden Toy Trucks","url":"https://poppaswoodencreations.co.nz/wooden-trucks","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"20.00","highPrice":"60.00","offerCount":"18"}}},
+        {"@type":"ListItem","position":4,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-cars","name":"Wooden Toy Cars","url":"https://poppaswoodencreations.co.nz/wooden-cars","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"15.00","highPrice":"45.00","offerCount":"25"}}},
+        {"@type":"ListItem","position":5,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-planes-helicopters","name":"Wooden Planes & Helicopters","url":"https://poppaswoodencreations.co.nz/wooden-planes-helicopters","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"20.00","highPrice":"55.00","offerCount":"12"}}},
+        {"@type":"ListItem","position":6,"item":{"@type":"Product","@id":"https://poppaswoodencreations.co.nz/wooden-kitchenware","name":"Wooden Kitchenware","url":"https://poppaswoodencreations.co.nz/wooden-kitchenware","brand":{"@type":"Brand","name":"Poppa's Wooden Creations"},"offers":{"@type":"AggregateOffer","priceCurrency":"NZD","lowPrice":"30.00","highPrice":"95.00","offerCount":"22"}}}
       ]
     }
     </script>
