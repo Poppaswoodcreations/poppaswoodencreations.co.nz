@@ -2,15 +2,10 @@
   command = "npm run build"
   publish = "dist"
 
-# Enable Netlify's prerendering so crawlers (Bing, etc.) see fully rendered HTML
-# This solves H1/meta tags being invisible to bots that can't execute JavaScript
 [build.environment]
   NODE_VERSION = "18"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-# Redirect all routes to index.html for SPA routing
+# SPA routing - all paths serve index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
