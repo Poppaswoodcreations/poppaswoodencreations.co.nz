@@ -239,7 +239,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="All Products - Wooden Toys & Kitchenware"
-                  description="Browse our complete collection of handcrafted wooden toys and kitchenware made from New Zealand native timber."
+                  description="Browse our complete collection of handcrafted wooden toys & kitchenware made from native New Zealand timber. Kauri, Rimu, Macrocarpa. Free shipping over $150."
                   canonicalPath="/products"
                   ogType="website"
                 />
@@ -290,7 +290,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Wooden Cars - Classic Toy Cars"
-                  description="Handcrafted wooden toy cars made from New Zealand native timber. Timeless designs that encourage creative play."
+                  description="Handcrafted wooden toy cars made from native New Zealand Kauri and Rimu timber. Timeless heirloom designs that encourage creative, imaginative play in children."
                   canonicalPath="/wooden-cars"
                   ogType="website"
                 />
@@ -311,7 +311,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Wooden Trains - Classic Train Sets"
-                  description="Handcrafted wooden toy trains made from New Zealand native timber. Build railways and spark imagination."
+                  description="Handcrafted wooden toy trains made from native New Zealand timber. Build railways, spark imagination, and inspire creative play. Montessori-friendly."
                   canonicalPath="/wooden-trains"
                   ogType="website"
                 />
@@ -440,7 +440,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="About Us - Handcrafted in Whangarei"
-                  description="Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware in Whangarei since 2015."
+                  description="Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015."
                   canonicalPath="/about"
                   ogType="website"
                 />
@@ -452,7 +452,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Contact Us - Get in Touch"
-                  description="Get in touch with Poppa's Wooden Creations. We're here to help with orders, custom requests, and questions."
+                  description="Contact Poppa's Wooden Creations in Whangarei, NZ. We're here to help with orders, custom wooden toy requests, and any questions you may have."
                   canonicalPath="/contact"
                   ogType="website"
                 />
@@ -504,7 +504,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Customer Reviews - 5.0/5 Stars"
-                  description="Read all 31 verified reviews from our happy customers. Handcrafted wooden toys and kitchenware loved by Kiwi families."
+                  description="Read verified reviews from happy customers. Handcrafted wooden toys and kitchenware loved by Kiwi families and Montessori schools across New Zealand."
                   canonicalPath="/reviews"
                   ogType="website"
                 />
@@ -536,7 +536,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Search Products | Poppa's Wooden Creations"
-                  description="Search our collection of handcrafted wooden toys made in New Zealand"
+                  description="Search our collection of handcrafted wooden toys and kitchenware made from native New Zealand timber. Find the perfect Montessori-friendly toy for any child."
                   canonicalPath="/search"
                   ogType="website"
                 />
