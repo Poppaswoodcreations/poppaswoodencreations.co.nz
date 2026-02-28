@@ -1,6 +1,5 @@
 import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, useSearchParams, Navigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 
 // Components needed immediately (above the fold)
 import Header from './components/Header';
@@ -123,7 +122,6 @@ function usePageTracking() {
 }
 
 // ─── CATEGORY PAGE HEADER ─────────────────────────────────────────────────────
-// Visible, SEO-friendly H1 banner for category pages
 
 const CategoryHeader: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => (
   <div className="bg-amber-50 border-b border-amber-100 py-8 px-4 text-center">
@@ -174,7 +172,6 @@ const AppContent: React.FC = () => {
           <Routes>
 
             {/* ── HOME ── */}
-            {/* Hero component already contains the visible <h1> tag */}
             <Route path="/" element={
               <>
                 <SEOHead
@@ -330,6 +327,16 @@ const AppContent: React.FC = () => {
 
             <Route path="/wooden-planes-helicopters" element={
               <>
+                <SEOHead
+                  title="Wooden Airplane & Helicopter Toys NZ"
+                  description="Handcrafted wooden airplane and helicopter toys made from native New Zealand timber. Safe, sustainable, and beautifully crafted for children."
+                  canonicalPath="/wooden-planes-helicopters"
+                  ogType="website"
+                />
+                <CategoryHeader
+                  title="Wooden Planes & Helicopters NZ"
+                  subtitle="Handcrafted from native New Zealand timber"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-planes-helicopters')}
                   onProductSelect={handleProductSelect}
@@ -407,6 +414,12 @@ const AppContent: React.FC = () => {
             {/* ── RICH CONTENT CATEGORY PAGES ── */}
             <Route path="/wooden-crosses" element={
               <>
+                <SEOHead
+                  title="Wooden Crosses NZ"
+                  description="Handcrafted wooden crosses made from native New Zealand timber. Beautiful, meaningful gifts handcrafted in Whangarei."
+                  canonicalPath="/wooden-crosses"
+                  ogType="website"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-crosses')}
                   onProductSelect={handleProductSelect}
@@ -420,6 +433,12 @@ const AppContent: React.FC = () => {
 
             <Route path="/wooden-pens" element={
               <>
+                <SEOHead
+                  title="Wooden Pens NZ"
+                  description="Handcrafted wooden pens made from native New Zealand timber. Unique, beautiful, and perfect as gifts. Made in Whangarei."
+                  canonicalPath="/wooden-pens"
+                  ogType="website"
+                />
                 <ProductGrid
                   products={products.filter(p => p.category === 'wooden-pens')}
                   onProductSelect={handleProductSelect}
@@ -434,6 +453,8 @@ const AppContent: React.FC = () => {
             {/* ── LEGACY URL REDIRECTS ── */}
             <Route path="/wooden-other-toys" element={<Navigate to="/products" replace />} />
             <Route path="/kitchen-utensils" element={<Navigate to="/wooden-kitchenware" replace />} />
+            <Route path="/kitchenware" element={<Navigate to="/wooden-kitchenware" replace />} />
+            <Route path="/baby-toys" element={<Navigate to="/wooden-baby-toys" replace />} />
 
             {/* ── INFO PAGES ── */}
             <Route path="/about" element={
@@ -603,9 +624,7 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <HelmetProvider>
-        <AppContent />
-      </HelmetProvider>
+      <AppContent />
     </ErrorBoundary>
   );
 };
