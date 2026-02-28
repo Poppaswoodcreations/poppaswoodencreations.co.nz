@@ -37,6 +37,12 @@ const CustomOrderPage = lazy(() => import('./pages/CustomOrderPage'));
 import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
 import WoodenPensPage from './pages/WoodenPensPage';
 import WoodenCrossesPage from './pages/WoodenCrossesPage';
+import WoodenBabyToysPage from './pages/WoodenBabyToysPage';
+import WoodenCarsPage from './pages/WoodenCarsPage';
+import WoodenTrucksPage from './pages/WoodenTrucksPage';
+import WoodenTrainsPage from './pages/WoodenTrainsPage';
+import WoodenKitchenwarePage from './pages/WoodenKitchenwarePage';
+import WoodenTractorsBoatsPage from './pages/WoodenTractorsBoatsPage';
 
 import { useProducts } from './hooks/useProducts';
 import { useCart } from './hooks/useCart';
@@ -280,6 +286,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-trucks"
                 />
+                <WoodenTrucksPage />
               </>
             } />
 
@@ -301,6 +308,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-cars"
                 />
+                <WoodenCarsPage />
               </>
             } />
 
@@ -322,6 +330,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
                 />
+                <WoodenTrainsPage />
               </>
             } />
 
@@ -366,6 +375,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-baby-toys"
                 />
+                <WoodenBabyToysPage />
               </>
             } />
 
@@ -387,6 +397,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchenware"
                 />
+                <WoodenKitchenwarePage />
               </>
             } />
 
@@ -408,6 +419,7 @@ const AppContent: React.FC = () => {
                   onAddToCart={handleAddToCart}
                   category="wooden-tractors-boats"
                 />
+                <WoodenTractorsBoatsPage />
               </>
             } />
 
