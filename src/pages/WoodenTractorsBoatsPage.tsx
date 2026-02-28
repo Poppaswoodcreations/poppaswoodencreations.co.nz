@@ -1,165 +1,123 @@
-import { Helmet } from 'react-helmet-async';
+import React from 'react';
 
-const WoodenTractorsBoatsPage = () => {
-  // Schema data
-  const collectionPageSchema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Handcrafted Wooden Tractors and Boats",
-    "description": "Wooden tractor and boat toys handcrafted from native New Zealand timber. Perfect for farm and water play. Prices from $20 to $100.",
-    "url": "https://poppaswoodencreations.co.nz/wooden-tractors-boats",
-    "inLanguage": "en-NZ",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Poppa's Wooden Creations",
-      "url": "https://poppaswoodencreations.co.nz"
-    }
-  };
-
-  const aggregateOfferSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Wooden Tractors and Boats Collection",
-    "description": "Handcrafted wooden tractors and boats from native NZ timber",
-    "brand": {
-      "@type": "Brand",
-      "name": "Poppa's Wooden Creations"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "NZD",
-      "lowPrice": "20",
-      "highPrice": "100",
-      "offerCount": "10",
-      "availability": "https://schema.org/InStock"
-    }
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://poppaswoodencreations.co.nz"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Tractors & Boats",
-        "item": "https://poppaswoodencreations.co.nz/wooden-tractors-boats"
-      }
-    ]
-  };
-
+const WoodenTractorsBoatsPage: React.FC = () => {
   return (
-    <>
-      <Helmet>
-        <title>Wooden Tractors & Boats NZ $20-$100 | Farm & Water Toys | Poppa's Wooden Creations</title>
-        <meta name="description" content="Wooden tractors and boats $20-$100. Handcrafted in Whangarei from Kauri, Rimu & Macrocarpa timber. Perfect for farm and water play." />
-        <meta name="keywords" content="wooden tractors NZ, wooden boats, toy tractors, toy boats Whangarei" />
-        
-        <script type="application/ld+json">
-          {JSON.stringify(collectionPageSchema)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(aggregateOfferSchema)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-      </Helmet>
+    <div className="max-w-4xl mx-auto px-4 py-12 text-gray-800">
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Rich Content Section - ADDED FOR SEO */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Handcrafted Wooden Tractors & Boats</h1>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Discover our collection of heirloom-quality wooden tractors and boats, handcrafted in Whangarei, 
-              New Zealand from sustainable native timbers. Each toy is designed to inspire imaginative play 
-              while supporting Montessori educational principles.
-            </p>
+      {/* Intro */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">Handcrafted Wooden Tractors & Boats — New Zealand Macrocarpa & Rimu</h2>
+        <p className="text-lg leading-relaxed mb-4">
+          Our wooden tractors and boats are handcrafted in Whangarei from native New Zealand timbers — primarily Macrocarpa and Rimu. Each piece is shaped and finished entirely by hand in our Tikipunga workshop, creating toys with the solid weight and natural character that only genuine handcrafted woodwork delivers.
+        </p>
+        <p className="leading-relaxed">
+          Farm life and the sea are woven into New Zealand's identity — and our wooden tractors and boats bring that character into children's play. Solid, satisfying, and beautifully made, these toys spark imaginations and withstand the enthusiastic play of real children.
+        </p>
+      </section>
+
+      {/* Why Choose */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">Why Choose Our Wooden Tractors & Boats?</h2>
+        <ul className="space-y-3">
+          <li className="flex items-start gap-3">
+            <span className="text-amber-600 font-bold mt-1">✓</span>
+            <div><strong>Solid & Substantial:</strong> Real weight and presence — toys that feel significant in a child's hands and stand up to hard play</div>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-amber-600 font-bold mt-1">✓</span>
+            <div><strong>Genuinely Handmade:</strong> Every tractor and boat is individually crafted by hand in our Whangarei workshop</div>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-amber-600 font-bold mt-1">✓</span>
+            <div><strong>Native NZ Timber:</strong> Crafted from Macrocarpa and Rimu — beautiful, sustainable New Zealand timbers</div>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-amber-600 font-bold mt-1">✓</span>
+            <div><strong>NZ-Themed Play:</strong> Farm and maritime themes that connect children to New Zealand's landscape and way of life</div>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-amber-600 font-bold mt-1">✓</span>
+            <div><strong>Heirloom Quality:</strong> Built to outlast childhood and be passed down through families as genuine keepsakes</div>
+          </li>
+        </ul>
+      </section>
+
+      {/* Timber */}
+      <section className="mb-10 bg-amber-50 rounded-xl p-6">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">Macrocarpa & Rimu — Strength with Character</h2>
+        <p className="leading-relaxed mb-4">
+          Macrocarpa (Cupressus macrocarpa) is a robust, golden-toned timber with a pleasant natural aroma and attractive grain. Its density and stability make it ideal for toys that need to handle robust play — it resists denting and wear while remaining workable enough for the detailed shaping that tractors and boats require.
+        </p>
+        <p className="leading-relaxed mb-4">
+          Rimu adds warmth and richness to the mix — its reddish-brown tones and fine grain create beautiful contrast and visual depth. Together, these timbers produce toys with genuine character and the satisfying solidity that makes wooden toys so enduring.
+        </p>
+        <p className="leading-relaxed">
+          All timber is sourced from legal, sustainable supplies — primarily salvaged or recycled native timber — to protect New Zealand's native forests.
+        </p>
+      </section>
+
+      {/* NZ Connection */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">A Connection to New Zealand</h2>
+        <p className="leading-relaxed mb-4">
+          New Zealand is a farming and maritime nation — tractors and boats are part of the landscape that Kiwi children grow up in. Our wooden tractors and boats connect children to that world in a tactile, imaginative way that electronic toys simply cannot replicate.
+        </p>
+        <p className="leading-relaxed">
+          Farm play builds an understanding of where food comes from and how it's grown. Maritime play sparks curiosity about the sea, navigation, and the natural world. These are rich, culturally meaningful themes for New Zealand children — and our handcrafted toys bring them to life in the most natural way possible.
+        </p>
+      </section>
+
+      {/* Development */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">Developmental Benefits</h2>
+        <p className="leading-relaxed mb-4">
+          The natural weight of wooden tractors and boats provides important sensory and proprioceptive feedback that supports motor development. Farm and maritime-themed play encourages rich imaginative storytelling, cooperative play, and an understanding of the wider world.
+        </p>
+        <p className="leading-relaxed">
+          Unlike toys with pre-programmed responses, our tractors and boats encourage children to create their own narratives — a farm becomes a working landscape, a boat becomes an ocean adventure. This open-ended play is at the heart of Montessori learning philosophy and is why our toys are trusted by Montessori educators across New Zealand.
+        </p>
+      </section>
+
+      {/* Gift */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">A Distinctly New Zealand Gift</h2>
+        <p className="leading-relaxed">
+          A handcrafted wooden tractor or boat from Poppa's Wooden Creations makes a memorable and distinctly New Zealand gift. Made entirely by hand in Whangarei from native NZ timber, each piece carries genuine character and craftsmanship — a gift that will be played with, treasured, and eventually passed down.
+        </p>
+      </section>
+
+      {/* Care */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-amber-900 mb-4">Care & Maintenance</h2>
+        <p className="leading-relaxed">
+          Dust regularly with a soft dry cloth. Avoid prolonged exposure to water or direct sunlight. Every 6–12 months, apply a small amount of natural wood oil to maintain the finish. Our toys are built tough, but a little care will keep them beautiful for generations.
+        </p>
+      </section>
+
+      {/* FAQ */}
+      <section className="mb-4">
+        <h2 className="text-2xl font-bold text-amber-900 mb-6">Frequently Asked Questions</h2>
+        <div className="space-y-5">
+          <div>
+            <h3 className="font-semibold text-amber-800 mb-1">What age are the tractors and boats suitable for?</h3>
+            <p className="leading-relaxed">Our wooden tractors and boats are generally suitable for children aged 2 and up. Each product listing includes the specific recommended age range.</p>
           </div>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Choose Our Wooden Tractors & Boats?</h2>
-            <ul className="space-y-3 text-gray-700">
-              <li className="flex items-start">
-                <span className="text-green-600 mr-2 mt-1">✓</span>
-                <span><strong>Farm & Maritime Adventures:</strong> Perfect for encouraging imaginative scenarios about farming, fishing, and water transport</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-600 mr-2 mt-1">✓</span>
-                <span><strong>Generational Durability:</strong> Built to withstand years of play and be passed down through families</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-600 mr-2 mt-1">✓</span>
-                <span><strong>Native NZ Timber:</strong> Crafted from Rimu, Kauri, and Macrocarpa with beautiful natural grain</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-600 mr-2 mt-1">✓</span>
-                <span><strong>Educational Value:</strong> Teaches children about vehicles, farming, and maritime activities while developing motor skills</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-600 mr-2 mt-1">✓</span>
-                <span><strong>Montessori Principles:</strong> Simple, open-ended design encourages creativity without electronic distractions</span>
-              </li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Age-Appropriate Design</h2>
-            <p className="text-gray-700 leading-relaxed">
-              Our wooden tractors and boats are sized perfectly for little hands, typically suitable for ages 2-8 years. 
-              The simple, robust design makes them ideal for toddlers developing fine motor skills, while older children 
-              enjoy incorporating them into complex imaginative play scenarios. Each piece is hand-sanded smooth and 
-              finished with child-safe natural oils that bring out the stunning grain of New Zealand native woods.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Sustainable & Locally Made</h2>
-            <p className="text-gray-700 leading-relaxed">
-              Every toy in our tractors and boats collection is made in our Whangarei workshop using sustainably 
-              sourced native New Zealand timbers. By choosing wooden toys, you're supporting local craftsmanship 
-              and reducing plastic waste in our landfills and oceans. Our toys are completely biodegradable and 
-              environmentally friendly. When they eventually reach the end of their very long lifespan, they return 
-              to the earth naturally—unlike plastic toys that persist for hundreds of years.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Montessori Educational Benefits</h2>
-            <p className="text-gray-700 leading-relaxed">
-              Wooden toys align perfectly with Montessori principles of simple, open-ended play. Unlike electronic 
-              toys with pre-programmed responses, our tractors and boats encourage creativity, problem-solving, and 
-              imaginative thinking. The natural weight and texture of New Zealand native woods provides important 
-              sensory feedback for developing minds. For over 10 years, Montessori schools across New Zealand have 
-              trusted our wooden toys for their classrooms. The durability that stands up to classroom use makes 
-              them perfect for home use too.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Caring for Your Wooden Toys</h2>
-            <p className="text-gray-700 leading-relaxed">
-              These durable toys require minimal care. Simply wipe with a damp cloth when needed. Avoid soaking in water. 
-              Every 6-12 months, you can re-oil with a natural wood oil (such as coconut or mineral oil) to maintain the 
-              beautiful finish and protect the native timber. With proper care, these toys will last for generations, 
-              becoming treasured family heirlooms that carry memories from one generation to the next.
-            </p>
-          </section>
+          <div>
+            <h3 className="font-semibold text-amber-800 mb-1">What timber are they made from?</h3>
+            <p className="leading-relaxed">Primarily Macrocarpa and Rimu — native New Zealand timbers sourced from legal, sustainable supplies.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-amber-800 mb-1">Can the boats go in water?</h3>
+            <p className="leading-relaxed">Our boats are designed as play toys rather than water toys. We recommend keeping them dry to protect the timber finish and ensure they last for years.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-amber-800 mb-1">Do you ship throughout New Zealand?</h3>
+            <p className="leading-relaxed">Yes, we ship to all New Zealand addresses. Standard shipping is $8.50 NZD, with free shipping on orders over $150.</p>
+          </div>
         </div>
+      </section>
 
-        {/* YOUR EXISTING PRODUCTS GRID GOES HERE */}
-        <div>
-          {/* Keep your existing product display code here */}
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
