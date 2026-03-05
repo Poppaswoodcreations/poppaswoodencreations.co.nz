@@ -178,7 +178,7 @@ const Footer: React.FC = () => {
                 <MapPin className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div className="text-sm">
                   <p>102 Kiripaka Rd</p>
-                  <p>Whangarei, Northland 0110</p>
+                  <p>Whangarei, Northland 0112</p>
                   <p>New Zealand</p>
                 </div>
               </div>
@@ -190,8 +190,8 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-sm hover:text-amber-500 transition-colors">
-                  poppas.wooden.creations@gmail.com
+                <a href="mailto:poppaswoodencreations@gmail.com" className="text-sm hover:text-amber-500 transition-colors">
+                  poppaswoodencreations@gmail.com
                 </a>
               </div>
               <div className="pt-2">
@@ -273,4 +273,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
- 
