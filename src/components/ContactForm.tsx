@@ -77,7 +77,7 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-gray-600">+64 21 022 88166  (02102288166)</p>
+                  <p className="text-gray-600">+64 21 022 88166 (021 022 88166)</p>
                   <p className="text-sm text-gray-500">Monday - Friday, 9am - 3pm NZST</p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                  <p className="text-gray-600">poppas.wooden.creations@gmail.com</p>
+                  <p className="text-gray-600">poppaswoodencreations@gmail.com</p>
                   <p className="text-sm text-gray-500">Response within 24 hours</p>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const ContactForm: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Location</h3>
                   <p className="text-gray-600">102 Kiripaka Rd</p>
-                  <p className="text-gray-600">Whangarei, Northland 0110</p>
+                  <p className="text-gray-600">Whangarei, Northland 0112</p>
                   <p className="text-gray-600">New Zealand</p>
                   <p className="text-sm text-gray-500">Workshop visits by appointment</p>
                 </div>
@@ -109,7 +109,7 @@ const ContactForm: React.FC = () => {
               {/* Google Maps Embed */}
               <div className="bg-white rounded-xl overflow-hidden shadow-lg">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3227.8845399999997!2d174.3241753!3d-35.6927778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0bb6c7e3d3d3d3%3A0x3d3d3d3d3d3d3d3d!2s102%20Kiripaka%20Road%2C%20Whangarei%200110%2C%20New%20Zealand!5e0!3m2!1sen!2snz!4v1234567890123!5m2!1sen!2snz"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3227.8845399999997!2d174.3241753!3d-35.6927778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0bb6c7e3d3d3d3%3A0x3d3d3d3d3d3d3d3d!2s102%20Kiripaka%20Road%2C%20Whangarei%200112%2C%20New%20Zealand!5e0!3m2!1sen!2snz!4v1234567890123!5m2!1sen!2snz"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
@@ -179,7 +179,7 @@ const ContactForm: React.FC = () => {
                 <AlertCircle className="text-red-500 mt-0.5" size={20} />
                 <div className="text-sm text-red-800">
                   <p className="font-medium">Error sending message</p>
-                  <p>Please try again or contact us directly at poppas.wooden.creations@gmail.com</p>
+                  <p>Please try again or contact us directly at poppaswoodencreations@gmail.com</p>
                 </div>
               </div>
             )}
