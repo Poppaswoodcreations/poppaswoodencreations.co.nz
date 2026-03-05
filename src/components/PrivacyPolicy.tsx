@@ -30,9 +30,9 @@ const PrivacyPolicy: React.FC = () => {
               <p>
                 <strong>Business Name:</strong> Poppa's Wooden Creations<br/>
                 <strong>Established:</strong> 2015 - New Zealand Family Business<br/>
-                <strong>Address:</strong> 102 Kiripaka Rd, Whangarei, Northland 0110, New Zealand<br/>
-                <strong>Phone:</strong> +64 21 022 8166<br/>
-                <strong>Email:</strong> poppas.wooden.creations@gmail.com
+                <strong>Address:</strong> 102 Kiripaka Rd, Whangarei, Northland 0112, New Zealand<br/>
+                <strong>Phone:</strong> +64 21 022 88166<br/>
+                <strong>Email:</strong> poppaswoodencreations@gmail.com
               </p>
               <p>
                 We are an established New Zealand family business specializing in handcrafted wooden toys 
@@ -152,11 +152,11 @@ const PrivacyPolicy: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="flex items-center space-x-2">
                 <Mail size={20} />
-                <span>poppas.wooden.creations@gmail.com</span>
+                <span>poppaswoodencreations@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={20} />
-                <span>+64 21 022 8166</span>
+                <span>+64 21 022 88166</span>
               </div>
             </div>
           </div>
