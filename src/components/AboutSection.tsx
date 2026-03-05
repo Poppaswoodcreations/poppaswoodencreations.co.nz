@@ -76,7 +76,7 @@ const AboutSection: React.FC = () => {
                   <div>
                     <p className="font-semibold">Physical Address:</p>
                     <p>102 Kiripaka Rd</p>
-                    <p>Whangarei, Northland 0110</p>
+                    <p>Whangarei, Northland 0112</p>
                     <p>New Zealand</p>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ const AboutSection: React.FC = () => {
                   <Phone className="text-blue-600 mt-1" size={16} />
                   <div>
                     <p className="font-semibold">Phone:</p>
-                    <p>+64 21 022 8166</p>
+                    <p>+64 21 022 88166</p>
                     <p className="text-sm text-gray-600">Monday-Friday 9AM-3PM NZST</p>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const AboutSection: React.FC = () => {
                   <Mail className="text-blue-600 mt-1" size={16} />
                   <div>
                     <p className="font-semibold">Email:</p>
-                    <p>poppas.wooden.creations@gmail.com</p>
+                    <p>poppaswoodencreations@gmail.com</p>
                     <p className="text-sm text-gray-600">Response within 24 hours</p>
                   </div>
                 </div>
@@ -210,8 +210,8 @@ const AboutSection: React.FC = () => {
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="text-purple-600" size={24} />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">4.9★ Rating</h3>
-              <p className="text-gray-600 text-sm">Over 150 verified customer reviews. 98% customer satisfaction rate.</p>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Verified Reviews</h3>
+              <p className="text-gray-600 text-sm">Genuine customer reviews from families across New Zealand and beyond.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -309,8 +309,8 @@ const AboutSection: React.FC = () => {
             <div className="text-gray-600">Unique Designs</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-purple-600 mb-2">4.9★</div>
-            <div className="text-gray-600">Customer Rating</div>
+            <div className="text-4xl font-bold text-purple-600 mb-2">NZ</div>
+            <div className="text-gray-600">Handcrafted in Whangarei</div>
           </div>
         </div>
 
