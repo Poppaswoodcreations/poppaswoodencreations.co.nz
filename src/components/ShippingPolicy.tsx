@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Package, Clock, MapPin, Shield, DollarSign, Truck } from 'lucide-react';
+import { Package, Clock, MapPin, Shield, Truck } from 'lucide-react';
 
 const ShippingPolicy: React.FC = () => {
   return (
@@ -149,8 +149,8 @@ const ShippingPolicy: React.FC = () => {
               </ul>
               <p className="text-sm text-gray-600 mt-4">
                 If you have any questions about your shipment, please contact us at{' '}
-                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
-                  poppas.wooden.creations@gmail.com
+                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
+                  poppaswoodencreations@gmail.com
                 </a>
               </p>
             </div>
@@ -197,8 +197,8 @@ const ShippingPolicy: React.FC = () => {
                 <h3 className="text-lg font-semibold mb-2">Lost or Damaged Parcels</h3>
                 <p>
                   If your order is lost in transit or arrives damaged, please contact us immediately at{' '}
-                  <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
-                    poppas.wooden.creations@gmail.com
+                  <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
+                    poppaswoodencreations@gmail.com
                   </a>
                   {' '}with your order number and photos (if damaged). We'll arrange a replacement or full refund within 48 hours.
                 </p>
@@ -229,14 +229,14 @@ const ShippingPolicy: React.FC = () => {
             <div className="space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
-                  poppas.wooden.creations@gmail.com
+                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
+                  poppaswoodencreations@gmail.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Phone:</strong>{' '}
-                <a href="tel:+6421022816 6" className="text-amber-600 hover:underline">
-                  +64 21 022 8166
+                <a href="tel:+64210228816" className="text-amber-600 hover:underline">
+                  +64 21 022 88166
                 </a>
               </p>
               <p className="text-sm text-gray-600 mt-2">Monday-Friday, 9:00 AM - 3:00 PM NZST</p>
