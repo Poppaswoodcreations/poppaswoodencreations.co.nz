@@ -89,8 +89,8 @@ const ReturnsRefunds: React.FC = () => {
                   <h3 className="font-semibold text-lg mb-2">Contact Us</h3>
                   <p className="text-gray-700">
                     Email us at{' '}
-                    <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
-                      poppas.wooden.creations@gmail.com
+                    <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
+                      poppaswoodencreations@gmail.com
                     </a>
                     {' '}with your order number and reason for return. We'll respond within 24 hours.
                   </p>
@@ -202,7 +202,7 @@ const ReturnsRefunds: React.FC = () => {
                 <h3 className="font-semibold mb-2">What to Do:</h3>
                 <ol className="space-y-2 ml-4 list-decimal">
                   <li>Take photos of the damage or defect</li>
-                  <li>Email us at poppas.wooden.creations@gmail.com within 7 days</li>
+                  <li>Email us at <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">poppaswoodencreations@gmail.com</a> within 7 days</li>
                   <li>Include your order number and photos</li>
                   <li>We'll send a replacement or full refund within 48 hours</li>
                 </ol>
@@ -308,14 +308,14 @@ const ReturnsRefunds: React.FC = () => {
             <div className="space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
-                  poppas.wooden.creations@gmail.com
+                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
+                  poppaswoodencreations@gmail.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Phone:</strong>{' '}
-                <a href="tel:+6421022816 6" className="text-amber-600 hover:underline">
-                  +64 21 022 8166
+                <a href="tel:+64210228816" className="text-amber-600 hover:underline">
+                  +64 21 022 88166
                 </a>
               </p>
               <p className="text-sm text-gray-600 mt-2">Response within 24 hours • Monday-Friday, 9:00 AM - 3:00 PM NZST</p>
