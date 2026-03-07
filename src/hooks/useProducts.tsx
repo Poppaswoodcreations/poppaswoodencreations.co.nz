@@ -11,6 +11,10 @@ const supabaseAdmin = supabaseServiceKey
   ? createClient(supabaseUrl, supabaseServiceKey)
   : null;
 
+interface UseProductsOptions {
+  limit?: number; // Optional limit for initial load
+}
+
 interface UseProductsReturn {
   products: Product[];
   loading: boolean;
@@ -18,12 +22,14 @@ interface UseProductsReturn {
   isSupabaseConnected: boolean;
   isAdminConnected: boolean;
   loadProducts: () => Promise<void>;
+  loadAllProducts: () => Promise<void>;
   saveProduct: (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateProduct: (id: string, updates: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
 }
 
-export function useProducts(): UseProductsReturn {
+export function useProducts(options: UseProductsOptions = {}): UseProductsReturn {
+  const { limit } = options;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,6 +58,39 @@ export function useProducts(): UseProductsReturn {
       setLoading(true);
       setError(null);
 
+      let query = supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      // Apply limit if provided (homepage only loads 8)
+      if (limit) {
+        query = query.limit(limit);
+      }
+
+      const { data, error: supabaseError } = await query;
+
+      if (supabaseError) throw supabaseError;
+
+      const mapped: Product[] = (data || []).map(mapRow);
+      setProducts(mapped);
+      setIsSupabaseConnected(true);
+    } catch (err: any) {
+      console.error('Failed to load products:', err);
+      setError(err.message || 'Failed to load products');
+      setIsSupabaseConnected(false);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [limit]);
+
+  // Always loads all products regardless of limit (used by admin, category pages)
+  const loadAllProducts = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
       const { data, error: supabaseError } = await supabase
         .from('products')
         .select('*')
@@ -75,7 +114,7 @@ export function useProducts(): UseProductsReturn {
   const saveProduct = useCallback(async (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
     const client = supabaseAdmin || supabase;
     const id = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    
+
     const { error } = await client.from('products').insert({
       id,
       name: product.name,
@@ -92,8 +131,8 @@ export function useProducts(): UseProductsReturn {
     });
 
     if (error) throw error;
-    await loadProducts();
-  }, [loadProducts]);
+    await loadAllProducts();
+  }, [loadAllProducts]);
 
   const updateProduct = useCallback(async (id: string, updates: Partial<Product>) => {
     const client = supabaseAdmin || supabase;
@@ -113,15 +152,15 @@ export function useProducts(): UseProductsReturn {
 
     const { error } = await client.from('products').update(dbUpdates).eq('id', id);
     if (error) throw error;
-    await loadProducts();
-  }, [loadProducts]);
+    await loadAllProducts();
+  }, [loadAllProducts]);
 
   const deleteProduct = useCallback(async (id: string) => {
     const client = supabaseAdmin || supabase;
     const { error } = await client.from('products').delete().eq('id', id);
     if (error) throw error;
-    await loadProducts();
-  }, [loadProducts]);
+    await loadAllProducts();
+  }, [loadAllProducts]);
 
   useEffect(() => {
     loadProducts();
@@ -134,6 +173,7 @@ export function useProducts(): UseProductsReturn {
     isSupabaseConnected,
     isAdminConnected,
     loadProducts,
+    loadAllProducts,
     saveProduct,
     updateProduct,
     deleteProduct,
