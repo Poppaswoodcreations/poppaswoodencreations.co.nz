@@ -8,8 +8,7 @@ const ReviewForm: React.FC = () => {
     rating: 5,
     review_title: '',
     review_text: '',
-    product_name: '',
-    order_number: ''
+    product_name: ''
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -22,7 +21,6 @@ const ReviewForm: React.FC = () => {
     setError('');
 
     try {
-      // Insert review into database (will be hidden by default until you approve it)
       const { error: insertError } = await supabase
         .from('reviews')
         .insert([{
@@ -33,23 +31,21 @@ const ReviewForm: React.FC = () => {
           product_name: formData.product_name,
           review_date: new Date().toISOString(),
           source: 'website',
-          verified: formData.order_number.trim() !== '', // Verified if they provided order number
-          is_visible: false, // Hidden until you approve in admin
-          category: '' // You'll categorize in admin
+          verified: false,
+          is_visible: false,
+          category: ''
         }]);
 
       if (insertError) throw insertError;
 
       setSubmitted(true);
       
-      // Reset form
       setFormData({
         author_name: '',
         rating: 5,
         review_title: '',
         review_text: '',
-        product_name: '',
-        order_number: ''
+        product_name: ''
       });
 
     } catch (err: any) {
@@ -201,23 +197,6 @@ const ReviewForm: React.FC = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="e.g., Wooden Train Set"
               />
-            </div>
-
-            {/* Order Number */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Order Number (Optional)
-              </label>
-              <input
-                type="text"
-                value={formData.order_number}
-                onChange={(e) => setFormData({ ...formData, order_number: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                placeholder="Your order number"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Provide your order number to verify your purchase and get a "Verified Purchase" badge
-              </p>
             </div>
 
             {/* Error Message */}
