@@ -147,7 +147,8 @@ const AppContent: React.FC = () => {
   usePageTracking();
   useCleanCanonical();
 
-  const { products, loading, error, loadProducts } = useProducts();
+  // ── ONLY CHANGE: limit homepage to 8 products for faster initial load ──
+  const { products, loading, error, loadProducts, loadAllProducts } = useProducts({ limit: 8 });
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
 
   const handleCategorySelect = (category: string) => navigate(`/${category}`);
@@ -621,7 +622,7 @@ const AppContent: React.FC = () => {
             <SEOHead noindex={true} />
             <AdminDashboard
               products={products}
-              onProductsUpdate={async () => { await loadProducts(); }}
+              onProductsUpdate={async () => { await loadAllProducts(); }}
               onClose={() => setShowAdmin(false)}
             />
           </Suspense>
