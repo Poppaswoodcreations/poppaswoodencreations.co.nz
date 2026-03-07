@@ -11,10 +11,17 @@
     <!-- NOTE: No base meta description here — React Helmet manages this per-page -->
     <!-- Having both causes "duplicate meta description" errors in Bing/SEO tools -->
 
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous" />
+    <!-- Defer GTM connection until after load -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    
-    <!-- Google Customer Reviews Badge Script -->
+    <link rel="dns-prefetch" href="https://www.gstatic.com" />
+
+    <!-- Preload main CSS to remove render block -->
+    <link rel="preload" href="/assets/index-DLq_c37B.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/assets/index-DLq_c37B.css" /></noscript>
+
+    <!-- Google Customer Reviews Badge Script - defer until after load -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
     
     <!-- LocalBusiness Schema -->
@@ -144,7 +151,7 @@
       });
     </script>
     
-    <!-- Load Google Tag Manager AFTER page load -->
+    <!-- Load Google Tag Manager AFTER page load with delay -->
     <script>
       window.addEventListener('load', function() {
         setTimeout(function() {
