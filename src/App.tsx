@@ -147,7 +147,7 @@ const AppContent: React.FC = () => {
   usePageTracking();
   useCleanCanonical();
 
-  // ── ONLY CHANGE: limit homepage to 8 products for faster initial load ──
+  // ── limit homepage to 8 products for faster initial load (Lighthouse score) ──
   const { products, loading, error, loadProducts, loadAllProducts } = useProducts({ limit: 8 });
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
 
@@ -167,7 +167,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header
-        onShowAdmin={() => setShowAdmin(true)}
+        onShowAdmin={() => { setShowAdmin(true); loadAllProducts(); }}
         onShowCart={() => setShowCart(true)}
         cartItemCount={getCartItemCount()}
       />
