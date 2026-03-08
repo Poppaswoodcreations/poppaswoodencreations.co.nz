@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Search, ChevronDown } from 'lucide-react';
-import { useProducts } from '../hooks/useProducts';
 
 interface HeaderProps {
   onShowAdmin: () => void;
@@ -14,8 +13,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  
-  const { isSupabaseConnected } = useProducts();
 
   const productCategories = [
     { slug: 'wooden-baby-toys', name: 'Baby Toys' },
@@ -103,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6">
 
-            {/* Shop dropdown — includes Custom Orders at bottom */}
+            {/* Shop dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Shop
@@ -120,7 +117,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                     {category.name}
                   </a>
                 ))}
-                {/* Divider + Custom Orders */}
                 <div className="border-t border-gray-100 mt-1 pt-1">
                   <a
                     href="/custom-order"
@@ -184,11 +180,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 ))}
               </div>
             </div>
-
-            {/* 
-              ✅ FIXED: Removed duplicate "Custom Order" CTA button that was here.
-              Custom Orders now only appears once — inside the Shop dropdown above.
-            */}
 
           </nav>
 
@@ -295,7 +286,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 Contact
               </a>
 
-              {/* Custom Order — prominent in mobile menu */}
               <a
                 href="/custom-order"
                 onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
