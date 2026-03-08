@@ -1,5 +1,6 @@
-// generateSitemap.js
-// Run this script to generate your sitemap.xml with only active, indexable pages
+// generate-sitemap.js
+// Run: node generate-sitemap.js
+// Generates public/sitemap.xml from Supabase products + blog posts + all static routes
 
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
@@ -7,13 +8,12 @@ import path from 'path';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || process.env.SUPABASE_URL;
 const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function generateSitemap() {
   console.log('Generating sitemap...');
 
-  // Fetch active products with proper slugs (not old product- or SQ IDs)
+  // ── FETCH ACTIVE PRODUCTS ──────────────────────────────────────────────────
   const { data: products, error } = await supabase
     .from('products')
     .select('slug, name, updated_at, id')
@@ -26,56 +26,9 @@ async function generateSitemap() {
     console.error('Error fetching products:', error);
     return;
   }
-
   console.log(`Found ${products?.length || 0} active products`);
 
-  // Static pages (high priority pages you want indexed)
-  const staticPages = [
-    { 
-      url: '', 
-      priority: '1.0', 
-      changefreq: 'weekly',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/products', 
-      priority: '0.9', 
-      changefreq: 'daily',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/wooden-planes-helicopters', 
-      priority: '0.8', 
-      changefreq: 'weekly',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/blog', 
-      priority: '0.8', 
-      changefreq: 'weekly',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/reviews', 
-      priority: '0.7', 
-      changefreq: 'monthly',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/contact', 
-      priority: '0.6', 
-      changefreq: 'monthly',
-      lastmod: new Date().toISOString()
-    },
-    { 
-      url: '/shipping', 
-      priority: '0.6', 
-      changefreq: 'monthly',
-      lastmod: new Date().toISOString()
-    },
-  ];
-
-  // Fetch blog posts
+  // ── FETCH PUBLISHED BLOG POSTS ─────────────────────────────────────────────
   const { data: blogPosts } = await supabase
     .from('blog_posts')
     .select('slug, updated_at')
@@ -84,39 +37,113 @@ async function generateSitemap() {
 
   console.log(`Found ${blogPosts?.length || 0} published blog posts`);
 
-  // Generate XML
+  const today = new Date().toISOString().split('T')[0];
+
+  // ── STATIC PAGES ───────────────────────────────────────────────────────────
+  // Priority guide:
+  //   1.0 = homepage
+  //   0.9 = all products listing
+  //   0.8 = category pages, SEO landing pages, blog index
+  //   0.7 = reviews, about, custom order
+  //   0.6 = contact, shipping, returns
+  const staticPages = [
+    // Core
+    { url: '',                          priority: '1.0', changefreq: 'weekly'  },
+    { url: '/products',                 priority: '0.9', changefreq: 'daily'   },
+
+    // Category pages
+    { url: '/wooden-cars',              priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-trucks',            priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-trains',            priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-planes-helicopters',priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-baby-toys',         priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-tractors-boats',    priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-kitchenware',       priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-crosses',           priority: '0.8', changefreq: 'weekly'  },
+    { url: '/wooden-pens',              priority: '0.8', changefreq: 'weekly'  },
+
+    // SEO landing page
+    { url: '/wooden-toys-nz',           priority: '0.8', changefreq: 'monthly' },
+
+    // Blog
+    { url: '/blog',                     priority: '0.8', changefreq: 'weekly'  },
+
+    // Business pages
+    { url: '/reviews',                  priority: '0.7', changefreq: 'weekly'  },
+    { url: '/about',                    priority: '0.7', changefreq: 'monthly' },
+    { url: '/custom-order',             priority: '0.7', changefreq: 'monthly' },
+
+    // Info / policy pages
+    { url: '/contact',                  priority: '0.6', changefreq: 'monthly' },
+    { url: '/shipping',                 priority: '0.6', changefreq: 'monthly' },
+    { url: '/returns',                  priority: '0.6', changefreq: 'monthly' },
+
+    // NOTE: the following are intentionally excluded (noindex in app):
+    //   /order-confirmation, /privacy, /terms, /admin/reviews,
+    //   /search, /write-review, /cart
+  ];
+
+  // ── BUILD XML ──────────────────────────────────────────────────────────────
+  const urlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+
+  const staticEntries = staticPages.map(p =>
+    urlEntry({
+      loc: `https://poppaswoodencreations.co.nz${p.url}`,
+      lastmod: today,
+      changefreq: p.changefreq,
+      priority: p.priority,
+    })
+  );
+
+  const productEntries = (products || []).map(product =>
+    urlEntry({
+      loc: `https://poppaswoodencreations.co.nz/products/${product.slug}`,
+      lastmod: product.updated_at?.split('T')[0] || today,
+      changefreq: 'weekly',
+      priority: '0.8',
+    })
+  );
+
+  const blogEntries = (blogPosts || []).map(post =>
+    urlEntry({
+      loc: `https://poppaswoodencreations.co.nz/blog/${post.slug}`,
+      lastmod: post.updated_at?.split('T')[0] || today,
+      changefreq: 'monthly',
+      priority: '0.7',
+    })
+  );
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${staticPages.map(page => `  <url>
-    <loc>https://poppaswoodencreations.co.nz${page.url}</loc>
-    <lastmod>${page.lastmod.split('T')[0]}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>`).join('\n')}
-${products?.map(product => `  <url>
-    <loc>https://poppaswoodencreations.co.nz/products/${product.slug}</loc>
-    <lastmod>${product.updated_at?.split('T')[0] || new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`).join('\n') || ''}
-${blogPosts?.map(post => `  <url>
-    <loc>https://poppaswoodencreations.co.nz/blog/${post.slug}</loc>
-    <lastmod>${post.updated_at?.split('T')[0] || new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>`).join('\n') || ''}
+
+  <!-- ═══ STATIC PAGES (${staticPages.length}) ═══ -->
+${staticEntries.join('\n')}
+
+  <!-- ═══ PRODUCT PAGES (${(products || []).length}) ═══ -->
+${productEntries.join('\n')}
+
+  <!-- ═══ BLOG POSTS (${(blogPosts || []).length}) ═══ -->
+${blogEntries.join('\n')}
+
 </urlset>`;
 
-  // Write to public folder
+  // ── WRITE FILE ─────────────────────────────────────────────────────────────
   const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
   fs.writeFileSync(sitemapPath, sitemap);
-  
-  console.log(`✅ Sitemap generated successfully at ${sitemapPath}`);
-  console.log(`Total URLs: ${staticPages.length + (products?.length || 0) + (blogPosts?.length || 0)}`);
+
+  const total = staticPages.length + (products?.length || 0) + (blogPosts?.length || 0);
+  console.log(`✅ Sitemap written to ${sitemapPath}`);
+  console.log(`   Static pages : ${staticPages.length}`);
+  console.log(`   Products     : ${products?.length || 0}`);
+  console.log(`   Blog posts   : ${blogPosts?.length || 0}`);
+  console.log(`   Total URLs   : ${total}`);
 }
 
 generateSitemap().catch(console.error);
