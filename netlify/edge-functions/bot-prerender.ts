@@ -159,7 +159,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact Us</h2>
-        <p>If you have any questions about your shipment, please contact us at <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a> or call <a href="tel:+6421022881​66">+64 21 022 88166</a>.</p>
+        <p>If you have any questions about your shipment, please contact us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a> or call <a href="tel:+6421022881​66">+64 21 022 88166</a>.</p>
       </section>
     `,
   },
@@ -180,7 +180,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>How to Return an Item</h2>
-        <p>To initiate a return, please email us at <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a> with your order details and reason for return. We will provide you with return instructions within 1–2 business days.</p>
+        <p>To initiate a return, please email us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a> with your order details and reason for return. We will provide you with return instructions within 1–2 business days.</p>
       </section>
       <section>
         <h2>Refunds</h2>
@@ -193,7 +193,7 @@ const POLICY_PAGES: Record<string, {
       <section>
         <h2>Contact Us</h2>
         <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
-        Email: <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a><br/>
+        Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
     `,
@@ -223,12 +223,12 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Your Rights</h2>
-        <p>Under the New Zealand Privacy Act 2020, you have the right to access and correct personal information we hold about you. To make a request, please contact us at <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a>.</p>
+        <p>Under the New Zealand Privacy Act 2020, you have the right to access and correct personal information we hold about you. To make a request, please contact us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a>.</p>
       </section>
       <section>
         <h2>Contact</h2>
         <p>Privacy Officer: Adrian Barber<br/>
-        Email: <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a><br/>
+        Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
     `,
@@ -266,7 +266,7 @@ const POLICY_PAGES: Record<string, {
       <section>
         <h2>Contact</h2>
         <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
-        Email: <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a><br/>
+        Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
     `,
@@ -302,7 +302,7 @@ const INFO_PAGES: Record<string, {
         <h2>Contact Us</h2>
         <p>We love hearing from our customers. Get in touch with any questions about our products or to discuss a custom order.</p>
         <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
-        Email: <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a><br/>
+        Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
     `,
@@ -317,7 +317,7 @@ const INFO_PAGES: Record<string, {
         <p>We'd love to hear from you. Whether you have a question about our products, want to discuss a custom order, or just want to say hello — we're here to help.</p>
         <ul>
           <li><strong>Phone:</strong> <a href="tel:+6421022881​66">+64 21 022 88166</a></li>
-          <li><strong>Email:</strong> <a href="mailto:Poppas.wooden.creations@gmail.com">Poppas.wooden.creations@gmail.com</a></li>
+          <li><strong>Email:</strong> <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a></li>
           <li><strong>Address:</strong> 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</li>
         </ul>
       </section>
@@ -359,7 +359,7 @@ function buildSharedFooter(): string {
         <p style="margin:4px 0;">102 Kiripaka Road, Tikipunga</p>
         <p style="margin:4px 0;">Whangarei 0112, New Zealand</p>
         <p style="margin:4px 0;"><a href="tel:+6421022881​66" style="color:#fcd34d;">+64 21 022 88166</a></p>
-        <p style="margin:4px 0;"><a href="mailto:Poppas.wooden.creations@gmail.com" style="color:#fcd34d;">Poppas.wooden.creations@gmail.com</a></p>
+        <p style="margin:4px 0;"><a href="mailto:poppaswoodencreations@gmail.com" style="color:#fcd34d;">poppaswoodencreations@gmail.com</a></p>
       </div>
       <div>
         <h3 style="color:#fef3c7;margin-bottom:12px;">Shop</h3>
@@ -481,7 +481,7 @@ function buildPolicyHTML(pathname: string): string {
     "name": "Poppa's Wooden Creations",
     "url": BASE_URL,
     "telephone": "+6421022881​66",
-    "email": "Poppas.wooden.creations@gmail.com",
+    "email": "poppaswoodencreations@gmail.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "102 Kiripaka Road, Tikipunga",
@@ -554,7 +554,7 @@ function buildInfoHTML(pathname: string): string {
     "description": "Handcrafted wooden toys and kitchenware from native NZ timber, made in Whangarei since 2015.",
     "url": BASE_URL,
     "telephone": "+6421022881​66",
-    "email": "Poppas.wooden.creations@gmail.com",
+    "email": "poppaswoodencreations@gmail.com",
     "foundingDate": "2015",
     "address": {
       "@type": "PostalAddress",
