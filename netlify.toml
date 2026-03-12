@@ -5,6 +5,33 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Redirect old Squarespace product URLs (404s) to relevant categories
+[[redirects]]
+  from = "/products/kauri-bowl"
+  to = "/wooden-kitchenware"
+  status = 301
+
+[[redirects]]
+  from = "/products/sedan"
+  to = "/wooden-cars"
+  status = 301
+
+[[redirects]]
+  from = "/products/baby-blocks-native-rimu-8-pack"
+  to = "/wooden-baby-toys"
+  status = 301
+
+[[redirects]]
+  from = "/products/school-bus-small"
+  to = "/wooden-trucks"
+  status = 301
+
+# Block search URL templates from indexing
+[[redirects]]
+  from = "/search"
+  to = "/"
+  status = 301
+
 # SPA routing - all paths serve index.html
 [[redirects]]
   from = "/*"
