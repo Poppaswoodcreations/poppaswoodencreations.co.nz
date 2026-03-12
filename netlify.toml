@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Redirect old /kitchenware URL to current category
+[[redirects]]
+  from = "/kitchenware"
+  to = "/wooden-kitchenware"
+  status = 301
+
 # Redirect old Squarespace product URLs (404s) to relevant categories
 [[redirects]]
   from = "/products/kauri-bowl"
