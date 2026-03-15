@@ -1,17 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://hfirnolwhesjkxshidxo.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmaXJub2x3aGVzamt4c2hpZHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5OTgxODUsImV4cCI6MjA3MzU3NDE4NX0.lEXxv7eEgUyuaVADraYq-OEQF7GRf-4WjC7hD_bVb2c'
 const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY
 
 // Public client for reading data (uses anon key)
-export const supabase = (
-  supabaseUrl && 
-  supabaseAnonKey && 
-  supabaseUrl.startsWith('https://') && 
-  supabaseUrl.includes('.supabase.co') &&
-  supabaseAnonKey.length > 20
-) ? createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
@@ -26,14 +20,11 @@ export const supabase = (
       'X-Client-Info': 'poppaswoodencreations'
     }
   }
-}) : null
+})
 
 // Admin client for write operations (uses service role key)
 export const supabaseAdmin = (
-  supabaseUrl && 
-  supabaseServiceKey && 
-  supabaseUrl.startsWith('https://') && 
-  supabaseUrl.includes('.supabase.co') &&
+  supabaseServiceKey &&
   supabaseServiceKey.length > 20
 ) ? createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
@@ -47,8 +38,8 @@ export const supabaseAdmin = (
   }
 }) : null
 
-if (!supabase || !supabaseAdmin) {
-  console.warn('Supabase not configured, using local storage mode')
+if (!supabaseAdmin) {
+  console.warn('Supabase admin not configured - write operations disabled')
 }
 
 // Database types
