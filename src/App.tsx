@@ -49,6 +49,14 @@ import { useCart } from './hooks/useCart';
 import { categories } from './data/products';
 import { Product } from './types';
 
+// ─── CATEGORY ROUTES ──────────────────────────────────────────────────────────
+
+const CATEGORY_PATHS = [
+  '/wooden-trucks', '/wooden-cars', '/wooden-trains', '/wooden-planes-helicopters',
+  '/wooden-baby-toys', '/wooden-kitchenware', '/wooden-tractors-boats',
+  '/wooden-crosses', '/wooden-pens', '/products'
+];
+
 // ─── LOADING FALLBACKS ────────────────────────────────────────────────────────
 
 const LoadingFallback: React.FC = () => (
@@ -147,8 +155,20 @@ const AppContent: React.FC = () => {
   usePageTracking();
   useCleanCanonical();
 
-  // ── limit homepage to 8 products for faster initial load (Lighthouse score) ──
-  const { products, loading, error, loadProducts, loadAllProducts } = useProducts({ limit: 8 });
+  const isCategoryPage = CATEGORY_PATHS.some(p => location.pathname.startsWith(p));
+
+  // Load all products on category pages, limit to 8 on homepage for performance
+  const { products, loading, error, loadProducts, loadAllProducts } = useProducts(
+    isCategoryPage ? {} : { limit: 8 }
+  );
+
+  // When navigating to a category page, ensure all products are loaded
+  useEffect(() => {
+    if (isCategoryPage) {
+      loadAllProducts();
+    }
+  }, [location.pathname]);
+
   const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
 
   const handleCategorySelect = (category: string) => navigate(`/${category}`);
@@ -255,6 +275,7 @@ const AppContent: React.FC = () => {
                   products={products}
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
+                  loading={loading}
                 />
               </>
             } />
@@ -286,6 +307,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trucks"
+                  loading={loading}
                 />
                 <WoodenTrucksPage />
               </>
@@ -308,6 +330,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-cars"
+                  loading={loading}
                 />
                 <WoodenCarsPage />
               </>
@@ -330,6 +353,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-trains"
+                  loading={loading}
                 />
                 <WoodenTrainsPage />
               </>
@@ -375,6 +399,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-baby-toys"
+                  loading={loading}
                 />
                 <WoodenBabyToysPage />
               </>
@@ -397,6 +422,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-kitchenware"
+                  loading={loading}
                 />
                 <WoodenKitchenwarePage />
               </>
@@ -419,6 +445,7 @@ const AppContent: React.FC = () => {
                   onProductSelect={handleProductSelect}
                   onAddToCart={handleAddToCart}
                   category="wooden-tractors-boats"
+                  loading={loading}
                 />
                 <WoodenTractorsBoatsPage />
               </>
