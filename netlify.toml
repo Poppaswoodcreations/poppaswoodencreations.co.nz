@@ -119,6 +119,31 @@
   status = 301
   force = true
 
+# Redirect old Squarespace SQ product IDs (redirect errors) to main shop
+[[redirects]]
+  from = "/products/SQ3632557"
+  to = "/wooden-toys-nz"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/SQ1562009"
+  to = "/wooden-toys-nz"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/SQ1772907"
+  to = "/wooden-toys-nz"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/SQ2367809"
+  to = "/wooden-toys-nz"
+  status = 301
+  force = true
+
 # Block search URL templates from indexing
 [[redirects]]
   from = "/search"
@@ -187,3 +212,4 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    
