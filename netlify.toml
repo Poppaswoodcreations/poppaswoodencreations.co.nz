@@ -29,6 +29,12 @@
   force = true
 
 [[redirects]]
+  from = "/reviews/"
+  to = "/reviews"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/shipping/"
   to = "/shipping"
   status = 301
@@ -212,4 +218,3 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    
