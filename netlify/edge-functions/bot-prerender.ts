@@ -411,6 +411,7 @@ function extractProductId(pathname: string): string | null {
 }
 
 function extractCategorySlug(pathname: string): string | null {
+  // Strip trailing slash before lookup — canonical URLs have no trailing slash
   const clean = pathname.replace(/\/$/, '');
   const slug = clean.replace(/^\//, '');
   return CATEGORY_META[slug] ? slug : null;
@@ -859,6 +860,20 @@ export default async function handler(request: Request, context: Context) {
     return context.next();
   }
 
+  // ── Trailing-slash normalisation for bots ──────────────────────────────────
+  // If a bot requests /wooden-trucks/ redirect to /wooden-trucks (the canonical).
+  // This ensures Google always indexes the no-trailing-slash version.
+  if (pathname !== '/' && pathname.endsWith('/')) {
+    const canonical = pathname.slice(0, -1);
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}${canonical}${url.search}`,
+        'Cache-Control': 'public, max-age=31536000',
+      },
+    });
+  }
+
   // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
@@ -923,15 +938,24 @@ export default async function handler(request: Request, context: Context) {
   return context.next();
 }
 
+// ── FIXED: Added trailing-slash variants so the edge function fires for both
+// /wooden-trucks AND /wooden-trucks/ (and all other bot-rendered paths)
 export const config = {
   path: [
     '/products/*',
     '/wooden-*',
+    '/wooden-*/',
     '/shipping',
+    '/shipping/',
     '/returns',
+    '/returns/',
     '/privacy',
+    '/privacy/',
     '/terms',
+    '/terms/',
     '/about',
+    '/about/',
     '/contact',
+    '/contact/',
   ],
 };
