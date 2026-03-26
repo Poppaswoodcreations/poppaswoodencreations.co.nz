@@ -16,4 +16,5 @@ Disallow: /products/product-7
 Disallow: /products/product-8
 Disallow: /products/product-9
 Disallow: /products/product-10
+
 Sitemap: https://poppaswoodencreations.co.nz/sitemap.xml
