@@ -1,5 +1,5 @@
 // netlify/edge-functions/bot-prerender.ts
-// Detects Google/bot crawlers and serves fully populated HTML
+// Detects Google/Bing/bot crawlers and serves fully populated HTML
 // Real users get the normal React SPA as usual
 
 import type { Context } from "https://edge.netlify.com";
@@ -122,6 +122,45 @@ const CATEGORY_META: Record<string, {
       'Non-toxic, child-safe finish',
       'Open-ended imaginative play',
       'Heirloom quality built to last',
+    ],
+  },
+  'wooden-pens': {
+    title: 'Handcrafted Wooden Pens NZ | Native Timber Pens | Poppa\'s Wooden Creations',
+    description: 'Handcrafted wooden pens turned from native New Zealand timber — Kauri, Rimu, Rewa-Rewa and Totara. Unique heirloom gifts made in Whangarei.',
+    h1: 'Handcrafted Wooden Pens',
+    intro: 'Our wooden pens are hand-turned in Whangarei from rare native New Zealand timbers including ancient Kauri, Rimu, Rewa-Rewa and Totara. Available as click pens, stylus pens and larger ballpoint pens — each one completely unique.',
+    features: [
+      'Hand-turned from native NZ timber — Kauri, Rimu, Rewa-Rewa, Totara',
+      'Chrome, black chrome, gold and antique bronze fittings',
+      'Click pens, stylus pens and larger ballpoint options',
+      'No two pens identical — unique grain patterns',
+      'Handcrafted in Whangarei — a rare NZ-made gift',
+    ],
+  },
+  'wooden-crosses': {
+    title: 'Handcrafted Wooden Crosses NZ | Native Timber | Poppa\'s Wooden Creations',
+    description: 'Handcrafted wooden crosses made from native New Zealand Rimu timber. Beautiful religious gifts and heirloom pieces, made by hand in Whangarei.',
+    h1: 'Handcrafted Wooden Crosses',
+    intro: 'Our wooden crosses are handcrafted in Whangarei from native New Zealand Rimu timber. A meaningful and lasting gift for baptisms, confirmations, Easter and other occasions.',
+    features: [
+      'Made from native NZ Rimu timber',
+      'Handcrafted in Whangarei since 2015',
+      'Beautiful grain — no two pieces identical',
+      'Non-toxic finish',
+      'Heirloom quality — built to last generations',
+    ],
+  },
+  'wooden-toys-nz': {
+    title: 'Handcrafted Wooden Toys Made in New Zealand | Poppa\'s Wooden Creations',
+    description: 'Premium handcrafted wooden toys made from native New Zealand timber. Trusted by Montessori schools. Cars, trucks, trains, baby toys and kitchenware handmade in Whangarei.',
+    h1: 'Handcrafted Wooden Toys NZ',
+    intro: 'Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa\'s Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.',
+    features: [
+      'Handcrafted from native NZ timber — Kauri, Rimu, Macrocarpa',
+      'Non-toxic, food-safe finish — safe for babies and toddlers',
+      'Trusted by Montessori schools across New Zealand since 2015',
+      'Unique grain patterns — no two pieces identical',
+      'Heirloom quality built to last generations',
     ],
   },
 };
@@ -333,9 +372,36 @@ const INFO_PAGES: Record<string, {
       </section>
     `,
   },
+  '/reviews': {
+    title: 'Customer Reviews | Poppa\'s Wooden Creations NZ',
+    description: 'Read genuine customer reviews of Poppa\'s Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.',
+    h1: 'Customer Reviews',
+    content: `
+      <section>
+        <h2>What Our Customers Say</h2>
+        <p>We are proud to be trusted by families and Montessori schools across New Zealand. Here is what some of our customers have to say about Poppa's Wooden Creations.</p>
+      </section>
+      <section>
+        <h2>Leave a Review</h2>
+        <p>Have you purchased from us? We'd love to hear your feedback. Please leave us a Google review or get in touch directly.</p>
+        <p>Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a></p>
+      </section>
+    `,
+  },
+  '/blog': {
+    title: 'Blog | Wooden Toys & Craftsmanship | Poppa\'s Wooden Creations NZ',
+    description: 'Read our blog for tips on wooden toys, Montessori play, NZ timber craftsmanship and more. Handcrafted wooden toys made in Whangarei since 2015.',
+    h1: 'Poppa\'s Wooden Creations Blog',
+    content: `
+      <section>
+        <h2>Tips, Ideas & Craftsmanship</h2>
+        <p>Welcome to the Poppa's Wooden Creations blog. Here we share tips on choosing wooden toys, the benefits of Montessori play, insights into New Zealand native timber, and stories from our Whangarei workshop.</p>
+      </section>
+    `,
+  },
 };
 
-// ─── Shared footer & nav HTML ─────────────────────────────────────────────────
+// ─── Shared nav & footer ──────────────────────────────────────────────────────
 function buildSharedNav(currentPath: string): string {
   return `
   <header style="background:#78350f;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
@@ -370,6 +436,7 @@ function buildSharedFooter(): string {
           <li><a href="${BASE_URL}/wooden-trains" style="color:#d6d3d1;text-decoration:none;">Wooden Trains</a></li>
           <li><a href="${BASE_URL}/wooden-kitchenware" style="color:#d6d3d1;text-decoration:none;">Wooden Kitchenware</a></li>
           <li><a href="${BASE_URL}/wooden-pens" style="color:#d6d3d1;text-decoration:none;">Wooden Pens</a></li>
+          <li><a href="${BASE_URL}/wooden-crosses" style="color:#d6d3d1;text-decoration:none;">Wooden Crosses</a></li>
         </ul>
       </div>
       <div>
@@ -393,12 +460,12 @@ function buildSharedFooter(): string {
       </div>
     </div>
     <div style="border-top:1px solid #44403c;margin-top:24px;padding-top:16px;text-align:center;font-size:0.85em;color:#78716c;">
-      &copy; 2025 Poppa's Wooden Creations. All rights reserved. | ABN/NZBN: NZ Sole Trader | Whangarei, Northland, New Zealand
+      &copy; 2025 Poppa's Wooden Creations. All rights reserved. | NZ Sole Trader | Whangarei, Northland, New Zealand
     </div>
   </footer>`;
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function isBot(userAgent: string): boolean {
   const ua = userAgent.toLowerCase();
@@ -411,20 +478,16 @@ function extractProductId(pathname: string): string | null {
 }
 
 function extractCategorySlug(pathname: string): string | null {
-  // Strip trailing slash before lookup — canonical URLs have no trailing slash
-  const clean = pathname.replace(/\/$/, '');
-  const slug = clean.replace(/^\//, '');
-  return CATEGORY_META[slug] ? slug : null;
+  const clean = pathname.replace(/\/$/, '').replace(/^\//, '');
+  return CATEGORY_META[clean] ? clean : null;
 }
 
 function isPolicyPage(pathname: string): boolean {
-  const clean = pathname.replace(/\/$/, '');
-  return clean in POLICY_PAGES;
+  return pathname.replace(/\/$/, '') in POLICY_PAGES;
 }
 
 function isInfoPage(pathname: string): boolean {
-  const clean = pathname.replace(/\/$/, '');
-  return clean in INFO_PAGES;
+  return pathname.replace(/\/$/, '') in INFO_PAGES;
 }
 
 async function fetchProduct(productId: string): Promise<any | null> {
@@ -476,23 +539,6 @@ function buildPolicyHTML(pathname: string): string {
   const canonicalUrl = `${BASE_URL}${clean}`;
   const robotsContent = page.noindex ? 'noindex, nofollow' : 'index, follow';
 
-  const localBusinessSchema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Poppa's Wooden Creations",
-    "url": BASE_URL,
-    "telephone": "+6421022881​66",
-    "email": "poppaswoodencreations@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "102 Kiripaka Road, Tikipunga",
-      "addressLocality": "Whangarei",
-      "addressRegion": "Northland",
-      "postalCode": "0112",
-      "addressCountry": "NZ",
-    },
-  });
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -517,7 +563,6 @@ function buildPolicyHTML(pathname: string): string {
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Poppa's Wooden Creations" />
   <script type="application/ld+json">${breadcrumbSchema}</script>
-  <script type="application/ld+json">${localBusinessSchema}</script>
   <style>
     body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
     main { padding: 40px 24px; }
@@ -548,25 +593,6 @@ function buildInfoHTML(pathname: string): string {
   const page = INFO_PAGES[clean];
   const canonicalUrl = `${BASE_URL}${clean}`;
 
-  const localBusinessSchema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Poppa's Wooden Creations",
-    "description": "Handcrafted wooden toys and kitchenware from native NZ timber, made in Whangarei since 2015.",
-    "url": BASE_URL,
-    "telephone": "+6421022881​66",
-    "email": "poppaswoodencreations@gmail.com",
-    "foundingDate": "2015",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "102 Kiripaka Road, Tikipunga",
-      "addressLocality": "Whangarei",
-      "addressRegion": "Northland",
-      "postalCode": "0112",
-      "addressCountry": "NZ",
-    },
-  });
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -591,7 +617,6 @@ function buildInfoHTML(pathname: string): string {
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Poppa's Wooden Creations" />
   <script type="application/ld+json">${breadcrumbSchema}</script>
-  <script type="application/ld+json">${localBusinessSchema}</script>
   <style>
     body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
     main { padding: 40px 24px; }
@@ -860,9 +885,7 @@ export default async function handler(request: Request, context: Context) {
     return context.next();
   }
 
-  // ── Trailing-slash normalisation for bots ──────────────────────────────────
-  // If a bot requests /wooden-trucks/ redirect to /wooden-trucks (the canonical).
-  // This ensures Google always indexes the no-trailing-slash version.
+  // Trailing-slash normalisation for bots
   if (pathname !== '/' && pathname.endsWith('/')) {
     const canonical = pathname.slice(0, -1);
     return new Response(null, {
@@ -905,7 +928,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Policy pages (/shipping, /returns, /privacy, /terms) ──────────────────
+  // ── Policy pages ───────────────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -921,7 +944,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Info pages (/about, /contact) ─────────────────────────────────────────
+  // ── Info pages (/about, /contact, /reviews, /blog) ─────────────────────────
   if (isInfoPage(pathname)) {
     const html = buildInfoHTML(pathname);
     return new Response(html, {
@@ -938,13 +961,29 @@ export default async function handler(request: Request, context: Context) {
   return context.next();
 }
 
-// ── FIXED: Added trailing-slash variants so the edge function fires for both
-// /wooden-trucks AND /wooden-trucks/ (and all other bot-rendered paths)
 export const config = {
   path: [
     '/products/*',
-    '/wooden-*',
-    '/wooden-*/',
+    '/wooden-baby-toys',
+    '/wooden-baby-toys/',
+    '/wooden-cars',
+    '/wooden-cars/',
+    '/wooden-trucks',
+    '/wooden-trucks/',
+    '/wooden-trains',
+    '/wooden-trains/',
+    '/wooden-kitchenware',
+    '/wooden-kitchenware/',
+    '/wooden-planes-helicopters',
+    '/wooden-planes-helicopters/',
+    '/wooden-tractors-boats',
+    '/wooden-tractors-boats/',
+    '/wooden-pens',
+    '/wooden-pens/',
+    '/wooden-crosses',
+    '/wooden-crosses/',
+    '/wooden-toys-nz',
+    '/wooden-toys-nz/',
     '/shipping',
     '/shipping/',
     '/returns',
@@ -957,5 +996,9 @@ export const config = {
     '/about/',
     '/contact',
     '/contact/',
+    '/reviews',
+    '/reviews/',
+    '/blog',
+    '/blog/',
   ],
 };
