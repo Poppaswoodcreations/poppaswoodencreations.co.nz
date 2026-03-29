@@ -102,26 +102,6 @@ const SearchPageWrapper: React.FC<{
   );
 };
 
-// ─── UTM CANONICAL CLEANER ────────────────────────────────────────────────────
-
-function useCleanCanonical() {
-  const location = useLocation();
-  useEffect(() => {
-    const baseUrl = 'https://poppaswoodencreations.co.nz';
-    const cleanUrl = baseUrl + location.pathname.replace(/\/$/, '') || baseUrl + '/';
-
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (canonical) {
-      canonical.href = cleanUrl;
-    } else {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      canonical.href = cleanUrl;
-      document.head.appendChild(canonical);
-    }
-  }, [location.pathname]);
-}
-
 // ─── PAGE TRACKING ────────────────────────────────────────────────────────────
 
 function usePageTracking() {
@@ -153,7 +133,6 @@ const AppContent: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
 
   usePageTracking();
-  useCleanCanonical();
 
   const isCategoryPage = CATEGORY_PATHS.some(p => location.pathname.startsWith(p));
 
