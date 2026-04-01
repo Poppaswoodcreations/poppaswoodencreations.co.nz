@@ -102,7 +102,7 @@ const PRODUCT_FAQS = [
   },
   {
     question: "Are these toys safe for babies and toddlers?",
-    answer: "Yes! All our toys are finished with non-toxic, food-safe oils and are designed with child safety in mind. They have no small parts that could be a choking hazard and are suitable for children from birth onwards."
+    answer: "Yes! All our toys are finished with non-toxic, food-safe oils and are designed with child safety in mind. They have no small parts that could be a choking hazard and are suitable for children from 12 months onwards."
   },
   {
     question: "How do I clean and care for wooden toys?",
@@ -134,7 +134,7 @@ const getAgeRange = (name: string, category?: string): string => {
   if (text.includes('baby') || text.includes('infant') || text.includes('rattle')) return '0-12 months';
   if (text.includes('toddler')) return '1-3 years';
   if (text.includes('preschool')) return '3-5 years';
-  return '0-8 years';
+  return '12 months+';
 };
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, isLoading = false }) => {
@@ -149,7 +149,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
 
   const ageRange = product
     ? getAgeRange(product.name, product.category)
-    : '0-8 years';
+    : '12 months+';
 
   // Always build canonical from URL params — never depends on product state
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${productId}`;
@@ -182,9 +182,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     noindex: shouldNoIndex
   });
 
-  // ✅ KEY FIX: Show spinner if EITHER explicitly loading OR products haven't arrived yet
-  // This prevents the "Product Not Found" from showing before Supabase responds
-  // Google sees a loading spinner instead of a soft 404
+  // Show spinner if EITHER explicitly loading OR products haven't arrived yet
   if (isLoading || products.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -309,10 +307,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     "material": productMaterial,
     "audience": {
       "@type": "PeopleAudience",
-      "suggestedMinAge": ageRange.split('-')[0].trim().replace(/[^0-9]/g, ''),
-      "suggestedMaxAge": ageRange.split('-')[1]?.trim().replace(/[^0-9]/g, '') || "8"
+      "suggestedMinAge": "1",
+      "suggestedMaxAge": "8"
     },
     "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Age Suitability", "value": ageRange },
       { "@type": "PropertyValue", "name": "Finish", "value": "Non-toxic food-safe oil" },
       { "@type": "PropertyValue", "name": "Origin", "value": "Handcrafted in New Zealand" },
       { "@type": "PropertyValue", "name": "Suitable For", "value": "Montessori education, early childhood development" },
@@ -473,8 +472,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                     <span className="font-medium text-gray-900 ml-2">{productMaterial}</span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Age Range:</span>
-                    <span className="font-medium text-gray-900 ml-2">{ageRange}</span>
+                    <span className="text-gray-600">Age:</span>
+                    <span className="font-medium text-gray-900 ml-2">Suitable for {ageRange}</span>
                   </div>
                   <div>
                     <span className="text-gray-600">Finish:</span>
