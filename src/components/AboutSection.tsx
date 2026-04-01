@@ -25,7 +25,6 @@ const AboutSection: React.FC = () => {
   const handleSaveAboutImage = () => {
     try {
       localStorage.setItem('poppas-about-image', aboutImage);
-      
       const verification = localStorage.getItem('poppas-about-image');
       if (verification === aboutImage) {
         setShowImageEditor(false);
@@ -48,7 +47,7 @@ const AboutSection: React.FC = () => {
             About Poppa's Wooden Creations
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A family business creating beautiful, safe, and sustainable wooden toys 
+            A family business creating beautiful, safe, and sustainable wooden toys
             in the heart of New Zealand since 2015.
           </p>
         </div>
@@ -113,20 +112,20 @@ const AboutSection: React.FC = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Poppa's Wooden Creations began in 2015 when our founder, a passionate craftsman and grandfather, 
-                  started making wooden toys for his grandchildren in his Whangarei workshop. What started as a 
-                  labor of love quickly grew into something special when friends and family saw the quality and 
+                  Poppa's Wooden Creations began in 2015 when our founder, a passionate craftsman and grandfather,
+                  started making wooden toys for his grandchildren in his Whangarei workshop. What started as a
+                  labor of love quickly grew into something special when friends and family saw the quality and
                   beauty of his handcrafted creations.
                 </p>
                 <p>
-                  Today, we're proud to be one of New Zealand's premier wooden toy makers, creating heirloom-quality 
-                  toys that inspire imagination, encourage learning, and provide endless hours of screen-free fun. 
+                  Today, we're proud to be one of New Zealand's premier wooden toy makers, creating heirloom-quality
+                  toys that inspire imagination, encourage learning, and provide endless hours of screen-free fun.
                   Every piece is still handcrafted with the same love and attention to detail that started it all.
                 </p>
                 <p>
-                  Our workshop in Whangarei is where the magic happens. Using traditional woodworking techniques 
-                  combined with modern safety standards, we create toys that are not just beautiful, but built 
-                  to last for generations. Each toy tells a story of New Zealand craftsmanship and our commitment 
+                  Our workshop in Whangarei is where the magic happens. Using traditional woodworking techniques
+                  combined with modern safety standards, we create toys that are not just beautiful, but built
+                  to last for generations. Each toy tells a story of New Zealand craftsmanship and our commitment
                   to sustainable, eco-friendly play.
                 </p>
               </div>
@@ -147,14 +146,23 @@ const AboutSection: React.FC = () => {
                   <Shield className="text-green-600 mt-1" size={20} />
                   <div>
                     <h4 className="font-semibold text-gray-900">Child Safety First</h4>
-                    <p className="text-gray-600">All our toys meet strict safety standards with non-toxic finishes.</p>
+                    <p className="text-gray-600">
+                      All our toys are handcrafted and inspected to meet New Zealand toy safety guidelines.
+                      We use only untreated native timbers finished with non-toxic, food-safe oils and waxes —
+                      no heavy metals, no chemical treatments, no loose small parts. Suitable for children
+                      from 12 months and trusted by Montessori schools across New Zealand.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Heart className="text-red-500 mt-1" size={20} />
                   <div>
                     <h4 className="font-semibold text-gray-900">Sustainable Materials</h4>
-                    <p className="text-gray-600">We use responsibly sourced New Zealand timber including Kauri, Rimu, and Macrocarpa.</p>
+                    <p className="text-gray-600">
+                      We use responsibly sourced New Zealand timber including Kauri, Rimu, and Macrocarpa,
+                      sourced from local NZ mills and suppliers. No pressure-treated or chemically impregnated
+                      wood is ever used in our toys.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -170,7 +178,7 @@ const AboutSection: React.FC = () => {
             >
               <Edit size={16} className="sm:w-5 sm:h-5" />
             </button>
-            
+
             <div className="aspect-square bg-white rounded-2xl shadow-2xl overflow-hidden">
               <img
                 src={aboutImage || ABOUT_IMAGE_FALLBACK}
@@ -197,7 +205,7 @@ const AboutSection: React.FC = () => {
                 <Shield className="text-green-600" size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Safety Certified</h3>
-              <p className="text-gray-600 text-sm">All toys meet NZ safety standards. Non-toxic finishes and smooth edges.</p>
+              <p className="text-gray-600 text-sm">All toys meet NZ safety guidelines. Non-toxic finishes, smooth edges, no small parts.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -318,7 +326,7 @@ const AboutSection: React.FC = () => {
         <div className="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl text-white p-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Our Commitment to You</h2>
           <p className="text-xl mb-6 max-w-3xl mx-auto">
-            Every toy we create is backed by our promise of quality, safety, and sustainability. 
+            Every toy we create is backed by our promise of quality, safety, and sustainability.
             We're not just making toys – we're creating memories that will last a lifetime.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
@@ -342,7 +350,7 @@ const AboutSection: React.FC = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-xl max-w-md w-full p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Edit About Page Image</h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -356,7 +364,7 @@ const AboutSection: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
                   />
                 </div>
-                
+
                 {aboutImage && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Preview</label>
@@ -371,7 +379,7 @@ const AboutSection: React.FC = () => {
                     />
                   </div>
                 )}
-                
+
                 <div className="bg-blue-50 p-3 rounded text-xs text-blue-800">
                   <p><strong>Tip:</strong> Use a Supabase image URL from your product-images bucket for best performance.</p>
                 </div>
