@@ -455,7 +455,7 @@ function buildSharedFooter(): string {
         <p style="margin:4px 0;">PayPal</p>
         <p style="margin:4px 0;">Visa / Mastercard</p>
         <p style="margin:4px 0;">American Express</p>
-        <p style="margin:8px 0;font-size:0.85em;color:#a8a29e;">Secure checkout via PayPal. All transactions encrypted with SSL.</p>
+        <p style="margin:8px 0;font-size:0.85em;color:#a8a29e;">Secure checkout via PayPal &amp; Stripe. All transactions encrypted with SSL.</p>
         <p style="margin:8px 0;font-size:0.85em;color:#a8a29e;">Handcrafted in Whangarei, NZ since 2015.</p>
       </div>
     </div>
@@ -488,6 +488,11 @@ function isPolicyPage(pathname: string): boolean {
 
 function isInfoPage(pathname: string): boolean {
   return pathname.replace(/\/$/, '') in INFO_PAGES;
+}
+
+// Returns true for legacy Squarespace slugs like SQ3795605, SQ1108316, etc.
+function isLegacySquarespaceSlug(productId: string): boolean {
+  return /^SQ\d+$/i.test(productId);
 }
 
 async function fetchProduct(productId: string): Promise<any | null> {
@@ -900,8 +905,26 @@ export default async function handler(request: Request, context: Context) {
   // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
+
+    // Legacy Squarespace slugs — permanently gone, tell Google to stop crawling
+    if (isLegacySquarespaceSlug(productId)) {
+      return new Response('Gone', {
+        status: 410,
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
+      });
+    }
+
+    // Real product — fetch from Supabase
     const product = await fetchProduct(productId);
-    if (!product) return context.next();
+
+    // Product not found — return 404 so Google doesn't try to index it
+    if (!product) {
+      return new Response('Not Found', { status: 404 });
+    }
+
     const html = buildProductHTML(product, productId);
     return new Response(html, {
       status: 200,
