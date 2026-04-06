@@ -198,7 +198,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact Us</h2>
-        <p>If you have any questions about your shipment, please contact us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a> or call <a href="tel:+6421022881​66">+64 21 022 88166</a>.</p>
+        <p>If you have any questions about your shipment, please contact us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a> or call <a href="tel:+642102288166">+64 21 022 88166</a>.</p>
       </section>
     `,
   },
@@ -231,7 +231,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact Us</h2>
-        <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
+        <p>Phone: <a href="tel:+642102288166">+64 21 022 88166</a><br/>
         Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
@@ -254,7 +254,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Payment Security</h2>
-        <p>All payment transactions are processed securely through PayPal. We do not store your credit card or payment details on our systems.</p>
+        <p>All payment transactions are processed securely through PayPal and Stripe. We do not store your credit card or payment details on our systems.</p>
       </section>
       <section>
         <h2>Cookies</h2>
@@ -304,7 +304,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact</h2>
-        <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
+        <p>Phone: <a href="tel:+642102288166">+64 21 022 88166</a><br/>
         Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
@@ -340,7 +340,7 @@ const INFO_PAGES: Record<string, {
       <section>
         <h2>Contact Us</h2>
         <p>We love hearing from our customers. Get in touch with any questions about our products or to discuss a custom order.</p>
-        <p>Phone: <a href="tel:+6421022881​66">+64 21 022 88166</a><br/>
+        <p>Phone: <a href="tel:+642102288166">+64 21 022 88166</a><br/>
         Email: <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
       </section>
@@ -355,7 +355,7 @@ const INFO_PAGES: Record<string, {
         <h2>Get in Touch</h2>
         <p>We'd love to hear from you. Whether you have a question about our products, want to discuss a custom order, or just want to say hello — we're here to help.</p>
         <ul>
-          <li><strong>Phone:</strong> <a href="tel:+6421022881​66">+64 21 022 88166</a></li>
+          <li><strong>Phone:</strong> <a href="tel:+642102288166">+64 21 022 88166</a></li>
           <li><strong>Email:</strong> <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a></li>
           <li><strong>Address:</strong> 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</li>
         </ul>
@@ -424,7 +424,7 @@ function buildSharedFooter(): string {
         <h3 style="color:#fef3c7;margin-bottom:12px;">Poppa's Wooden Creations</h3>
         <p style="margin:4px 0;">102 Kiripaka Road, Tikipunga</p>
         <p style="margin:4px 0;">Whangarei 0112, New Zealand</p>
-        <p style="margin:4px 0;"><a href="tel:+6421022881​66" style="color:#fcd34d;">+64 21 022 88166</a></p>
+        <p style="margin:4px 0;"><a href="tel:+642102288166" style="color:#fcd34d;">+64 21 022 88166</a></p>
         <p style="margin:4px 0;"><a href="mailto:poppaswoodencreations@gmail.com" style="color:#fcd34d;">poppaswoodencreations@gmail.com</a></p>
       </div>
       <div>
@@ -490,9 +490,29 @@ function isInfoPage(pathname: string): boolean {
   return pathname.replace(/\/$/, '') in INFO_PAGES;
 }
 
+// Strip all UTM and other tracking params, return clean pathname only
+function buildCanonicalUrl(pathname: string): string {
+  return `${BASE_URL}${pathname}`;
+}
+
 // Returns true for legacy Squarespace slugs like SQ3795605, SQ1108316, etc.
 function isLegacySquarespaceSlug(productId: string): boolean {
   return /^SQ\d+$/i.test(productId);
+}
+
+// Returns true if the URL contains unfilled search template placeholders
+function hasSearchTemplatePlaceholder(search: string): boolean {
+  return search.includes('search_term_string') || search.includes('%7Bsearch_term_string%7D');
+}
+
+// Returns true if the URL contains UTM or other tracking parameters
+function hasTrackingParams(searchParams: URLSearchParams): boolean {
+  for (const key of searchParams.keys()) {
+    if (key.startsWith('utm_') || key === 'gclid' || key === 'fbclid' || key === 'ref') {
+      return true;
+    }
+  }
+  return false;
 }
 
 async function fetchProduct(productId: string): Promise<any | null> {
@@ -541,7 +561,7 @@ async function fetchCategoryProducts(slug: string): Promise<any[]> {
 function buildPolicyHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = POLICY_PAGES[clean];
-  const canonicalUrl = `${BASE_URL}${clean}`;
+  const canonicalUrl = buildCanonicalUrl(clean);
   const robotsContent = page.noindex ? 'noindex, nofollow' : 'index, follow';
 
   const breadcrumbSchema = JSON.stringify({
@@ -596,7 +616,7 @@ function buildPolicyHTML(pathname: string): string {
 function buildInfoHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = INFO_PAGES[clean];
-  const canonicalUrl = `${BASE_URL}${clean}`;
+  const canonicalUrl = buildCanonicalUrl(clean);
 
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
@@ -881,22 +901,49 @@ function buildProductHTML(product: any, productId: string): string {
 // ─── Main handler ─────────────────────────────────────────────────────────────
 
 export default async function handler(request: Request, context: Context) {
-  const userAgent = request.headers.get('user-agent') || '';
   const url = new URL(request.url);
   const pathname = url.pathname;
+  const userAgent = request.headers.get('user-agent') || '';
 
-  // Only intercept bots
+  // ── FIX 1: Intercept unfilled search template URLs (bots AND users) ──────────
+  // Catches: /products?search={search_term_string} and its URL-encoded variant.
+  // These are artefacts of the SearchAction schema and should never be indexed.
+  if (hasSearchTemplatePlaceholder(url.search)) {
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}/products`,
+        'Cache-Control': 'public, max-age=31536000',
+        'X-Robots-Tag': 'noindex',
+      },
+    });
+  }
+
+  // ── FIX 2: Strip tracking params — redirect to clean canonical URL ──────────
+  // Catches UTM tags, gclid, fbclid etc. on any URL the edge function handles.
+  // Fires for bots only (real users can keep their UTM session data via the SPA).
+  if (isBot(userAgent) && hasTrackingParams(url.searchParams)) {
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}${pathname}`,
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  }
+
+  // Only intercept bots from this point on
   if (!isBot(userAgent)) {
     return context.next();
   }
 
-  // Trailing-slash normalisation for bots
+  // ── FIX 3: Trailing-slash normalisation for bots ────────────────────────────
+  // Redirects /wooden-trains/ → /wooden-trains (and all other paths with trailing slash)
   if (pathname !== '/' && pathname.endsWith('/')) {
-    const canonical = pathname.slice(0, -1);
     return new Response(null, {
       status: 301,
       headers: {
-        'Location': `${BASE_URL}${canonical}${url.search}`,
+        'Location': `${BASE_URL}${pathname.slice(0, -1)}`,
         'Cache-Control': 'public, max-age=31536000',
       },
     });
@@ -986,6 +1033,8 @@ export default async function handler(request: Request, context: Context) {
 
 export const config = {
   path: [
+    '/products',              // ← NEW: catches /products?search={search_term_string}
+    '/products/',             // ← NEW: trailing-slash variant
     '/products/*',
     '/wooden-baby-toys',
     '/wooden-baby-toys/',
