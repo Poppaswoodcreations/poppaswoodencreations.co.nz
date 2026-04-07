@@ -198,7 +198,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact Us</h2>
-        <p>If you have any questions about your shipment, please contact us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a> or call <a href="tel:+642102288166">+64 21 022 88166</a>.</p>
+        <p>If you have any questions about your shipment, please contact us at <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a> or call <a href="tel:+642102288166">+64 21 022 88166</a>.</p>
       </section>
     `,
   },
@@ -262,7 +262,7 @@ const POLICY_PAGES: Record<string, {
       </section>
       <section>
         <h2>Your Rights</h2>
-        <p>Under the New Zealand Privacy Act 2020, you have the right to access and correct personal information we hold about you. To make a request, please contact us at <a href="mailto:poppas.wooden.creations@gmail.com">poppaswoodencreations@gmail.com</a>.</p>
+        <p>Under the New Zealand Privacy Act 2020, you have the right to access and correct personal information we hold about you. To make a request, please contact us at <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a>.</p>
       </section>
       <section>
         <h2>Contact</h2>
@@ -425,7 +425,7 @@ function buildSharedFooter(): string {
         <p style="margin:4px 0;">102 Kiripaka Road, Tikipunga</p>
         <p style="margin:4px 0;">Whangarei 0112, New Zealand</p>
         <p style="margin:4px 0;"><a href="tel:+642102288166" style="color:#fcd34d;">+64 21 022 88166</a></p>
-        <p style="margin:4px 0;"><a href="mailto:poppaswoodencreations@gmail.com" style="color:#fcd34d;">poppas.wooden.creations@gmail.com</a></p>
+        <p style="margin:4px 0;"><a href="mailto:poppas.wooden.creations@gmail.com" style="color:#fcd34d;">poppas.wooden.creations@gmail.com</a></p>
       </div>
       <div>
         <h3 style="color:#fef3c7;margin-bottom:12px;">Shop</h3>
