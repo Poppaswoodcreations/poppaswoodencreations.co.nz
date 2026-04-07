@@ -26,19 +26,39 @@ interface OrderNotificationData {
   orderNumber: string;
 }
 
-/**
- * Send order notification emails:
- *  - Customer gets a confirmation email
- *  - Owner (Adrian) gets a new order alert
- */
 export const sendOrderNotification = async (orderData: OrderNotificationData): Promise<void> => {
   console.log('📧 Sending order emails for:', orderData.orderNumber);
 
   try {
+    // Calculate subtotal and shipping
+    const subtotal = orderData.items.reduce(
+      (sum, item) => sum + item.product.price * item.quantity, 0
+    );
+    const shipping = orderData.orderTotal - subtotal;
+
+    // Flatten items so the Netlify function can read them directly
+    const flatItems = orderData.items.map(item => ({
+      name: item.product.name,
+      price: item.product.price,
+      quantity: item.quantity,
+    }));
+
+    const payload = {
+      orderNumber: orderData.orderNumber,
+      orderTotal: orderData.orderTotal,
+      subtotal,
+      shipping,
+      items: flatItems,
+      customer: orderData.customer,
+      paymentMethod: orderData.paymentMethod,
+    };
+
+    console.log('📤 Sending payload to send-order-email:', JSON.stringify(payload));
+
     const response = await fetch('/.netlify/functions/send-order-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
@@ -50,10 +70,9 @@ export const sendOrderNotification = async (orderData: OrderNotificationData): P
     console.log('✅ Emails sent:', result);
 
   } catch (error) {
-    // Log the error but don't break the checkout flow
     console.error('❌ Failed to send order emails:', error);
 
-    // Fallback: store order in localStorage so it's not lost
+    // Fallback: store order in localStorage
     try {
       const existingOrders = JSON.parse(localStorage.getItem('pending-orders') || '[]');
       localStorage.setItem('pending-orders', JSON.stringify([
@@ -64,9 +83,9 @@ export const sendOrderNotification = async (orderData: OrderNotificationData): P
         },
         ...existingOrders,
       ]));
-      console.warn('📝 Order saved to localStorage as fallback — check admin dashboard');
+      console.warn('📝 Order saved to localStorage as fallback');
     } catch {
-      // Silent fail on localStorage
+      // Silent fail
     }
   }
 };
