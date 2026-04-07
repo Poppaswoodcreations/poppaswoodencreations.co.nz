@@ -149,8 +149,8 @@ const ShippingPolicy: React.FC = () => {
               </ul>
               <p className="text-sm text-gray-600 mt-4">
                 If you have any questions about your shipment, please contact us at{' '}
-                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
-                  poppaswoodencreations@gmail.com
+                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                  poppas.wooden.creations@gmail.com
                 </a>
               </p>
             </div>
@@ -197,8 +197,8 @@ const ShippingPolicy: React.FC = () => {
                 <h3 className="text-lg font-semibold mb-2">Lost or Damaged Parcels</h3>
                 <p>
                   If your order is lost in transit or arrives damaged, please contact us immediately at{' '}
-                  <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
-                    poppaswoodencreations@gmail.com
+                  <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                    poppas.wooden.creations@gmail.com
                   </a>
                   {' '}with your order number and photos (if damaged). We'll arrange a replacement or full refund within 48 hours.
                 </p>
@@ -229,8 +229,8 @@ const ShippingPolicy: React.FC = () => {
             <div className="space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
-                  poppaswoodencreations@gmail.com
+                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                  poppas.wooden.creations@gmail.com
                 </a>
               </p>
               <p className="text-gray-700">
