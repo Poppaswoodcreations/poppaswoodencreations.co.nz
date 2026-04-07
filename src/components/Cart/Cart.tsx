@@ -10,6 +10,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { Product } from '../../types';
 import { sendOrderNotification } from '../../utils/orderNotifications';
+import PayPalButton from './PayPalButton';
 
 declare global {
   interface Window {
@@ -30,9 +31,8 @@ interface CartProps {
   onClose: () => void;
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
+  onClearCart: () => void;
 }
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const buildOrderData = (
   orderId: string,
@@ -94,13 +94,7 @@ interface ExpressPayProps {
 }
 
 const ExpressPayButton: React.FC<ExpressPayProps> = ({
-  grandTotal,
-  formData,
-  items,
-  shipping,
-  total,
-  onSuccess,
-  onError,
+  grandTotal, formData, items, shipping, total, onSuccess, onError,
 }) => {
   const stripe = useStripe();
   const [paymentRequest, setPaymentRequest] = useState<any>(null);
@@ -108,107 +102,53 @@ const ExpressPayButton: React.FC<ExpressPayProps> = ({
 
   useEffect(() => {
     if (!stripe) return;
-
     const pr = stripe.paymentRequest({
       country: 'NZ',
       currency: 'nzd',
-      total: {
-        label: "Poppa's Wooden Creations",
-        amount: Math.round(grandTotal * 100),
-      },
+      total: { label: "Poppa's Wooden Creations", amount: Math.round(grandTotal * 100) },
       requestPayerName: true,
       requestPayerEmail: true,
     });
-
     pr.canMakePayment().then(result => {
-      if (result) {
-        setPaymentRequest(pr);
-        setCanPay(true);
-      }
+      if (result) { setPaymentRequest(pr); setCanPay(true); }
     });
-
     pr.on('paymentmethod', async (ev) => {
       try {
         const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, formData, items);
-
-        if (backendError) {
-          ev.complete('fail');
-          onError(backendError);
-          return;
-        }
-
+        if (backendError) { ev.complete('fail'); onError(backendError); return; }
         const { error, paymentIntent } = await stripe.confirmCardPayment(
-          clientSecret,
-          { payment_method: ev.paymentMethod.id },
-          { handleActions: false }
+          clientSecret, { payment_method: ev.paymentMethod.id }, { handleActions: false }
         );
-
-        if (error) {
-          ev.complete('fail');
-          onError(error.message || 'Payment failed');
-          return;
-        }
-
+        if (error) { ev.complete('fail'); onError(error.message || 'Payment failed'); return; }
         ev.complete('success');
-
         if (paymentIntent?.status === 'requires_action') {
           const { error: actionError } = await stripe.confirmCardPayment(clientSecret);
-          if (actionError) {
-            onError(actionError.message || 'Payment failed');
-            return;
-          }
+          if (actionError) { onError(actionError.message || 'Payment failed'); return; }
         }
-
         const orderId = `STR-${paymentIntent!.id.slice(-8).toUpperCase()}`;
-        localStorage.setItem(
-          'pending-order',
-          JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, {
-            ...formData,
-            name: ev.payerName || formData.name,
-            email: ev.payerEmail || formData.email,
-          }))
-        );
-
+        localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, {
+          ...formData,
+          name: ev.payerName || formData.name,
+          email: ev.payerEmail || formData.email,
+        })));
         await sendOrderNotification({
-          orderTotal: grandTotal,
-          items,
-          customer: formData,
-          paymentMethod: 'Apple/Google Pay',
-          orderNumber: orderId,
+          orderTotal: grandTotal, items, customer: formData,
+          paymentMethod: 'Apple/Google Pay', orderNumber: orderId,
         }).catch(console.error);
-
-        if (window.gtag) {
-          window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
-        }
-
+        if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
         onSuccess(orderId);
-      } catch (err: any) {
-        ev.complete('fail');
-        onError(err.message || 'Something went wrong');
-      }
+      } catch (err: any) { ev.complete('fail'); onError(err.message || 'Something went wrong'); }
     });
   }, [stripe, grandTotal]);
 
   if (!canPay || !paymentRequest) return null;
-
   return (
     <div className="mb-4">
       <div className="flex items-center space-x-2 mb-3">
         <Smartphone size={18} className="text-gray-600" />
         <span className="text-sm font-medium text-gray-700">Express Checkout</span>
       </div>
-      <PaymentRequestButtonElement
-        options={{
-          paymentRequest,
-          style: {
-            paymentRequestButton: {
-              type: 'buy',
-              theme: 'dark',
-              height: '52px',
-            },
-          },
-        }}
-      />
+      <PaymentRequestButtonElement options={{ paymentRequest, style: { paymentRequestButton: { type: 'buy', theme: 'dark', height: '52px' } } }} />
       <div className="flex items-center my-4">
         <div className="flex-1 border-t border-gray-200" />
         <span className="px-3 text-sm text-gray-400">or pay by card</span>
@@ -231,13 +171,7 @@ interface StripeFormProps {
 }
 
 const StripeCardForm: React.FC<StripeFormProps> = ({
-  grandTotal,
-  formData,
-  items,
-  shipping,
-  total,
-  onSuccess,
-  onError,
+  grandTotal, formData, items, shipping, total, onSuccess, onError,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -246,96 +180,47 @@ const StripeCardForm: React.FC<StripeFormProps> = ({
   const handleStripeSubmit = async () => {
     if (!stripe || !elements) return;
     setProcessing(true);
-
     try {
       const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, formData, items);
-
-      if (backendError) {
-        onError(backendError);
-        setProcessing(false);
-        return;
-      }
-
+      if (backendError) { onError(backendError); setProcessing(false); return; }
       const cardElement = elements.getElement(CardElement);
       if (!cardElement) return;
-
       const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: cardElement,
           billing_details: {
-            name: formData.name,
-            email: formData.email,
-            address: {
-              line1: formData.address,
-              city: formData.city,
-              postal_code: formData.postalCode,
-              country: formData.country,
-            },
+            name: formData.name, email: formData.email,
+            address: { line1: formData.address, city: formData.city, postal_code: formData.postalCode, country: formData.country },
           },
         },
       });
-
-      if (error) {
-        onError(error.message || 'Payment failed');
-        setProcessing(false);
-        return;
-      }
-
+      if (error) { onError(error.message || 'Payment failed'); setProcessing(false); return; }
       if (paymentIntent?.status === 'succeeded') {
         const orderId = `STR-${paymentIntent.id.slice(-8).toUpperCase()}`;
-        localStorage.setItem('pending-order', JSON.stringify(
-          buildOrderData(orderId, grandTotal, total, shipping, items, formData)
-        ));
-
+        localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, formData)));
         await sendOrderNotification({
-          orderTotal: grandTotal,
-          items,
-          customer: formData,
-          paymentMethod: 'Stripe',
-          orderNumber: orderId,
+          orderTotal: grandTotal, items, customer: formData,
+          paymentMethod: 'Stripe', orderNumber: orderId,
         }).catch(console.error);
-
-        if (window.gtag) {
-          window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
-        }
-
+        if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
         onSuccess(orderId);
       }
-    } catch (err: any) {
-      onError(err.message || 'Something went wrong');
-      setProcessing(false);
-    }
+    } catch (err: any) { onError(err.message || 'Something went wrong'); setProcessing(false); }
   };
 
   return (
     <div className="space-y-4">
       <div className="p-4 border border-gray-300 rounded-lg bg-white">
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#374151',
-                '::placeholder': { color: '#9CA3AF' },
-              },
-              invalid: { color: '#EF4444' },
-            },
-          }}
-        />
+        <CardElement options={{ style: { base: { fontSize: '16px', color: '#374151', '::placeholder': { color: '#9CA3AF' } }, invalid: { color: '#EF4444' } } }} />
       </div>
-      <button
-        onClick={handleStripeSubmit}
-        disabled={processing || !stripe}
-        className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-      >
+      <button onClick={handleStripeSubmit} disabled={processing || !stripe}
+        className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2">
         <CreditCard size={20} />
         <span>{processing ? 'Processing...' : `Pay $${grandTotal.toFixed(2)} NZD by Card`}</span>
       </button>
     </div>
   );
 };
-
-// ─── Combined Stripe Section (Apple/Google Pay + Card) ────────────────────────
 
 const StripePaymentSection: React.FC<StripeFormProps> = (props) => (
   <Elements stripe={stripePromise}>
@@ -346,22 +231,16 @@ const StripePaymentSection: React.FC<StripeFormProps> = (props) => (
 
 // ─── Main Cart Component ──────────────────────────────────────────────────────
 
-const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveItem }) => {
+const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveItem, onClearCart }) => {
   const [showCheckout, setShowCheckout] = useState(false);
-  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
   const [orderComplete, setOrderComplete] = useState(false);
   const [completedOrderId, setCompletedOrderId] = useState('');
   const [formData, setFormData] = useState({
-    email: '',
-    name: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    country: 'NZ',
-    deliveryMethod: 'shipping',
+    email: '', name: '', address: '', city: '', postalCode: '', country: 'NZ', deliveryMethod: 'shipping',
   });
   const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'paypal'>('stripe');
+  const [paypalOrderId] = useState(`PAY-${Date.now()}`);
 
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const totalWeight = items.reduce((sum, item) => sum + (item.product.weight || 0.5) * item.quantity, 0);
@@ -370,13 +249,10 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
 
   function calculateShipping() {
     if (formData.deliveryMethod === 'pickup') return 0;
-    const hasPineCars = items.some(
-      item =>
-        item.product.price === 5.0 &&
-        (item.product.name.toLowerCase().includes('pine') ||
-          item.product.name.toLowerCase().includes('car') ||
-          item.product.name.toLowerCase().includes('ute') ||
-          item.product.name.toLowerCase().includes('small'))
+    const hasPineCars = items.some(item =>
+      item.product.price === 5.0 &&
+      (item.product.name.toLowerCase().includes('pine') || item.product.name.toLowerCase().includes('car') ||
+       item.product.name.toLowerCase().includes('ute') || item.product.name.toLowerCase().includes('small'))
     );
     if (hasPineCars) return 0;
     if (total >= 1000) return 0;
@@ -394,6 +270,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     if (formData.deliveryMethod === 'shipping' && (!formData.address || !formData.city || !formData.postalCode)) {
       setError('Please fill in shipping address'); return false;
     }
+    setError('');
     return true;
   };
 
@@ -403,35 +280,21 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     return date.toISOString().split('T')[0];
   };
 
-  const handlePayPalRedirect = () => {
-    if (!validateForm()) return;
-    const orderId = `PAY-${Date.now()}`;
-    localStorage.setItem('pending-order', JSON.stringify(
-      buildOrderData(orderId, grandTotal, total, shipping, items, formData)
-    ));
-    sendOrderNotification({ orderTotal: grandTotal, items, customer: formData, paymentMethod: 'PayPal', orderNumber: orderId }).catch(console.error);
-
-    const returnUrl = encodeURIComponent(
-      `${window.location.origin}/order-confirmation?order_id=${orderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&source=paypal`
-    );
-    const cancelUrl = encodeURIComponent(window.location.origin);
-    const itemName = encodeURIComponent(`Wooden Toys Order - ${items.length} item${items.length !== 1 ? 's' : ''}`);
-    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=poppas.wooden.creations@gmail.com&item_name=${itemName}&amount=${grandTotal.toFixed(2)}&currency_code=NZD&return=${returnUrl}&cancel_return=${cancelUrl}&rm=2&cbt=Return%20to%20Poppa%27s%20Wooden%20Creations&no_note=1`;
-
-    try {
-      const newWindow = window.open(paypalUrl, '_blank');
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        window.location.href = paypalUrl;
-      } else {
-        onClose();
-      }
-    } catch { window.location.href = paypalUrl; }
-  };
-
   const handleStripeSuccess = (orderId: string) => {
+    onClearCart();
+    localStorage.removeItem('poppas-cart');
     setCompletedOrderId(orderId);
     setOrderComplete(true);
     window.location.href = `/order-confirmation?order_id=${orderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&source=stripe`;
+  };
+
+  const handlePayPalSuccess = () => {
+    localStorage.setItem('pending-order', JSON.stringify(buildOrderData(paypalOrderId, grandTotal, total, shipping, items, formData)));
+    sendOrderNotification({ orderTotal: grandTotal, items, customer: formData, paymentMethod: 'PayPal', orderNumber: paypalOrderId }).catch(console.error);
+    if (window.gtag) window.gtag('event', 'purchase', { transaction_id: paypalOrderId, value: grandTotal, currency: 'NZD' });
+    onClearCart();
+    localStorage.removeItem('poppas-cart');
+    window.location.href = `/order-confirmation?order_id=${paypalOrderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&source=paypal`;
   };
 
   // ─── Order Complete ─────────────────────────────────────────────────────────
@@ -580,22 +443,16 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                   </button>
                 </div>
 
-                {/* STRIPE — Apple Pay / Google Pay + Card */}
+                {/* STRIPE */}
                 {paymentMethod === 'stripe' && (
                   <div>
                     <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg mb-4">
-                      <p className="text-amber-800 text-sm">
-                        💳 Pay by Apple Pay, Google Pay, or credit/debit card. No account needed.
-                      </p>
+                      <p className="text-amber-800 text-sm">💳 Pay by Apple Pay, Google Pay, or credit/debit card. No account needed.</p>
                     </div>
                     <StripePaymentSection
-                      grandTotal={grandTotal}
-                      formData={formData}
-                      items={items}
-                      shipping={shipping}
-                      total={total}
-                      onSuccess={handleStripeSuccess}
-                      onError={msg => setError(msg)}
+                      grandTotal={grandTotal} formData={formData} items={items}
+                      shipping={shipping} total={total}
+                      onSuccess={handleStripeSuccess} onError={msg => setError(msg)}
                     />
                   </div>
                 )}
@@ -604,17 +461,19 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                 {paymentMethod === 'paypal' && (
                   <div>
                     <div className="bg-blue-50 p-3 rounded-lg mb-4">
-                      <p className="text-blue-800 text-sm">
-                        Pay with PayPal. No PayPal account needed — pay as a guest with any card.
-                      </p>
+                      <p className="text-blue-800 text-sm">Pay with PayPal. No PayPal account needed — pay as a guest with any card.</p>
                     </div>
-                    <button onClick={handlePayPalRedirect} disabled={processing}
-                      className="w-full bg-blue-600 text-white py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2">
-                      <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-                        <span className="text-blue-600 text-xs font-bold">PP</span>
-                      </div>
-                      <span>Pay ${grandTotal.toFixed(2)} NZD with PayPal</span>
-                    </button>
+                    {(!formData.email || !formData.name) && (
+                      <p className="text-amber-600 text-sm mb-3">⚠️ Please fill in your name and email above before paying with PayPal.</p>
+                    )}
+                    <PayPalButton
+                      grandTotal={grandTotal}
+                      orderId={paypalOrderId}
+                      customerEmail={formData.email}
+                      deliveryDate={calculateDeliveryDate()}
+                      onSuccess={handlePayPalSuccess}
+                      onError={msg => setError(msg)}
+                    />
                   </div>
                 )}
               </div>
@@ -686,7 +545,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                     <button onClick={() => setShowCheckout(true)} className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors">
                       Proceed to Checkout
                     </button>
-                    <button onClick={() => items.forEach(item => onRemoveItem(item.product.id))} className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <button onClick={() => { onClearCart(); localStorage.removeItem('poppas-cart'); }} className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors">
                       Clear Cart
                     </button>
                   </div>
