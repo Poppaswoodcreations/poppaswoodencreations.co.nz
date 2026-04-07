@@ -136,19 +136,17 @@ const AppContent: React.FC = () => {
 
   const isCategoryPage = CATEGORY_PATHS.some(p => location.pathname.startsWith(p));
 
-  // Load all products on category pages, limit to 8 on homepage for performance
   const { products, loading, error, loadProducts, loadAllProducts } = useProducts(
     isCategoryPage ? {} : { limit: 8 }
   );
 
-  // When navigating to a category page, ensure all products are loaded
   useEffect(() => {
     if (isCategoryPage) {
       loadAllProducts();
     }
   }, [location.pathname]);
 
-  const { cart, addToCart, updateQuantity, removeFromCart, getCartItemCount } = useCart();
+  const { cart, addToCart, updateQuantity, removeFromCart, clearCart, getCartItemCount } = useCart();
 
   const handleCategorySelect = (category: string) => navigate(`/${category}`);
   const handleProductSelect = (product: Product) => addToCart(product);
@@ -242,7 +240,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="All Wooden Toys & Kitchenware NZ"
-                  description="Browse our complete collection of handcrafted wooden toys & kitchenware made from native New Zealand timber. Kauri, Rimu, Macrocarpa. Free shipping over $150."
+                  description="Browse our complete collection of handcrafted wooden toys & kitchenware made from native New Zealand timber."
                   canonicalPath="/products"
                   ogType="website"
                 />
@@ -273,198 +271,82 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Wooden Toy Trucks NZ"
-                  description="Handcrafted wooden toy trucks made from New Zealand native timber. Durable, realistic, and perfect for construction-themed play."
+                  description="Handcrafted wooden toy trucks made from New Zealand native timber."
                   canonicalPath="/wooden-trucks"
                   ogType="website"
                 />
-                <CategoryHeader
-                  title="Wooden Toy Trucks NZ"
-                  subtitle="Handcrafted from native New Zealand timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-trucks')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-trucks"
-                  loading={loading}
-                />
+                <CategoryHeader title="Wooden Toy Trucks NZ" subtitle="Handcrafted from native New Zealand timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-trucks')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-trucks" loading={loading} />
                 <WoodenTrucksPage />
               </>
             } />
 
             <Route path="/wooden-cars" element={
               <>
-                <SEOHead
-                  title="Wooden Toy Cars NZ"
-                  description="Handcrafted wooden toy cars made from native New Zealand Kauri and Rimu timber. Timeless heirloom designs that encourage creative, imaginative play in children."
-                  canonicalPath="/wooden-cars"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Toy Cars NZ"
-                  subtitle="Timeless handcrafted designs from native timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-cars')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-cars"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Toy Cars NZ" description="Handcrafted wooden toy cars made from native New Zealand Kauri and Rimu timber." canonicalPath="/wooden-cars" ogType="website" />
+                <CategoryHeader title="Wooden Toy Cars NZ" subtitle="Timeless handcrafted designs from native timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-cars')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-cars" loading={loading} />
                 <WoodenCarsPage />
               </>
             } />
 
             <Route path="/wooden-trains" element={
               <>
-                <SEOHead
-                  title="Wooden Train Sets NZ"
-                  description="Handcrafted wooden toy trains made from native New Zealand timber. Build railways, spark imagination, and inspire creative play. Montessori-friendly."
-                  canonicalPath="/wooden-trains"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Train Sets NZ"
-                  subtitle="Spark imagination with handcrafted native timber railways"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-trains')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-trains"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Train Sets NZ" description="Handcrafted wooden toy trains made from native New Zealand timber." canonicalPath="/wooden-trains" ogType="website" />
+                <CategoryHeader title="Wooden Train Sets NZ" subtitle="Spark imagination with handcrafted native timber railways" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-trains')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-trains" loading={loading} />
                 <WoodenTrainsPage />
               </>
             } />
 
             <Route path="/wooden-planes-helicopters" element={
               <>
-                <SEOHead
-                  title="Wooden Airplane & Helicopter Toys NZ"
-                  description="Handcrafted wooden airplane and helicopter toys made from native New Zealand timber. Safe, sustainable, and beautifully crafted for children."
-                  canonicalPath="/wooden-planes-helicopters"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Planes & Helicopters NZ"
-                  subtitle="Handcrafted from native New Zealand timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-planes-helicopters')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-planes-helicopters"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Airplane & Helicopter Toys NZ" description="Handcrafted wooden airplane and helicopter toys made from native New Zealand timber." canonicalPath="/wooden-planes-helicopters" ogType="website" />
+                <CategoryHeader title="Wooden Planes & Helicopters NZ" subtitle="Handcrafted from native New Zealand timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-planes-helicopters')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-planes-helicopters" loading={loading} />
                 <WoodenPlanesHelicoptersPage />
               </>
             } />
 
             <Route path="/wooden-baby-toys" element={
               <>
-                <SEOHead
-                  title="Wooden Baby Toys - Safe & Natural"
-                  description="Safe, handcrafted wooden baby toys made from New Zealand native timber with non-toxic finishes. Perfect for teething and sensory development."
-                  canonicalPath="/wooden-baby-toys"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Baby Toys NZ"
-                  subtitle="Safe, natural & non-toxic — crafted from native NZ timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-baby-toys')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-baby-toys"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Baby Toys - Safe & Natural" description="Safe, handcrafted wooden baby toys made from New Zealand native timber with non-toxic finishes." canonicalPath="/wooden-baby-toys" ogType="website" />
+                <CategoryHeader title="Wooden Baby Toys NZ" subtitle="Safe, natural & non-toxic — crafted from native NZ timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-baby-toys')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-baby-toys" loading={loading} />
                 <WoodenBabyToysPage />
               </>
             } />
 
             <Route path="/wooden-kitchenware" element={
               <>
-                <SEOHead
-                  title="Wooden Kitchenware NZ"
-                  description="Handcrafted wooden kitchenware made from New Zealand native Rimu and Macrocarpa timber. Beautiful, functional, and built to last a lifetime."
-                  canonicalPath="/wooden-kitchenware"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Kitchenware NZ"
-                  subtitle="Handcrafted from native Rimu & Macrocarpa timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-kitchenware')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-kitchenware"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Kitchenware NZ" description="Handcrafted wooden kitchenware made from New Zealand native Rimu and Macrocarpa timber." canonicalPath="/wooden-kitchenware" ogType="website" />
+                <CategoryHeader title="Wooden Kitchenware NZ" subtitle="Handcrafted from native Rimu & Macrocarpa timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-kitchenware')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-kitchenware" loading={loading} />
                 <WoodenKitchenwarePage />
               </>
             } />
 
             <Route path="/wooden-tractors-boats" element={
               <>
-                <SEOHead
-                  title="Wooden Tractors & Boats NZ"
-                  description="Handcrafted wooden toy tractors and boats made from New Zealand native timber. Perfect for farm and water-themed imaginative play."
-                  canonicalPath="/wooden-tractors-boats"
-                  ogType="website"
-                />
-                <CategoryHeader
-                  title="Wooden Tractors & Boats NZ"
-                  subtitle="Farm and water toys handcrafted from native timber"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-tractors-boats')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-tractors-boats"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Tractors & Boats NZ" description="Handcrafted wooden toy tractors and boats made from New Zealand native timber." canonicalPath="/wooden-tractors-boats" ogType="website" />
+                <CategoryHeader title="Wooden Tractors & Boats NZ" subtitle="Farm and water toys handcrafted from native timber" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-tractors-boats')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-tractors-boats" loading={loading} />
                 <WoodenTractorsBoatsPage />
               </>
             } />
 
-            {/* ── RICH CONTENT CATEGORY PAGES ── */}
             <Route path="/wooden-crosses" element={
               <>
-                <SEOHead
-                  title="Wooden Crosses NZ"
-                  description="Handcrafted wooden crosses made from native New Zealand timber. Beautiful, meaningful gifts handcrafted in Whangarei."
-                  canonicalPath="/wooden-crosses"
-                  ogType="website"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-crosses')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-crosses"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Crosses NZ" description="Handcrafted wooden crosses made from native New Zealand timber." canonicalPath="/wooden-crosses" ogType="website" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-crosses')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-crosses" loading={loading} />
                 <WoodenCrossesPage />
               </>
             } />
 
             <Route path="/wooden-pens" element={
               <>
-                <SEOHead
-                  title="Wooden Pens NZ"
-                  description="Handcrafted wooden pens made from native New Zealand timber. Unique, beautiful, and perfect as gifts. Made in Whangarei."
-                  canonicalPath="/wooden-pens"
-                  ogType="website"
-                />
-                <ProductGrid
-                  products={products.filter(p => p.category === 'wooden-pens')}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                  category="wooden-pens"
-                  loading={loading}
-                />
+                <SEOHead title="Wooden Pens NZ" description="Handcrafted wooden pens made from native New Zealand timber." canonicalPath="/wooden-pens" ogType="website" />
+                <ProductGrid products={products.filter(p => p.category === 'wooden-pens')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-pens" loading={loading} />
                 <WoodenPensPage />
               </>
             } />
@@ -476,131 +358,28 @@ const AppContent: React.FC = () => {
             <Route path="/baby-toys" element={<Navigate to="/wooden-baby-toys" replace />} />
 
             {/* ── INFO PAGES ── */}
-            <Route path="/about" element={
-              <>
-                <SEOHead
-                  title="About Us - Made in Whangarei NZ"
-                  description="Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015."
-                  canonicalPath="/about"
-                  ogType="website"
-                />
-                <AboutSection />
-              </>
-            } />
-
-            <Route path="/contact" element={
-              <>
-                <SEOHead
-                  title="Contact Us - Get in Touch"
-                  description="Contact Poppa's Wooden Creations in Whangarei, NZ. We're here to help with orders, custom wooden toy requests, and any questions you may have."
-                  canonicalPath="/contact"
-                  ogType="website"
-                />
-                <ContactForm />
-              </>
-            } />
-
-            {/* ── POLICY PAGES ── */}
-            <Route path="/shipping" element={
-              <>
-                <SEOHead
-                  title="Shipping Policy"
-                  description="Learn about our worldwide shipping, delivery times, and free shipping offers for handcrafted wooden toys from New Zealand."
-                  canonicalPath="/shipping"
-                  ogType="website"
-                />
-                <ShippingPolicy />
-              </>
-            } />
-
-            <Route path="/returns" element={
-              <>
-                <SEOHead
-                  title="Returns & Refunds Policy"
-                  description="Our 30-day return policy and quality guarantee for handcrafted wooden toys. Easy returns, full refunds, and lifetime craftsmanship guarantee."
-                  canonicalPath="/returns"
-                  ogType="website"
-                />
-                <ReturnsRefunds />
-              </>
-            } />
-
-            <Route path="/privacy" element={
-              <>
-                <SEOHead title="Privacy Policy" noindex={true} />
-                <PrivacyPolicy />
-              </>
-            } />
-
-            <Route path="/terms" element={
-              <>
-                <SEOHead title="Terms of Service" noindex={true} />
-                <TermsOfService />
-              </>
-            } />
+            <Route path="/about" element={<><SEOHead title="About Us - Made in Whangarei NZ" description="Learn about Poppa's Wooden Creations." canonicalPath="/about" ogType="website" /><AboutSection /></>} />
+            <Route path="/contact" element={<><SEOHead title="Contact Us - Get in Touch" description="Contact Poppa's Wooden Creations in Whangarei, NZ." canonicalPath="/contact" ogType="website" /><ContactForm /></>} />
+            <Route path="/shipping" element={<><SEOHead title="Shipping Policy" description="Learn about our worldwide shipping and delivery times." canonicalPath="/shipping" ogType="website" /><ShippingPolicy /></>} />
+            <Route path="/returns" element={<><SEOHead title="Returns & Refunds Policy" description="Our 30-day return policy and quality guarantee." canonicalPath="/returns" ogType="website" /><ReturnsRefunds /></>} />
+            <Route path="/privacy" element={<><SEOHead title="Privacy Policy" noindex={true} /><PrivacyPolicy /></>} />
+            <Route path="/terms" element={<><SEOHead title="Terms of Service" noindex={true} /><TermsOfService /></>} />
 
             {/* ── REVIEWS ── */}
-            <Route path="/reviews" element={
-              <>
-                <SEOHead
-                  title="Customer Reviews - 5.0/5 Stars"
-                  description="Read verified reviews from happy customers. Handcrafted wooden toys and kitchenware loved by Kiwi families and Montessori schools across New Zealand."
-                  canonicalPath="/reviews"
-                  ogType="website"
-                />
-                <Reviews />
-              </>
-            } />
-
-            <Route path="/write-review" element={
-              <>
-                <SEOHead
-                  title="Write a Review"
-                  description="Share your experience with Poppa's Wooden Creations. Your feedback helps other families discover our handcrafted wooden toys."
-                  canonicalPath="/write-review"
-                  ogType="website"
-                />
-                <ReviewForm />
-              </>
-            } />
-
-            <Route path="/admin/reviews" element={
-              <>
-                <SEOHead title="Manage Reviews" noindex={true} />
-                <ReviewsAdmin />
-              </>
-            } />
+            <Route path="/reviews" element={<><SEOHead title="Customer Reviews - 5.0/5 Stars" description="Read verified reviews from happy customers." canonicalPath="/reviews" ogType="website" /><Reviews /></>} />
+            <Route path="/write-review" element={<><SEOHead title="Write a Review" description="Share your experience with Poppa's Wooden Creations." canonicalPath="/write-review" ogType="website" /><ReviewForm /></>} />
+            <Route path="/admin/reviews" element={<><SEOHead title="Manage Reviews" noindex={true} /><ReviewsAdmin /></>} />
 
             {/* ── SEARCH ── */}
             <Route path="/search" element={
               <>
-                <SEOHead
-                  title="Search Products"
-                  description="Search our collection of handcrafted wooden toys and kitchenware made from native New Zealand timber. Find the perfect Montessori-friendly toy for any child."
-                  canonicalPath="/search"
-                  ogType="website"
-                />
-                <SearchPageWrapper
-                  products={products}
-                  onProductSelect={handleProductSelect}
-                  onAddToCart={handleAddToCart}
-                />
+                <SEOHead title="Search Products" description="Search our collection of handcrafted wooden toys." canonicalPath="/search" ogType="website" />
+                <SearchPageWrapper products={products} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} />
               </>
             } />
 
             {/* ── BLOG ── */}
-            <Route path="/blog" element={
-              <>
-                <SEOHead
-                  title="Blog - Wooden Toy Tips"
-                  description="Tips and guides for wooden toys, Montessori education, and sustainable parenting. Expert advice from Poppa's Wooden Creations."
-                  canonicalPath="/blog"
-                  ogType="website"
-                />
-                <BlogListView />
-              </>
-            } />
-
+            <Route path="/blog" element={<><SEOHead title="Blog - Wooden Toy Tips" description="Tips and guides for wooden toys and Montessori education." canonicalPath="/blog" ogType="website" /><BlogListView /></>} />
             <Route path="/blog/:slug" element={<BlogPostWrapper />} />
 
           </Routes>
@@ -618,6 +397,7 @@ const AppContent: React.FC = () => {
             onClose={() => setShowCart(false)}
             onUpdateQuantity={updateQuantity}
             onRemoveItem={removeFromCart}
+            onClearCart={clearCart}
           />
         </Suspense>
       )}
