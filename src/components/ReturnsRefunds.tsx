@@ -202,7 +202,7 @@ const ReturnsRefunds: React.FC = () => {
                 <h3 className="font-semibold mb-2">What to Do:</h3>
                 <ol className="space-y-2 ml-4 list-decimal">
                   <li>Take photos of the damage or defect</li>
-                  <li>Email us at <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">poppas.wooden.creations@gmail.com</a> within 7 days</li>
+                  <li>Email us at <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">poppas.wooden.creations@gmail.com</a> within 7 days</li>
                   <li>Include your order number and photos</li>
                   <li>We'll send a replacement or full refund within 48 hours</li>
                 </ol>
@@ -308,8 +308,8 @@ const ReturnsRefunds: React.FC = () => {
             <div className="space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:poppaswoodencreations@gmail.com" className="text-amber-600 hover:underline">
-                  poppaswoodencreations@gmail.com
+                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                  poppas.wooden.creations@gmail.com
                 </a>
               </p>
               <p className="text-gray-700">
