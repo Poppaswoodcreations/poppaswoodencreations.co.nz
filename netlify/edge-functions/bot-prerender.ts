@@ -425,7 +425,7 @@ function buildSharedFooter(): string {
         <p style="margin:4px 0;">102 Kiripaka Road, Tikipunga</p>
         <p style="margin:4px 0;">Whangarei 0112, New Zealand</p>
         <p style="margin:4px 0;"><a href="tel:+642102288166" style="color:#fcd34d;">+64 21 022 88166</a></p>
-        <p style="margin:4px 0;"><a href="mailto:poppaswoodencreations@gmail.com" style="color:#fcd34d;">poppaswoodencreations@gmail.com</a></p>
+        <p style="margin:4px 0;"><a href="mailto:poppaswoodencreations@gmail.com" style="color:#fcd34d;">poppas.wooden.creations@gmail.com</a></p>
       </div>
       <div>
         <h3 style="color:#fef3c7;margin-bottom:12px;">Shop</h3>
