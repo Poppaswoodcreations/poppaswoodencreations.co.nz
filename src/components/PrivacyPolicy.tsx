@@ -32,7 +32,7 @@ const PrivacyPolicy: React.FC = () => {
                 <strong>Established:</strong> 2015 - New Zealand Family Business<br/>
                 <strong>Address:</strong> 102 Kiripaka Rd, Whangarei, Northland 0112, New Zealand<br/>
                 <strong>Phone:</strong> +64 21 022 88166<br/>
-                <strong>Email:</strong> poppaswoodencreations@gmail.com
+                <strong>Email:</strong> poppas.wooden.creations@gmail.com
               </p>
               <p>
                 We are an established New Zealand family business specializing in handcrafted wooden toys 
@@ -152,7 +152,7 @@ const PrivacyPolicy: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="flex items-center space-x-2">
                 <Mail size={20} />
-                <span>poppaswoodencreations@gmail.com</span>
+                <span>poppas.wooden.creations@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={20} />
