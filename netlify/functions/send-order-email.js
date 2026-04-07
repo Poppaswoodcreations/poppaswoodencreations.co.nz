@@ -27,6 +27,8 @@ exports.handler = async (event) => {
     paymentMethod,
   } = orderData;
 
+  const OWNER_EMAIL = 'poppas.wooden.creations@gmail.com';
+
   const itemsHtml = items.map(item => `
     <tr>
       <td style="padding:10px;border-bottom:1px solid #e5e7eb;">${item.name}</td>
@@ -35,9 +37,7 @@ exports.handler = async (event) => {
     </tr>
   `).join('');
 
-  const itemsText = items.map(i => `  • ${i.name} x${i.quantity} = $${(i.price * i.quantity).toFixed(2)} NZD`).join('\n');
-
-  // ── Email to YOU (owner notification) ──────────────────────────────────────
+  // Owner notification email
   const ownerHtml = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f9fafb;padding:20px;">
       <div style="background:white;padding:30px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);">
@@ -92,7 +92,7 @@ exports.handler = async (event) => {
     </div>
   `;
 
-  // ── Email to CUSTOMER (confirmation) ───────────────────────────────────────
+  // Customer confirmation email
   const customerHtml = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f9fafb;padding:20px;">
       <div style="background:white;padding:30px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);">
@@ -149,7 +149,7 @@ exports.handler = async (event) => {
         <div style="margin-top:24px;background:#fef3c7;padding:16px;border-radius:8px;">
           <h3 style="color:#92400e;margin:0 0 8px;">Questions?</h3>
           <p style="color:#92400e;margin:0;">
-            Email us at <a href="mailto:poppaswoodencreations@gmail.com">poppaswoodencreations@gmail.com</a><br>
+            Email us at <a href="mailto:${OWNER_EMAIL}">${OWNER_EMAIL}</a><br>
             or call <a href="tel:+64210228166">021 022 8166</a>
           </p>
         </div>
@@ -163,7 +163,7 @@ exports.handler = async (event) => {
   `;
 
   const sendEmail = async (to, subject, html, replyTo) => {
-    const body = { from: 'Poppas Wooden Creations <orders@poppaswoodencreations.co.nz>', to, subject, html };
+    const body = { from: "Poppa's Wooden Creations <orders@poppaswoodencreations.co.nz>", to, subject, html };
     if (replyTo) body.reply_to = replyTo;
 
     const res = await fetch('https://api.resend.com/emails', {
@@ -183,21 +183,19 @@ exports.handler = async (event) => {
   };
 
   try {
-    // Send owner notification
     await sendEmail(
-      'poppaswoodencreations@gmail.com',
+      OWNER_EMAIL,
       `🚨 New Order #${orderNumber} — $${orderTotal.toFixed(2)} NZD`,
       ownerHtml,
       customer.email
     );
 
-    // Send customer confirmation (only if they have an email)
     if (customer.email && customer.email.includes('@')) {
       await sendEmail(
         customer.email,
         `Order Confirmed — Poppa's Wooden Creations #${orderNumber}`,
         customerHtml,
-        'poppaswoodencreations@gmail.com'
+        OWNER_EMAIL
       );
     }
 
@@ -206,6 +204,7 @@ exports.handler = async (event) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ success: true }),
     };
+
   } catch (error) {
     console.error('Email send failed:', error);
     return {
