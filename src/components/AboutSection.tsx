@@ -91,7 +91,7 @@ const AboutSection: React.FC = () => {
                   <Mail className="text-blue-600 mt-1" size={16} />
                   <div>
                     <p className="font-semibold">Email:</p>
-                    <p>poppaswoodencreations@gmail.com</p>
+                    <p>poppas.wooden.creations@gmail.com</p>
                     <p className="text-sm text-gray-600">Response within 24 hours</p>
                   </div>
                 </div>
