@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Mail, Phone, MapPin, Clock, CheckCircle, AlertTriangle, Trash2, Eye } from 'lucide-react';
+import { Package, Mail, MapPin, CheckCircle, AlertTriangle, Trash2, Eye, X } from 'lucide-react';
 
 interface PendingOrder {
   orderNumber: string;
@@ -16,6 +16,7 @@ interface PendingOrder {
     city: string;
     postalCode: string;
     country: string;
+    deliveryMethod?: string;
   };
   paymentMethod: string;
   timestamp: string;
@@ -23,45 +24,71 @@ interface PendingOrder {
   notified: boolean;
 }
 
+const ADMIN_EMAIL = 'poppas.wooden.creations@gmail.com';
+
 const OrderManager: React.FC = () => {
   const [orders, setOrders] = useState<PendingOrder[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<PendingOrder | null>(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
 
-  // Load orders from localStorage
   useEffect(() => {
     loadOrders();
-    
-    // Set up periodic checking for new orders
-    const interval = setInterval(loadOrders, 30000); // Check every 30 seconds
-    
+    const interval = setInterval(loadOrders, 30000);
     return () => clearInterval(interval);
   }, []);
 
   const loadOrders = () => {
     try {
+      // Load from both keys and merge (pending-orders = fallback storage, pending-order = single order from checkout)
       const stored = localStorage.getItem('pending-orders');
-      if (stored) {
-        const parsedOrders = JSON.parse(stored);
-        setOrders(parsedOrders);
-        console.log(`📦 Loaded ${parsedOrders.length} orders from storage`);
+      const parsedOrders: PendingOrder[] = stored ? JSON.parse(stored) : [];
+
+      // Also check for single pending-order (set after PayPal/Stripe success)
+      const singleOrder = localStorage.getItem('pending-order');
+      if (singleOrder) {
+        try {
+          const parsed = JSON.parse(singleOrder);
+          // Convert from buildOrderData format to PendingOrder format
+          const orderId = parsed.orderId || parsed.orderNumber;
+          if (orderId && !parsedOrders.find(o => o.orderNumber === orderId)) {
+            const converted: PendingOrder = {
+              orderNumber: orderId,
+              orderTotal: parsed.total || parsed.orderTotal || 0,
+              items: (parsed.items || []).map((item: any) => ({
+                name: item.name || item.product?.name || 'Unknown',
+                quantity: item.quantity || 1,
+                price: item.price || item.product?.price || 0,
+              })),
+              customer: parsed.customer || {},
+              paymentMethod: parsed.paymentMethod || 'Unknown',
+              timestamp: parsed.timestamp || new Date().toISOString(),
+              status: 'pending',
+              notified: false,
+            };
+            parsedOrders.unshift(converted);
+            // Save merged list back
+            localStorage.setItem('pending-orders', JSON.stringify(parsedOrders));
+          }
+        } catch {
+          // ignore parse errors
+        }
       }
+
+      setOrders(parsedOrders);
+      console.log(`📦 Loaded ${parsedOrders.length} orders`);
     } catch (error) {
       console.error('Error loading orders:', error);
     }
   };
 
   const updateOrderStatus = (orderNumber: string, status: PendingOrder['status']) => {
-    const updatedOrders = orders.map(order => 
-      order.orderNumber === orderNumber 
+    const updatedOrders = orders.map(order =>
+      order.orderNumber === orderNumber
         ? { ...order, status, notified: true }
         : order
     );
-    
     setOrders(updatedOrders);
     localStorage.setItem('pending-orders', JSON.stringify(updatedOrders));
-    
-    console.log(`📦 Updated order ${orderNumber} status to ${status}`);
   };
 
   const deleteOrder = (orderNumber: string) => {
@@ -73,12 +100,9 @@ const OrderManager: React.FC = () => {
   };
 
   const markAsNotified = (orderNumber: string) => {
-    const updatedOrders = orders.map(order => 
-      order.orderNumber === orderNumber 
-        ? { ...order, notified: true }
-        : order
+    const updatedOrders = orders.map(order =>
+      order.orderNumber === orderNumber ? { ...order, notified: true } : order
     );
-    
     setOrders(updatedOrders);
     localStorage.setItem('pending-orders', JSON.stringify(updatedOrders));
   };
@@ -95,11 +119,8 @@ const OrderManager: React.FC = () => {
 
   const formatDate = (timestamp: string) => {
     return new Date(timestamp).toLocaleString('en-NZ', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
     });
   };
 
@@ -108,13 +129,10 @@ const OrderManager: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-bold text-gray-900">Order Management</h3>
-        <button
-          onClick={loadOrders}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-        >
+        <button onClick={loadOrders}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
           <Package size={16} />
           <span>Refresh Orders</span>
         </button>
@@ -133,7 +151,6 @@ const OrderManager: React.FC = () => {
             </div>
           </div>
         </div>
-        
         <div className="bg-white p-6 rounded-lg border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -145,7 +162,6 @@ const OrderManager: React.FC = () => {
             </div>
           </div>
         </div>
-        
         <div className="bg-white p-6 rounded-lg border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -163,18 +179,14 @@ const OrderManager: React.FC = () => {
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
         <h4 className="font-semibold text-amber-800 mb-3">📧 Order Notification Setup</h4>
         <div className="text-sm text-amber-700 space-y-2">
-          <p><strong>✅ Email Notifications ACTIVE!</strong></p>
-          <p><strong>Admin Email:</strong> adrianbarber8@gmail.com</p>
+          <p><strong>✅ Email Notifications ACTIVE via Resend!</strong></p>
+          <p><strong>Admin Email:</strong> {ADMIN_EMAIL}</p>
           <p><strong>How it works:</strong></p>
           <ol className="list-decimal list-inside space-y-1 ml-4">
-            <li>Customer places order → Automatic email sent to adrianbarber8@gmail.com</li>
+            <li>Customer places order → Automatic email sent to {ADMIN_EMAIL}</li>
+            <li>Customer receives confirmation email automatically</li>
             <li>Order stored in Admin Dashboard for tracking</li>
-            <li>Browser notification shown (if enabled)</li>
-            <li>Backup mailto link opens if email service fails</li>
           </ol>
-          <p className="mt-3 font-medium">
-            📱 <strong>Multiple backup methods ensure you never miss an order!</strong>
-          </p>
         </div>
       </div>
 
@@ -183,7 +195,7 @@ const OrderManager: React.FC = () => {
         <div className="px-6 py-4 border-b border-gray-200">
           <h4 className="font-semibold text-gray-900">Recent Orders</h4>
         </div>
-        
+
         {orders.length === 0 ? (
           <div className="p-8 text-center">
             <Package className="mx-auto text-gray-300 mb-4" size={48} />
@@ -195,24 +207,12 @@ const OrderManager: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Order
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Customer
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Total
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -220,9 +220,7 @@ const OrderManager: React.FC = () => {
                   <tr key={order.orderNumber} className={`hover:bg-gray-50 ${!order.notified ? 'bg-yellow-50' : ''}`}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        {!order.notified && (
-                          <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
-                        )}
+                        {!order.notified && <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>}
                         <div>
                           <div className="text-sm font-medium text-gray-900">#{order.orderNumber}</div>
                           <div className="text-sm text-gray-500">{order.paymentMethod}</div>
@@ -238,11 +236,9 @@ const OrderManager: React.FC = () => {
                       <div className="text-sm text-gray-500">{order.items.length} item{order.items.length !== 1 ? 's' : ''}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <select
-                        value={order.status}
+                      <select value={order.status}
                         onChange={(e) => updateOrderStatus(order.orderNumber, e.target.value as PendingOrder['status'])}
-                        className={`px-2 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(order.status)}`}
-                      >
+                        className={`px-2 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(order.status)}`}>
                         <option value="pending">Pending</option>
                         <option value="processing">Processing</option>
                         <option value="shipped">Shipped</option>
@@ -254,28 +250,16 @@ const OrderManager: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
-                        <button
-                          onClick={() => {
-                            setSelectedOrder(order);
-                            setShowOrderDetails(true);
-                          }}
-                          className="text-blue-600 hover:text-blue-900 p-1 rounded"
-                          title="View details"
-                        >
+                        <button onClick={() => { setSelectedOrder(order); setShowOrderDetails(true); }}
+                          className="text-blue-600 hover:text-blue-900 p-1 rounded" title="View details">
                           <Eye size={16} />
                         </button>
-                        <button
-                          onClick={() => markAsNotified(order.orderNumber)}
-                          className="text-green-600 hover:text-green-900 p-1 rounded"
-                          title="Mark as notified"
-                        >
+                        <button onClick={() => markAsNotified(order.orderNumber)}
+                          className="text-green-600 hover:text-green-900 p-1 rounded" title="Mark as notified">
                           <CheckCircle size={16} />
                         </button>
-                        <button
-                          onClick={() => deleteOrder(order.orderNumber)}
-                          className="text-red-600 hover:text-red-900 p-1 rounded"
-                          title="Delete order"
-                        >
+                        <button onClick={() => deleteOrder(order.orderNumber)}
+                          className="text-red-600 hover:text-red-900 p-1 rounded" title="Delete order">
                           <Trash2 size={16} />
                         </button>
                       </div>
@@ -294,59 +278,44 @@ const OrderManager: React.FC = () => {
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-900">
-                  Order #{selectedOrder.orderNumber}
-                </h3>
-                <button
-                  onClick={() => setShowOrderDetails(false)}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
+                <h3 className="text-xl font-bold text-gray-900">Order #{selectedOrder.orderNumber}</h3>
+                <button onClick={() => setShowOrderDetails(false)} className="p-2 hover:bg-gray-100 rounded-full">
                   <X size={20} />
                 </button>
               </div>
 
-              {/* Order Summary */}
               <div className="bg-gray-50 p-4 rounded-lg mb-6">
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-600">Total:</span>
-                    <span className="font-bold text-gray-900 ml-2">${selectedOrder.orderTotal.toFixed(2)} NZD</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Payment:</span>
-                    <span className="font-medium text-gray-900 ml-2">{selectedOrder.paymentMethod}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Date:</span>
-                    <span className="font-medium text-gray-900 ml-2">{formatDate(selectedOrder.timestamp)}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Items:</span>
-                    <span className="font-medium text-gray-900 ml-2">{selectedOrder.items.length}</span>
-                  </div>
+                  <div><span className="text-gray-600">Total:</span><span className="font-bold text-gray-900 ml-2">${selectedOrder.orderTotal.toFixed(2)} NZD</span></div>
+                  <div><span className="text-gray-600">Payment:</span><span className="font-medium text-gray-900 ml-2">{selectedOrder.paymentMethod}</span></div>
+                  <div><span className="text-gray-600">Date:</span><span className="font-medium text-gray-900 ml-2">{formatDate(selectedOrder.timestamp)}</span></div>
+                  <div><span className="text-gray-600">Items:</span><span className="font-medium text-gray-900 ml-2">{selectedOrder.items.length}</span></div>
                 </div>
               </div>
 
-              {/* Customer Information */}
               <div className="mb-6">
                 <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
-                  <MapPin className="mr-2 text-blue-600" size={16} />
-                  Customer Information
+                  <MapPin className="mr-2 text-blue-600" size={16} />Customer Information
                 </h4>
                 <div className="bg-blue-50 p-4 rounded-lg space-y-2 text-sm">
                   <div><strong>Name:</strong> {selectedOrder.customer.name}</div>
-                  <div><strong>Email:</strong> 
+                  <div><strong>Email:</strong>
                     <a href={`mailto:${selectedOrder.customer.email}`} className="text-blue-600 hover:underline ml-1">
                       {selectedOrder.customer.email}
                     </a>
                   </div>
-                  <div><strong>Address:</strong> {selectedOrder.customer.address}</div>
-                  <div><strong>City:</strong> {selectedOrder.customer.city}, {selectedOrder.customer.postalCode}</div>
-                  <div><strong>Country:</strong> {selectedOrder.customer.country}</div>
+                  {selectedOrder.customer.deliveryMethod === 'pickup' ? (
+                    <div><strong>Delivery:</strong> 🏪 Workshop Pickup</div>
+                  ) : (
+                    <>
+                      <div><strong>Address:</strong> {selectedOrder.customer.address}</div>
+                      <div><strong>City:</strong> {selectedOrder.customer.city}, {selectedOrder.customer.postalCode}</div>
+                      <div><strong>Country:</strong> {selectedOrder.customer.country}</div>
+                    </>
+                  )}
                 </div>
               </div>
 
-              {/* Order Items */}
               <div className="mb-6">
                 <h4 className="font-semibold text-gray-900 mb-3">Order Items</h4>
                 <div className="space-y-2">
@@ -365,34 +334,22 @@ const OrderManager: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Actions */}
               <div className="flex flex-wrap gap-2">
-                <a
-                  href={`mailto:${selectedOrder.customer.email}?subject=Order Confirmation - ${selectedOrder.orderNumber}&body=Hi ${selectedOrder.customer.name},%0D%0A%0D%0AThank you for your order! We've received your order and will process it shortly.%0D%0A%0D%0AOrder Number: ${selectedOrder.orderNumber}%0D%0ATotal: $${selectedOrder.orderTotal.toFixed(2)} NZD%0D%0A%0D%0ABest regards,%0D%0APoppa's Wooden Creations`}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-sm"
-                >
+                <a href={`mailto:${selectedOrder.customer.email}?subject=Order Confirmation - ${selectedOrder.orderNumber}&body=Hi ${selectedOrder.customer.name},%0D%0A%0D%0AThank you for your order! We've received your order and will process it shortly.%0D%0A%0D%0AOrder Number: ${selectedOrder.orderNumber}%0D%0ATotal: $${selectedOrder.orderTotal.toFixed(2)} NZD%0D%0A%0D%0ABest regards,%0D%0APoppa's Wooden Creations`}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-sm">
                   <Mail size={14} />
                   <span>Email Customer</span>
                 </a>
-                
-                <button
-                  onClick={() => updateOrderStatus(selectedOrder.orderNumber, 'processing')}
-                  className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors text-sm"
-                >
+                <button onClick={() => updateOrderStatus(selectedOrder.orderNumber, 'processing')}
+                  className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors text-sm">
                   Mark Processing
                 </button>
-                
-                <button
-                  onClick={() => updateOrderStatus(selectedOrder.orderNumber, 'shipped')}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm"
-                >
+                <button onClick={() => updateOrderStatus(selectedOrder.orderNumber, 'shipped')}
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm">
                   Mark Shipped
                 </button>
-                
-                <button
-                  onClick={() => markAsNotified(selectedOrder.orderNumber)}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm"
-                >
+                <button onClick={() => markAsNotified(selectedOrder.orderNumber)}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm">
                   Mark Notified
                 </button>
               </div>
@@ -401,15 +358,13 @@ const OrderManager: React.FC = () => {
         </div>
       )}
 
-      {/* Instructions */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h4 className="font-medium text-blue-900 mb-2">📋 How Order Notifications Work</h4>
         <div className="text-sm text-blue-800 space-y-1">
-          <p><strong>Current Setup:</strong> Orders are stored in your browser's local storage</p>
+          <p><strong>Emails:</strong> Sent automatically via Resend on every order</p>
           <p><strong>Red dot:</strong> Indicates new/unnotified orders</p>
           <p><strong>Email Customer:</strong> Opens your email client with pre-filled order confirmation</p>
           <p><strong>Status Updates:</strong> Track order progress from pending to completed</p>
-          <p><strong>Refresh Orders:</strong> Check for new orders manually</p>
         </div>
       </div>
     </div>
