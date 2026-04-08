@@ -155,7 +155,25 @@
   status = 301
   force = true
 
-# Ghost product slugs (old Squarespace named URLs) → relevant categories
+# Ghost product slugs (old named URLs) → relevant categories
+[[redirects]]
+  from = "/products/garbage-truck"
+  to = "/wooden-trucks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/rattle"
+  to = "/wooden-baby-toys"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products/front-end-loader"
+  to = "/wooden-tractors-boats"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/products/kauri-bowl"
   to = "/wooden-kitchenware"
