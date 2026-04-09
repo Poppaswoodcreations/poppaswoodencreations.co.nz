@@ -151,8 +151,8 @@ const CATEGORY_META: Record<string, {
     ],
   },
   'wooden-toys-nz': {
-    title: 'Handcrafted Wooden Toys Made in New Zealand | Poppa\'s Wooden Creations',
-    description: 'Premium handcrafted wooden toys made from native New Zealand timber. Trusted by Montessori schools. Cars, trucks, trains, baby toys and kitchenware handmade in Whangarei.',
+    title: 'Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa\'s Wooden Creations',
+    description: 'Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ\'s trusted wooden toy maker since 2015.',
     h1: 'Handcrafted Wooden Toys NZ',
     intro: 'Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa\'s Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.',
     features: [
@@ -460,7 +460,7 @@ function buildSharedFooter(): string {
       </div>
     </div>
     <div style="border-top:1px solid #44403c;margin-top:24px;padding-top:16px;text-align:center;font-size:0.85em;color:#78716c;">
-      &copy; 2025 Poppa's Wooden Creations. All rights reserved. | NZ Sole Trader | Whangarei, Northland, New Zealand
+      &copy; 2026 Poppa's Wooden Creations. All rights reserved. | NZ Sole Trader | Whangarei, Northland, New Zealand
     </div>
   </footer>`;
 }
@@ -490,22 +490,18 @@ function isInfoPage(pathname: string): boolean {
   return pathname.replace(/\/$/, '') in INFO_PAGES;
 }
 
-// Strip all UTM and other tracking params, return clean pathname only
 function buildCanonicalUrl(pathname: string): string {
   return `${BASE_URL}${pathname}`;
 }
 
-// Returns true for legacy Squarespace slugs like SQ3795605, SQ1108316, etc.
 function isLegacySquarespaceSlug(productId: string): boolean {
   return /^SQ\d+$/i.test(productId);
 }
 
-// Returns true if the URL contains unfilled search template placeholders
 function hasSearchTemplatePlaceholder(search: string): boolean {
   return search.includes('search_term_string') || search.includes('%7Bsearch_term_string%7D');
 }
 
-// Returns true if the URL contains UTM or other tracking parameters
 function hasTrackingParams(searchParams: URLSearchParams): boolean {
   for (const key of searchParams.keys()) {
     if (key.startsWith('utm_') || key === 'gclid' || key === 'fbclid' || key === 'ref') {
@@ -821,7 +817,7 @@ function buildProductHTML(product: any, productId: string): string {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "150",
+      "reviewCount": "10",
       "bestRating": "5",
     },
   });
@@ -906,8 +902,6 @@ export default async function handler(request: Request, context: Context) {
   const userAgent = request.headers.get('user-agent') || '';
 
   // ── FIX 1: Intercept unfilled search template URLs (bots AND users) ──────────
-  // Catches: /products?search={search_term_string} and its URL-encoded variant.
-  // These are artefacts of the SearchAction schema and should never be indexed.
   if (hasSearchTemplatePlaceholder(url.search)) {
     return new Response(null, {
       status: 301,
@@ -920,8 +914,6 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── FIX 2: Strip tracking params — redirect to clean canonical URL ──────────
-  // Catches UTM tags, gclid, fbclid etc. on any URL the edge function handles.
-  // Fires for bots only (real users can keep their UTM session data via the SPA).
   if (isBot(userAgent) && hasTrackingParams(url.searchParams)) {
     return new Response(null, {
       status: 301,
@@ -938,7 +930,6 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── FIX 3: Trailing-slash normalisation for bots ────────────────────────────
-  // Redirects /wooden-trains/ → /wooden-trains (and all other paths with trailing slash)
   if (pathname !== '/' && pathname.endsWith('/')) {
     return new Response(null, {
       status: 301,
@@ -952,8 +943,6 @@ export default async function handler(request: Request, context: Context) {
   // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
-
-    // Legacy Squarespace slugs — permanently gone, tell Google to stop crawling
     if (isLegacySquarespaceSlug(productId)) {
       return new Response('Gone', {
         status: 410,
@@ -964,10 +953,8 @@ export default async function handler(request: Request, context: Context) {
       });
     }
 
-    // Real product — fetch from Supabase
     const product = await fetchProduct(productId);
 
-    // Product not found — return 404 so Google doesn't try to index it
     if (!product) {
       return new Response('Not Found', { status: 404 });
     }
@@ -1033,8 +1020,8 @@ export default async function handler(request: Request, context: Context) {
 
 export const config = {
   path: [
-    '/products',              // ← NEW: catches /products?search={search_term_string}
-    '/products/',             // ← NEW: trailing-slash variant
+    '/products',
+    '/products/',
     '/products/*',
     '/wooden-baby-toys',
     '/wooden-baby-toys/',
