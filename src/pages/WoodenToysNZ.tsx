@@ -9,8 +9,8 @@ const WoodenToysNZ: React.FC = () => {
   return (
     <>
       <SEOHead 
-        title="Handmade Wooden Toys NZ"
-        description="Premium handmade wooden toys crafted from native NZ timber. Safe, sustainable, Montessori-approved. Shop cars, trains, baby toys & more."
+        title="Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa's Wooden Creations"
+        description="Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ's trusted wooden toy maker since 2015."
         canonicalPath="/wooden-toys-nz"
         ogType="website"
         image="https://poppaswoodencreations.co.nz/hero-image.jpg"
@@ -229,8 +229,8 @@ const WoodenToysNZ: React.FC = () => {
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Do you ship throughout New Zealand?</h3>
                 <p className="text-gray-700">
-                  Yes! We offer shipping across New Zealand with free shipping on orders over $1000. We also ship 
-                  internationally for customers wanting authentic NZ wooden toys.
+                  Yes! We offer shipping across New Zealand. We also ship internationally for customers wanting 
+                  authentic NZ wooden toys.
                 </p>
               </div>
             </div>
