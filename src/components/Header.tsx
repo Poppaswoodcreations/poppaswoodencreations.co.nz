@@ -102,11 +102,22 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
 
             {/* Shop dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
+              <a
+                href="/wooden-toys-nz"
+                onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
+                className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center"
+              >
                 Shop
                 <ChevronDown size={16} className="ml-1" />
-              </button>
+              </a>
               <div className="absolute left-0 mt-2 w-52 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <a
+                  href="/wooden-toys-nz"
+                  onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
+                  className="block px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium border-b border-gray-100"
+                >
+                  All Wooden Toys
+                </a>
                 {productCategories.map((category) => (
                   <a
                     key={category.slug}
@@ -241,6 +252,13 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Shop by Category</div>
                 <div className="pl-4 space-y-1">
+                  <a
+                    href="/wooden-toys-nz"
+                    onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
+                    className="block w-full text-left py-2 text-amber-700 font-medium hover:text-amber-800 transition-colors"
+                  >
+                    All Wooden Toys
+                  </a>
                   {productCategories.map((category) => (
                     <a
                       key={category.slug}
