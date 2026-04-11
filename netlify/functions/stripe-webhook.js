@@ -1,13 +1,4 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.NOTIFY_EMAIL_USER,
-    pass: process.env.NOTIFY_EMAIL_PASS,
-  },
-});
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -114,11 +105,18 @@ exports.handler = async (event) => {
 </html>`;
 
   try {
-    await transporter.sendMail({
-      from: `"Poppa's Orders" <${process.env.NOTIFY_EMAIL_USER}>`,
-      to: process.env.NOTIFY_EMAIL_USER,
-      subject: `🛒 New Order ${orderId} — $${grandTotal} NZD — ${customerName}`,
-      html: htmlBody,
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'orders@poppaswoodencreations.co.nz',
+        to: 'poppas.wooden.creations@gmail.com',
+        subject: `🛒 New Order ${orderId} — $${grandTotal} NZD — ${customerName}`,
+        html: htmlBody,
+      }),
     });
   } catch (emailErr) {
     console.error('Failed to send order email:', emailErr);
