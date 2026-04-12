@@ -23,7 +23,7 @@ const BOT_USER_AGENTS = [
 
 const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') || '';
 const SUPABASE_ANON_KEY = Deno.env.get('VITE_SUPABASE_ANON_KEY') || '';
-const BASE_URL = 'https://poppas.wooden.creations.co.nz';
+const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
 // ─── Category page metadata ───────────────────────────────────────────────────
 const CATEGORY_META: Record<string, {
@@ -943,6 +943,7 @@ export default async function handler(request: Request, context: Context) {
   // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
+    // Legacy Squarespace slugs — permanently gone
     if (isLegacySquarespaceSlug(productId)) {
       return new Response('Gone', {
         status: 410,
@@ -955,8 +956,15 @@ export default async function handler(request: Request, context: Context) {
 
     const product = await fetchProduct(productId);
 
+    // Product not found — permanently gone (410 tells Google to stop crawling)
     if (!product) {
-      return new Response('Not Found', { status: 404 });
+      return new Response('Gone', {
+        status: 410,
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
+      });
     }
 
     const html = buildProductHTML(product, productId);
