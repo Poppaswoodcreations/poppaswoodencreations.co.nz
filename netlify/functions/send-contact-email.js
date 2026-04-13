@@ -26,7 +26,7 @@ exports.handler = async (event) => {
 
     const payload = {
       from: "Poppa's Website <onboarding@resend.dev>",
-      to: ['poppaswoodencreations@gmail.com'],
+      to: ['poppas.wooden.creations@gmail.com'],
       reply_to: email,
       subject: `[${typeLabel}] ${subject}`,
       html: `
