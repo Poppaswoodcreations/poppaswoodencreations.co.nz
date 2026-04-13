@@ -24,8 +24,8 @@ exports.handler = async (event) => {
 
     const typeLabel = orderTypeLabels[orderType] || orderType;
 
-    const ownerEmail = {
-      from: "Poppa's Website <noreply@poppaswoodencreations.co.nz>",
+    const payload = {
+      from: "Poppa's Website <onboarding@resend.dev>",
       to: ['poppaswoodencreations@gmail.com'],
       reply_to: email,
       subject: `[${typeLabel}] ${subject}`,
@@ -45,12 +45,14 @@ exports.handler = async (event) => {
               <p style="color:#111827;white-space:pre-wrap;margin-bottom:0;">${message}</p>
             </div>
             <p style="margin-top:20px;font-size:13px;color:#6b7280;">
-              Reply directly to this email to respond to ${name}.
+              Hit Reply to respond directly to ${name} at ${email}.
             </p>
           </div>
         </div>
       `,
     };
+
+    console.log('Sending contact email to Resend...');
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -58,15 +60,16 @@ exports.handler = async (event) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(ownerEmail),
+      body: JSON.stringify(payload),
     });
 
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`Resend error: ${err}`);
-    }
+    const resBody = await res.text();
+    console.log('Resend response status:', res.status);
+    console.log('Resend response body:', resBody);
 
-    console.log('✅ Contact form email sent from:', email);
+    if (!res.ok) {
+      throw new Error(`Resend error ${res.status}: ${resBody}`);
+    }
 
     return {
       statusCode: 200,
@@ -75,7 +78,7 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error('send-contact-email error:', error);
+    console.error('send-contact-email error:', error.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
