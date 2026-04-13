@@ -97,7 +97,7 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                  <p className="text-gray-600">poppaswoodencreations@gmail.com</p>
+                  <p className="text-gray-600">poppas.wooden.creations@gmail.com</p>
                   <p className="text-sm text-gray-500">Response within 24 hours</p>
                 </div>
               </div>
@@ -188,7 +188,7 @@ const ContactForm: React.FC = () => {
                 <AlertCircle className="text-red-500 mt-0.5" size={20} />
                 <div className="text-sm text-red-800">
                   <p className="font-medium">Error sending message</p>
-                  <p>Please try again or contact us directly at poppaswoodencreations@gmail.com</p>
+                  <p>Please try again or contact us directly at poppas.wooden.creations@gmail.com</p>
                 </div>
               </div>
             )}
