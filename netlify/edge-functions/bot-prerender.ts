@@ -21,8 +21,17 @@ const BOT_USER_AGENTS = [
   'Google-PageRenderer',
 ];
 
-const SUPABASE_URL = Deno.env.get('VITE_SUPABASE_URL') || '';
-const SUPABASE_ANON_KEY = Deno.env.get('VITE_SUPABASE_ANON_KEY') || '';
+// ── Env vars: Netlify edge functions require non-VITE_ prefixed vars ──────────
+// Set SUPABASE_URL and SUPABASE_ANON_KEY in Netlify > Site settings > Env vars
+// alongside (or instead of) the VITE_ versions
+const SUPABASE_URL =
+  Deno.env.get('SUPABASE_URL') ||
+  Deno.env.get('VITE_SUPABASE_URL') ||
+  '';
+const SUPABASE_ANON_KEY =
+  Deno.env.get('SUPABASE_ANON_KEY') ||
+  Deno.env.get('VITE_SUPABASE_ANON_KEY') ||
+  '';
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
 // ─── Category page metadata ───────────────────────────────────────────────────
@@ -498,6 +507,10 @@ function isLegacySquarespaceSlug(productId: string): boolean {
   return /^SQ\d+$/i.test(productId);
 }
 
+function isPlaceholderSlug(productId: string): boolean {
+  return /^product-\d+$/i.test(productId);
+}
+
 function hasSearchTemplatePlaceholder(search: string): boolean {
   return search.includes('search_term_string') || search.includes('%7Bsearch_term_string%7D');
 }
@@ -512,7 +525,10 @@ function hasTrackingParams(searchParams: URLSearchParams): boolean {
 }
 
 async function fetchProduct(productId: string): Promise<any | null> {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('[bot-prerender] Missing Supabase env vars — SUPABASE_URL or SUPABASE_ANON_KEY not set');
+    return null;
+  }
   try {
     const response = await fetch(
       `${SUPABASE_URL}/rest/v1/products?id=eq.${encodeURIComponent(productId)}&select=*`,
@@ -524,10 +540,14 @@ async function fetchProduct(productId: string): Promise<any | null> {
         },
       }
     );
-    if (!response.ok) return null;
+    if (!response.ok) {
+      console.error(`[bot-prerender] Supabase fetch failed: ${response.status} ${response.statusText}`);
+      return null;
+    }
     const data = await response.json();
     return data?.[0] || null;
-  } catch {
+  } catch (err) {
+    console.error('[bot-prerender] fetchProduct error:', err);
     return null;
   }
 }
@@ -796,6 +816,9 @@ function buildProductHTML(product: any, productId: string): string {
   const fullImage = image.startsWith('http') ? image : `${BASE_URL}${image}`;
   const inStock = product.in_stock !== false;
   const category = (product.category || 'wooden-toys').replace(/-/g, ' ');
+  const seoTitle = product.seo_title || `${name} | Handcrafted Wooden Toy | Made in NZ | Poppa's Wooden Creations`;
+  const seoDescription = product.seo_description || description.substring(0, 160);
+  const ageLabel = product.age_label || '';
 
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
@@ -827,7 +850,7 @@ function buildProductHTML(product: any, productId: string): string {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
-      { "@type": "ListItem", "position": 2, "name": category.replace(/\b\w/g, l => l.toUpperCase()), "item": `${BASE_URL}/${product.category || 'products'}` },
+      { "@type": "ListItem", "position": 2, "name": category.replace(/\b\w/g, l => l.toUpperCase()), "item": `${BASE_URL}/${product.category || 'wooden-toys-nz'}` },
       { "@type": "ListItem", "position": 3, "name": name, "item": canonicalUrl },
     ],
   });
@@ -837,15 +860,17 @@ function buildProductHTML(product: any, productId: string): string {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${name} | Handcrafted Wooden Toy | Made in NZ | Poppa's Wooden Creations</title>
-  <meta name="description" content="${description.substring(0, 160)}" />
+  <title>${seoTitle}</title>
+  <meta name="description" content="${seoDescription}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonicalUrl}" />
   <meta property="og:title" content="${name} | Poppa's Wooden Creations" />
-  <meta property="og:description" content="${description.substring(0, 160)}" />
+  <meta property="og:description" content="${seoDescription}" />
   <meta property="og:image" content="${fullImage}" />
   <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="Poppa's Wooden Creations" />
+  <meta property="og:locale" content="en_NZ" />
   <script type="application/ld+json">${productSchema}</script>
   <script type="application/ld+json">${breadcrumbSchema}</script>
   <style>
@@ -853,31 +878,38 @@ function buildProductHTML(product: any, productId: string): string {
     main { padding: 40px 24px; }
     h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
     h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
+    a { color: #b45309; }
+    section { margin-bottom: 24px; }
     nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
     nav.breadcrumb a { color: #92400e; text-decoration: none; }
+    .product-meta { background: #fef3c7; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+    .product-meta p { margin: 6px 0; }
+    .price { font-size: 1.4em; font-weight: bold; color: #78350f; }
+    .stock-in { color: #15803d; font-weight: bold; }
+    .stock-out { color: #dc2626; font-weight: bold; }
   </style>
 </head>
 <body>
   ${buildSharedNav(`/products/${productId}`)}
   <nav class="breadcrumb">
     <a href="${BASE_URL}">Home</a> &rsaquo;
-    <a href="${BASE_URL}/${product.category || 'products'}">${category.replace(/\b\w/g, (l: string) => l.toUpperCase())}</a> &rsaquo;
+    <a href="${BASE_URL}/${product.category || 'wooden-toys-nz'}">${category.replace(/\b\w/g, (l: string) => l.toUpperCase())}</a> &rsaquo;
     <span>${name}</span>
   </nav>
   <main>
     <h1>${name}</h1>
-    <p>${description}</p>
-    <div><strong>Price:</strong> $${price} NZD</div>
-    <div><strong>Availability:</strong> ${inStock ? 'In Stock' : 'Out of Stock'}</div>
-    <div><strong>Material:</strong> Premium New Zealand native timber</div>
-    <div><strong>Made in:</strong> Whangarei, New Zealand</div>
-    <div><strong>Category:</strong> ${category.replace(/\b\w/g, (l: string) => l.toUpperCase())}</div>
-    <img src="${fullImage}" alt="${name} - Handcrafted wooden toy from New Zealand" width="600" height="600" />
+    <img src="${fullImage}" alt="${name} - Handcrafted wooden toy from New Zealand" width="600" height="600" style="max-width:100%;border-radius:8px;" />
+    <div class="product-meta">
+      <p class="price">$${price} NZD</p>
+      <p class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? '✓ In Stock' : '✗ Out of Stock'}</p>
+      ${ageLabel ? `<p><strong>Age:</strong> ${ageLabel}</p>` : ''}
+      <p><strong>Material:</strong> Premium New Zealand native timber (Kauri, Rimu or Macrocarpa)</p>
+      <p><strong>Made in:</strong> Whangarei, New Zealand</p>
+      <p><strong>Finish:</strong> Non-toxic, food-safe oil</p>
+    </div>
     <section>
       <h2>About This Product</h2>
-      <p>Handcrafted in Whangarei, New Zealand from premium native timber.
-      Finished with non-toxic, food-safe oils. Safe for children of all ages.
-      Trusted by Montessori schools across New Zealand since 2015.</p>
+      <p>${description}</p>
     </section>
     <section>
       <h2>Why Choose Poppa's Wooden Creations?</h2>
@@ -886,7 +918,13 @@ function buildProductHTML(product: any, productId: string): string {
         <li>Non-toxic, food-safe finish — safe for babies and toddlers</li>
         <li>Built to last generations as heirloom pieces</li>
         <li>Trusted by Montessori schools nationwide since 2015</li>
+        <li>Every piece unique — natural grain variation is a feature, not a flaw</li>
       </ul>
+    </section>
+    <section>
+      <h2>Handcrafted in Whangarei</h2>
+      <p>This product is handcrafted by Adrian at Poppa's Wooden Creations in Tikipunga, Whangarei, New Zealand. We are not a dropshipper — every item is made in our own workshop from native NZ timber.</p>
+      <p><a href="${BASE_URL}/contact">Contact us</a> if you'd like to discuss a custom order or have any questions.</p>
     </section>
   </main>
   ${buildSharedFooter()}
@@ -906,7 +944,7 @@ export default async function handler(request: Request, context: Context) {
     return new Response(null, {
       status: 301,
       headers: {
-        'Location': `${BASE_URL}/products`,
+        'Location': `${BASE_URL}/wooden-toys-nz`,
         'Cache-Control': 'public, max-age=31536000',
         'X-Robots-Tag': 'noindex',
       },
@@ -943,6 +981,7 @@ export default async function handler(request: Request, context: Context) {
   // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
+
     // Legacy Squarespace slugs — permanently gone
     if (isLegacySquarespaceSlug(productId)) {
       return new Response('Gone', {
@@ -954,10 +993,26 @@ export default async function handler(request: Request, context: Context) {
       });
     }
 
+    // Placeholder slugs (product-8, etc.) — permanently gone
+    if (isPlaceholderSlug(productId)) {
+      return new Response('Gone', {
+        status: 410,
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
+      });
+    }
+
     const product = await fetchProduct(productId);
 
-    // Product not found — permanently gone (410 tells Google to stop crawling)
     if (!product) {
+      // If Supabase env vars are missing, fall through to React rather than 410
+      // This prevents valid products from being wrongly killed by a config issue
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        return context.next();
+      }
+      // Product genuinely not in DB — permanently gone
       return new Response('Gone', {
         status: 410,
         headers: {
