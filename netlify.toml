@@ -5,6 +5,84 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# ── Edge functions ────────────────────────────────────────────────────────────
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/products/*"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-baby-toys"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-cars"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-trucks"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-trains"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-kitchenware"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-planes-helicopters"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-tractors-boats"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-pens"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-crosses"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/wooden-toys-nz"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/about"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/contact"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/reviews"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/blog"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/shipping"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/returns"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/privacy"
+
+[[edge_functions]]
+  function = "bot-prerender"
+  path = "/terms"
+
 # ── Redirects ─────────────────────────────────────────────────────────────────
 
 # Static files served directly (must come before SPA catch-all)
