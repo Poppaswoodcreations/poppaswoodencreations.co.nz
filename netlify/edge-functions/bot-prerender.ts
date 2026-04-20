@@ -22,8 +22,6 @@ const BOT_USER_AGENTS = [
 ];
 
 // ── Env vars: Netlify edge functions require non-VITE_ prefixed vars ──────────
-// Set SUPABASE_URL and SUPABASE_ANON_KEY in Netlify > Site settings > Env vars
-// alongside (or instead of) the VITE_ versions
 const SUPABASE_URL =
   Deno.env.get('SUPABASE_URL') ||
   Deno.env.get('VITE_SUPABASE_URL') ||
@@ -34,7 +32,6 @@ const SUPABASE_ANON_KEY =
   '';
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
-// ─── Category page metadata ───────────────────────────────────────────────────
 const CATEGORY_META: Record<string, {
   title: string;
   description: string;
@@ -174,7 +171,6 @@ const CATEGORY_META: Record<string, {
   },
 };
 
-// ─── Policy page metadata ─────────────────────────────────────────────────────
 const POLICY_PAGES: Record<string, {
   title: string;
   description: string;
@@ -321,7 +317,6 @@ const POLICY_PAGES: Record<string, {
   },
 };
 
-// ─── Info page metadata ───────────────────────────────────────────────────────
 const INFO_PAGES: Record<string, {
   title: string;
   description: string;
@@ -348,7 +343,6 @@ const INFO_PAGES: Record<string, {
       </section>
       <section>
         <h2>Contact Us</h2>
-        <p>We love hearing from our customers. Get in touch with any questions about our products or to discuss a custom order.</p>
         <p>Phone: <a href="tel:+642102288166">+64 21 022 88166</a><br/>
         Email: <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
@@ -410,7 +404,6 @@ const INFO_PAGES: Record<string, {
   },
 };
 
-// ─── Shared nav & footer ──────────────────────────────────────────────────────
 function buildSharedNav(currentPath: string): string {
   return `
   <header style="background:#78350f;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
@@ -474,8 +467,6 @@ function buildSharedFooter(): string {
   </footer>`;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function isBot(userAgent: string): boolean {
   const ua = userAgent.toLowerCase();
   return BOT_USER_AGENTS.some(bot => ua.includes(bot.toLowerCase()));
@@ -526,7 +517,7 @@ function hasTrackingParams(searchParams: URLSearchParams): boolean {
 
 async function fetchProduct(productId: string): Promise<any | null> {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('[bot-prerender] Missing Supabase env vars — SUPABASE_URL or SUPABASE_ANON_KEY not set');
+    console.error('[bot-prerender] Missing Supabase env vars');
     return null;
   }
   try {
@@ -540,10 +531,7 @@ async function fetchProduct(productId: string): Promise<any | null> {
         },
       }
     );
-    if (!response.ok) {
-      console.error(`[bot-prerender] Supabase fetch failed: ${response.status} ${response.statusText}`);
-      return null;
-    }
+    if (!response.ok) return null;
     const data = await response.json();
     return data?.[0] || null;
   } catch (err) {
@@ -572,14 +560,11 @@ async function fetchCategoryProducts(slug: string): Promise<any[]> {
   }
 }
 
-// ─── HTML builders ────────────────────────────────────────────────────────────
-
 function buildPolicyHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = POLICY_PAGES[clean];
   const canonicalUrl = buildCanonicalUrl(clean);
   const robotsContent = page.noindex ? 'noindex, nofollow' : 'index, follow';
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -588,7 +573,6 @@ function buildPolicyHTML(pathname: string): string {
       { "@type": "ListItem", "position": 2, "name": page.h1, "item": canonicalUrl },
     ],
   });
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -633,7 +617,6 @@ function buildInfoHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = INFO_PAGES[clean];
   const canonicalUrl = buildCanonicalUrl(clean);
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -642,7 +625,6 @@ function buildInfoHTML(pathname: string): string {
       { "@type": "ListItem", "position": 2, "name": page.h1, "item": canonicalUrl },
     ],
   });
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -686,7 +668,6 @@ function buildInfoHTML(pathname: string): string {
 function buildCategoryHTML(slug: string, products: any[]): string {
   const meta = CATEGORY_META[slug];
   const canonicalUrl = `${BASE_URL}/${slug}`;
-
   const productListItems = products.map(p => {
     const img = (p.images?.[0] || `${BASE_URL}/og-image.jpg`);
     const fullImg = img.startsWith('http') ? img : `${BASE_URL}${img}`;
@@ -701,7 +682,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       </a>
     </article>`;
   }).join('\n');
-
   const itemListSchema = products.length > 0 ? JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -715,7 +695,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       "url": `${BASE_URL}/products/${p.id}`,
     })),
   }) : null;
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -724,7 +703,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       { "@type": "ListItem", "position": 2, "name": meta.h1, "item": canonicalUrl },
     ],
   });
-
   const collectionSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -744,7 +722,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       },
     },
   });
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -780,22 +757,17 @@ function buildCategoryHTML(slug: string, products: any[]): string {
   <main>
     <h1>${meta.h1}</h1>
     <p>${meta.intro}</p>
-
     <section>
       <h2>Why Choose Poppa's ${meta.h1}?</h2>
       <ul>
         ${meta.features.map(f => `<li>${f}</li>`).join('\n        ')}
       </ul>
     </section>
-
     ${products.length > 0 ? `
     <section>
       <h2>Our ${meta.h1} Collection</h2>
-      <div>
-        ${productListItems}
-      </div>
+      <div>${productListItems}</div>
     </section>` : ''}
-
     <section>
       <h2>Handcrafted in Whangarei, New Zealand</h2>
       <p>Every piece in our ${meta.h1.toLowerCase()} range is handcrafted by Adrian at Poppa's Wooden Creations in Tikipunga, Whangarei. Using only native New Zealand timbers — Kauri, Rimu, and Macrocarpa — and finished with non-toxic, food-safe oils, each piece is unique and built to last generations.</p>
@@ -819,7 +791,6 @@ function buildProductHTML(product: any, productId: string): string {
   const seoTitle = product.seo_title || `${name} | Handcrafted Wooden Toy | Made in NZ | Poppa's Wooden Creations`;
   const seoDescription = product.seo_description || description.substring(0, 160);
   const ageLabel = product.age_label || '';
-
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
@@ -844,7 +815,6 @@ function buildProductHTML(product: any, productId: string): string {
       "bestRating": "5",
     },
   });
-
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -854,7 +824,6 @@ function buildProductHTML(product: any, productId: string): string {
       { "@type": "ListItem", "position": 3, "name": name, "item": canonicalUrl },
     ],
   });
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -932,14 +901,11 @@ function buildProductHTML(product: any, productId: string): string {
 </html>`;
 }
 
-// ─── Main handler ─────────────────────────────────────────────────────────────
-
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url);
   const pathname = url.pathname;
   const userAgent = request.headers.get('user-agent') || '';
 
-  // ── FIX 1: Intercept unfilled search template URLs (bots AND users) ──────────
   if (hasSearchTemplatePlaceholder(url.search)) {
     return new Response(null, {
       status: 301,
@@ -951,7 +917,6 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── FIX 2: Strip tracking params — redirect to clean canonical URL ──────────
   if (isBot(userAgent) && hasTrackingParams(url.searchParams)) {
     return new Response(null, {
       status: 301,
@@ -962,12 +927,10 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // Only intercept bots from this point on
   if (!isBot(userAgent)) {
     return context.next();
   }
 
-  // ── FIX 3: Trailing-slash normalisation for bots ────────────────────────────
   if (pathname !== '/' && pathname.endsWith('/')) {
     return new Response(null, {
       status: 301,
@@ -978,47 +941,22 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Product pages ──────────────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
-
-    // Legacy Squarespace slugs — permanently gone
-    if (isLegacySquarespaceSlug(productId)) {
+    if (isLegacySquarespaceSlug(productId) || isPlaceholderSlug(productId)) {
       return new Response('Gone', {
         status: 410,
-        headers: {
-          'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
-        },
-      });
-    }
-
-    // Placeholder slugs (product-8, etc.) — permanently gone
-    if (isPlaceholderSlug(productId)) {
-      return new Response('Gone', {
-        status: 410,
-        headers: {
-          'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
-        },
+        headers: { 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=31536000' },
       });
     }
 
     const product = await fetchProduct(productId);
 
     if (!product) {
-      // If Supabase env vars are missing, fall through to React rather than 410
-      // This prevents valid products from being wrongly killed by a config issue
-      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-        return context.next();
-      }
-      // Product genuinely not in DB — permanently gone
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return context.next();
       return new Response('Gone', {
         status: 410,
-        headers: {
-          'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
-        },
+        headers: { 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=31536000' },
       });
     }
 
@@ -1033,7 +971,6 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Category pages ─────────────────────────────────────────────────────────
   const categorySlug = extractCategorySlug(pathname);
   if (categorySlug) {
     const products = await fetchCategoryProducts(categorySlug);
@@ -1048,7 +985,6 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Policy pages ───────────────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -1064,7 +1000,6 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── Info pages (/about, /contact, /reviews, /blog) ─────────────────────────
   if (isInfoPage(pathname)) {
     const html = buildInfoHTML(pathname);
     return new Response(html, {
@@ -1077,7 +1012,6 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // Everything else — let React handle it
   return context.next();
 }
 
