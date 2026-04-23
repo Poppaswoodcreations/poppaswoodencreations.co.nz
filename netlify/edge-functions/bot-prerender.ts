@@ -21,7 +21,6 @@ const BOT_USER_AGENTS = [
   'Google-PageRenderer',
 ];
 
-// ── Env vars: Netlify edge functions require non-VITE_ prefixed vars ──────────
 const SUPABASE_URL =
   Deno.env.get('SUPABASE_URL') ||
   Deno.env.get('VITE_SUPABASE_URL') ||
@@ -32,6 +31,9 @@ const SUPABASE_ANON_KEY =
   '';
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
+// ─────────────────────────────────────────────────────────────
+// CATEGORY META
+// ─────────────────────────────────────────────────────────────
 const CATEGORY_META: Record<string, {
   title: string;
   description: string;
@@ -130,8 +132,9 @@ const CATEGORY_META: Record<string, {
       'Heirloom quality built to last',
     ],
   },
+  // /wooden-planes is a legacy short URL — redirected to /wooden-planes-helicopters in the handler
   'wooden-pens': {
-    title: 'Handcrafted Wooden Pens NZ | Native Timber Pens | Poppa\'s Wooden Creations',
+    title: "Handcrafted Wooden Pens NZ | Native Timber Pens | Poppa's Wooden Creations",
     description: 'Handcrafted wooden pens turned from native New Zealand timber — Kauri, Rimu, Rewa-Rewa and Totara. Unique heirloom gifts made in Whangarei.',
     h1: 'Handcrafted Wooden Pens',
     intro: 'Our wooden pens are hand-turned in Whangarei from rare native New Zealand timbers including ancient Kauri, Rimu, Rewa-Rewa and Totara. Available as click pens, stylus pens and larger ballpoint pens — each one completely unique.',
@@ -144,7 +147,7 @@ const CATEGORY_META: Record<string, {
     ],
   },
   'wooden-crosses': {
-    title: 'Handcrafted Wooden Crosses NZ | Native Timber | Poppa\'s Wooden Creations',
+    title: "Handcrafted Wooden Crosses NZ | Native Timber | Poppa's Wooden Creations",
     description: 'Handcrafted wooden crosses made from native New Zealand Rimu timber. Beautiful religious gifts and heirloom pieces, made by hand in Whangarei.',
     h1: 'Handcrafted Wooden Crosses',
     intro: 'Our wooden crosses are handcrafted in Whangarei from native New Zealand Rimu timber. A meaningful and lasting gift for baptisms, confirmations, Easter and other occasions.',
@@ -157,10 +160,10 @@ const CATEGORY_META: Record<string, {
     ],
   },
   'wooden-toys-nz': {
-    title: 'Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa\'s Wooden Creations',
-    description: 'Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ\'s trusted wooden toy maker since 2015.',
+    title: "Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa's Wooden Creations",
+    description: "Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ's trusted wooden toy maker since 2015.",
     h1: 'Handcrafted Wooden Toys NZ',
-    intro: 'Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa\'s Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.',
+    intro: "Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa's Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.",
     features: [
       'Handcrafted from native NZ timber — Kauri, Rimu, Macrocarpa',
       'Non-toxic, food-safe finish — safe for babies and toddlers',
@@ -171,6 +174,9 @@ const CATEGORY_META: Record<string, {
   },
 };
 
+// ─────────────────────────────────────────────────────────────
+// POLICY PAGES
+// ─────────────────────────────────────────────────────────────
 const POLICY_PAGES: Record<string, {
   title: string;
   description: string;
@@ -179,7 +185,7 @@ const POLICY_PAGES: Record<string, {
   content: string;
 }> = {
   '/shipping': {
-    title: 'Shipping Policy | Poppa\'s Wooden Creations NZ',
+    title: "Shipping Policy | Poppa's Wooden Creations NZ",
     description: 'Learn about shipping times, costs, and delivery options for handcrafted wooden toys from Poppa\'s Wooden Creations in Whangarei, New Zealand.',
     h1: 'Shipping Policy',
     noindex: false,
@@ -208,7 +214,7 @@ const POLICY_PAGES: Record<string, {
     `,
   },
   '/returns': {
-    title: 'Returns & Refunds Policy | Poppa\'s Wooden Creations NZ',
+    title: "Returns & Refunds Policy | Poppa's Wooden Creations NZ",
     description: 'Our 30-day return policy and quality guarantee for handcrafted wooden toys. Easy returns, full refunds, and lifetime craftsmanship guarantee.',
     h1: 'Returns & Refunds Policy',
     noindex: false,
@@ -243,8 +249,8 @@ const POLICY_PAGES: Record<string, {
     `,
   },
   '/privacy': {
-    title: 'Privacy Policy | Poppa\'s Wooden Creations NZ',
-    description: 'Privacy policy for Poppa\'s Wooden Creations. How we collect, use, and protect your personal information.',
+    title: "Privacy Policy | Poppa's Wooden Creations NZ",
+    description: "Privacy policy for Poppa's Wooden Creations. How we collect, use, and protect your personal information.",
     h1: 'Privacy Policy',
     noindex: true,
     content: `
@@ -278,8 +284,8 @@ const POLICY_PAGES: Record<string, {
     `,
   },
   '/terms': {
-    title: 'Terms of Service | Poppa\'s Wooden Creations NZ',
-    description: 'Terms and conditions for purchasing from Poppa\'s Wooden Creations handcrafted wooden toys and kitchenware in New Zealand.',
+    title: "Terms of Service | Poppa's Wooden Creations NZ",
+    description: "Terms and conditions for purchasing from Poppa's Wooden Creations handcrafted wooden toys and kitchenware in New Zealand.",
     h1: 'Terms of Service',
     noindex: true,
     content: `
@@ -317,6 +323,9 @@ const POLICY_PAGES: Record<string, {
   },
 };
 
+// ─────────────────────────────────────────────────────────────
+// INFO PAGES
+// ─────────────────────────────────────────────────────────────
 const INFO_PAGES: Record<string, {
   title: string;
   description: string;
@@ -324,9 +333,9 @@ const INFO_PAGES: Record<string, {
   content: string;
 }> = {
   '/about': {
-    title: 'About Us | Handcrafted in Whangarei NZ Since 2015 | Poppa\'s Wooden Creations',
-    description: 'Learn about Poppa\'s Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015.',
-    h1: 'About Poppa\'s Wooden Creations',
+    title: "About Us | Handcrafted in Whangarei NZ Since 2015 | Poppa's Wooden Creations",
+    description: "Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015.",
+    h1: "About Poppa's Wooden Creations",
     content: `
       <section>
         <h2>Handcrafted in Whangarei Since 2015</h2>
@@ -350,9 +359,9 @@ const INFO_PAGES: Record<string, {
     `,
   },
   '/contact': {
-    title: 'Contact Us | Poppa\'s Wooden Creations Whangarei NZ',
-    description: 'Contact Poppa\'s Wooden Creations in Whangarei, NZ. Phone, email, or visit us. We\'re here to help with orders, custom wooden toy requests, and any questions.',
-    h1: 'Contact Poppa\'s Wooden Creations',
+    title: "Contact Us | Poppa's Wooden Creations Whangarei NZ",
+    description: "Contact Poppa's Wooden Creations in Whangarei, NZ. Phone, email, or visit us. We're here to help with orders, custom wooden toy requests, and any questions.",
+    h1: "Contact Poppa's Wooden Creations",
     content: `
       <section>
         <h2>Get in Touch</h2>
@@ -376,8 +385,8 @@ const INFO_PAGES: Record<string, {
     `,
   },
   '/reviews': {
-    title: 'Customer Reviews | Poppa\'s Wooden Creations NZ',
-    description: 'Read genuine customer reviews of Poppa\'s Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.',
+    title: "Customer Reviews | Poppa's Wooden Creations NZ",
+    description: "Read genuine customer reviews of Poppa's Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.",
     h1: 'Customer Reviews',
     content: `
       <section>
@@ -392,9 +401,9 @@ const INFO_PAGES: Record<string, {
     `,
   },
   '/blog': {
-    title: 'Blog | Wooden Toys & Craftsmanship | Poppa\'s Wooden Creations NZ',
-    description: 'Read our blog for tips on wooden toys, Montessori play, NZ timber craftsmanship and more. Handcrafted wooden toys made in Whangarei since 2015.',
-    h1: 'Poppa\'s Wooden Creations Blog',
+    title: "Blog | Wooden Toys & Craftsmanship | Poppa's Wooden Creations NZ",
+    description: "Read our blog for tips on wooden toys, Montessori play, NZ timber craftsmanship and more. Handcrafted wooden toys made in Whangarei since 2015.",
+    h1: "Poppa's Wooden Creations Blog",
     content: `
       <section>
         <h2>Tips, Ideas & Craftsmanship</h2>
@@ -404,6 +413,9 @@ const INFO_PAGES: Record<string, {
   },
 };
 
+// ─────────────────────────────────────────────────────────────
+// SHARED LAYOUT HELPERS
+// ─────────────────────────────────────────────────────────────
 function buildSharedNav(currentPath: string): string {
   return `
   <header style="background:#78350f;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
@@ -467,6 +479,20 @@ function buildSharedFooter(): string {
   </footer>`;
 }
 
+const SHARED_CSS = `
+  body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
+  main { padding: 40px 24px; }
+  h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
+  h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
+  a { color: #b45309; }
+  section { margin-bottom: 24px; }
+  nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
+  nav.breadcrumb a { color: #92400e; text-decoration: none; }
+`;
+
+// ─────────────────────────────────────────────────────────────
+// UTILITY FUNCTIONS
+// ─────────────────────────────────────────────────────────────
 function isBot(userAgent: string): boolean {
   const ua = userAgent.toLowerCase();
   return BOT_USER_AGENTS.some(bot => ua.includes(bot.toLowerCase()));
@@ -480,6 +506,11 @@ function extractProductId(pathname: string): string | null {
 function extractCategorySlug(pathname: string): string | null {
   const clean = pathname.replace(/\/$/, '').replace(/^\//, '');
   return CATEGORY_META[clean] ? clean : null;
+}
+
+function extractBlogSlug(pathname: string): string | null {
+  const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
+  return match ? match[1] : null;
 }
 
 function isPolicyPage(pathname: string): boolean {
@@ -515,6 +546,9 @@ function hasTrackingParams(searchParams: URLSearchParams): boolean {
   return false;
 }
 
+// ─────────────────────────────────────────────────────────────
+// SUPABASE FETCHERS
+// ─────────────────────────────────────────────────────────────
 async function fetchProduct(productId: string): Promise<any | null> {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.error('[bot-prerender] Missing Supabase env vars');
@@ -560,6 +594,34 @@ async function fetchCategoryProducts(slug: string): Promise<any[]> {
   }
 }
 
+// Blog posts table columns: id, slug, title, content, excerpt,
+// featured_image, author, read_time, published_at, created_at,
+// updated_at, category, meta_description, image_alt, tags, faqs
+async function fetchBlogPost(slug: string): Promise<any | null> {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/blog_posts?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data?.[0] || null;
+  } catch (err) {
+    console.error('[bot-prerender] fetchBlogPost error:', err);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// HTML BUILDERS
+// ─────────────────────────────────────────────────────────────
 function buildPolicyHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = POLICY_PAGES[clean];
@@ -588,16 +650,7 @@ function buildPolicyHTML(pathname: string): string {
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Poppa's Wooden Creations" />
   <script type="application/ld+json">${breadcrumbSchema}</script>
-  <style>
-    body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
-    main { padding: 40px 24px; }
-    h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
-    h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
-    a { color: #b45309; }
-    section { margin-bottom: 24px; }
-    nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
-    nav.breadcrumb a { color: #92400e; text-decoration: none; }
-  </style>
+  <style>${SHARED_CSS}</style>
 </head>
 <body>
   ${buildSharedNav(clean)}
@@ -640,16 +693,7 @@ function buildInfoHTML(pathname: string): string {
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Poppa's Wooden Creations" />
   <script type="application/ld+json">${breadcrumbSchema}</script>
-  <style>
-    body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
-    main { padding: 40px 24px; }
-    h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
-    h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
-    a { color: #b45309; }
-    section { margin-bottom: 24px; }
-    nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
-    nav.breadcrumb a { color: #92400e; text-decoration: none; }
-  </style>
+  <style>${SHARED_CSS}</style>
 </head>
 <body>
   ${buildSharedNav(clean)}
@@ -843,14 +887,7 @@ function buildProductHTML(product: any, productId: string): string {
   <script type="application/ld+json">${productSchema}</script>
   <script type="application/ld+json">${breadcrumbSchema}</script>
   <style>
-    body { font-family: Georgia, serif; max-width: 900px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
-    main { padding: 40px 24px; }
-    h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
-    h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
-    a { color: #b45309; }
-    section { margin-bottom: 24px; }
-    nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
-    nav.breadcrumb a { color: #92400e; text-decoration: none; }
+    ${SHARED_CSS}
     .product-meta { background: #fef3c7; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
     .product-meta p { margin: 6px 0; }
     .price { font-size: 1.4em; font-weight: bold; color: #78350f; }
@@ -901,22 +938,146 @@ function buildProductHTML(product: any, productId: string): string {
 </html>`;
 }
 
+function buildBlogPostHTML(post: any, slug: string): string {
+  const canonicalUrl = `${BASE_URL}/blog/${slug}`;
+  const title = post.title || "Blog | Poppa's Wooden Creations";
+  const metaDesc = post.meta_description || post.excerpt || title;
+  const excerpt = post.excerpt || '';
+  const image = post.featured_image || `${BASE_URL}/og-image.jpg`;
+  const fullImage = image.startsWith('http') ? image : `${BASE_URL}${image}`;
+  const content = post.content || '';
+  const datePublished = post.published_at || post.created_at || '';
+  const author = post.author || 'Adrian - Poppa';
+  const readTime = post.read_time || '';
+
+  // Parse FAQs if present — column is a JSON array of {question, answer}
+  let faqSchema = '';
+  try {
+    const faqs = typeof post.faqs === 'string' ? JSON.parse(post.faqs) : (post.faqs || []);
+    if (Array.isArray(faqs) && faqs.length > 0) {
+      faqSchema = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map((f: any) => ({
+          "@type": "Question",
+          "name": f.question,
+          "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+        })),
+      });
+    }
+  } catch {
+    // faqs not parseable — skip
+  }
+
+  const articleSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": metaDesc,
+    "image": fullImage,
+    "url": canonicalUrl,
+    "datePublished": datePublished,
+    "dateModified": post.updated_at || datePublished,
+    "author": { "@type": "Person", "name": author },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Poppa's Wooden Creations",
+      "logo": { "@type": "ImageObject", "url": `${BASE_URL}/og-image.jpg` },
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
+  });
+
+  const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${BASE_URL}/blog` },
+      { "@type": "ListItem", "position": 3, "name": title, "item": canonicalUrl },
+    ],
+  });
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title} | Poppa's Wooden Creations</title>
+  <meta name="description" content="${metaDesc}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${metaDesc}" />
+  <meta property="og:image" content="${fullImage}" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Poppa's Wooden Creations" />
+  <meta property="og:locale" content="en_NZ" />
+  <meta property="article:published_time" content="${datePublished}" />
+  <meta property="article:author" content="${author}" />
+  <script type="application/ld+json">${articleSchema}</script>
+  <script type="application/ld+json">${breadcrumbSchema}</script>
+  ${faqSchema ? `<script type="application/ld+json">${faqSchema}</script>` : ''}
+  <style>
+    ${SHARED_CSS}
+    body { max-width: 860px; }
+    .blog-hero { width: 100%; max-height: 420px; object-fit: cover; border-radius: 8px; margin-bottom: 24px; }
+    .blog-meta { font-size: 0.9em; color: #78716c; margin-bottom: 24px; }
+    .blog-content { line-height: 1.85; }
+    .blog-content h2 { color: #92400e; margin-top: 36px; }
+    .blog-content p { margin-bottom: 1.2em; }
+    .blog-content ul, .blog-content ol { margin-bottom: 1.2em; padding-left: 1.5em; }
+    .blog-content li { margin-bottom: 0.4em; }
+    .cta-box { background: #fef3c7; border-left: 4px solid #78350f; border-radius: 6px; padding: 20px 24px; margin-top: 48px; }
+    .cta-box h2 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  ${buildSharedNav(`/blog/${slug}`)}
+  <nav class="breadcrumb">
+    <a href="${BASE_URL}">Home</a> &rsaquo;
+    <a href="${BASE_URL}/blog">Blog</a> &rsaquo;
+    <span>${title}</span>
+  </nav>
+  <main>
+    <h1>${title}</h1>
+    <p class="blog-meta">
+      By ${author}${readTime ? ` &nbsp;·&nbsp; ${readTime}` : ''}${datePublished ? ` &nbsp;·&nbsp; ${new Date(datePublished).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' })}` : ''}
+    </p>
+    ${fullImage !== `${BASE_URL}/og-image.jpg` ? `<img src="${fullImage}" alt="${title}" class="blog-hero" width="860" height="420" />` : ''}
+    ${excerpt ? `<p style="font-size:1.1em;color:#57534e;font-style:italic;margin-bottom:24px;">${excerpt}</p>` : ''}
+    <div class="blog-content">${content}</div>
+    <div class="cta-box">
+      <h2>Shop Handcrafted Wooden Toys</h2>
+      <p>Browse our full range of handcrafted wooden toys and kitchenware, made from native New Zealand timber in Whangarei.</p>
+      <p><a href="${BASE_URL}/wooden-toys-nz">Browse all wooden toys →</a></p>
+    </div>
+  </main>
+  ${buildSharedFooter()}
+</body>
+</html>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// MAIN HANDLER
+// ─────────────────────────────────────────────────────────────
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url);
   const pathname = url.pathname;
   const userAgent = request.headers.get('user-agent') || '';
 
+  // ── 1. Kill the search template URL immediately (410, not redirect) ──
   if (hasSearchTemplatePlaceholder(url.search)) {
-    return new Response(null, {
-      status: 301,
+    return new Response('Gone', {
+      status: 410,
       headers: {
-        'Location': `${BASE_URL}/wooden-toys-nz`,
-        'Cache-Control': 'public, max-age=31536000',
         'X-Robots-Tag': 'noindex',
+        'Cache-Control': 'public, max-age=31536000',
       },
     });
   }
 
+  // ── 2. Strip tracking params for bots ───────────────────────────────
   if (isBot(userAgent) && hasTrackingParams(url.searchParams)) {
     return new Response(null, {
       status: 301,
@@ -927,10 +1088,12 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 3. Pass real users straight through to the React SPA ────────────
   if (!isBot(userAgent)) {
     return context.next();
   }
 
+  // ── 4. Canonicalise trailing slashes ────────────────────────────────
   if (pathname !== '/' && pathname.endsWith('/')) {
     return new Response(null, {
       status: 301,
@@ -941,22 +1104,42 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 5. /wooden-planes → /wooden-planes-helicopters (legacy short URL) ─
+  if (pathname === '/wooden-planes') {
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}/wooden-planes-helicopters`,
+        'Cache-Control': 'public, max-age=31536000',
+      },
+    });
+  }
+
+  // ── 6. Product pages ────────────────────────────────────────────────
   const productId = extractProductId(pathname);
   if (productId) {
+    // Legacy Squarespace or placeholder slugs → 410
     if (isLegacySquarespaceSlug(productId) || isPlaceholderSlug(productId)) {
       return new Response('Gone', {
         status: 410,
-        headers: { 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=31536000' },
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
       });
     }
 
     const product = await fetchProduct(productId);
 
     if (!product) {
+      // If Supabase isn't configured, pass through rather than 410ing real pages
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return context.next();
       return new Response('Gone', {
         status: 410,
-        headers: { 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=31536000' },
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
       });
     }
 
@@ -971,6 +1154,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 7. Category pages ───────────────────────────────────────────────
   const categorySlug = extractCategorySlug(pathname);
   if (categorySlug) {
     const products = await fetchCategoryProducts(categorySlug);
@@ -985,6 +1169,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 8. Policy pages ─────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -1000,6 +1185,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 9. Info pages (about, contact, reviews, blog index) ─────────────
   if (isInfoPage(pathname)) {
     const html = buildInfoHTML(pathname);
     return new Response(html, {
@@ -1012,9 +1198,37 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
+  // ── 10. Individual blog posts (/blog/:slug) ──────────────────────────
+  const blogSlug = extractBlogSlug(pathname);
+  if (blogSlug) {
+    const post = await fetchBlogPost(blogSlug);
+    if (!post) {
+      return new Response('Not Found', {
+        status: 404,
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=3600',
+        },
+      });
+    }
+    const html = buildBlogPostHTML(post, blogSlug);
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+        'X-Robots-Tag': 'index, follow',
+      },
+    });
+  }
+
+  // ── 11. Anything else — pass through to React SPA ───────────────────
   return context.next();
 }
 
+// ─────────────────────────────────────────────────────────────
+// EDGE FUNCTION CONFIG — paths this function intercepts
+// ─────────────────────────────────────────────────────────────
 export const config = {
   path: [
     '/products',
@@ -1032,6 +1246,8 @@ export const config = {
     '/wooden-kitchenware/',
     '/wooden-planes-helicopters',
     '/wooden-planes-helicopters/',
+    '/wooden-planes',       // ← redirects to /wooden-planes-helicopters
+    '/wooden-planes/',
     '/wooden-tractors-boats',
     '/wooden-tractors-boats/',
     '/wooden-pens',
@@ -1056,5 +1272,8 @@ export const config = {
     '/reviews/',
     '/blog',
     '/blog/',
+    '/blog/*',              // ← individual blog posts now intercepted
+    '/search',              // ← catches /search?q={search_term_string}
+    '/search/',
   ],
 };
