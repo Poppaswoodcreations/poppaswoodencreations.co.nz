@@ -98,338 +98,357 @@
   status = 200
   force = true
 
-# Old Squarespace SQ product IDs → shop (all known IDs + wildcard fallback)
+# /wooden-planes → correct category URL
+[[redirects]]
+  from = "/wooden-planes"
+  to = "/wooden-planes-helicopters"
+  status = 301
+  force = true
+
+# Old Squarespace SQ product IDs → 410 Gone
 [[redirects]]
   from = "/products/SQ3795605"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ1108316"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ4347975"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ0988282"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ3999062"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ5769226"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ3031978"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ3632557"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ1562009"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ1772907"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/SQ2367809"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 # Wildcard catch-all for any remaining SQ IDs
 [[redirects]]
   from = "/products/SQ*"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
-# Placeholder/test product slugs → shop
+# Placeholder/test product slugs → 410 Gone
 [[redirects]]
   from = "/products/product-1"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-2"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-3"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-4"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-5"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-6"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-7"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-8"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-9"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/product-10"
-  to = "/wooden-toys-nz"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
-# Ghost product slugs (old named URLs) → relevant categories
+# Ghost product slugs → 410 Gone (never existed or no longer sold)
 [[redirects]]
   from = "/products/garbage-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/rattle"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/front-end-loader"
-  to = "/wooden-tractors-boats"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/kauri-bowl"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/rimu-salad-bowl"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/salad-servers"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/chopping-board"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/butter-knife"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/bowl"
-  to = "/wooden-kitchenware"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/sedan"
-  to = "/wooden-cars"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/rimu-car"
-  to = "/wooden-cars"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/race-car"
-  to = "/wooden-cars"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/police-car"
-  to = "/wooden-cars"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/small-sports-car"
-  to = "/wooden-cars"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/cargo-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/fire-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/ice-cream-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/tipper-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/tanker-truck"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/small-road-trains"
-  to = "/wooden-trains"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/mini-buss-rimu"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/school-bus-small"
-  to = "/wooden-trucks"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/kauri-helicopter"
-  to = "/wooden-planes-helicopters"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/kauri-planes"
-  to = "/wooden-planes-helicopters"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/backhoe"
-  to = "/wooden-tractors-boats"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/paddle-boat"
-  to = "/wooden-tractors-boats"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/submarine"
-  to = "/wooden-tractors-boats"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/skateboard"
-  to = "/wooden-tractors-boats"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/baby-blocks-native-rimu-8-pack"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/pull-along-duck"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/stacking-toy"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/humming-top"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/products/bongo-drum"
-  to = "/wooden-baby-toys"
-  status = 301
+  to = "/410"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/products/small-pine-train"
+  to = "/410"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/products/rimu-teething-ring"
+  to = "/410"
+  status = 410
   force = true
 
 # Block search template URL
