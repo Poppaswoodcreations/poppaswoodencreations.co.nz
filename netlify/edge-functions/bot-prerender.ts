@@ -21,6 +21,48 @@ const BOT_USER_AGENTS = [
   'Google-PageRenderer',
 ];
 
+// ─────────────────────────────────────────────────────────────
+// GHOST SLUGS — return 410 Gone for ALL visitors, not just bots
+// These URLs were never valid products on this site.
+// ─────────────────────────────────────────────────────────────
+const GHOST_SLUGS = new Set([
+  'small-pine-train',
+  'rimu-teething-ring',
+  'ice-cream-truck',
+  'butter-knife',
+  'small-sports-car',
+  'mini-buss-rimu',
+  'fire-truck',
+  'front-end-loader',
+  'humming-top',
+  'bowl',
+  'garbage-truck',
+  'rattle',
+  'kauri-bowl',
+  'sedan',
+  'baby-blocks-native-rimu-8-pack',
+  'school-bus-small',
+  'rimu-salad-bowl',
+  'salad-servers',
+  'chopping-board',
+  'rimu-car',
+  'race-car',
+  'police-car',
+  'cargo-truck',
+  'tipper-truck',
+  'tanker-truck',
+  'small-road-trains',
+  'kauri-helicopter',
+  'kauri-planes',
+  'backhoe',
+  'paddle-boat',
+  'submarine',
+  'skateboard',
+  'pull-along-duck',
+  'stacking-toy',
+  'bongo-drum',
+]);
+
 const SUPABASE_URL =
   Deno.env.get('SUPABASE_URL') ||
   Deno.env.get('VITE_SUPABASE_URL') ||
@@ -594,9 +636,6 @@ async function fetchCategoryProducts(slug: string): Promise<any[]> {
   }
 }
 
-// Blog posts table columns: id, slug, title, content, excerpt,
-// featured_image, author, read_time, published_at, created_at,
-// updated_at, category, meta_description, image_alt, tags, faqs
 async function fetchBlogPost(slug: string): Promise<any | null> {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
   try {
@@ -950,7 +989,6 @@ function buildBlogPostHTML(post: any, slug: string): string {
   const author = post.author || 'Adrian - Poppa';
   const readTime = post.read_time || '';
 
-  // Parse FAQs if present — column is a JSON array of {question, answer}
   let faqSchema = '';
   try {
     const faqs = typeof post.faqs === 'string' ? JSON.parse(post.faqs) : (post.faqs || []);
@@ -1066,7 +1104,7 @@ export default async function handler(request: Request, context: Context) {
   const pathname = url.pathname;
   const userAgent = request.headers.get('user-agent') || '';
 
-  // ── 1. Kill the search template URL immediately (410, not redirect) ──
+  // ── 1. Kill the search template URL immediately ──────────────────────
   if (hasSearchTemplatePlaceholder(url.search)) {
     return new Response('Gone', {
       status: 410,
@@ -1088,12 +1126,30 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 3. Pass real users straight through to the React SPA ────────────
+  // ── 3. Ghost slug check — 410 for ALL visitors, no bot check needed ─
+  const productId = extractProductId(pathname);
+  if (productId) {
+    if (
+      isLegacySquarespaceSlug(productId) ||
+      isPlaceholderSlug(productId) ||
+      GHOST_SLUGS.has(productId)
+    ) {
+      return new Response('Gone', {
+        status: 410,
+        headers: {
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=31536000',
+        },
+      });
+    }
+  }
+
+  // ── 4. Pass real users straight through to the React SPA ────────────
   if (!isBot(userAgent)) {
     return context.next();
   }
 
-  // ── 4. Canonicalise trailing slashes ────────────────────────────────
+  // ── 5. Canonicalise trailing slashes ────────────────────────────────
   if (pathname !== '/' && pathname.endsWith('/')) {
     return new Response(null, {
       status: 301,
@@ -1104,7 +1160,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 5. /wooden-planes → /wooden-planes-helicopters (legacy short URL) ─
+  // ── 6. /wooden-planes → /wooden-planes-helicopters ──────────────────
   if (pathname === '/wooden-planes') {
     return new Response(null, {
       status: 301,
@@ -1115,24 +1171,11 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 6. Product pages ────────────────────────────────────────────────
-  const productId = extractProductId(pathname);
+  // ── 7. Product pages (bot only beyond this point) ───────────────────
   if (productId) {
-    // Legacy Squarespace or placeholder slugs → 410
-    if (isLegacySquarespaceSlug(productId) || isPlaceholderSlug(productId)) {
-      return new Response('Gone', {
-        status: 410,
-        headers: {
-          'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
-        },
-      });
-    }
-
     const product = await fetchProduct(productId);
 
     if (!product) {
-      // If Supabase isn't configured, pass through rather than 410ing real pages
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return context.next();
       return new Response('Gone', {
         status: 410,
@@ -1154,7 +1197,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 7. Category pages ───────────────────────────────────────────────
+  // ── 8. Category pages ───────────────────────────────────────────────
   const categorySlug = extractCategorySlug(pathname);
   if (categorySlug) {
     const products = await fetchCategoryProducts(categorySlug);
@@ -1169,7 +1212,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 8. Policy pages ─────────────────────────────────────────────────
+  // ── 9. Policy pages ─────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -1185,7 +1228,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 9. Info pages (about, contact, reviews, blog index) ─────────────
+  // ── 10. Info pages ──────────────────────────────────────────────────
   if (isInfoPage(pathname)) {
     const html = buildInfoHTML(pathname);
     return new Response(html, {
@@ -1198,7 +1241,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 10. Individual blog posts (/blog/:slug) ──────────────────────────
+  // ── 11. Individual blog posts (/blog/:slug) ──────────────────────────
   const blogSlug = extractBlogSlug(pathname);
   if (blogSlug) {
     const post = await fetchBlogPost(blogSlug);
@@ -1222,12 +1265,12 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 11. Anything else — pass through to React SPA ───────────────────
+  // ── 12. Anything else — pass through to React SPA ───────────────────
   return context.next();
 }
 
 // ─────────────────────────────────────────────────────────────
-// EDGE FUNCTION CONFIG — paths this function intercepts
+// EDGE FUNCTION CONFIG
 // ─────────────────────────────────────────────────────────────
 export const config = {
   path: [
@@ -1246,7 +1289,7 @@ export const config = {
     '/wooden-kitchenware/',
     '/wooden-planes-helicopters',
     '/wooden-planes-helicopters/',
-    '/wooden-planes',       // ← redirects to /wooden-planes-helicopters
+    '/wooden-planes',
     '/wooden-planes/',
     '/wooden-tractors-boats',
     '/wooden-tractors-boats/',
@@ -1272,8 +1315,8 @@ export const config = {
     '/reviews/',
     '/blog',
     '/blog/',
-    '/blog/*',              // ← individual blog posts now intercepted
-    '/search',              // ← catches /search?q={search_term_string}
+    '/blog/*',
+    '/search',
     '/search/',
   ],
 };
