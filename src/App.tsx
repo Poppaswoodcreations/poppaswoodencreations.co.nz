@@ -108,12 +108,19 @@ const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-  const productsHook = useProducts({});
+  const {
+    products,
+    loading,
+    loadAllProducts,
+    saveProduct,
+    updateProduct,
+    deleteProduct,
+    isAdminConnected,
+    isSupabaseConnected,
+  } = useProducts({});
 
   useEffect(() => {
-    if (authed) {
-      productsHook.loadAllProducts();
-    }
+    if (authed) loadAllProducts();
   }, [authed]);
 
   const ADMIN_PASSWORD = 'poppas2024';
@@ -159,8 +166,13 @@ const AdminPage: React.FC = () => {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <AdminDashboard
-        products={productsHook.products}
-        onProductsUpdate={productsHook.loadAllProducts}
+        products={products}
+        onProductsUpdate={loadAllProducts}
+        saveProduct={saveProduct}
+        updateProduct={updateProduct}
+        deleteProduct={deleteProduct}
+        isAdminConnected={isAdminConnected}
+        isSupabaseConnected={isSupabaseConnected}
         onClose={() => window.history.back()}
       />
     </Suspense>
