@@ -175,7 +175,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           </nav>
 
           {/* Right icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <button
               className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
               aria-label="Search products"
@@ -196,10 +196,10 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               )}
             </button>
 
-            {/* Admin button desktop */}
+            {/* Admin button - always visible */}
             <button
               onClick={handleAdminClick}
-              className="hidden md:block p-2 text-gray-700 hover:text-amber-700 transition-colors"
+              className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
               aria-label="Admin access"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -301,16 +301,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Admin - mobile */}
-              <div className="border-t border-gray-200 pt-2">
-                <button
-                  onClick={handleAdminClick}
-                  className="block w-full text-left px-4 py-2 text-gray-500 hover:bg-amber-50 hover:text-amber-700 transition-colors text-sm"
-                >
-                  Admin
-                </button>
               </div>
 
             </div>
