@@ -102,6 +102,69 @@ const SearchPageWrapper: React.FC<{
   );
 };
 
+// ─── ADMIN PAGE WRAPPER ───────────────────────────────────────────────────────
+
+const AdminPage: React.FC = () => {
+  const [authed, setAuthed] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { products, loadAllProducts } = useProducts({});
+
+  useEffect(() => {
+    if (authed) loadAllProducts();
+  }, [authed]);
+
+  const ADMIN_PASSWORD = 'poppas2024';
+
+  const handleLogin = () => {
+    if (password === ADMIN_PASSWORD) {
+      setAuthed(true);
+      setError('');
+    } else {
+      setError('Incorrect password');
+    }
+  };
+
+  if (!authed) {
+    return (
+      <div className="min-h-screen bg-amber-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
+          <div className="text-center mb-6">
+            <div className="text-4xl mb-2">🔐</div>
+            <h1 className="text-2xl font-bold text-amber-900">Admin Login</h1>
+            <p className="text-gray-500 text-sm mt-1">Poppa's Wooden Creations</p>
+          </div>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleLogin()}
+            className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-3 text-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+          {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+          <button
+            onClick={handleLogin}
+            className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <AdminDashboard
+        products={products}
+        onProductsUpdate={async () => { await loadAllProducts(); }}
+        onClose={() => window.history.back()}
+      />
+    </Suspense>
+  );
+};
+
 // ─── PAGE TRACKING ────────────────────────────────────────────────────────────
 
 function usePageTracking() {
@@ -160,6 +223,16 @@ const AppContent: React.FC = () => {
       </button>
     </div>
   ) : null;
+
+  // Don't render the main layout for the admin route
+  if (location.pathname === '/admin') {
+    return (
+      <ErrorBoundary>
+        <SEOHead title="Admin Dashboard" noindex={true} />
+        <AdminPage />
+      </ErrorBoundary>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -269,12 +342,7 @@ const AppContent: React.FC = () => {
             {/* ── CATEGORY PAGES ── */}
             <Route path="/wooden-trucks" element={
               <>
-                <SEOHead
-                  title="Wooden Toy Trucks NZ"
-                  description="Handcrafted wooden toy trucks made from New Zealand native timber."
-                  canonicalPath="/wooden-trucks"
-                  ogType="website"
-                />
+                <SEOHead title="Wooden Toy Trucks NZ" description="Handcrafted wooden toy trucks made from New Zealand native timber." canonicalPath="/wooden-trucks" ogType="website" />
                 <CategoryHeader title="Wooden Toy Trucks NZ" subtitle="Handcrafted from native New Zealand timber" />
                 <ProductGrid products={products.filter(p => p.category === 'wooden-trucks')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-trucks" loading={loading} />
                 <WoodenTrucksPage />
