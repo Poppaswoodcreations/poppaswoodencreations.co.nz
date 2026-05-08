@@ -41,7 +41,6 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validPasswords = ['Adrianbar1?', 'admin', 'poppa', 'password', 'poppas'];
-
     if (validPasswords.includes(password.trim())) {
       onShowAdmin();
       setShowPasswordPrompt(false);
@@ -54,29 +53,19 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   };
 
   const handleCategoryClick = (categorySlug: string) => {
-    if (categorySlug === 'home') {
-      navigate('/');
-    } else if (categorySlug === 'about') {
-      navigate('/about');
-    } else if (categorySlug === 'contact') {
-      navigate('/contact');
-    } else if (categorySlug === 'reviews') {
-      navigate('/reviews');
-    } else if (categorySlug === 'shipping') {
-      navigate('/shipping');
-    } else if (categorySlug === 'returns') {
-      navigate('/returns');
-    } else if (categorySlug === 'blog') {
-      navigate('/blog');
-    } else if (categorySlug === 'privacy') {
-      navigate('/privacy');
-    } else if (categorySlug === 'terms') {
-      navigate('/terms');
-    } else if (categorySlug === 'custom-order') {
-      navigate('/custom-order');
-    } else {
-      navigate(`/${categorySlug}`);
-    }
+    const routes: Record<string, string> = {
+      home: '/',
+      about: '/about',
+      contact: '/contact',
+      reviews: '/reviews',
+      shipping: '/shipping',
+      returns: '/returns',
+      blog: '/blog',
+      privacy: '/privacy',
+      terms: '/terms',
+      'custom-order': '/custom-order',
+    };
+    navigate(routes[categorySlug] ?? `/${categorySlug}`);
     setIsMenuOpen(false);
   };
 
@@ -84,9 +73,10 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     <header className="bg-white shadow-md sticky top-0 z-30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          
-            href="/"
-            onClick={(e) => { e.preventDefault(); handleCategoryClick('home'); }}
+
+          {/* Logo */}
+          <button
+            onClick={() => handleCategoryClick('home')}
             className="flex items-center space-x-2 cursor-pointer"
           >
             <div className="w-10 h-10 bg-amber-700 rounded-lg flex items-center justify-center">
@@ -96,84 +86,74 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               <div className="font-bold text-xl text-gray-900">Poppa's Wooden Creations</div>
               <p className="text-xs text-gray-600">Handcrafted in New Zealand</p>
             </div>
-          </a>
+          </button>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6">
 
-            {/* Shop dropdown */}
             <div className="relative group">
-              
-                href="/wooden-toys-nz"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
+              <button
+                onClick={() => handleCategoryClick('wooden-toys-nz')}
                 className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center"
               >
                 Shop
                 <ChevronDown size={16} className="ml-1" />
-              </a>
+              </button>
               <div className="absolute left-0 mt-2 w-52 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                
-                  href="/wooden-toys-nz"
-                  onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
-                  className="block px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium border-b border-gray-100"
+                <button
+                  onClick={() => handleCategoryClick('wooden-toys-nz')}
+                  className="block w-full text-left px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium border-b border-gray-100"
                 >
                   All Wooden Toys
-                </a>
+                </button>
                 {productCategories.map((category) => (
-                  
+                  <button
                     key={category.slug}
-                    href={`/${category.slug}`}
-                    onClick={(e) => { e.preventDefault(); handleCategoryClick(category.slug); }}
-                    className="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                    onClick={() => handleCategoryClick(category.slug)}
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                   >
                     {category.name}
-                  </a>
+                  </button>
                 ))}
                 <div className="border-t border-gray-100 mt-1 pt-1">
-                  
-                    href="/custom-order"
-                    onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
-                    className="block px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium"
+                  <button
+                    onClick={() => handleCategoryClick('custom-order')}
+                    className="block w-full text-left px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium"
                   >
-                    ✦ Custom Orders
-                  </a>
+                    Custom Orders
+                  </button>
                 </div>
               </div>
             </div>
 
-            
-              href="/about"
-              onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }}
+            <button
+              onClick={() => handleCategoryClick('about')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
             >
               About
-            </a>
+            </button>
 
-            
-              href="/blog"
-              onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }}
+            <button
+              onClick={() => handleCategoryClick('blog')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
             >
               Blog
-            </a>
+            </button>
 
-            
-              href="/reviews"
-              onClick={(e) => { e.preventDefault(); handleCategoryClick('reviews'); }}
+            <button
+              onClick={() => handleCategoryClick('reviews')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
             >
               Reviews
-            </a>
+            </button>
 
-            
-              href="/contact"
-              onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }}
+            <button
+              onClick={() => handleCategoryClick('contact')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base"
             >
               Contact
-            </a>
+            </button>
 
-            {/* Help dropdown */}
             <div className="relative group">
               <button className="text-gray-700 hover:text-amber-700 transition-colors font-medium text-base flex items-center">
                 Help
@@ -181,20 +161,20 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 {helpLinks.map((link) => (
-                  
+                  <button
                     key={link.slug}
-                    href={`/${link.slug}`}
-                    onClick={(e) => { e.preventDefault(); handleCategoryClick(link.slug); }}
-                    className="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                    onClick={() => handleCategoryClick(link.slug)}
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
 
           </nav>
 
+          {/* Right icons */}
           <div className="flex items-center space-x-4">
             <button
               className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
@@ -216,7 +196,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               )}
             </button>
 
-            {/* Admin button - desktop only */}
+            {/* Admin button desktop */}
             <button
               onClick={handleAdminClick}
               className="hidden md:block p-2 text-gray-700 hover:text-amber-700 transition-colors"
@@ -228,10 +208,11 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
               </svg>
             </button>
 
+            {/* Hamburger */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-gray-700 hover:text-amber-700 transition-colors"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -243,100 +224,92 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
             <div className="space-y-2">
-              
-                href="/"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('home'); }}
+
+              <button
+                onClick={() => handleCategoryClick('home')}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Home
-              </a>
+              </button>
 
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Shop by Category</div>
                 <div className="pl-4 space-y-1">
-                  
-                    href="/wooden-toys-nz"
-                    onClick={(e) => { e.preventDefault(); handleCategoryClick('wooden-toys-nz'); }}
+                  <button
+                    onClick={() => handleCategoryClick('wooden-toys-nz')}
                     className="block w-full text-left py-2 text-amber-700 font-medium hover:text-amber-800 transition-colors"
                   >
                     All Wooden Toys
-                  </a>
+                  </button>
                   {productCategories.map((category) => (
-                    
+                    <button
                       key={category.slug}
-                      href={`/${category.slug}`}
-                      onClick={(e) => { e.preventDefault(); handleCategoryClick(category.slug); }}
+                      onClick={() => handleCategoryClick(category.slug)}
                       className="block w-full text-left py-2 text-gray-600 hover:text-amber-700 transition-colors"
                     >
                       {category.name}
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
 
-              
-                href="/about"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('about'); }}
+              <button
+                onClick={() => handleCategoryClick('about')}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 About Us
-              </a>
+              </button>
 
-              
-                href="/blog"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('blog'); }}
+              <button
+                onClick={() => handleCategoryClick('blog')}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Blog
-              </a>
+              </button>
 
-              
-                href="/reviews"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('reviews'); }}
+              <button
+                onClick={() => handleCategoryClick('reviews')}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Reviews
-              </a>
+              </button>
 
-              
-                href="/contact"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('contact'); }}
+              <button
+                onClick={() => handleCategoryClick('contact')}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
               >
                 Contact
-              </a>
+              </button>
 
-              
-                href="/custom-order"
-                onClick={(e) => { e.preventDefault(); handleCategoryClick('custom-order'); }}
+              <button
+                onClick={() => handleCategoryClick('custom-order')}
                 className="block w-full text-left px-4 py-2 text-amber-700 font-semibold hover:bg-amber-50 hover:text-amber-800 transition-colors border-t border-b border-amber-100"
               >
-                ✦ Custom Orders
-              </a>
+                Custom Orders
+              </button>
 
               <div className="px-4 py-2">
                 <div className="font-medium text-gray-900 mb-2">Help</div>
                 <div className="pl-4 space-y-1">
                   {helpLinks.map((link) => (
-                    
+                    <button
                       key={link.slug}
-                      href={`/${link.slug}`}
-                      onClick={(e) => { e.preventDefault(); handleCategoryClick(link.slug); }}
+                      onClick={() => handleCategoryClick(link.slug)}
                       className="block w-full text-left py-2 text-gray-600 hover:text-amber-700 transition-colors"
                     >
                       {link.name}
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
 
-              {/* Admin link in mobile menu */}
+              {/* Admin - mobile */}
               <div className="border-t border-gray-200 pt-2">
                 <button
                   onClick={handleAdminClick}
                   className="block w-full text-left px-4 py-2 text-gray-500 hover:bg-amber-50 hover:text-amber-700 transition-colors text-sm"
                 >
-                  🔐 Admin
+                  Admin
                 </button>
               </div>
 
@@ -345,6 +318,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
         )}
       </div>
 
+      {/* Password prompt */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl max-w-md w-full p-6">
@@ -367,10 +341,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setShowPasswordPrompt(false);
-                    setPassword('');
-                  }}
+                  onClick={() => { setShowPasswordPrompt(false); setPassword(''); }}
                   className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Cancel
