@@ -102,16 +102,18 @@ const SearchPageWrapper: React.FC<{
   );
 };
 
-// ─── ADMIN PAGE WRAPPER ───────────────────────────────────────────────────────
+// ─── ADMIN PAGE ───────────────────────────────────────────────────────────────
 
 const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { products, loadAllProducts } = useProducts({});
+  const [loginError, setLoginError] = useState('');
+  const productsHook = useProducts({});
 
   useEffect(() => {
-    if (authed) loadAllProducts();
+    if (authed) {
+      productsHook.loadAllProducts();
+    }
   }, [authed]);
 
   const ADMIN_PASSWORD = 'poppas2024';
@@ -119,9 +121,9 @@ const AdminPage: React.FC = () => {
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
       setAuthed(true);
-      setError('');
+      setLoginError('');
     } else {
-      setError('Incorrect password');
+      setLoginError('Incorrect password');
     }
   };
 
@@ -142,7 +144,7 @@ const AdminPage: React.FC = () => {
             onKeyDown={e => e.key === 'Enter' && handleLogin()}
             className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-3 text-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
-          {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+          {loginError && <p className="text-red-500 text-sm mb-3">{loginError}</p>}
           <button
             onClick={handleLogin}
             className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition"
@@ -157,8 +159,8 @@ const AdminPage: React.FC = () => {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <AdminDashboard
-        products={products}
-        onProductsUpdate={async () => { await loadAllProducts(); }}
+        products={productsHook.products}
+        onProductsUpdate={productsHook.loadAllProducts}
         onClose={() => window.history.back()}
       />
     </Suspense>
@@ -197,6 +199,16 @@ const AppContent: React.FC = () => {
 
   usePageTracking();
 
+  // Render admin page without main site layout
+  if (location.pathname === '/admin') {
+    return (
+      <>
+        <SEOHead title="Admin Dashboard" noindex={true} />
+        <AdminPage />
+      </>
+    );
+  }
+
   const isCategoryPage = CATEGORY_PATHS.some(p => location.pathname.startsWith(p));
 
   const { products, loading, error, loadProducts, loadAllProducts } = useProducts(
@@ -223,16 +235,6 @@ const AppContent: React.FC = () => {
       </button>
     </div>
   ) : null;
-
-  // Don't render the main layout for the admin route
-  if (location.pathname === '/admin') {
-    return (
-      <ErrorBoundary>
-        <SEOHead title="Admin Dashboard" noindex={true} />
-        <AdminPage />
-      </ErrorBoundary>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
