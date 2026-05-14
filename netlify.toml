@@ -112,7 +112,24 @@
   status = 301
   force = true
 
-# Old Squarespace SQ product IDs → 410 Gone
+# ── Blog redirects ────────────────────────────────────────────────────────────
+
+# Truncated slug Google found → correct full slug
+[[redirects]]
+  from = "/blog/how-to-clean-wooden-toys-naturally"
+  to = "/blog/how-to-clean-wooden-toys-naturally-and-safely"
+  status = 301
+  force = true
+
+# Ghost blog slugs → 410 Gone
+[[redirects]]
+  from = "/blog/sensory-toys-for-babies"
+  to = "/410"
+  status = 410
+  force = true
+
+# ── Old Squarespace SQ product IDs → 410 Gone ────────────────────────────────
+
 [[redirects]]
   from = "/products/SQ3795605"
   to = "/410"
@@ -186,7 +203,8 @@
   status = 410
   force = true
 
-# Placeholder/test product slugs → 410 Gone
+# ── Placeholder/test product slugs → 410 Gone ────────────────────────────────
+
 [[redirects]]
   from = "/products/product-1"
   to = "/410"
@@ -247,7 +265,8 @@
   status = 410
   force = true
 
-# Ghost product slugs → 410 Gone (never existed or no longer sold)
+# ── Ghost product slugs → 410 Gone ───────────────────────────────────────────
+
 [[redirects]]
   from = "/products/garbage-truck"
   to = "/410"
@@ -458,6 +477,8 @@
   status = 410
   force = true
 
+# ── Misc redirects ────────────────────────────────────────────────────────────
+
 # Block search template URL
 [[redirects]]
   from = "/search"
@@ -485,7 +506,8 @@
   status = 301
   force = true
 
-# Trailing-slash canonicalisation
+# ── Trailing-slash canonicalisation ──────────────────────────────────────────
+
 [[redirects]]
   from = "/about/"
   to = "/about"
