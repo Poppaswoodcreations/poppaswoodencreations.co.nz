@@ -22,7 +22,7 @@ const BOT_USER_AGENTS = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// GHOST SLUGS — return 410 Gone for ALL visitors, not just bots
+// GHOST PRODUCT SLUGS — 410 Gone for ALL visitors
 // These URLs were never valid products on this site.
 // ─────────────────────────────────────────────────────────────
 const GHOST_SLUGS = new Set([
@@ -61,6 +61,16 @@ const GHOST_SLUGS = new Set([
   'pull-along-duck',
   'stacking-toy',
   'bongo-drum',
+]);
+
+// ─────────────────────────────────────────────────────────────
+// GHOST BLOG SLUGS — 410 Gone for ALL visitors
+// These blog URLs never existed or are truncated variants.
+// ─────────────────────────────────────────────────────────────
+const GHOST_BLOG_SLUGS = new Set([
+  'how-to-clean-wooden-toys-naturally',
+  'choosing-best-wooden-toy-cars',
+  'sensory-toys-for-babies',
 ]);
 
 const SUPABASE_URL =
@@ -174,7 +184,6 @@ const CATEGORY_META: Record<string, {
       'Heirloom quality built to last',
     ],
   },
-  // /wooden-planes is a legacy short URL — redirected to /wooden-planes-helicopters in the handler
   'wooden-pens': {
     title: "Handcrafted Wooden Pens NZ | Native Timber Pens | Poppa's Wooden Creations",
     description: 'Handcrafted wooden pens turned from native New Zealand timber — Kauri, Rimu, Rewa-Rewa and Totara. Unique heirloom gifts made in Whangarei.',
@@ -1042,7 +1051,7 @@ function buildBlogPostHTML(post: any, slug: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Poppa's Wooden Creations</title>
   <meta name="description" content="${metaDesc}" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow" wait/>
   <link rel="canonical" href="${canonicalUrl}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${metaDesc}" />
@@ -1126,7 +1135,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 3. Ghost slug check — 410 for ALL visitors, no bot check needed ─
+  // ── 3. Ghost product slug check — 410 for ALL visitors ──────────────
   const productId = extractProductId(pathname);
   if (productId) {
     if (
@@ -1144,12 +1153,24 @@ export default async function handler(request: Request, context: Context) {
     }
   }
 
-  // ── 4. Pass real users straight through to the React SPA ────────────
+  // ── 4. Ghost blog slug check — 410 for ALL visitors ─────────────────
+  const blogSlugEarly = extractBlogSlug(pathname);
+  if (blogSlugEarly && GHOST_BLOG_SLUGS.has(blogSlugEarly)) {
+    return new Response('Gone', {
+      status: 410,
+      headers: {
+        'X-Robots-Tag': 'noindex',
+        'Cache-Control': 'public, max-age=31536000',
+      },
+    });
+  }
+
+  // ── 5. Pass real users straight through to the React SPA ────────────
   if (!isBot(userAgent)) {
     return context.next();
   }
 
-  // ── 5. Canonicalise trailing slashes ────────────────────────────────
+  // ── 6. Canonicalise trailing slashes ────────────────────────────────
   if (pathname !== '/' && pathname.endsWith('/')) {
     return new Response(null, {
       status: 301,
@@ -1160,7 +1181,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 6. /wooden-planes → /wooden-planes-helicopters ──────────────────
+  // ── 7. /wooden-planes → /wooden-planes-helicopters ──────────────────
   if (pathname === '/wooden-planes') {
     return new Response(null, {
       status: 301,
@@ -1171,10 +1192,9 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 7. Product pages (bot only beyond this point) ───────────────────
+  // ── 8. Product pages (bot only beyond this point) ───────────────────
   if (productId) {
     const product = await fetchProduct(productId);
-
     if (!product) {
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return context.next();
       return new Response('Gone', {
@@ -1185,7 +1205,6 @@ export default async function handler(request: Request, context: Context) {
         },
       });
     }
-
     const html = buildProductHTML(product, productId);
     return new Response(html, {
       status: 200,
@@ -1197,7 +1216,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 8. Category pages ───────────────────────────────────────────────
+  // ── 9. Category pages ───────────────────────────────────────────────
   const categorySlug = extractCategorySlug(pathname);
   if (categorySlug) {
     const products = await fetchCategoryProducts(categorySlug);
@@ -1212,7 +1231,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 9. Policy pages ─────────────────────────────────────────────────
+  // ── 10. Policy pages ────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -1228,7 +1247,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 10. Info pages ──────────────────────────────────────────────────
+  // ── 11. Info pages ──────────────────────────────────────────────────
   if (isInfoPage(pathname)) {
     const html = buildInfoHTML(pathname);
     return new Response(html, {
@@ -1241,16 +1260,16 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 11. Individual blog posts (/blog/:slug) ──────────────────────────
+  // ── 12. Individual blog posts (/blog/:slug) ──────────────────────────
   const blogSlug = extractBlogSlug(pathname);
   if (blogSlug) {
     const post = await fetchBlogPost(blogSlug);
     if (!post) {
-      return new Response('Not Found', {
-        status: 404,
+      return new Response('Gone', {
+        status: 410,
         headers: {
           'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=3600',
+          'Cache-Control': 'public, max-age=31536000',
         },
       });
     }
@@ -1265,7 +1284,7 @@ export default async function handler(request: Request, context: Context) {
     });
   }
 
-  // ── 12. Anything else — pass through to React SPA ───────────────────
+  // ── 13. Anything else — pass through to React SPA ───────────────────
   return context.next();
 }
 
