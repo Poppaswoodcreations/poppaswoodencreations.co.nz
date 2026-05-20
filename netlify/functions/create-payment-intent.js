@@ -6,18 +6,29 @@ exports.handler = async (event) => {
   }
   try {
     const { amount, currency = 'nzd', metadata } = JSON.parse(event.body);
+
     if (!amount || amount <= 0) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Invalid amount' }),
       };
     }
+
+    // Truncate each metadata value to Stripe's 500 char limit
+    const safeMetadata = {};
+    if (metadata) {
+      for (const [key, value] of Object.entries(metadata)) {
+        safeMetadata[key] = String(value).slice(0, 490);
+      }
+    }
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
       currency,
-      metadata: metadata || {},
+      metadata: safeMetadata,
       automatic_payment_methods: { enabled: true },
     });
+
     return {
       statusCode: 200,
       headers: {
