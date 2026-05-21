@@ -65,12 +65,14 @@ const GHOST_SLUGS = new Set([
 
 // ─────────────────────────────────────────────────────────────
 // GHOST BLOG SLUGS — 410 Gone for ALL visitors
-// These blog URLs never existed or are truncated variants.
+// Fast-path blocklist; any slug not in Supabase also gets 410
+// via the Supabase lookup fallback in step 12.
 // ─────────────────────────────────────────────────────────────
 const GHOST_BLOG_SLUGS = new Set([
   'how-to-clean-wooden-toys-naturally',
   'choosing-best-wooden-toy-cars',
   'sensory-toys-for-babies',
+  'benefits-of-wooden-toys',
 ]);
 
 const SUPABASE_URL =
@@ -237,7 +239,7 @@ const POLICY_PAGES: Record<string, {
 }> = {
   '/shipping': {
     title: "Shipping Policy | Poppa's Wooden Creations NZ",
-    description: 'Learn about shipping times, costs, and delivery options for handcrafted wooden toys from Poppa\'s Wooden Creations in Whangarei, New Zealand.',
+    description: "Learn about shipping times, costs, and delivery options for handcrafted wooden toys from Poppa's Wooden Creations in Whangarei, New Zealand.",
     h1: 'Shipping Policy',
     noindex: false,
     content: `
@@ -1051,7 +1053,7 @@ function buildBlogPostHTML(post: any, slug: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Poppa's Wooden Creations</title>
   <meta name="description" content="${metaDesc}" />
-  <meta name="robots" content="index, follow" wait/>
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonicalUrl}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${metaDesc}" />
@@ -1154,6 +1156,8 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── 4. Ghost blog slug check — 410 for ALL visitors ─────────────────
+  // Fast-path blocklist. Any slug missing from Supabase also gets 410
+  // via the Supabase lookup in step 12.
   const blogSlugEarly = extractBlogSlug(pathname);
   if (blogSlugEarly && GHOST_BLOG_SLUGS.has(blogSlugEarly)) {
     return new Response('Gone', {
@@ -1261,6 +1265,7 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── 12. Individual blog posts (/blog/:slug) ──────────────────────────
+  // Any slug not found in Supabase returns 410 — no manual blocklist needed.
   const blogSlug = extractBlogSlug(pathname);
   if (blogSlug) {
     const post = await fetchBlogPost(blogSlug);
