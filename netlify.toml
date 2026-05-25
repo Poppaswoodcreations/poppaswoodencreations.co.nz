@@ -112,6 +112,19 @@
   status = 301
   force = true
 
+# Ghost category → 410 Gone
+[[redirects]]
+  from = "/wooden-other-toys"
+  to = "/410"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wooden-other-toys/"
+  to = "/410"
+  status = 410
+  force = true
+
 # ── Blog redirects ────────────────────────────────────────────────────────────
 
 # Truncated slug Google found → correct full slug
