@@ -94,6 +94,8 @@ const CATEGORY_META: Record<string, {
   h1: string;
   intro: string;
   features: string[];
+  extendedContent?: string;
+  faqs?: { question: string; answer: string }[];
 }> = {
   'wooden-kitchenware': {
     title: 'Wooden Kitchenware NZ | Handcrafted Serving Boards & Utensils',
@@ -110,15 +112,70 @@ const CATEGORY_META: Record<string, {
   },
   'wooden-baby-toys': {
     title: 'Wooden Baby Toys NZ | Safe Handcrafted Toys for Infants & Toddlers',
-    description: 'Safe, handcrafted wooden baby toys from New Zealand native timber. Non-toxic finish, Montessori-inspired designs trusted by NZ families and schools since 2015.',
-    h1: 'Handcrafted Wooden Baby Toys',
-    intro: 'Our wooden baby toys are lovingly handcrafted in Whangarei from New Zealand native timber. Finished with non-toxic, baby-safe oils and designed for sensory development and open-ended Montessori play.',
+    description: 'Safe, handcrafted wooden baby toys from New Zealand native timber. Non-toxic finish, smooth edges, Montessori-inspired designs trusted by NZ families and schools since 2015. Shop online, ships nationwide.',
+    h1: 'Wooden Baby Toys NZ — Handcrafted from Native Timber',
+    intro: `Our wooden baby toys are lovingly handcrafted in Whangarei, New Zealand, from native Kauri, Rimu and Macrocarpa timber. Every toy is finished with a non-toxic, baby-safe oil and designed with smooth, splinter-free edges — safe from the very first touch.
+
+We have been making wooden baby toys for New Zealand families and Montessori schools since 2015. Each piece is made by hand in our Tikipunga workshop — we are not a dropshipper or importer. When you buy a wooden baby toy from Poppa's Wooden Creations, you are getting a genuine, handcrafted NZ-made product that will outlast any plastic toy and can be passed down through generations.
+
+Our wooden baby toys support sensory development, fine motor skills and open-ended Montessori play. The natural weight and texture of real New Zealand timber gives babies and toddlers a rich tactile experience that plastic simply cannot replicate.`,
     features: [
-      'Non-toxic, food-safe finish — safe for teething babies',
-      'Montessori-inspired, open-ended play',
-      'Trusted by NZ Montessori schools since 2015',
-      'Made from Kauri, Rimu and Macrocarpa',
-      'Smooth, splinter-free edges for little hands',
+      'Non-toxic, food-safe finish — completely safe for teething babies',
+      'Smooth, splinter-free edges handcrafted for little hands',
+      'Montessori-inspired open-ended play that supports development',
+      'Trusted by NZ Montessori schools and eco-conscious families since 2015',
+      'Made from native Kauri, Rimu and Macrocarpa — no two pieces identical',
+      'Ships nationwide across New Zealand — rural delivery available',
+      'Heirloom quality built to be passed down through generations',
+    ],
+    extendedContent: `
+      <section>
+        <h2>Why Wooden Baby Toys Are Better Than Plastic</h2>
+        <p>Wooden baby toys have been trusted by parents and educators for generations — and for good reason. Unlike plastic toys, genuine hardwood toys from native New Zealand timber are free from BPA, phthalates, and other synthetic chemicals. They are durable enough to survive the roughest toddler play and beautiful enough to display in your home.</p>
+        <p>The natural weight of a real timber toy gives babies important sensory feedback as they reach, grasp and manipulate objects. Research into Montessori early learning consistently shows that open-ended, natural-material toys support cognitive development more effectively than electronic or single-purpose plastic toys.</p>
+        <p>Our wooden baby toys are made from Kauri, Rimu and Macrocarpa — three of New Zealand's most beautiful native timbers. Each piece has a unique grain pattern, meaning your baby's toy is genuinely one of a kind.</p>
+      </section>
+      <section>
+        <h2>Safe Wooden Baby Toys — Our Finishing Process</h2>
+        <p>Every wooden baby toy we make goes through a careful finishing process. After shaping and sanding to a fine finish, each toy is hand-coated with a food-safe, non-toxic oil that brings out the natural beauty of the timber. There are no paints, varnishes or synthetic coatings — only natural oils that are safe even if a baby puts the toy in their mouth.</p>
+        <p>All edges and corners are rounded and sanded smooth by hand. We check every toy before it leaves our Whangarei workshop to make sure it meets our quality standards and is completely safe for babies and toddlers.</p>
+      </section>
+      <section>
+        <h2>Wooden Baby Toys for Montessori Play</h2>
+        <p>Montessori education places a strong emphasis on natural materials, open-ended play and sensory-rich environments. Our wooden baby toys are used in Montessori classrooms and playgroups across New Zealand because they fit perfectly with these principles.</p>
+        <p>Simple, well-crafted wooden toys encourage babies and toddlers to use their imagination, develop fine motor skills and explore cause and effect — without flashing lights, sounds or batteries. Our toys grow with your child, remaining engaging from early infancy through toddlerhood and beyond.</p>
+      </section>
+      <section>
+        <h2>Handcrafted in Whangarei, Northland</h2>
+        <p>Every wooden baby toy in our range is made by hand by Adrian at Poppa's Wooden Creations, 102 Kiripaka Road, Tikipunga, Whangarei. We have been crafting wooden toys from native NZ timber since 2015 and every product we sell is made in our own workshop — not imported, not dropshipped.</p>
+        <p>We ship our wooden baby toys nationwide across New Zealand including rural addresses. International shipping is also available. If you would like to discuss a custom wooden baby toy — perhaps a personalised first toy for a new arrival — please <a href="${BASE_URL}/contact">contact us</a> and we will be happy to help.</p>
+      </section>
+    `,
+    faqs: [
+      {
+        question: 'Are your wooden baby toys safe for newborns and infants?',
+        answer: 'Yes. All our wooden baby toys are finished with a non-toxic, food-safe oil — no paints, varnishes or synthetic coatings. Every toy is hand-sanded to a smooth, splinter-free finish with rounded edges, making them completely safe for babies from birth. They are safe even if a baby puts them in their mouth.',
+      },
+      {
+        question: 'What timber do you use for your wooden baby toys?',
+        answer: 'We use native New Zealand timbers — primarily Kauri, Rimu and Macrocarpa. These are beautiful, dense hardwoods that are naturally smooth and durable. Because we use real native NZ timber, every toy has a unique grain pattern and no two pieces are identical.',
+      },
+      {
+        question: 'Do you ship wooden baby toys throughout New Zealand?',
+        answer: 'Yes, we ship to all New Zealand addresses including rural delivery. Shipping costs are calculated at checkout. We also offer international shipping for customers outside New Zealand.',
+      },
+      {
+        question: 'Are your wooden baby toys suitable for Montessori play?',
+        answer: 'Absolutely. Our wooden baby toys are used in Montessori schools and playgroups across New Zealand. They are made from natural materials, designed for open-ended play, and free from electronic components — all key principles of Montessori early childhood education.',
+      },
+      {
+        question: 'Can I order a custom wooden baby toy?',
+        answer: 'Yes. We love working on custom orders — whether that is a personalised toy with a name engraved, a specific timber, or a bespoke design. Contact us at poppas.wooden.creations@gmail.com or call +64 21 022 88166 to discuss your idea.',
+      },
+      {
+        question: 'How do I care for a wooden baby toy?',
+        answer: 'Wipe clean with a damp cloth and dry immediately. Do not soak in water or put in the dishwasher. Occasionally re-oiling with a food-safe oil (such as coconut oil) will keep the timber nourished and looking its best. Avoid prolonged exposure to direct sunlight.',
+      },
     ],
   },
   'wooden-trucks': {
@@ -776,6 +833,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       </a>
     </article>`;
   }).join('\n');
+
   const itemListSchema = products.length > 0 ? JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -789,6 +847,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       "url": `${BASE_URL}/products/${p.id}`,
     })),
   }) : null;
+
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -797,6 +856,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       { "@type": "ListItem", "position": 2, "name": meta.h1, "item": canonicalUrl },
     ],
   });
+
   const collectionSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -816,6 +876,32 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       },
     },
   });
+
+  // Build FAQ schema if this category has FAQs
+  const faqSchema = meta.faqs && meta.faqs.length > 0 ? JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": meta.faqs.map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer,
+      },
+    })),
+  }) : null;
+
+  // Build FAQ HTML if this category has FAQs
+  const faqHTML = meta.faqs && meta.faqs.length > 0 ? `
+    <section>
+      <h2>Frequently Asked Questions</h2>
+      ${meta.faqs.map(f => `
+      <div style="margin-bottom:20px;">
+        <h3 style="color:#78350f;font-size:1.05em;margin-bottom:6px;">${f.question}</h3>
+        <p style="margin:0;">${f.answer}</p>
+      </div>`).join('')}
+    </section>` : '';
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -834,11 +920,15 @@ function buildCategoryHTML(slug: string, products: any[]): string {
   <script type="application/ld+json">${breadcrumbSchema}</script>
   <script type="application/ld+json">${collectionSchema}</script>
   ${itemListSchema ? `<script type="application/ld+json">${itemListSchema}</script>` : ''}
+  ${faqSchema ? `<script type="application/ld+json">${faqSchema}</script>` : ''}
   <style>
     body { font-family: Georgia, serif; max-width: 1100px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
     main { padding: 40px 24px; }
     h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
     h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
+    h3 { color: #78350f; }
+    a { color: #b45309; }
+    section { margin-bottom: 24px; }
     nav.breadcrumb { padding: 12px 24px; background: #fef3c7; font-size: 0.9em; }
     nav.breadcrumb a { color: #92400e; text-decoration: none; }
   </style>
@@ -862,6 +952,8 @@ function buildCategoryHTML(slug: string, products: any[]): string {
       <h2>Our ${meta.h1} Collection</h2>
       <div>${productListItems}</div>
     </section>` : ''}
+    ${meta.extendedContent || ''}
+    ${faqHTML}
     <section>
       <h2>Handcrafted in Whangarei, New Zealand</h2>
       <p>Every piece in our ${meta.h1.toLowerCase()} range is handcrafted by Adrian at Poppa's Wooden Creations in Tikipunga, Whangarei. Using only native New Zealand timbers — Kauri, Rimu, and Macrocarpa — and finished with non-toxic, food-safe oils, each piece is unique and built to last generations.</p>
@@ -1156,8 +1248,6 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── 4. Ghost blog slug check — 410 for ALL visitors ─────────────────
-  // Fast-path blocklist. Any slug missing from Supabase also gets 410
-  // via the Supabase lookup in step 12.
   const blogSlugEarly = extractBlogSlug(pathname);
   if (blogSlugEarly && GHOST_BLOG_SLUGS.has(blogSlugEarly)) {
     return new Response('Gone', {
@@ -1265,7 +1355,6 @@ export default async function handler(request: Request, context: Context) {
   }
 
   // ── 12. Individual blog posts (/blog/:slug) ──────────────────────────
-  // Any slug not found in Supabase returns 410 — no manual blocklist needed.
   const blogSlug = extractBlogSlug(pathname);
   if (blogSlug) {
     const post = await fetchBlogPost(blogSlug);
