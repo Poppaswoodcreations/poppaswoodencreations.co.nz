@@ -1220,7 +1220,7 @@ export default async function handler(request: Request, context: Context) {
       status: 410,
       headers: {
         'X-Robots-Tag': 'noindex',
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
@@ -1248,7 +1248,7 @@ export default async function handler(request: Request, context: Context) {
         status: 410,
         headers: {
           'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
+          'Cache-Control': 'public, max-age=3600',
         },
       });
     }
@@ -1273,7 +1273,7 @@ export default async function handler(request: Request, context: Context) {
       status: 410,
       headers: {
         'X-Robots-Tag': 'noindex',
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
@@ -1314,7 +1314,7 @@ export default async function handler(request: Request, context: Context) {
         status: 410,
         headers: {
           'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
+          'Cache-Control': 'public, max-age=3600',
         },
       });
     }
@@ -1382,7 +1382,7 @@ export default async function handler(request: Request, context: Context) {
         status: 410,
         headers: {
           'X-Robots-Tag': 'noindex',
-          'Cache-Control': 'public, max-age=31536000',
+          'Cache-Control': 'public, max-age=3600',
         },
       });
     }
