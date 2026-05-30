@@ -520,90 +520,10 @@
   force = true
 
 # ── Trailing-slash canonicalisation ──────────────────────────────────────────
-
-[[redirects]]
-  from = "/about/"
-  to = "/about"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/contact/"
-  to = "/contact"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/reviews/"
-  to = "/reviews"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/shipping/"
-  to = "/shipping"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/returns/"
-  to = "/returns"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/privacy/"
-  to = "/privacy"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/terms/"
-  to = "/terms"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-baby-toys/"
-  to = "/wooden-baby-toys"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-cars/"
-  to = "/wooden-cars"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-trucks/"
-  to = "/wooden-trucks"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-trains/"
-  to = "/wooden-trains"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-kitchenware/"
-  to = "/wooden-kitchenware"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-tractors-boats/"
-  to = "/wooden-tractors-boats"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/wooden-planes-helicopters/"
-  to = "/wooden-planes-helicopters"
-  status = 301
-  force = true
+# REMOVED: the force=true trailing-slash redirects here caused an infinite
+# redirect loop (they fight Netlify's pretty-URL normalisation).
+# Bots: bot-prerender.ts step 6 issues a single clean /path/ -> /path 301.
+# Users: SPA serves the same content and the canonical tag dedupes. No redirect needed.
 
 # SPA routing - all paths serve index.html (MUST BE LAST)
 [[redirects]]
