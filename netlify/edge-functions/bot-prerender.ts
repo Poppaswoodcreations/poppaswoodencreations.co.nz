@@ -69,11 +69,18 @@ const GHOST_SLUGS = new Set([
 // via the Supabase lookup fallback in step 12.
 // ─────────────────────────────────────────────────────────────
 const GHOST_BLOG_SLUGS = new Set([
-  'how-to-clean-wooden-toys-naturally',
   'choosing-best-wooden-toy-cars',
   'sensory-toys-for-babies',
   'benefits-of-wooden-toys',
 ]);
+
+// ─────────────────────────────────────────────────────────────
+// RENAMED BLOG SLUGS — 301 to the current published slug
+// Old/truncated slugs Google still has indexed -> live post.
+// ─────────────────────────────────────────────────────────────
+const BLOG_SLUG_REDIRECTS: Record<string, string> = {
+  'how-to-clean-wooden-toys-naturally': 'how-to-clean-wooden-toys-naturally-and-safely',
+};
 
 const SUPABASE_URL =
   Deno.env.get('SUPABASE_URL') ||
@@ -1245,6 +1252,18 @@ export default async function handler(request: Request, context: Context) {
         },
       });
     }
+  }
+
+  // ── 3.5 Renamed blog slugs — 301 to the current published slug ──────
+  const renamedBlog = extractBlogSlug(pathname);
+  if (renamedBlog && BLOG_SLUG_REDIRECTS[renamedBlog]) {
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}/blog/${BLOG_SLUG_REDIRECTS[renamedBlog]}`,
+        'Cache-Control': 'public, max-age=31536000',
+      },
+    });
   }
 
   // ── 4. Ghost blog slug check — 410 for ALL visitors ─────────────────
