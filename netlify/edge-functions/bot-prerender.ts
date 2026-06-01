@@ -27,7 +27,6 @@ const BOT_USER_AGENTS = [
 // ─────────────────────────────────────────────────────────────
 const GHOST_SLUGS = new Set([
   'small-pine-train',
-  'rimu-teething-ring',
   'ice-cream-truck',
   'butter-knife',
   'small-sports-car',
@@ -36,8 +35,6 @@ const GHOST_SLUGS = new Set([
   'front-end-loader',
   'humming-top',
   'bowl',
-  'garbage-truck',
-  'rattle',
   'kauri-bowl',
   'sedan',
   'baby-blocks-native-rimu-8-pack',
@@ -49,10 +46,8 @@ const GHOST_SLUGS = new Set([
   'race-car',
   'police-car',
   'cargo-truck',
-  'tipper-truck',
   'tanker-truck',
   'small-road-trains',
-  'kauri-helicopter',
   'kauri-planes',
   'backhoe',
   'paddle-boat',
@@ -61,6 +56,7 @@ const GHOST_SLUGS = new Set([
   'pull-along-duck',
   'stacking-toy',
   'bongo-drum',
+  'gliders',
 ]);
 
 // ─────────────────────────────────────────────────────────────
@@ -80,6 +76,21 @@ const GHOST_BLOG_SLUGS = new Set([
 // ─────────────────────────────────────────────────────────────
 const BLOG_SLUG_REDIRECTS: Record<string, string> = {
   'how-to-clean-wooden-toys-naturally': 'how-to-clean-wooden-toys-naturally-and-safely',
+};
+
+// ─────────────────────────────────────────────────────────────
+// RENAMED PRODUCT SLUGS — 301 to the current product id
+// Old slugs Google still has indexed -> live product in Supabase.
+// Recovers ranking instead of throwing it away with a 410.
+// ─────────────────────────────────────────────────────────────
+const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
+  'small-pine-cars': 'small-pine-car',
+  'log-truck': 'logging-truck',
+  'rimu-teething-ring': 'teething-ring',
+  'rattle': 'baby-rattle',
+  'garbage-truck': 'rubbish-truck',
+  'tipper-truck': 'dump-truck',
+  'kauri-helicopter': 'pine-helicopter',
 };
 
 const SUPABASE_URL =
@@ -1232,6 +1243,19 @@ export default async function handler(request: Request, context: Context) {
       headers: {
         'Location': `${BASE_URL}${pathname}`,
         'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  }
+
+  // ── 2.5 Renamed product slugs — 301 to the current product id ───────
+  // Runs BEFORE the ghost 410 check so a renamed slug always redirects.
+  const renamedProduct = extractProductId(pathname);
+  if (renamedProduct && PRODUCT_SLUG_REDIRECTS[renamedProduct]) {
+    return new Response(null, {
+      status: 301,
+      headers: {
+        'Location': `${BASE_URL}/products/${PRODUCT_SLUG_REDIRECTS[renamedProduct]}`,
+        'Cache-Control': 'public, max-age=31536000',
       },
     });
   }
