@@ -18,13 +18,39 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: `Webhook Error: ${err.message}` };
   }
 
-  if (stripeEvent.type !== 'payment_intent.succeeded') {
+  // Accept BOTH the Checkout flow and the direct PaymentIntent flow.
+  let metadata = {};
+  let amountTotal = 0;
+  let stripeRef = '';
+
+  if (stripeEvent.type === 'checkout.session.completed') {
+    const session = stripeEvent.data.object;
+    metadata = session.metadata || {};
+    amountTotal = (session.amount_total != null ? session.amount_total : 0) / 100;
+    stripeRef = session.payment_intent || session.id;
+
+    // If order metadata wasn't set on the session, it may be on the
+    // PaymentIntent — retrieve it and merge (session values win).
+    if (!metadata.items && session.payment_intent) {
+      try {
+        const pi = await stripe.paymentIntents.retrieve(session.payment_intent);
+        metadata = { ...(pi.metadata || {}), ...metadata };
+        if (!amountTotal) amountTotal = (pi.amount || 0) / 100;
+      } catch (e) {
+        console.error('Could not retrieve PaymentIntent for session:', e.message);
+      }
+    }
+  } else if (stripeEvent.type === 'payment_intent.succeeded') {
+    const pi = stripeEvent.data.object;
+    metadata = pi.metadata || {};
+    amountTotal = (pi.amount || 0) / 100;
+    stripeRef = pi.id;
+  } else {
+    console.log(`Event ${stripeEvent.type} ignored`);
     return { statusCode: 200, body: 'Event ignored' };
   }
 
-  const pi = stripeEvent.data.object;
-  const m  = pi.metadata || {};
-
+  const m = metadata;
   const customerName   = m.customer_name   || 'Not provided';
   const customerEmail  = m.customer_email  || 'Not provided';
   const deliveryMethod = m.delivery_method || 'shipping';
@@ -32,22 +58,26 @@ exports.handler = async (event) => {
   const city           = m.city            || '';
   const postalCode     = m.postal_code     || '';
   const country        = m.country         || 'NZ';
-  const subtotal       = parseFloat(m.subtotal  || '0');
-  const shippingCost   = parseFloat(m.shipping  || '0');
-  const grandTotal     = pi.amount / 100;
-  const orderId        = `STR-${pi.id.slice(-8).toUpperCase()}`;
+  const subtotal       = parseFloat(m.subtotal || '0');
+  const shippingCost   = parseFloat(m.shipping || '0');
+  const grandTotal     = amountTotal;
   const paymentMethod  = m.payment_method  || 'Card';
 
+  const refTail = (stripeRef || '').slice(-8).toUpperCase();
+  const orderId = `STR-${refTail}`;
+
   const itemsStr = m.items || '';
-  const items = itemsStr.split(', ').map(itemStr => {
-    const match = itemStr.match(/^(.+) x(\d+) \(\$([0-9.]+)\)$/);
-    if (match) {
-      const totalPrice = parseFloat(match[3]);
-      const quantity = parseInt(match[2]);
-      return { name: match[1], quantity, price: totalPrice / quantity };
-    }
-    return { name: itemStr, quantity: 1, price: 0 };
-  });
+  const items = itemsStr
+    ? itemsStr.split(', ').map(itemStr => {
+        const match = itemStr.match(/^(.+) x(\d+) \(\$([0-9.]+)\)$/);
+        if (match) {
+          const totalPrice = parseFloat(match[3]);
+          const quantity = parseInt(match[2], 10);
+          return { name: match[1], quantity, price: totalPrice / quantity };
+        }
+        return { name: itemStr, quantity: 1, price: 0 };
+      })
+    : [];
 
   const payload = {
     orderNumber: orderId,
@@ -78,7 +108,7 @@ exports.handler = async (event) => {
     });
     if (!saveRes.ok) {
       const errText = await saveRes.text();
-      console.error('save-order failed:', errText);
+      console.error(`save-order failed (${saveRes.status}):`, errText);
     } else {
       console.log(`Order ${orderId} saved to Supabase`);
     }
@@ -95,7 +125,7 @@ exports.handler = async (event) => {
     });
     if (!emailRes.ok) {
       const errText = await emailRes.text();
-      console.error('send-order-email failed:', errText);
+      console.error(`send-order-email failed (${emailRes.status}):`, errText);
     } else {
       console.log(`Order emails sent for ${orderId}`);
     }
