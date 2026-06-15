@@ -91,6 +91,8 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'garbage-truck': 'rubbish-truck',
   'tipper-truck': 'dump-truck',
   'kauri-helicopter': 'pine-helicopter',
+  'the-block-train-made-from-kauri': 'block-train',
+  'happy-go-lucky-train': 'happy-go-luck-train',
 };
 
 const SUPABASE_URL =
