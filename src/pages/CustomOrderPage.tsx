@@ -69,7 +69,7 @@ const CustomOrderPage: React.FC = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const response = await fetch('/.netlify/functions/send-custom-order-email', {
+      const response = await fetch('/api/send-custom-order-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
