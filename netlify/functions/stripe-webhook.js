@@ -1,21 +1,27 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// Cloudflare Pages Function: POST /api/stripe-webhook
+// Verifies the Stripe signature with Web Crypto (no SDK), then saves the order
+// and triggers order emails. Order-handling logic is unchanged from the original.
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+export async function onRequest(context) {
+  const { request, env } = context;
+  if (request.method !== 'POST') {
+    return new Response('Method Not Allowed', { status: 405 });
   }
 
-  const sig = event.headers['stripe-signature'];
+  const rawBody = await request.text();
+  const sig = request.headers.get('stripe-signature');
+
+  const valid = await verifyStripeSignature(rawBody, sig, env.STRIPE_WEBHOOK_SECRET);
+  if (!valid) {
+    console.error('Webhook signature verification failed');
+    return new Response('Webhook Error: signature verification failed', { status: 400 });
+  }
+
   let stripeEvent;
   try {
-    stripeEvent = stripe.webhooks.constructEvent(
-      event.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
+    stripeEvent = JSON.parse(rawBody);
   } catch (err) {
-    console.error('Webhook signature failed:', err.message);
-    return { statusCode: 400, body: `Webhook Error: ${err.message}` };
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
   // Accept BOTH the Checkout flow and the direct PaymentIntent flow.
@@ -33,9 +39,14 @@ exports.handler = async (event) => {
     // PaymentIntent — retrieve it and merge (session values win).
     if (!metadata.items && session.payment_intent) {
       try {
-        const pi = await stripe.paymentIntents.retrieve(session.payment_intent);
-        metadata = { ...(pi.metadata || {}), ...metadata };
-        if (!amountTotal) amountTotal = (pi.amount || 0) / 100;
+        const piRes = await fetch(`https://api.stripe.com/v1/payment_intents/${session.payment_intent}`, {
+          headers: { 'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}` },
+        });
+        if (piRes.ok) {
+          const pi = await piRes.json();
+          metadata = { ...(pi.metadata || {}), ...metadata };
+          if (!amountTotal) amountTotal = (pi.amount || 0) / 100;
+        }
       } catch (e) {
         console.error('Could not retrieve PaymentIntent for session:', e.message);
       }
@@ -47,7 +58,7 @@ exports.handler = async (event) => {
     stripeRef = pi.id;
   } else {
     console.log(`Event ${stripeEvent.type} ignored`);
-    return { statusCode: 200, body: 'Event ignored' };
+    return new Response('Event ignored', { status: 200 });
   }
 
   const m = metadata;
@@ -97,11 +108,11 @@ exports.handler = async (event) => {
     paymentMethod,
   };
 
-  const baseUrl = process.env.SITE_URL || 'https://poppaswoodencreations.co.nz';
+  const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
 
   // Save order to Supabase
   try {
-    const saveRes = await fetch(`${baseUrl}/.netlify/functions/save-order`, {
+    const saveRes = await fetch(`${baseUrl}/api/save-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -118,7 +129,7 @@ exports.handler = async (event) => {
 
   // Send order emails
   try {
-    const emailRes = await fetch(`${baseUrl}/.netlify/functions/send-order-email`, {
+    const emailRes = await fetch(`${baseUrl}/api/send-order-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -133,5 +144,50 @@ exports.handler = async (event) => {
     console.error('send-order-email fetch error:', emailErr);
   }
 
-  return { statusCode: 200, body: JSON.stringify({ received: true }) };
-};
+  return new Response(JSON.stringify({ received: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+
+// ── Stripe signature verification (Web Crypto — no SDK) ──────────────
+async function verifyStripeSignature(rawBody, sigHeader, secret, toleranceSec = 300) {
+  if (!sigHeader || !secret) return false;
+  let t;
+  const v1s = [];
+  for (const part of sigHeader.split(',')) {
+    const idx = part.indexOf('=');
+    if (idx === -1) continue;
+    const k = part.slice(0, idx).trim();
+    const v = part.slice(idx + 1).trim();
+    if (k === 't') t = v;
+    else if (k === 'v1') v1s.push(v);
+  }
+  if (!t || v1s.length === 0) return false;
+
+  const expected = await computeHmac(secret, `${t}.${rawBody}`);
+  if (!v1s.some((v) => timingSafeEqual(v, expected))) return false;
+
+  // Replay protection: reject timestamps outside the tolerance window
+  const now = Math.floor(Date.now() / 1000);
+  if (toleranceSec && Math.abs(now - Number(t)) > toleranceSec) return false;
+  return true;
+}
+
+async function computeHmac(secret, payload) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw', enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(payload));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return mismatch === 0;
+}
