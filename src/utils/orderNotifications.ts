@@ -54,7 +54,7 @@ export const sendOrderNotification = async (orderData: OrderNotificationData): P
   // Run email and save-order in parallel
   await Promise.allSettled([
     // Send emails
-    fetch('/.netlify/functions/send-order-email', {
+    fetch('/api/send-order-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -64,7 +64,7 @@ export const sendOrderNotification = async (orderData: OrderNotificationData): P
     }),
 
     // Save to Supabase
-    fetch('/.netlify/functions/save-order', {
+    fetch('/api/save-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
