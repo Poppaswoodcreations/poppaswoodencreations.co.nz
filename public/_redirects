@@ -1,0 +1,16 @@
+# Cloudflare Pages redirects — poppaswoodencreations.co.nz
+# Complex logic (ghost 410s, renames, bot prerender) lives in
+# functions/_middleware.ts. This file is only simple redirects + SPA fallback.
+
+# Legacy / marketing redirects
+/wooden-planes        /wooden-planes-helicopters   301
+/kitchenware          /wooden-kitchenware          301
+/search               /                            301
+/search/*             /                            301
+/shopcars/*           /                            301
+
+# Admin entry point
+/admin                /admin.html                  200
+
+# SPA fallback — MUST stay last
+/*                    /index.html                  200
