@@ -18,7 +18,7 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/.netlify/functions/send-contact-email', {
+      const response = await fetch('/api/send-contact-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
