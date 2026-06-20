@@ -7,10 +7,10 @@ interface SearchBarProps {
   className?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ 
-  onSearch, 
-  placeholder = 'Search products...', 
-  className = '' 
+const SearchBar: React.FC<SearchBarProps> = ({
+  onSearch,
+  placeholder = 'Search products...',
+  className = ''
 }) => {
   const [query, setQuery] = useState('');
 
@@ -27,7 +27,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <form onSubmit={handleSubmit} className={`relative ${className}`}>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <button
+          type="submit"
+          aria-label="Search"
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-600 transition-colors"
+        >
+          <Search size={20} />
+        </button>
         <input
           type="text"
           value={query}
