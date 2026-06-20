@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Search, ChevronDown } from 'lucide-react';
+import SearchBar from './SearchBar';
 
 interface HeaderProps {
   onShowAdmin: () => void;
@@ -10,6 +11,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -67,6 +69,14 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
     };
     navigate(routes[categorySlug] ?? `/${categorySlug}`);
     setIsMenuOpen(false);
+  };
+
+  const handleSearchSubmit = (query: string) => {
+    const trimmed = query.trim();
+    if (trimmed) {
+      navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+    }
+    setShowSearch(false);
   };
 
   return (
@@ -177,10 +187,12 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
           {/* Right icons */}
           <div className="flex items-center space-x-2">
             <button
+              onClick={() => setShowSearch((prev) => !prev)}
               className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
               aria-label="Search products"
+              aria-expanded={showSearch}
             >
-              <Search size={20} />
+              {showSearch ? <X size={20} /> : <Search size={20} />}
             </button>
 
             <button
@@ -219,6 +231,17 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
             </button>
           </div>
         </div>
+
+        {/* Search Box */}
+        {showSearch && (
+          <div className="border-t border-gray-200 py-3 bg-white">
+            <SearchBar
+              onSearch={handleSearchSubmit}
+              placeholder="Search wooden toys..."
+              className="max-w-md mx-auto"
+            />
+          </div>
+        )}
 
         {/* Mobile Menu */}
         {isMenuOpen && (
