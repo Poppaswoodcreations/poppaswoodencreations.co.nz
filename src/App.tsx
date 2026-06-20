@@ -54,7 +54,7 @@ import { Product } from './types';
 const CATEGORY_PATHS = [
   '/wooden-trucks', '/wooden-cars', '/wooden-trains', '/wooden-planes-helicopters',
   '/wooden-baby-toys', '/wooden-kitchenware', '/wooden-tractors-boats',
-  '/wooden-crosses', '/wooden-pens', '/products'
+  '/wooden-crosses', '/wooden-pens', '/products', '/search'
 ];
 
 // ─── LOADING FALLBACKS ────────────────────────────────────────────────────────
