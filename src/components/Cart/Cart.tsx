@@ -353,6 +353,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
   const baseShipping = calculateBaseShipping();
   const shipping = baseShipping + ruralSurcharge;
   const grandTotal = total + shipping;
+  const checkoutError = validateCheckoutFields(formData);
 
   function calculateBaseShipping() {
     if (formData.deliveryMethod === 'pickup') return 0;
@@ -588,17 +589,18 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                     <div className="bg-blue-50 p-3 rounded-lg mb-4">
                       <p className="text-blue-800 text-sm">Pay with PayPal. No PayPal account needed — pay as a guest with any card.</p>
                     </div>
-                    {(!formData.email || !formData.name) && (
-                      <p className="text-amber-600 text-sm mb-3">⚠️ Please fill in your name and email above before paying with PayPal.</p>
+                    {checkoutError ? (
+                      <p className="text-amber-600 text-sm mb-3">⚠️ {checkoutError}</p>
+                    ) : (
+                      <PayPalButton
+                        grandTotal={grandTotal}
+                        orderId={paypalOrderId}
+                        customerEmail={formData.email}
+                        deliveryDate={calculateDeliveryDate()}
+                        onSuccess={handlePayPalSuccess}
+                        onError={msg => setError(msg)}
+                      />
                     )}
-                    <PayPalButton
-                      grandTotal={grandTotal}
-                      orderId={paypalOrderId}
-                      customerEmail={formData.email}
-                      deliveryDate={calculateDeliveryDate()}
-                      onSuccess={handlePayPalSuccess}
-                      onError={msg => setError(msg)}
-                    />
                   </div>
                 )}
               </div>
