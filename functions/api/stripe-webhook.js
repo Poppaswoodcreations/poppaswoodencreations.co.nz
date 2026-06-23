@@ -10,10 +10,13 @@ export async function onRequest(context) {
 
   const rawBody = await request.text();
   const sig = request.headers.get('stripe-signature');
+  const secret = (env.STRIPE_WEBHOOK_SECRET || '').trim();
 
-  const valid = await verifyStripeSignature(rawBody, sig, env.STRIPE_WEBHOOK_SECRET);
+  const valid = await verifyStripeSignature(rawBody, sig, secret);
   if (!valid) {
-    console.error('Webhook signature verification failed');
+    console.error(
+      `Webhook signature verification failed. secretPresent=${!!secret} secretLen=${secret.length} sigHeaderPresent=${!!sig}`
+    );
     return new Response('Webhook Error: signature verification failed', { status: 400 });
   }
 
