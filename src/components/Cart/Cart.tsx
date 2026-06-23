@@ -80,6 +80,15 @@ function isRuralPostcode(postcode: string): boolean {
   return NZ_RURAL_POSTCODES.has(postcode.trim());
 }
 
+// ─── Shared checkout validation (now actually enforced before payment) ───────
+function validateCheckoutFields(formData: any): string | null {
+  if (!formData.email || !formData.name) return 'Please fill in all required fields';
+  if (formData.deliveryMethod === 'shipping' && (!formData.address || !formData.city || !formData.postalCode)) {
+    return 'Please fill in shipping address';
+  }
+  return null;
+}
+
 interface CartItem {
   id: string;
   product: Product;
@@ -195,8 +204,22 @@ const ExpressPayButton: React.FC<ExpressPayProps> = ({
       if (result) { setPaymentRequest(pr); setCanPay(true); }
     });
     pr.on('paymentmethod', async (ev) => {
+      // Merge wallet-provided name/email over the typed form first, so
+      // metadata sent to Stripe reflects what the customer actually supplied
+      // even if they left the on-page fields blank.
+      const payerFormData = {
+        ...formData,
+        name: ev.payerName || formData.name,
+        email: ev.payerEmail || formData.email,
+      };
+      const validationError = validateCheckoutFields(payerFormData);
+      if (validationError) {
+        ev.complete('fail');
+        onError(validationError);
+        return;
+      }
       try {
-        const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, formData, items, shipping, total);
+        const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, payerFormData, items, shipping, total);
         if (backendError) { ev.complete('fail'); onError(backendError); return; }
         const { error, paymentIntent } = await stripe.confirmCardPayment(
           clientSecret, { payment_method: ev.paymentMethod.id }, { handleActions: false }
@@ -208,13 +231,9 @@ const ExpressPayButton: React.FC<ExpressPayProps> = ({
           if (actionError) { onError(actionError.message || 'Payment failed'); return; }
         }
         const orderId = `STR-${paymentIntent!.id.slice(-8).toUpperCase()}`;
-        localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, {
-          ...formData,
-          name: ev.payerName || formData.name,
-          email: ev.payerEmail || formData.email,
-        })));
+        localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, payerFormData)));
         await sendOrderNotification({
-          orderTotal: grandTotal, items, customer: formData,
+          orderTotal: grandTotal, items, customer: payerFormData,
           paymentMethod: 'Apple/Google Pay', orderNumber: orderId,
         }).catch(console.error);
         if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
@@ -261,6 +280,8 @@ const StripeCardForm: React.FC<StripeFormProps> = ({
 
   const handleStripeSubmit = async () => {
     if (!stripe || !elements) return;
+    const validationError = validateCheckoutFields(formData);
+    if (validationError) { onError(validationError); return; }
     setProcessing(true);
     try {
       const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, formData, items, shipping, total);
@@ -352,10 +373,8 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
   }
 
   const validateForm = () => {
-    if (!formData.email || !formData.name) { setError('Please fill in all required fields'); return false; }
-    if (formData.deliveryMethod === 'shipping' && (!formData.address || !formData.city || !formData.postalCode)) {
-      setError('Please fill in shipping address'); return false;
-    }
+    const validationError = validateCheckoutFields(formData);
+    if (validationError) { setError(validationError); return false; }
     setError('');
     return true;
   };
