@@ -1,15 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../lib/supabase';
-import { createClient } from '@supabase/supabase-js';
 import { Product } from '../types';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY || '';
-
-// Admin client using service role key (bypasses RLS)
-const supabaseAdmin = supabaseServiceKey
-  ? createClient(supabaseUrl, supabaseServiceKey)
-  : null;
 
 interface UseProductsOptions {
   limit?: number; // Optional limit for initial load
@@ -28,49 +22,67 @@ interface UseProductsReturn {
   deleteProduct: (id: string) => Promise<void>;
 }
 
+const mapRow = (row: any): Product => ({
+  id: row.id,
+  name: row.name,
+  description: row.description || '',
+  price: parseFloat(row.price) || 0,
+  category: row.category || '',
+  images: row.images || [],
+  inStock: row.in_stock ?? true,
+  featured: row.featured ?? false,
+  seoTitle: row.seo_title || '',
+  seoDescription: row.seo_description || '',
+  stockQuantity: row.stock_quantity || 0,
+  weight: row.weight || 0,
+  createdAt: row.created_at || new Date().toISOString(),
+  updatedAt: row.updated_at || new Date().toISOString(),
+});
+
+// Lightweight read path — plain fetch against the Supabase REST API.
+// No supabase-js import, so this never adds to your main bundle.
+async function fetchProductsRest(limit?: number): Promise<any[]> {
+  let url = `${supabaseUrl}/rest/v1/products?select=*&order=created_at.desc`;
+  if (limit) url += `&limit=${limit}`;
+
+  const res = await fetch(url, {
+    headers: {
+      apikey: supabaseAnonKey,
+      Authorization: `Bearer ${supabaseAnonKey}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to load products (${res.status})`);
+  }
+
+  return res.json();
+}
+
+// Heavy write path — supabase-js is only fetched here, on demand,
+// the moment an admin actually saves/updates/deletes something.
+// This keeps it out of the bundle every normal visitor downloads.
+async function getWriteClient() {
+  const { createClient } = await import('@supabase/supabase-js');
+  // Prefer service role (bypasses RLS) if available, otherwise fall back to anon key.
+  const key = supabaseServiceKey || supabaseAnonKey;
+  return createClient(supabaseUrl, key);
+}
+
 export function useProducts(options: UseProductsOptions = {}): UseProductsReturn {
   const { limit } = options;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSupabaseConnected, setIsSupabaseConnected] = useState(false);
-  const isAdminConnected = !!supabaseAdmin;
-
-  const mapRow = (row: any): Product => ({
-    id: row.id,
-    name: row.name,
-    description: row.description || '',
-    price: parseFloat(row.price) || 0,
-    category: row.category || '',
-    images: row.images || [],
-    inStock: row.in_stock ?? true,
-    featured: row.featured ?? false,
-    seoTitle: row.seo_title || '',
-    seoDescription: row.seo_description || '',
-    stockQuantity: row.stock_quantity || 0,
-    weight: row.weight || 0,
-    createdAt: row.created_at || new Date().toISOString(),
-    updatedAt: row.updated_at || new Date().toISOString(),
-  });
+  const isAdminConnected = !!supabaseServiceKey;
 
   const loadProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      let query = supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      // Apply limit if provided (homepage only loads 8)
-      if (limit) {
-        query = query.limit(limit);
-      }
-
-      const { data, error: supabaseError } = await query;
-
-      if (supabaseError) throw supabaseError;
+      const data = await fetchProductsRest(limit);
 
       const mapped: Product[] = (data || []).map(mapRow);
       setProducts(mapped);
@@ -91,12 +103,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
       setLoading(true);
       setError(null);
 
-      const { data, error: supabaseError } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (supabaseError) throw supabaseError;
+      const data = await fetchProductsRest();
 
       const mapped: Product[] = (data || []).map(mapRow);
       setProducts(mapped);
@@ -112,7 +119,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
   }, []);
 
   const saveProduct = useCallback(async (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const client = supabaseAdmin || supabase;
+    const client = await getWriteClient();
     const id = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
     const { error } = await client.from('products').insert({
@@ -135,7 +142,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
   }, [loadAllProducts]);
 
   const updateProduct = useCallback(async (id: string, updates: Partial<Product>) => {
-    const client = supabaseAdmin || supabase;
+    const client = await getWriteClient();
 
     const dbUpdates: any = {};
     if (updates.name !== undefined) dbUpdates.name = updates.name;
@@ -156,7 +163,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
   }, [loadAllProducts]);
 
   const deleteProduct = useCallback(async (id: string) => {
-    const client = supabaseAdmin || supabase;
+    const client = await getWriteClient();
     const { error } = await client.from('products').delete().eq('id', id);
     if (error) throw error;
     await loadAllProducts();
