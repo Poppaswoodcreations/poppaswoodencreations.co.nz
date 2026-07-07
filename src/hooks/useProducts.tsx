@@ -35,6 +35,9 @@ const mapRow = (row: any): Product => ({
   seoDescription: row.seo_description || '',
   stockQuantity: row.stock_quantity || 0,
   weight: row.weight || 0,
+  lengthMm: row.length_mm ?? null,
+  widthMm: row.width_mm ?? null,
+  heightMm: row.height_mm ?? null,
   createdAt: row.created_at || new Date().toISOString(),
   updatedAt: row.updated_at || new Date().toISOString(),
 });
@@ -135,6 +138,9 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
       seo_description: product.seoDescription || '',
       stock_quantity: product.stockQuantity || 0,
       weight: product.weight || 0,
+      length_mm: product.lengthMm ?? null,
+      width_mm: product.widthMm ?? null,
+      height_mm: product.heightMm ?? null,
     });
 
     if (error) throw error;
@@ -156,6 +162,9 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
     if (updates.seoDescription !== undefined) dbUpdates.seo_description = updates.seoDescription;
     if (updates.stockQuantity !== undefined) dbUpdates.stock_quantity = updates.stockQuantity;
     if (updates.weight !== undefined) dbUpdates.weight = updates.weight;
+    if (updates.lengthMm !== undefined) dbUpdates.length_mm = updates.lengthMm;
+    if (updates.widthMm !== undefined) dbUpdates.width_mm = updates.widthMm;
+    if (updates.heightMm !== undefined) dbUpdates.height_mm = updates.heightMm;
 
     const { error } = await client.from('products').update(dbUpdates).eq('id', id);
     if (error) throw error;
