@@ -70,6 +70,26 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
               fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.
             </p>
 
+            <p className="text-base text-gray-500 mt-4 max-w-2xl">
+              Based in Tikipunga, on the edge of Whangarei, our workshop has been turning native New Zealand timber into
+              heirloom-quality toys since 2015. As a small toy manufacturer and woodworker, every piece — from our wooden
+              trucks and cars to trains, planes and kitchenware — starts as a rough length of Kauri, Rimu or Macrocarpa
+              before it's shaped, sanded, and finished by hand.
+            </p>
+
+            <p className="text-base text-gray-500 mt-4 max-w-2xl">
+              We don't outsource or mass-produce. Each toy that leaves our Tikipunga workshop has been made and checked
+              by us personally, which is part of why Montessori schools and eco-conscious families across New Zealand
+              keep coming back. Wood grain, weight, and finish vary slightly from piece to piece — that's not a flaw,
+              it's the mark of something actually handmade rather than stamped out on a factory line.
+            </p>
+
+            <p className="text-base text-gray-500 mt-4 max-w-2xl">
+              Whether you're after a first Montessori-style toy for a baby, a durable truck that'll survive years of
+              rough play, or a set of kitchenware built to last, everything is designed to be safe, non-toxic, and made
+              to be passed down rather than thrown away.
+            </p>
+
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
               <button
                 onClick={() => onCategorySelect('wooden-vehicles')}
