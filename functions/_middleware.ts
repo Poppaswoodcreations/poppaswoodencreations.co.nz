@@ -115,6 +115,33 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
 // ─────────────────────────────────────────────────────────────
+// HOME PAGE META
+// ─────────────────────────────────────────────────────────────
+const HOME_META = {
+  title: "Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations",
+  description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $150.",
+  h1: 'Handmade Wooden Toys & Kitchenware from New Zealand',
+  intro: 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.',
+  paragraphs: [
+    "From our Whangarei workshop, we create children's wooden toys that inspire imaginative play and develop fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.",
+    "Based in Tikipunga, on the edge of Whangarei, our workshop has been turning native New Zealand timber into heirloom-quality toys since 2015. As a small toy manufacturer and woodworker, every piece — from our wooden trucks and cars to trains, planes and kitchenware — starts as a rough length of Kauri, Rimu or Macrocarpa before it's shaped, sanded, and finished by hand.",
+    "We don't outsource or mass-produce. Each toy that leaves our Tikipunga workshop has been made and checked by us personally, which is part of why Montessori schools and eco-conscious families across New Zealand keep coming back. Wood grain, weight, and finish vary slightly from piece to piece — that's not a flaw, it's the mark of something actually handmade rather than stamped out on a factory line.",
+    "Whether you're after a first Montessori-style toy for a baby, a durable truck that'll survive years of rough play, or a set of kitchenware built to last, everything is designed to be safe, non-toxic, and made to be passed down rather than thrown away.",
+  ],
+  categories: [
+    { name: 'Wooden Trains', slug: 'wooden-trains', desc: 'Handcrafted wooden train sets and railway accessories' },
+    { name: 'Wooden Baby Toys', slug: 'wooden-baby-toys', desc: 'Safe, natural wooden toys for babies and toddlers' },
+    { name: 'Wooden Trucks', slug: 'wooden-trucks', desc: 'Heavy-duty wooden trucks for construction play' },
+    { name: 'Wooden Cars', slug: 'wooden-cars', desc: 'Fast and fun wooden cars for racing adventures' },
+    { name: 'Wooden Planes & Helicopters', slug: 'wooden-planes-helicopters', desc: 'Take flight with wooden aircraft and helicopters' },
+    { name: 'Wooden Kitchenware', slug: 'wooden-kitchenware', desc: 'Beautiful and functional wooden kitchen tools' },
+    { name: 'Wooden Tractors & Boats', slug: 'wooden-tractors-boats', desc: 'Farm tractors and sailing boats for adventure play' },
+    { name: 'Wooden Crosses', slug: 'wooden-crosses', desc: 'Handcrafted wooden crosses made from native New Zealand timber. Beautiful religious gifts and heirloom pieces.' },
+    { name: 'Wooden Pens', slug: 'wooden-pens', desc: 'Handcrafted wooden pens turned from native New Zealand timber. Unique gifts and heirloom writing instruments.' },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
 // CATEGORY META
 // ─────────────────────────────────────────────────────────────
 const CATEGORY_META: Record<string, {
@@ -733,6 +760,26 @@ async function fetchCategoryProducts(supabaseUrl: string, supabaseKey: string, s
   }
 }
 
+async function fetchFeaturedProducts(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
+  if (!supabaseUrl || !supabaseKey) return [];
+  try {
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/products?select=id,name,price,description,images,category&order=created_at.desc&limit=8`,
+      {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) return [];
+    return await response.json();
+  } catch {
+    return [];
+  }
+}
+
 async function fetchBlogPost(supabaseUrl: string, supabaseKey: string, slug: string): Promise<any | null> {
   if (!supabaseUrl || !supabaseKey) return null;
   try {
@@ -758,6 +805,108 @@ async function fetchBlogPost(supabaseUrl: string, supabaseKey: string, slug: str
 // ─────────────────────────────────────────────────────────────
 // HTML BUILDERS
 // ─────────────────────────────────────────────────────────────
+function buildHomeHTML(featuredProducts: any[]): string {
+  const canonicalUrl = BASE_URL;
+
+  const categoryCards = HOME_META.categories.map(c => `
+    <article>
+      <a href="${BASE_URL}/${c.slug}">
+        <h3>${c.name}</h3>
+        <p>${c.desc}</p>
+      </a>
+    </article>`).join('\n');
+
+  const featuredItems = featuredProducts.slice(0, 8).map(p => {
+    const img = (p.images?.[0] || `${BASE_URL}/og-image.jpg`);
+    const fullImg = img.startsWith('http') ? img : `${BASE_URL}${img}`;
+    const price = parseFloat(p.price || 0).toFixed(2);
+    return `
+    <article>
+      <a href="${BASE_URL}/products/${p.id}">
+        <img src="${fullImg}" alt="${p.name} - handcrafted wooden toy NZ" width="300" height="300" loading="lazy" />
+        <h3>${p.name}</h3>
+        <p>$${price} NZD</p>
+      </a>
+    </article>`;
+  }).join('\n');
+
+  const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
+    ],
+  });
+
+  const itemListSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Wooden Toy Categories",
+    "numberOfItems": HOME_META.categories.length,
+    "itemListElement": HOME_META.categories.map((c, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": c.name,
+      "url": `${BASE_URL}/${c.slug}`,
+    })),
+  });
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${HOME_META.title}</title>
+  <meta name="description" content="${HOME_META.description}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${HOME_META.title}" />
+  <meta property="og:description" content="${HOME_META.description}" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Poppa's Wooden Creations" />
+  <meta property="og:locale" content="en_NZ" />
+  <script type="application/ld+json">${breadcrumbSchema}</script>
+  <script type="application/ld+json">${itemListSchema}</script>
+  <style>
+    body { font-family: Georgia, serif; max-width: 1100px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
+    main { padding: 40px 24px; }
+    h1 { color: #78350f; font-size: 2em; margin-bottom: 8px; }
+    h2 { color: #92400e; font-size: 1.3em; margin-top: 32px; }
+    h3 { color: #78350f; }
+    a { color: #b45309; }
+    section { margin-bottom: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    article { border: 1px solid #e7e5e4; border-radius: 8px; padding: 12px; }
+    article a { text-decoration: none; color: inherit; display: block; }
+    img { max-width: 100%; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  ${buildSharedNav('/')}
+  <main>
+    <h1>${HOME_META.h1}</h1>
+    <p>${HOME_META.intro}</p>
+    ${HOME_META.paragraphs.map(p => `<p>${p}</p>`).join('\n    ')}
+    <section>
+      <h2>Shop by Category</h2>
+      <div class="grid">${categoryCards}</div>
+    </section>
+    ${featuredProducts.length > 0 ? `
+    <section>
+      <h2>Featured Products</h2>
+      <div class="grid">${featuredItems}</div>
+    </section>` : ''}
+    <section>
+      <h2>Handcrafted in Tikipunga, Whangarei</h2>
+      <p>Poppa's Wooden Creations is a toy manufacturer and woodworker based in Tikipunga, Whangarei. Every product is made and checked by hand in our own workshop — we don't outsource or import. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.</p>
+    </section>
+  </main>
+  ${buildSharedFooter()}
+</body>
+</html>`;
+}
+
 function buildPolicyHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = POLICY_PAGES[clean];
@@ -1353,6 +1502,20 @@ export const onRequest = async (context: any): Promise<Response> => {
       headers: {
         'Location': `${BASE_URL}/wooden-planes-helicopters`,
         'Cache-Control': 'public, max-age=31536000',
+      },
+    });
+  }
+
+  // ── 7.5 Homepage (bot only beyond this point) ───────────────────────
+  if (pathname === '/') {
+    const featured = await fetchFeaturedProducts(supabaseUrl, supabaseKey);
+    const html = buildHomeHTML(featured);
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+        'X-Robots-Tag': 'index, follow',
       },
     });
   }
