@@ -137,6 +137,15 @@ const getAgeRange = (name: string, category?: string): string => {
   return '12 months+';
 };
 
+// Formats a weight value (stored in kg) for display.
+// Shows in grams if under 1kg for readability, otherwise in kg.
+const formatWeight = (weightKg: number): string => {
+  if (weightKg < 1) {
+    return `${Math.round(weightKg * 1000)} g`;
+  }
+  return `${weightKg.toFixed(2).replace(/\.?0+$/, '')} kg`;
+};
+
 const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, isLoading = false }) => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
@@ -150,6 +159,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
   const ageRange = product
     ? getAgeRange(product.name, product.category)
     : '12 months+';
+
+  // Dimensions and weight - read defensively in case the Product type
+  // hasn't been updated yet to declare these fields explicitly.
+  const lengthMm = product ? (product as any).length_mm ?? (product as any).lengthMm : undefined;
+  const widthMm = product ? (product as any).width_mm ?? (product as any).widthMm : undefined;
+  const heightMm = product ? (product as any).height_mm ?? (product as any).heightMm : undefined;
+  const weightKg = product ? (product as any).weight ?? undefined : undefined;
+
+  const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
+  const hasWeight = weightKg != null && weightKg !== '';
 
   // Always build canonical from URL params — never depends on product state
   const canonicalUrl = `https://poppaswoodencreations.co.nz/products/${productId}`;
@@ -305,6 +324,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     })),
     "category": product.category || "Wooden Toys",
     "material": productMaterial,
+    ...(hasWeight ? { "weight": { "@type": "QuantitativeValue", "value": weightKg, "unitCode": "KGM" } } : {}),
+    ...(hasDimensions ? {
+      "depth": { "@type": "QuantitativeValue", "value": lengthMm, "unitCode": "MMT" },
+      "width": { "@type": "QuantitativeValue", "value": widthMm, "unitCode": "MMT" },
+      "height": { "@type": "QuantitativeValue", "value": heightMm, "unitCode": "MMT" }
+    } : {}),
     "audience": {
       "@type": "PeopleAudience",
       "suggestedMinAge": "1",
@@ -487,6 +512,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                     <span className="text-gray-600">Suitable for:</span>
                     <span className="font-medium text-gray-900 ml-2">Montessori</span>
                   </div>
+                  {hasDimensions && (
+                    <div>
+                      <span className="text-gray-600">Dimensions:</span>
+                      <span className="font-medium text-gray-900 ml-2">{lengthMm} x {widthMm} x {heightMm} mm</span>
+                    </div>
+                  )}
+                  {hasWeight && (
+                    <div>
+                      <span className="text-gray-600">Weight:</span>
+                      <span className="font-medium text-gray-900 ml-2">{formatWeight(Number(weightKg))}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
