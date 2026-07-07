@@ -25,7 +25,7 @@ export const HomePageSchema = () => {
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
-      "email": "contact@poppaswoodencreations.co.nz",
+      "email": "poppas.wooden.creations@gmail.com",
       "availableLanguage": ["English"]
     },
     "sameAs": [
@@ -54,7 +54,7 @@ export const HomePageSchema = () => {
       "longitude": 174.3166
     },
     "url": "https://poppaswoodencreations.co.nz",
-    "email": "contact@poppaswoodencreations.co.nz",
+    "email": "poppas.wooden.creations@gmail.com",
     "priceRange": "$$",
     "openingHoursSpecification": [
       {
