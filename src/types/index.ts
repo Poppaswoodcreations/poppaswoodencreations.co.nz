@@ -9,13 +9,15 @@ export interface Product {
   featured: boolean;
   stockQuantity?: number; // Number of items in stock
   weight?: number; // Weight in kg
+  lengthMm?: number | null; // Length in mm
+  widthMm?: number | null; // Width in mm
+  heightMm?: number | null; // Height in mm
   createdAt: string;
   updatedAt: string;
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
 }
-
 export interface Category {
   id: string;
   name: string;
@@ -27,19 +29,16 @@ export interface Category {
   seoDescription?: string;
   seoKeywords?: string;
 }
-
 export interface CartItem {
   product: Product;
   quantity: number;
 }
-
 export interface User {
   id: string;
   email: string;
   name: string;
   role: 'admin' | 'customer';
 }
-
 export interface SiteSettings {
   siteName: string;
   siteDescription: string;
