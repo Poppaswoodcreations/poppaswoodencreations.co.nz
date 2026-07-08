@@ -118,12 +118,90 @@ const PRODUCT_FAQS = [
   }
 ];
 
-const extractMaterial = (name: string, desc?: string): string => {
+// Explicit per-product material overrides. Keyed by product id (slug).
+// These take priority over the keyword-guess fallback below, since guessing
+// from the name/description text was picking the wrong material for
+// multi-timber products and didn't recognise "rewa rewa" at all.
+const MATERIAL_OVERRIDES: Record<string, string> = {
+  '2-by-4-car-steering-wheel': 'Pine wood',
+  '2-by-4-pine-car': 'Pine wood',
+  '2-by-4-pine-car-with-roof': 'Pine wood',
+  '2-by-4-pine-tow-truck': 'Pine wood',
+  '2-by-4-pine-ute': 'Pine wood',
+  '2-by-4-set-5': 'Pine wood',
+  'baby-rattle': 'Rimu wood',
+  'bi-plane': 'Pine wood',
+  'big-spatula-flat': 'Rimu wood',
+  'big-spatula-flat-2': 'Rimu wood',
+  'block-train': 'Kauri wood',
+  'car-carrier': 'Kauri wood',
+  'car-carrier-and-4-cars': 'Kauri & Macrocarpa wood',
+  'dragster': 'Kauri wood',
+  'dump-truck': 'Kauri & Macrocarpa wood',
+  'egg-cup': 'Rimu wood',
+  'fishing-boat': 'Rewa Rewa & Kauri wood',
+  'floor-noise-maker': 'Pine wood',
+  'french-rolling-pin': 'Rimu wood',
+  'gt-coupe': 'Kauri wood',
+  'hammer-set': 'Pine wood',
+  'happy-go-luck-train': 'Pine wood',
+  'helicopter-rimu': 'Rimu wood',
+  'hot-pot-stand': 'Rimu wood',
+  'kauri-truck-trailer-loader': 'Kauri & Macrocarpa wood',
+  'key-holder': 'Rimu wood',
+  'logging-truck': 'Kauri & Macrocarpa wood',
+  'noise-maker': 'Pine wood',
+  'pine-bat-car': 'Pine wood',
+  'pine-boat': 'Pine wood',
+  'pine-helicopter': 'Pine wood',
+  'pine-kiwi': 'Pine wood',
+  'police-boat': 'Rewa Rewa & Kauri wood',
+  'product-pen-kauri-chrome-black': 'Kauri wood',
+  'product-pen-kauri-gold-stylus': 'Kauri wood',
+  'product-pen-rewa-rewa-antique-bronze': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-chrome-black': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-gold-stylus': 'Rewa Rewa wood',
+  'product-pen-rimu-antique-bronze': 'Rimu wood',
+  'product-pen-rimu-chrome-black': 'Rimu wood',
+  'product-pen-rimu-gold-stylus': 'Rimu wood',
+  'product-pen-totara-antique-bronze': 'Totara wood',
+  'product-pen-totara-chrome-black': 'Totara wood',
+  'product-pen-totara-gold-stylus': 'Totara wood',
+  'rimu-wooden-cross': 'Rimu wood',
+  'roadster': 'Kauri wood',
+  'rolling-pin-2': 'Rimu wood',
+  'rubbish-truck': 'Kauri & Macrocarpa wood',
+  'salad-forks': 'Rimu wood',
+  'small-pine-bus': 'Pine wood',
+  'small-pine-car': 'Pine wood',
+  'small-pine-helicopter': 'Pine wood',
+  'small-pine-truck': 'Pine wood',
+  'small-pine-ute': 'Pine wood',
+  'small-spatula-curve': 'Rimu wood',
+  'small-spatula-flat-1': 'Rimu wood',
+  'speedster': 'Kauri wood',
+  'sportster': 'Kauri wood',
+  't-rex': 'Pine wood',
+  'teething-ring': 'Rimu wood',
+  'toaster-tongs': 'Kauri wood',
+  'tour-bus': 'Pine wood',
+  'tour-bus-wooden-car': 'Kauri wood',
+  'tractor-exquisite': 'Kauri wood',
+  'trolley-and-blocks': 'Pine & Macrocarpa wood',
+  'truckster': 'Kauri wood',
+  'two-window-coupe': 'Kauri wood',
+  'wooden-tea-spoon': 'Kauri wood',
+};
+
+const extractMaterial = (id: string, name: string, desc?: string): string => {
+  const override = MATERIAL_OVERRIDES[id];
+  if (override) return override;
+
   const text = `${name} ${desc || ''}`.toLowerCase();
-  const materials = ['kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
+  const materials = ['rewa rewa', 'kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
   for (const material of materials) {
     if (text.includes(material)) {
-      return material.charAt(0).toUpperCase() + material.slice(1) + ' wood';
+      return material.replace(/\b\w/g, c => c.toUpperCase()) + ' wood';
     }
   }
   return 'Premium New Zealand native timber';
@@ -153,7 +231,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
   const product = products.find(p => p.id === productId);
 
   const productMaterial = product
-    ? extractMaterial(product.name, product.description)
+    ? extractMaterial(product.id, product.name, product.description)
     : 'Premium New Zealand native timber';
 
   const ageRange = product
