@@ -123,7 +123,7 @@ const AdminPage: React.FC = () => {
     if (authed) loadAllProducts();
   }, [authed]);
 
-  const ADMIN_PASSWORD = 'poppas2024';
+  const ADMIN_PASSWORD = 'Adrianbar1?';
 
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
