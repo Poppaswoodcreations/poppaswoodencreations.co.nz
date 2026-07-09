@@ -102,7 +102,6 @@ export const PAYMENT_METHODS = [
   }
 ];
 
-export const ADMIN_PASSWORDS = ['Adrianbar1?', 'admin', 'poppa', 'password', 'poppas'];
 export const DEFAULT_PRODUCT_IMAGE = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
 export const FALLBACK_PRODUCT_IMAGE = 'https://hfirnolwhesjkxshidxo.supabase.co/storage/v1/object/public/product-images/RUBBISH%20TRUCK-optimized.webp';
 
