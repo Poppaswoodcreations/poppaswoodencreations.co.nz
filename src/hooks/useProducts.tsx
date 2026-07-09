@@ -7,7 +7,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 // This is the client-side admin password gate (same one used to unlock
 // the /admin dashboard). It is NOT a secret — it's checked again
 // server-side in /api/admin-products before any write happens there.
-const ADMIN_PASSWORD = 'poppas2024';
+const ADMIN_PASSWORD = 'Adrianbar1?';
 
 interface UseProductsOptions {
   limit?: number; // Optional limit for initial load
