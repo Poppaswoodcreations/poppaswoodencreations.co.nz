@@ -7,9 +7,13 @@ const _k = [
   'lEXxv7eEgUyuaVADraYq-OEQF7GRf-4WjC7hD_bVb2c'
 ]
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || _k.join('.')
-const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY
 
-// Public client for reading data (uses anon key)
+// Public client for reading data (uses anon key). This is the only
+// Supabase client that should ever exist in the browser bundle — the
+// service role key must never be read or embedded here. Admin writes
+// go through the /api/admin-products serverless function instead,
+// which holds the service key server-side only and is never exposed
+// to visitors.
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: false,
@@ -26,26 +30,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     }
   }
 })
-
-// Admin client for write operations (uses service role key)
-export const supabaseAdmin = (
-  supabaseServiceKey &&
-  supabaseServiceKey.length > 20
-) ? createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 0
-    }
-  }
-}) : null
-
-if (!supabaseAdmin) {
-  console.warn('Supabase admin not configured - write operations disabled')
-}
 
 // Database types
 export interface Database {
