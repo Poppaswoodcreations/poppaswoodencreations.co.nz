@@ -356,7 +356,7 @@ const AppContent: React.FC = () => {
             {/* ── CATEGORY PAGES ── */}
             <Route path="/wooden-trucks" element={
               <>
-                <SEOHead title="Wooden Toy Trucks NZ" description="Handcrafted wooden toy trucks made from New Zealand native timber." canonicalPath="/wooden-trucks" ogType="website" />
+                <SEOHead title="Wooden Toy Trucks NZ" description="Handcrafted wooden toy trucks NZ-made from Kauri & Macrocarpa. Dump trucks, logging trucks & more — heirloom-quality, non-toxic, built to last." canonicalPath="/wooden-trucks" ogType="website" />
                 <CategoryHeader title="Wooden Toy Trucks NZ" subtitle="Handcrafted from native New Zealand timber" />
                 <ProductGrid products={products.filter(p => p.category === 'wooden-trucks')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-trucks" loading={loading} />
                 <WoodenTrucksPage />
@@ -383,7 +383,7 @@ const AppContent: React.FC = () => {
 
             <Route path="/wooden-planes-helicopters" element={
               <>
-                <SEOHead title="Wooden Airplane & Helicopter Toys NZ" description="Handcrafted wooden airplane and helicopter toys made from native New Zealand timber." canonicalPath="/wooden-planes-helicopters" ogType="website" />
+                <SEOHead title="Wooden Airplane & Helicopter Toys NZ" description="Handcrafted wooden toy helicopters & planes made in NZ from Rimu and Pine. Montessori-friendly, heirloom-quality aviation toys for kids 3+." canonicalPath="/wooden-planes-helicopters" ogType="website" />
                 <CategoryHeader title="Wooden Planes & Helicopters NZ" subtitle="Handcrafted from native New Zealand timber" />
                 <ProductGrid products={products.filter(p => p.category === 'wooden-planes-helicopters')} onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} category="wooden-planes-helicopters" loading={loading} />
                 <WoodenPlanesHelicoptersPage />
