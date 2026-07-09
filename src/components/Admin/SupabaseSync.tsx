@@ -3,7 +3,7 @@ import { Database, Upload, Download, RefreshCw, CheckCircle, AlertCircle, Zap, S
 import { supabase } from '../../lib/supabase';
 import { Product } from '../../types';
 
-const ADMIN_PASSWORD = 'poppas2024';
+const ADMIN_PASSWORD = 'Adrianbar1?';
 
 interface SupabaseSyncProps {
   products: Product[];
