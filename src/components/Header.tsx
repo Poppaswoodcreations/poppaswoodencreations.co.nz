@@ -42,8 +42,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validPasswords = ['Adrianbar1?', 'admin', 'poppa', 'password', 'poppas'];
-    if (validPasswords.includes(password.trim())) {
+    if (password.trim() === 'Adrianbar1?') {
       onShowAdmin();
       setShowPasswordPrompt(false);
       setPassword('');
