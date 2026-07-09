@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Database, Upload, Download, RefreshCw, CheckCircle, AlertCircle, Zap, Shield } from 'lucide-react';
-import { supabase, supabaseAdmin } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { Product } from '../../types';
+
+const ADMIN_PASSWORD = 'poppas2024';
 
 interface SupabaseSyncProps {
   products: Product[];
@@ -14,124 +16,40 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
   const [message, setMessage] = useState('');
 
   const isConnected = !!supabase;
-  const isAdminConnected = !!supabaseAdmin;
+  // Admin writes now go through /api/admin-products, which is always
+  // reachable — the service role key lives server-side only.
+  const isAdminConnected = true;
 
   const syncToSupabase = async () => {
     console.log('🔄 Starting sync to Supabase...');
-    console.log('🔐 Admin client available:', !!supabaseAdmin);
     console.log('📦 Products to sync:', products.length);
-    
-    if (!supabaseAdmin) {
-      console.error('❌ Admin client not available');
-      setStatus('error');
-      setMessage('Supabase admin client not connected. Service role key may be missing.');
-      return;
-    }
 
     setSyncing(true);
     setStatus('idle');
     setMessage('');
 
     try {
-      console.log(`🔐 Step 1: Using admin client to sync ${products.length} products to Supabase...`);
-      
-      // Test basic connection first
-      console.log('🧪 Testing basic database connection...');
-      const { data: testData, error: testError } = await supabaseAdmin
-        .from('products')
-        .select('*')
-        .limit(1);
-      
-      if (testError) {
-        console.error('❌ Database connection failed:', testError);
-        throw new Error(`Database connection failed: ${testError.message}`);
-      }
-      
-      console.log('✅ Database connection successful');
-
-      // Step 2: Use upsert instead of insert to handle existing products
-      console.log('🔄 Step 2: Using upsert to handle existing products...');
-
-      // Step 3: Prepare products for database format
-      console.log('📝 Step 3: Converting products to database format...');
-      const supabaseProducts = products.map(product => {
-        const dbProduct = {
-          id: product.id || `SQ${Math.floor(Math.random() * 10000000)}`,
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          category: product.category,
-          images: product.images,
-          in_stock: product.inStock,
-          featured: product.featured,
-          weight: product.weight || 0.5,
-          stock_quantity: product.stockQuantity || 5
-        };
-        
-        console.log(`📦 Prepared product: ${dbProduct.name} (ID: ${dbProduct.id})`);
-        return dbProduct;
+      const res = await fetch('/api/admin-products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: ADMIN_PASSWORD,
+          action: 'bulk-sync',
+          products,
+        }),
       });
-      
-      console.log('✅ Products converted to database format');
-      console.log('📊 Sample product:', supabaseProducts[0]);
+      const data = await res.json().catch(() => ({}));
 
-      // Step 4: Insert products in batches to avoid timeout
-      console.log('📤 Step 4: Inserting products to database...');
-      const batchSize = 10;
-      const batches = [];
-      
-      for (let i = 0; i < supabaseProducts.length; i += batchSize) {
-        batches.push(supabaseProducts.slice(i, i + batchSize));
-      }
-      
-      console.log(`📦 Inserting ${batches.length} batches of products...`);
-      
-      let totalInserted = 0;
-      for (let i = 0; i < batches.length; i++) {
-        const batch = batches[i];
-        console.log(`📤 Inserting batch ${i + 1}/${batches.length} (${batch.length} products)...`);
-        console.log(`📦 Batch ${i + 1} sample product:`, batch[0]);
-        
-        const { data: batchData, error: batchError } = await supabaseAdmin
-          .from('products')
-          .upsert(batch, { 
-            onConflict: 'id',
-            ignoreDuplicates: false 
-          })
-          .select();
-        
-        if (batchError) {
-          console.error(`❌ Batch ${i + 1} failed:`, batchError);
-          console.error(`❌ Failed batch data:`, batch);
-          throw new Error(`Batch ${i + 1} failed: ${batchError.message}`);
-        }
-        
-        totalInserted += batchData.length;
-        console.log(`✅ Batch ${i + 1} completed: ${batchData.length} products inserted`);
-      }
-      
-      // Final verification
-      const { data: finalData, error: finalError } = await supabaseAdmin
-        .from('products')
-        .select('*');
-
-      if (finalError) {
-        console.error('❌ Final verification failed:', finalError);
-        throw new Error(`Final verification failed: ${finalError.message}`);
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `Sync failed (${res.status})`);
       }
 
       setStatus('success');
-      setMessage(`✅ Successfully synced ${totalInserted} products to Supabase with admin permissions! Database now has ${finalData.length} total products. You can now add products directly on your live site with permanent saving.`);
-      
-      console.log(`✅ SYNC COMPLETE: ${totalInserted} products synced to Supabase with admin client`);
-      console.log(`📊 Database verification: ${finalData.length} total products in database`);
+      setMessage(`✅ Successfully synced ${data.totalInserted} products to Supabase. You can now add products directly on your live site with permanent saving.`);
+      console.log(`✅ SYNC COMPLETE: ${data.totalInserted} products synced`);
 
     } catch (error) {
-      console.error('❌ DETAILED SYNC ERROR:', error);
-      console.error('❌ Error type:', typeof error);
-      console.error('❌ Error message:', error instanceof Error ? error.message : 'Unknown error type');
-      console.error('❌ Error stack:', error instanceof Error ? error.stack : 'No stack trace');
-      
+      console.error('❌ Sync error:', error);
       setStatus('error');
       setMessage(`❌ Sync failed: ${error instanceof Error ? error.message : 'Unknown error'}. Check browser console for details.`);
     } finally {
@@ -200,7 +118,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
           {isAdminConnected ? '✅ Admin Database Connected - Permanent Saves Enabled!' : '⚠️ Admin Access Missing - Limited Save Permissions'}
         </h3>
         <p className="text-lg">
-          {isAdminConnected ? 'Perfect! Your edits now save permanently with full admin permissions.' : 'Service role key needed for permanent database saves.'}
+          {isAdminConnected ? 'Perfect! Your edits now save permanently through the secure admin API.' : 'Service role key needed for permanent database saves.'}
         </p>
       </div>
 
@@ -250,7 +168,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
               <p className={`font-medium ${
                 isAdminConnected ? 'text-blue-800' : 'text-yellow-800'
               }`}>
-                {isAdminConnected ? '🔐 Admin Client Connected' : '⚠️ Admin Client Missing'}
+                {isAdminConnected ? '🔐 Admin API Connected' : '⚠️ Admin API Missing'}
               </p>
               <p className={`text-sm ${
                 isAdminConnected ? 'text-blue-700' : 'text-yellow-700'
@@ -293,7 +211,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
             Upload to Database
           </h4>
           <p className="text-gray-600 mb-4 text-sm">
-            Upload your current {products.length} products to Supabase database using admin permissions. 
+            Upload your current {products.length} products to Supabase database via the secure admin API. 
             After this, you can add products directly on your live site with permanent saving!
           </p>
           <button
@@ -315,7 +233,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
           </button>
           {!isAdminConnected && (
             <p className="text-xs text-red-600 mt-2">
-              ⚠️ Admin client required for permanent saves
+              ⚠️ Admin API required for permanent saves
             </p>
           )}
         </div>
@@ -366,9 +284,9 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
             </span>
           </div>
           <div className="flex justify-between">
-            <span>Service Role Key:</span>
+            <span>Admin API:</span>
             <span className={isAdminConnected ? 'text-blue-600' : 'text-yellow-600'}>
-              {isAdminConnected ? '🔐 Admin Access' : '⚠️ Limited Access'}
+              {isAdminConnected ? '🔐 Secure Server-Side Access' : '⚠️ Limited Access'}
             </span>
           </div>
         </div>
@@ -379,7 +297,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
         <h4 className="font-medium text-blue-900 mb-3">🎯 Setup Instructions</h4>
         <div className="text-sm text-blue-800 space-y-2">
           <p><strong>✅ Step 1:</strong> Environment variables configured</p>
-          <p><strong>✅ Step 2:</strong> Admin client with service role key ready</p>
+          <p><strong>✅ Step 2:</strong> Admin API with service role key ready (server-side)</p>
           <p><strong>Step 3:</strong> Click "Sync to Database (Admin)" above to upload your products</p>
           <p><strong>Step 4:</strong> Deploy your website</p>
           <p><strong>Step 5:</strong> 🎉 Add products directly on your live site with permanent saving!</p>
@@ -391,7 +309,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
         <h4 className="text-xl font-bold mb-3">✨ Benefits with Admin Access</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="space-y-2">
-            <p>🔐 Permanent saves with service role</p>
+            <p>🔐 Permanent saves via secure server-side API</p>
             <p>✅ Add products directly on live site</p>
             <p>✅ No more manual code editing</p>
             <p>✅ Instant updates for all visitors</p>
@@ -399,7 +317,7 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
           <div className="space-y-2">
             <p>✅ Real-time inventory management</p>
             <p>✅ Automatic backups in cloud</p>
-            <p>✅ Bypass RLS policies safely</p>
+            <p>✅ Bypass RLS policies safely (server-side only)</p>
             <p>✅ 100% FREE for your business size</p>
           </div>
         </div>
