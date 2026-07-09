@@ -7,10 +7,9 @@ const _k = [
   'lEXxv7eEgUyuaVADraYq-OEQF7GRf-4WjC7hD_bVb2c'
 ]
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || _k.join('.')
-const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY || '';
 
+// Public client only — uses the anon key, safe to ship to the browser.
+// The service role key must never be read or bundled here. Admin writes
+// go through the /api/admin-products serverless function instead, which
+// holds the service key server-side only.
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-export const supabaseAdmin = supabaseServiceKey 
-  ? createClient(supabaseUrl, supabaseServiceKey)
-  : null;
-export const isAdminAvailable = !!supabaseServiceKey;
