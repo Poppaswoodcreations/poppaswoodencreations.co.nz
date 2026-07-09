@@ -11,7 +11,7 @@ export async function onRequest(context) {
   const SUPABASE_URL = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
   const SUPABASE_SERVICE_KEY =
     env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || env.VITE_SUPABASE_SERVICE_KEY;
-  const ADMIN_PASSWORD = env.ADMIN_PASSWORD || 'poppas2024';
+  const ADMIN_PASSWORD = env.ADMIN_PASSWORD || 'Adrianbar1?';
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('admin-products: missing Supabase env vars', {
