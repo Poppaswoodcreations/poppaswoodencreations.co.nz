@@ -3,7 +3,11 @@ import { Product } from '../types';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY || '';
+
+// This is the client-side admin password gate (same one used to unlock
+// the /admin dashboard). It is NOT a secret — it's checked again
+// server-side in /api/admin-products before any write happens there.
+const ADMIN_PASSWORD = 'poppas2024';
 
 interface UseProductsOptions {
   limit?: number; // Optional limit for initial load
@@ -42,8 +46,9 @@ const mapRow = (row: any): Product => ({
   updatedAt: row.updated_at || new Date().toISOString(),
 });
 
-// Lightweight read path — plain fetch against the Supabase REST API.
-// No supabase-js import, so this never adds to your main bundle.
+// Lightweight read path — plain fetch against the Supabase REST API,
+// using only the anon key. No supabase-js import, so this never adds
+// to your main bundle, and nothing here can write to the database.
 async function fetchProductsRest(limit?: number): Promise<any[]> {
   let url = `${supabaseUrl}/rest/v1/products?select=*&order=created_at.desc`;
   if (limit) url += `&limit=${limit}`;
@@ -62,14 +67,20 @@ async function fetchProductsRest(limit?: number): Promise<any[]> {
   return res.json();
 }
 
-// Heavy write path — supabase-js is only fetched here, on demand,
-// the moment an admin actually saves/updates/deletes something.
-// This keeps it out of the bundle every normal visitor downloads.
-async function getWriteClient() {
-  const { createClient } = await import('@supabase/supabase-js');
-  // Prefer service role (bypasses RLS) if available, otherwise fall back to anon key.
-  const key = supabaseServiceKey || supabaseAnonKey;
-  return createClient(supabaseUrl, key);
+// All writes go through this one serverless endpoint. The service role
+// key lives only in the Cloudflare Function's environment — it is never
+// sent to, or bundled into, the browser.
+async function callAdminProducts(body: Record<string, any>) {
+  const res = await fetch('/api/admin-products', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: ADMIN_PASSWORD, ...body }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.error) {
+    throw new Error(data.error || `Request failed (${res.status})`);
+  }
+  return data;
 }
 
 export function useProducts(options: UseProductsOptions = {}): UseProductsReturn {
@@ -78,7 +89,9 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSupabaseConnected, setIsSupabaseConnected] = useState(false);
-  const isAdminConnected = !!supabaseServiceKey;
+  // Admin writes are always available now — the gate is the server-side
+  // password check in /api/admin-products, not a key held in the browser.
+  const isAdminConnected = true;
 
   const loadProducts = useCallback(async () => {
     try {
@@ -122,59 +135,17 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
   }, []);
 
   const saveProduct = useCallback(async (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const client = await getWriteClient();
-    const id = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-    const { error } = await client.from('products').insert({
-      id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      category: product.category,
-      images: product.images,
-      in_stock: product.inStock,
-      featured: product.featured,
-      seo_title: product.seoTitle || '',
-      seo_description: product.seoDescription || '',
-      stock_quantity: product.stockQuantity || 0,
-      weight: product.weight || 0,
-      length_mm: product.lengthMm ?? null,
-      width_mm: product.widthMm ?? null,
-      height_mm: product.heightMm ?? null,
-    });
-
-    if (error) throw error;
+    await callAdminProducts({ action: 'save', product });
     await loadAllProducts();
   }, [loadAllProducts]);
 
   const updateProduct = useCallback(async (id: string, updates: Partial<Product>) => {
-    const client = await getWriteClient();
-
-    const dbUpdates: any = {};
-    if (updates.name !== undefined) dbUpdates.name = updates.name;
-    if (updates.description !== undefined) dbUpdates.description = updates.description;
-    if (updates.price !== undefined) dbUpdates.price = updates.price;
-    if (updates.category !== undefined) dbUpdates.category = updates.category;
-    if (updates.images !== undefined) dbUpdates.images = updates.images;
-    if (updates.inStock !== undefined) dbUpdates.in_stock = updates.inStock;
-    if (updates.featured !== undefined) dbUpdates.featured = updates.featured;
-    if (updates.seoTitle !== undefined) dbUpdates.seo_title = updates.seoTitle;
-    if (updates.seoDescription !== undefined) dbUpdates.seo_description = updates.seoDescription;
-    if (updates.stockQuantity !== undefined) dbUpdates.stock_quantity = updates.stockQuantity;
-    if (updates.weight !== undefined) dbUpdates.weight = updates.weight;
-    if (updates.lengthMm !== undefined) dbUpdates.length_mm = updates.lengthMm;
-    if (updates.widthMm !== undefined) dbUpdates.width_mm = updates.widthMm;
-    if (updates.heightMm !== undefined) dbUpdates.height_mm = updates.heightMm;
-
-    const { error } = await client.from('products').update(dbUpdates).eq('id', id);
-    if (error) throw error;
+    await callAdminProducts({ action: 'update', id, updates });
     await loadAllProducts();
   }, [loadAllProducts]);
 
   const deleteProduct = useCallback(async (id: string) => {
-    const client = await getWriteClient();
-    const { error } = await client.from('products').delete().eq('id', id);
-    if (error) throw error;
+    await callAdminProducts({ action: 'delete', id });
     await loadAllProducts();
   }, [loadAllProducts]);
 
