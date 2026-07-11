@@ -1,0 +1,38 @@
+name: Daily Database Backup
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # runs daily at 12:00 UTC (~midnight NZ time)
+  workflow_dispatch:        # lets you trigger it manually too
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install postgresql-client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Checkout backup repo
+        uses: actions/checkout@v4
+        with:
+          repository: Poppaswoodcreations/poppaswoodencreations-backups
+          token: ${{ secrets.BACKUP_REPO_TOKEN }}
+          path: backup-repo
+
+      - name: Dump database
+        run: |
+          mkdir -p backup-repo/backups
+          pg_dump "${{ secrets.SUPABASE_DB_URL }}" --no-owner --no-acl > backup-repo/backups/backup_$(date +%Y-%m-%d).sql
+
+      - name: Remove backups older than 14 days
+        run: |
+          find backup-repo/backups -name "backup_*.sql" -mtime +14 -delete
+
+      - name: Commit and push backup
+        working-directory: backup-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backups/
+          git commit -m "Automated DB backup $(date +%Y-%m-%d)" || echo "No changes to commit"
+          git push
