@@ -1,12 +1,52 @@
 // Cloudflare Pages Function (adapter).
 // The original Netlify handler body is preserved unchanged below;
 // this wrapper feeds it a Netlify-style `event` and maps the result to a Response.
+
+const RATE_LIMIT = 15;          // max requests
+const RATE_WINDOW_SECONDS = 300; // per 5 minutes
+
+async function checkRateLimit(env, ip) {
+  const kv = env.RATE_LIMIT_KV;
+  if (!kv) return { allowed: true }; // KV not bound yet — fail open
+
+  const key = `chat:${ip}`;
+  const now = Date.now();
+  const raw = await kv.get(key);
+  let data = raw ? JSON.parse(raw) : { count: 0, start: now };
+
+  if (now - data.start > RATE_WINDOW_SECONDS * 1000) {
+    data = { count: 0, start: now };
+  }
+
+  data.count += 1;
+  await kv.put(key, JSON.stringify(data), { expirationTtl: RATE_WINDOW_SECONDS });
+
+  return { allowed: data.count <= RATE_LIMIT, count: data.count };
+}
+
 export async function onRequest(context) {
   // Expose Cloudflare env to the handler's process.env.* reads
   globalThis.process = globalThis.process || {};
   globalThis.process.env = { ...(globalThis.process.env || {}), ...context.env };
 
-  const { request } = context;
+  const { request, env } = context;
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const { allowed } = await checkRateLimit(env, ip);
+
+  if (!allowed) {
+    return new Response(
+      JSON.stringify({ error: 'Too many requests. Please wait a few minutes and try again.' }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(RATE_WINDOW_SECONDS),
+        },
+      }
+    );
+  }
+
   const reqHeaders = {};
   request.headers.forEach((v, k) => { reqHeaders[k] = v; });
 
