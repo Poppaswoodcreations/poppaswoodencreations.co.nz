@@ -2,8 +2,8 @@ name: Daily Database Backup
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # runs daily at 12:00 UTC (~midnight NZ time)
-  workflow_dispatch:        # lets you trigger it manually too
+    - cron: '0 12 * * *'
+  workflow_dispatch:
 
 jobs:
   backup:
@@ -28,7 +28,7 @@ jobs:
       - name: Dump database
         run: |
           mkdir -p backup-repo/backups
-          pg_dump "${{ secrets.SUPABASE_DB_URL }}" --no-owner --no-acl > backup-repo/backups/backup_$(date +%Y-%m-%d).sql
+          /usr/lib/postgresql/17/bin/pg_dump "${{ secrets.SUPABASE_DB_URL }}" --no-owner --no-acl > backup-repo/backups/backup_$(date +%Y-%m-%d).sql
 
       - name: Remove backups older than 14 days
         run: |
