@@ -4,7 +4,6 @@ import { Product } from '../../types';
 import { saveProductsToStorage } from '../../utils/productStorage';
 import ProductForm from './ProductForm';
 import CSVImporter from './CSVImporter';
-import BackupManager from './BackupManager';
 import ImageManager from './ImageManager';
 import CategoryImageEditor from './CategoryImageEditor';
 import CategoryManager from './CategoryManager';
@@ -51,7 +50,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     { id: 'email', label: '📧 Email Manager', icon: Settings },
     { id: 'inventory', label: '📊 Inventory Manager', icon: BarChart3 },
     { id: 'import', label: '📥 CSV Import', icon: Upload },
-    { id: 'backup', label: '💾 Backup & Database', icon: Database },
     { id: 'images', label: '🖼️ Upload Images', icon: Upload },
     { id: 'category-images', label: '🖼️ Category Images', icon: Image }
   ];
@@ -237,7 +235,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <p className="text-amber-700 mb-6">
                 Manage customer reviews, reply to them, approve pending submissions, and add new reviews from Google My Business.
               </p>
-              <a
+              
                 href="/admin/reviews"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -285,7 +283,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <li>✅ Best Sensory Wooden Toys for Babies</li>
                 <li>✅ How to Clean Wooden Toys Naturally</li>
               </ul>
-              <a
+              
                 href="https://poppaswoodencreations.co.nz"
                 onClick={(e) => { e.preventDefault(); window.open('https://poppaswoodencreations.co.nz', '_blank'); }}
                 className="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
@@ -312,7 +310,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">
               <h3 className="text-xl font-bold text-green-800 mb-3">🎉 Admin Access Granted!</h3>
               <div className="text-green-700 space-y-2">
-                <p><strong>✅ Password:</strong> Adrianbar1? accepted</p>
+                <p><strong>✅ Access:</strong> Verified</p>
                 <p><strong>✅ Products:</strong> {products.length} loaded</p>
                 <p><strong>✅ Database:</strong> {isAdminConnected ? 'Admin connected - permanent saves!' : 'Local storage mode'}</p>
                 <p><strong>✅ Orders:</strong> Email notifications to adrianbarber8@gmail.com</p>
@@ -564,14 +562,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               saveProductsToStorage([]);
               alert('⚠️ All products cleared!');
             }}
-          />
-        );
-
-      case 'backup':
-        return (
-          <BackupManager
-            products={products}
-            onProductsUpdate={onProductsUpdate}
           />
         );
 
