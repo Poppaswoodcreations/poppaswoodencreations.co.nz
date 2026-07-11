@@ -2,10 +2,41 @@
 // Handles all admin product writes (save/update/delete/bulk-sync) server-side.
 // The service role key never leaves this function — the browser only ever
 // sends the admin password + the data, and gets JSON back.
+
+const REQUEST_LIMIT = 30;             // max requests
+const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
+
+const AUTH_FAIL_LIMIT = 5;             // max wrong-password attempts
+const AUTH_FAIL_WINDOW_SECONDS = 900;  // per 15 minutes
+
+async function checkLimit(kv, key, limit, windowSeconds) {
+  if (!kv) return { allowed: true }; // KV not bound yet — fail open
+  const now = Date.now();
+  const raw = await kv.get(key);
+  let data = raw ? JSON.parse(raw) : { count: 0, start: now };
+
+  if (now - data.start > windowSeconds * 1000) {
+    data = { count: 0, start: now };
+  }
+
+  data.count += 1;
+  await kv.put(key, JSON.stringify(data), { expirationTtl: windowSeconds });
+
+  return { allowed: data.count <= limit };
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   if (request.method !== 'POST') {
     return json({ error: 'Method Not Allowed' }, 405);
+  }
+
+  const kv = env.RATE_LIMIT_KV;
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+  const requestCheck = await checkLimit(kv, `admin-products:req:${ip}`, REQUEST_LIMIT, REQUEST_WINDOW_SECONDS);
+  if (!requestCheck.allowed) {
+    return json({ error: 'Too many requests. Please wait a few minutes and try again.' }, 429);
   }
 
   const SUPABASE_URL = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
@@ -30,6 +61,10 @@ export async function onRequest(context) {
   const { password, action, product, id, updates, products } = body || {};
 
   if (password !== ADMIN_PASSWORD) {
+    const authCheck = await checkLimit(kv, `admin-products:auth:${ip}`, AUTH_FAIL_LIMIT, AUTH_FAIL_WINDOW_SECONDS);
+    if (!authCheck.allowed) {
+      return json({ error: 'Too many failed attempts. Please wait 15 minutes and try again.' }, 429);
+    }
     return json({ error: 'Unauthorized' }, 401);
   }
 
