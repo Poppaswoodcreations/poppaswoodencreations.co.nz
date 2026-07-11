@@ -57,7 +57,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Handmade Wooden Toys & Kitchenware from New Zealand
+              Handmade Wooden Toys & Kitchenware from Whangarei, New Zealand
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
