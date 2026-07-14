@@ -25,6 +25,12 @@ const BOT_USER_AGENTS = [
   'applebot',
   'Google-InspectionTool',
   'Google-PageRenderer',
+  'storebot-google',
+  'google-shopping',
+  'adsbot-google',
+  'apis-google',
+  'mediapartners-google',
+  'googleother',
 ];
 
 // ─────────────────────────────────────────────────────────────
