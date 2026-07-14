@@ -61,9 +61,16 @@ const ShippingPolicy: React.FC = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>Cost:</strong> $8.50 NZD (FREE for orders over $1000 NZD)</span>
+                    <span><strong>Cost:</strong> Calculated by order weight — $10.00 NZD (up to 1kg), $13.00 (1–2kg), $19.00 (2–3kg), $26.00 (3–4kg), $32.00 (over 4kg). FREE for orders over $1000 NZD.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Rural delivery surcharge:</strong> An additional $5.70 NZD applies to addresses on NZ Post's rural delivery list, calculated automatically at checkout once you enter your postcode.</span>
                   </li>
                 </ul>
+                <p className="text-sm text-gray-600 mt-3 italic">
+                  * Exact shipping cost is shown in your cart before you enter payment details.
+                </p>
               </div>
 
               <div>
@@ -71,23 +78,23 @@ const ShippingPolicy: React.FC = () => {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>Australia:</strong> 7-14 business days - $25 NZD</span>
+                    <span><strong>Australia:</strong> 7-14 business days - $25.00 NZD (up to 1kg), $35.00 NZD (over 1kg)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>USA & Canada:</strong> 10-21 business days - $45 NZD</span>
+                    <span><strong>USA & Canada:</strong> 10-21 business days - $35.00 NZD (up to 1kg), $50.00 NZD (over 1kg)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>UK & Europe:</strong> 14-28 business days - $55 NZD</span>
+                    <span><strong>UK & Europe:</strong> 14-28 business days - $40.00 NZD (up to 1kg), $55.00 NZD (over 1kg)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>Asia & Pacific:</strong> 10-21 business days - $35 NZD</span>
+                    <span><strong>Rest of World:</strong> 10-21 business days - $50.00 NZD (up to 1kg), $70.00 NZD (over 1kg)</span>
                   </li>
                 </ul>
                 <p className="text-sm text-gray-600 mt-3 italic">
-                  * International shipping times may vary due to customs processing. Customer is responsible for any import duties or taxes.
+                  * International shipping times may vary due to customs processing. Customer is responsible for any import duties or taxes. Exact cost is calculated by order weight and shown in your cart before payment.
                 </p>
               </div>
             </div>
