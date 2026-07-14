@@ -235,7 +235,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <p className="text-amber-700 mb-6">
                 Manage customer reviews, reply to them, approve pending submissions, and add new reviews from Google My Business.
               </p>
-              
+              <a
                 href="/admin/reviews"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -283,7 +283,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <li>✅ Best Sensory Wooden Toys for Babies</li>
                 <li>✅ How to Clean Wooden Toys Naturally</li>
               </ul>
-              
+              <a
                 href="https://poppaswoodencreations.co.nz"
                 onClick={(e) => { e.preventDefault(); window.open('https://poppaswoodencreations.co.nz', '_blank'); }}
                 className="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
