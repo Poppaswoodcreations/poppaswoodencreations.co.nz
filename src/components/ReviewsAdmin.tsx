@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, MessageSquare, X, Check } from 'lucide-react';
-import { supabase } from '../lib/supabaseClient';
+
+const ADMIN_PASSWORD = 'Adrianbar1?';
 
 interface Review {
   id: string;
@@ -35,6 +36,17 @@ const renderStars = (rating: number) => (
   </div>
 );
 
+async function callAdminReviews(body: Record<string, any>) {
+  const res = await fetch('/api/admin-reviews', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: ADMIN_PASSWORD, ...body }),
+  });
+  const data = await res.json();
+  if (!res.ok || data.error) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
 const ReviewsAdmin: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [pendingReviews, setPendingReviews] = useState<Review[]>([]);
@@ -65,24 +77,12 @@ const ReviewsAdmin: React.FC = () => {
   }, []);
 
   const fetchReviews = async () => {
+    setLoading(true);
     try {
-      const { data: visibleData, error: visibleError } = await supabase
-        .from('reviews')
-        .select('*')
-        .eq('is_visible', true)
-        .order('review_date', { ascending: false });
-
-      if (visibleError) throw visibleError;
-      setReviews(visibleData || []);
-
-      const { data: pendingData, error: pendingError } = await supabase
-        .from('reviews')
-        .select('*')
-        .eq('is_visible', false)
-        .order('created_at', { ascending: false });
-
-      if (pendingError) throw pendingError;
-      setPendingReviews(pendingData || []);
+      const data = await callAdminReviews({ action: 'list' });
+      const all: Review[] = data.reviews || [];
+      setReviews(all.filter(r => r.is_visible));
+      setPendingReviews(all.filter(r => !r.is_visible));
     } catch (error) {
       console.error('Error fetching reviews:', error);
     } finally {
@@ -93,14 +93,13 @@ const ReviewsAdmin: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .insert([{
+      await callAdminReviews({
+        action: 'insert',
+        review: {
           ...formData,
-          review_date: new Date(formData.review_date).toISOString()
-        }]);
-
-      if (error) throw error;
+          review_date: new Date(formData.review_date).toISOString(),
+        },
+      });
 
       setFormData({
         author_name: '',
@@ -128,11 +127,7 @@ const ReviewsAdmin: React.FC = () => {
 
   const approveReview = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .update({ is_visible: true })
-        .eq('id', id);
-      if (error) throw error;
+      await callAdminReviews({ action: 'update-visibility', id, is_visible: true });
       fetchReviews();
       alert('Review approved and published!');
     } catch (error) {
@@ -142,11 +137,7 @@ const ReviewsAdmin: React.FC = () => {
 
   const toggleVisibility = async (id: string, currentVisibility: boolean) => {
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .update({ is_visible: !currentVisibility })
-        .eq('id', id);
-      if (error) throw error;
+      await callAdminReviews({ action: 'update-visibility', id, is_visible: !currentVisibility });
       fetchReviews();
     } catch (error) {
       console.error('Error updating review:', error);
@@ -156,11 +147,7 @@ const ReviewsAdmin: React.FC = () => {
   const deleteReview = async (id: string) => {
     if (!confirm('Are you sure you want to delete this review?')) return;
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .delete()
-        .eq('id', id);
-      if (error) throw error;
+      await callAdminReviews({ action: 'delete', id });
       fetchReviews();
     } catch (error) {
       console.error('Error deleting review:', error);
@@ -184,14 +171,7 @@ const ReviewsAdmin: React.FC = () => {
     }
     setSavingReply(true);
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .update({
-          owner_reply: replyText.trim(),
-          owner_reply_date: new Date().toISOString()
-        })
-        .eq('id', id);
-      if (error) throw error;
+      await callAdminReviews({ action: 'save-reply', id, replyText: replyText.trim() });
       setReplyingTo(null);
       setReplyText('');
       fetchReviews();
@@ -207,11 +187,7 @@ const ReviewsAdmin: React.FC = () => {
   const deleteReply = async (id: string) => {
     if (!confirm('Are you sure you want to delete this reply?')) return;
     try {
-      const { error } = await supabase
-        .from('reviews')
-        .update({ owner_reply: null, owner_reply_date: null })
-        .eq('id', id);
-      if (error) throw error;
+      await callAdminReviews({ action: 'delete-reply', id });
       fetchReviews();
     } catch (error) {
       console.error('Error deleting reply:', error);
@@ -239,11 +215,10 @@ const ReviewsAdmin: React.FC = () => {
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className="flex space-x-4 mb-6 border-b border-gray-200">
+        <div className="flex gap-6 mb-6 border-b border-gray-200">
           <button
             onClick={() => setActiveTab('pending')}
-            className={`px-6 py-3 font-semibold border-b-2 transition-colors ${
+            className={`pb-3 px-1 font-medium border-b-2 transition-colors ${
               activeTab === 'pending' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -251,7 +226,7 @@ const ReviewsAdmin: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-6 py-3 font-semibold border-b-2 transition-colors ${
+            className={`pb-3 px-1 font-medium border-b-2 transition-colors ${
               activeTab === 'all' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -259,45 +234,25 @@ const ReviewsAdmin: React.FC = () => {
           </button>
         </div>
 
-        {/* Add Review Form */}
         {showForm && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Add New Review</h2>
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 className="text-xl font-semibold mb-4">Add Manual Review</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                <input type="text" required value={formData.author_name}
-                  onChange={(e) => setFormData({...formData, author_name: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  placeholder="John Smith" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                <select value={formData.rating} onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                  <option value={5}>5 Stars - Excellent</option>
-                  <option value={4}>4 Stars - Very Good</option>
-                  <option value={3}>3 Stars - Good</option>
-                  <option value={2}>2 Stars - Fair</option>
-                  <option value={1}>1 Star - Poor</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Review Text</label>
-                <textarea value={formData.review_text} onChange={(e) => setFormData({...formData, review_text: e.target.value})}
-                  rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  placeholder="Write the review here..." />
-              </div>
-              {formData.source === 'website' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Review Title (optional)</label>
-                  <input type="text" value={formData.review_title}
-                    onChange={(e) => setFormData({...formData, review_title: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    placeholder="e.g., Amazing quality!" />
-                </div>
-              )}
               <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Author Name</label>
+                  <input type="text" required value={formData.author_name}
+                    onChange={(e) => setFormData({...formData, author_name: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                  <select value={formData.rating}
+                    onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                    {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} Star{n !== 1 ? 's' : ''}</option>)}
+                  </select>
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Review Date</label>
                   <input type="date" required value={formData.review_date}
@@ -306,16 +261,28 @@ const ReviewsAdmin: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Source</label>
-                  <select value={formData.source} onChange={(e) => setFormData({...formData, source: e.target.value})}
+                  <select value={formData.source}
+                    onChange={(e) => setFormData({...formData, source: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                     <option value="google">Google</option>
                     <option value="website">Website</option>
-                    <option value="manual">Manual Entry</option>
                   </select>
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Review Title (optional)</label>
+                <input type="text" value={formData.review_title}
+                  onChange={(e) => setFormData({...formData, review_title: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Review Text</label>
+                <textarea required rows={4} value={formData.review_text}
+                  onChange={(e) => setFormData({...formData, review_text: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none" />
+              </div>
               {formData.source === 'google' && (
-                <div className="grid grid-cols-3 gap-4 p-4 bg-blue-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-blue-50 rounded-lg">
                   <label className="flex items-center space-x-2">
                     <input type="checkbox" checked={formData.local_guide}
                       onChange={(e) => setFormData({...formData, local_guide: e.target.checked})}
@@ -324,13 +291,13 @@ const ReviewsAdmin: React.FC = () => {
                   </label>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Review Count</label>
-                    <input type="number" min="0" value={formData.review_count}
+                    <input type="number" min={0} value={formData.review_count}
                       onChange={(e) => setFormData({...formData, review_count: parseInt(e.target.value) || 0})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Photo Count</label>
-                    <input type="number" min="0" value={formData.photo_count}
+                    <input type="number" min={0} value={formData.photo_count}
                       onChange={(e) => setFormData({...formData, photo_count: parseInt(e.target.value) || 0})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                   </div>
