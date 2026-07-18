@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Mail, MapPin, CheckCircle, AlertTriangle, Trash2, Eye, X, RefreshCw } from 'lucide-react';
-import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+const ADMIN_PASSWORD = 'Adrianbar1?';
 
 interface Order {
   id: string;
@@ -43,14 +39,15 @@ const OrderManager: React.FC = () => {
   const loadOrders = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setOrders(data || []);
-      console.log(`📦 Loaded ${data?.length || 0} orders from Supabase`);
+      const res = await fetch('/api/admin-orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: ADMIN_PASSWORD, action: 'list' }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed to load orders');
+      setOrders(data.orders || []);
+      console.log(`📦 Loaded ${data.orders?.length || 0} orders`);
     } catch (error) {
       console.error('Error loading orders:', error);
     } finally {
@@ -60,12 +57,13 @@ const OrderManager: React.FC = () => {
 
   const updateOrderStatus = async (id: string, status: Order['status']) => {
     try {
-      const { error } = await supabase
-        .from('orders')
-        .update({ status })
-        .eq('id', id);
-
-      if (error) throw error;
+      const res = await fetch('/api/admin-orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: ADMIN_PASSWORD, action: 'update-status', id, status }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed to update status');
       setOrders(orders.map(o => o.id === id ? { ...o, status } : o));
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -75,8 +73,13 @@ const OrderManager: React.FC = () => {
   const deleteOrder = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this order?')) return;
     try {
-      const { error } = await supabase.from('orders').delete().eq('id', id);
-      if (error) throw error;
+      const res = await fetch('/api/admin-orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: ADMIN_PASSWORD, action: 'delete', id }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed to delete order');
       setOrders(orders.filter(o => o.id !== id));
     } catch (error) {
       console.error('Error deleting order:', error);
