@@ -112,6 +112,7 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'tipper-truck': 'dump-truck',
   'kauri-helicopter': 'pine-helicopter',
   'helicopter-macrocarpa': 'pine-helicopter',
+  'small-pine-helicopter': 'pine-helicopter',
   'the-block-train-made-from-kauri': 'block-train',
   'happy-go-lucky-train': 'happy-go-luck-train',
 };
@@ -1061,7 +1062,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     },
   });
 
-  // Build FAQ schema if this category has FAQs
   const faqSchema = meta.faqs && meta.faqs.length > 0 ? JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -1075,7 +1075,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     })),
   }) : null;
 
-  // Build FAQ HTML if this category has FAQs
   const faqHTML = meta.faqs && meta.faqs.length > 0 ? `
     <section>
       <h2>Frequently Asked Questions</h2>
