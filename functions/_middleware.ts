@@ -96,6 +96,7 @@ const GHOST_CATEGORIES = new Set([
 // ─────────────────────────────────────────────────────────────
 const BLOG_SLUG_REDIRECTS: Record<string, string> = {
   'how-to-clean-wooden-toys-naturally': 'how-to-clean-wooden-toys-naturally-and-safely',
+  'wooden-pine-trolley-and-blocks': 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -1062,6 +1063,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     },
   });
 
+  // Build FAQ schema if this category has FAQs
   const faqSchema = meta.faqs && meta.faqs.length > 0 ? JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -1075,6 +1077,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     })),
   }) : null;
 
+  // Build FAQ HTML if this category has FAQs
   const faqHTML = meta.faqs && meta.faqs.length > 0 ? `
     <section>
       <h2>Frequently Asked Questions</h2>
