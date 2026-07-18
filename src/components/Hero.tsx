@@ -15,11 +15,16 @@ interface SiteSettings {
   hero_cta_link?: string;
 }
 
+const DEFAULT_TITLE = 'Handmade Wooden Toys & Kitchenware from Whangarei, New Zealand';
+const DEFAULT_SUBTITLE = 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.';
+
 const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   const [siteSettings, setSiteSettings] = useState<SiteSettings>({});
 
   const featuredProduct = products.find(p => p.featured) || products[0];
   const heroImage = siteSettings.hero_bg_image || featuredProduct?.images?.[0];
+  const heroTitle = siteSettings.hero_title || DEFAULT_TITLE;
+  const heroSubtitle = siteSettings.hero_subtitle || DEFAULT_SUBTITLE;
 
   // Load site settings in background — does NOT block image render
   useEffect(() => {
@@ -34,7 +39,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
           setSiteSettings(data);
         }
       } catch (err) {
-        // Silently fail — fallback image already showing
+        // Silently fail — fallback content already showing
       }
     };
 
@@ -57,12 +62,11 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Handmade Wooden Toys & Kitchenware from Whangarei, New Zealand
+              {heroTitle}
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
-              Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa.
-              Safe, sustainable, and built to last generations.
+              {heroSubtitle}
             </p>
 
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
