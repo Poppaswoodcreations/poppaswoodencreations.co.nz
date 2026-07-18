@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Save, Upload, RefreshCw } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+const ADMIN_PASSWORD = 'Adrianbar1?';
+
 interface HeroEditorProps {
   onSave: (heroData: any) => void;
 }
 
 const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
+  const [settingsId, setSettingsId] = useState<string | null>(null);
   const [heroData, setHeroData] = useState({
     hero_title: "Premium Wooden Toys",
     hero_subtitle: "Made with Love",
@@ -20,7 +23,9 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
-  // Load hero data from Supabase
+  // Load hero data — still uses the anon client, since site_settings
+  // has a public SELECT policy (safe, read-only, needed for the
+  // live homepage to display hero content to every visitor).
   useEffect(() => {
     loadHeroData();
   }, []);
@@ -38,6 +43,7 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
       }
 
       if (data) {
+        setSettingsId(data.id);
         setHeroData({
           hero_title: data.hero_title || "Premium Wooden Toys",
           hero_subtitle: data.hero_subtitle || "Made with Love",
@@ -116,21 +122,32 @@ const HeroEditor: React.FC<HeroEditorProps> = ({ onSave }) => {
     setUploadError(null);
 
     try {
-      // Update site_settings in Supabase
-      const { error } = await supabase
-        .from('site_settings')
-        .update({
-          hero_title: heroData.hero_title,
-          hero_subtitle: heroData.hero_subtitle,
-          hero_cta_text: heroData.hero_cta_text,
-          hero_cta_link: heroData.hero_cta_link,
-          hero_bg_image: heroData.hero_bg_image
-        })
-        .eq('id', (await supabase.from('site_settings').select('id').single()).data?.id);
-
-      if (error) {
-        throw error;
+      if (!settingsId) {
+        throw new Error('Missing site_settings row id — try refreshing the page.');
       }
+
+      // Writes now go through /api/admin-site-settings, which uses the
+      // service role key server-side. site_settings previously had a
+      // permissive "public" ALL policy that let anyone update it directly
+      // with the anon key — this route + a tightened policy closes that.
+      const res = await fetch('/api/admin-site-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: ADMIN_PASSWORD,
+          action: 'update',
+          id: settingsId,
+          updates: {
+            hero_title: heroData.hero_title,
+            hero_subtitle: heroData.hero_subtitle,
+            hero_cta_text: heroData.hero_cta_text,
+            hero_cta_link: heroData.hero_cta_link,
+            hero_bg_image: heroData.hero_bg_image,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed to save hero settings');
 
       console.log('✅ Hero settings saved to Supabase');
       setSaveMessage('Hero section updated successfully! Changes are live.');
