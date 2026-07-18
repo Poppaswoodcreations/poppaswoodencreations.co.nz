@@ -21,7 +21,7 @@ const OrderConfirmation: React.FC = () => {
     (window as any).renderOptIn = function() {
       (window as any).gapi.load('surveyoptin', function() {
         (window as any).gapi.surveyoptin.render({
-          "merchant_id": 5719804723,
+          "merchant_id": 5825166305,
           "order_id": orderId,
           "email": email,
           "delivery_country": "NZ",
