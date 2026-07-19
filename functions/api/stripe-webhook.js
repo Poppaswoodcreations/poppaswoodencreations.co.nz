@@ -113,7 +113,10 @@ export async function onRequest(context) {
 
   const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
 
-  // Save order to Supabase
+  // Save order to Supabase — save-order.js is idempotent, so this returns
+  // alreadyExisted:true if this exact order was already saved (e.g. Stripe
+  // re-delivering the same webhook event).
+  let alreadyExisted = false;
   try {
     const saveRes = await fetch(`${baseUrl}/api/save-order`, {
       method: 'POST',
@@ -124,27 +127,35 @@ export async function onRequest(context) {
       const errText = await saveRes.text();
       console.error(`save-order failed (${saveRes.status}):`, errText);
     } else {
-      console.log(`Order ${orderId} saved to Supabase`);
+      const saveData = await saveRes.json();
+      alreadyExisted = !!saveData.alreadyExisted;
+      console.log(`Order ${orderId} saved to Supabase (alreadyExisted=${alreadyExisted})`);
     }
   } catch (saveErr) {
     console.error('save-order fetch error:', saveErr);
   }
 
-  // Send order emails
-  try {
-    const emailRes = await fetch(`${baseUrl}/api/send-order-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!emailRes.ok) {
-      const errText = await emailRes.text();
-      console.error(`send-order-email failed (${emailRes.status}):`, errText);
-    } else {
-      console.log(`Order emails sent for ${orderId}`);
+  // Send order emails — but only the first time we see this order. If
+  // save-order reported it already existed, this is a duplicate webhook
+  // delivery for an order we've already emailed about, so skip re-sending.
+  if (!alreadyExisted) {
+    try {
+      const emailRes = await fetch(`${baseUrl}/api/send-order-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!emailRes.ok) {
+        const errText = await emailRes.text();
+        console.error(`send-order-email failed (${emailRes.status}):`, errText);
+      } else {
+        console.log(`Order emails sent for ${orderId}`);
+      }
+    } catch (emailErr) {
+      console.error('send-order-email fetch error:', emailErr);
     }
-  } catch (emailErr) {
-    console.error('send-order-email fetch error:', emailErr);
+  } else {
+    console.log(`Skipping duplicate emails for already-saved order ${orderId}`);
   }
 
   return new Response(JSON.stringify({ received: true }), {
