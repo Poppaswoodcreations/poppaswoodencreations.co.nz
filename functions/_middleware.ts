@@ -713,7 +713,7 @@ function hasSearchTemplatePlaceholder(search: string): boolean {
 
 function hasTrackingParams(searchParams: URLSearchParams): boolean {
   for (const key of searchParams.keys()) {
-    if (key.startsWith('utm_') || key === 'gclid' || key === 'fbclid' || key === 'ref') {
+    if (key.startsWith('utm_') || key === 'gclid' || key === 'fbclid' || key === 'ref' || key === 'srsltid') {
       return true;
     }
   }
