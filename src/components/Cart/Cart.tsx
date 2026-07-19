@@ -231,10 +231,10 @@ const ExpressPayButton: React.FC<ExpressPayProps> = ({
         }
         const orderId = `STR-${paymentIntent!.id.slice(-8).toUpperCase()}`;
         localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, payerFormData)));
-        await sendOrderNotification({
-          orderTotal: grandTotal, items, customer: payerFormData,
-          paymentMethod: 'Apple/Google Pay', orderNumber: orderId,
-        }).catch(console.error);
+        // NOTE: order save + confirmation/notification emails are handled
+        // by the Stripe webhook (payment_intent.succeeded) server-side —
+        // NOT here. Calling sendOrderNotification here as well used to
+        // cause every card order to be saved twice and emailed twice.
         if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
         onSuccess(orderId);
       } catch (err: any) { ev.complete('fail'); onError(err.message || 'Something went wrong'); }
@@ -300,10 +300,10 @@ const StripeCardForm: React.FC<StripeFormProps> = ({
       if (paymentIntent?.status === 'succeeded') {
         const orderId = `STR-${paymentIntent.id.slice(-8).toUpperCase()}`;
         localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderId, grandTotal, total, shipping, items, formData)));
-        await sendOrderNotification({
-          orderTotal: grandTotal, items, customer: formData,
-          paymentMethod: 'Stripe', orderNumber: orderId,
-        }).catch(console.error);
+        // NOTE: order save + confirmation/notification emails are handled
+        // by the Stripe webhook (payment_intent.succeeded) server-side —
+        // NOT here. Calling sendOrderNotification here as well used to
+        // cause every card order to be saved twice and emailed twice.
         if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderId, value: grandTotal, currency: 'NZD' });
         onSuccess(orderId);
       }
