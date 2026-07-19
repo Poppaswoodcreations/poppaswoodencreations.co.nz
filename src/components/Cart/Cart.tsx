@@ -133,20 +133,21 @@ const buildOrderData = (
   timestamp: new Date().toISOString(),
 });
 
-// ─── Updated: passes full order metadata to Stripe ────────────────────────────
+// ─── Updated: server now computes the charge amount itself from real
+// product prices — this only sends what's in the cart + delivery details,
+// never a trusted dollar figure. ─────────────────────────────────────────
 const createPaymentIntent = async (
-  grandTotal: number,
   formData: any,
-  items: CartItem[],
-  shipping: number,
-  total: number
+  items: CartItem[]
 ) => {
   const res = await fetch('/api/create-payment-intent', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      amount: grandTotal,
-      currency: 'nzd',
+      items: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+      deliveryMethod: formData.deliveryMethod,
+      country: formData.country || 'NZ',
+      postalCode: formData.postalCode || '',
       metadata: {
         customer_name:   formData.name,
         customer_email:  formData.email,
@@ -160,8 +161,6 @@ const createPaymentIntent = async (
           formData.deliveryMethod === 'shipping' &&
           isRuralPostcode(formData.postalCode)
         ),
-        subtotal:        total.toFixed(2),
-        shipping:        shipping.toFixed(2),
         payment_method:  'Card',
         items:           items
           .map(i => `${i.product.name} x${i.quantity} ($${(i.product.price * i.quantity).toFixed(2)})`)
@@ -219,7 +218,7 @@ const ExpressPayButton: React.FC<ExpressPayProps> = ({
         return;
       }
       try {
-        const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, payerFormData, items, shipping, total);
+        const { clientSecret, error: backendError } = await createPaymentIntent(payerFormData, items);
         if (backendError) { ev.complete('fail'); onError(backendError); return; }
         const { error, paymentIntent } = await stripe.confirmCardPayment(
           clientSecret, { payment_method: ev.paymentMethod.id }, { handleActions: false }
@@ -284,7 +283,7 @@ const StripeCardForm: React.FC<StripeFormProps> = ({
     if (validationError) { onError(validationError); return; }
     setProcessing(true);
     try {
-      const { clientSecret, error: backendError } = await createPaymentIntent(grandTotal, formData, items, shipping, total);
+      const { clientSecret, error: backendError } = await createPaymentIntent(formData, items);
       if (backendError) { onError(backendError); setProcessing(false); return; }
       const cardElement = elements.getElement(CardElement);
       if (!cardElement) return;
