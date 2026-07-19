@@ -1,5 +1,12 @@
 // Cloudflare Pages Function: POST /api/save-order
 // Inserts an order into Supabase via the REST API (no SDK needed).
+//
+// IDEMPOTENT: checks for an existing row with the same order_number before
+// inserting. This protects against Stripe re-delivering the same webhook
+// event (which it does whenever a response takes too long, or if there are
+// duplicate webhook endpoints configured) — without this check, every
+// re-delivery created a second order row and triggered a second round of
+// emails.
 export async function onRequest(context) {
   const { request, env } = context;
   if (request.method !== 'POST') {
@@ -18,8 +25,32 @@ export async function onRequest(context) {
     return json({ error: 'Supabase env vars not configured' }, 500);
   }
 
+  const headers = {
+    apikey: SUPABASE_SERVICE_KEY,
+    Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+    'Content-Type': 'application/json',
+  };
+
   try {
     const o = await request.json();
+
+    if (!o.orderNumber) {
+      return json({ error: 'orderNumber is required' }, 400);
+    }
+
+    // ── Idempotency check — has this order already been saved? ─────────
+    const existingRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/orders?order_number=eq.${encodeURIComponent(o.orderNumber)}&select=*`,
+      { headers }
+    );
+    if (existingRes.ok) {
+      const existingRows = await existingRes.json();
+      if (Array.isArray(existingRows) && existingRows.length > 0) {
+        console.log(`Order ${o.orderNumber} already saved — skipping duplicate insert`);
+        return json({ success: true, alreadyExisted: true, order: existingRows[0] });
+      }
+    }
+
     const row = {
       order_number: o.orderNumber,
       order_total: o.orderTotal,
@@ -33,12 +64,7 @@ export async function onRequest(context) {
 
     const res = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
       method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation',
-      },
+      headers: { ...headers, Prefer: 'return=representation' },
       body: JSON.stringify([row]),
     });
 
@@ -48,7 +74,7 @@ export async function onRequest(context) {
       return json({ error: errText }, 500);
     }
     const data = await res.json();
-    return json({ success: true, order: Array.isArray(data) ? data[0] : data });
+    return json({ success: true, alreadyExisted: false, order: Array.isArray(data) ? data[0] : data });
   } catch (error) {
     console.error('save-order error:', error);
     return json({ error: error.message }, 500);
