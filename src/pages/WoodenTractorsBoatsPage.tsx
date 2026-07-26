@@ -112,7 +112,7 @@ const WoodenTractorsBoatsPage: React.FC = () => {
           </div>
           <div>
             <h3 className="font-semibold text-amber-800 mb-1">Do you ship throughout New Zealand?</h3>
-            <p className="leading-relaxed">Yes, we ship to all New Zealand addresses. Standard shipping is $8.50 NZD, with free shipping on orders over $150.</p>
+            <p className="leading-relaxed">Yes, we ship to all New Zealand addresses. Standard shipping is $8.50 NZD, with free shipping on orders over $1000.</p>
           </div>
         </div>
       </section>
