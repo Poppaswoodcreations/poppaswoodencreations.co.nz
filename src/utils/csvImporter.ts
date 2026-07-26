@@ -296,7 +296,7 @@ const generateSEO = (name: string, description: string, category: string, price:
   const seoTitle = `${name} | ${categoryName} | Handcrafted in New Zealand`;
   
   // Generate SEO description
-  const seoDescription = `${name} - ${description.substring(0, 100)}${description.length > 100 ? '...' : ''} Handcrafted from sustainable timber. Price: $${price} NZD. Free NZ shipping over $150.`;
+  const seoDescription = `${name} - ${description.substring(0, 100)}${description.length > 100 ? '...' : ''} Handcrafted from sustainable timber. Price: $${price} NZD. Free NZ shipping over $1000.`;
   
   // Generate SEO keywords based on product name and category
   const baseKeywords = [
