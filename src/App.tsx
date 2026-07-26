@@ -267,7 +267,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations"
-                  description="Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $150."
+                  description="Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $1000."
                   image="https://poppaswoodencreations.co.nz/hero-image.jpg"
                   canonicalPath="/"
                 />
