@@ -34,6 +34,7 @@ const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 const CustomOrderPage = lazy(() => import('./pages/CustomOrderPage'));
+const Games = lazy(() => import('./components/Games'));
 import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
 import WoodenPensPage from './pages/WoodenPensPage';
 import WoodenCrossesPage from './pages/WoodenCrossesPage';
@@ -446,6 +447,19 @@ const AppContent: React.FC = () => {
             <Route path="/returns" element={<><SEOHead title="Returns & Refunds Policy" description="Our 30-day return policy and quality guarantee." canonicalPath="/returns" ogType="website" /><ReturnsRefunds /></>} />
             <Route path="/privacy" element={<><SEOHead title="Privacy Policy" noindex={true} /><PrivacyPolicy /></>} />
             <Route path="/terms" element={<><SEOHead title="Terms of Service" noindex={true} /><TermsOfService /></>} />
+
+            {/* ── GAMES ── */}
+            <Route path="/games" element={
+              <>
+                <SEOHead
+                  title="Games - Poppa's Wooden Creations"
+                  description="Take a break with Poppa's Workshop Games — Hangman and Guess the Number, free to play."
+                  canonicalPath="/games"
+                  ogType="website"
+                />
+                <Games />
+              </>
+            } />
 
             {/* ── REVIEWS ── */}
             <Route path="/reviews" element={<><SEOHead title="Customer Reviews - 5.0/5 Stars" description="Read verified reviews from happy customers." canonicalPath="/reviews" ogType="website" /><Reviews /></>} />
