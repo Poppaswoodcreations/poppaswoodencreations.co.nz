@@ -65,6 +65,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
       privacy: '/privacy',
       terms: '/terms',
       'custom-order': '/custom-order',
+      games: '/games',
     };
     navigate(routes[categorySlug] ?? `/${categorySlug}`);
     setIsMenuOpen(false);
@@ -130,6 +131,12 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                     className="block w-full text-left px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium"
                   >
                     Custom Orders
+                  </button>
+                  <button
+                    onClick={() => handleCategoryClick('games')}
+                    className="block w-full text-left px-4 py-2 text-amber-700 hover:bg-amber-50 hover:text-amber-800 transition-colors font-medium"
+                  >
+                    Games
                   </button>
                 </div>
               </div>
@@ -308,6 +315,13 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
                 className="block w-full text-left px-4 py-2 text-amber-700 font-semibold hover:bg-amber-50 hover:text-amber-800 transition-colors border-t border-b border-amber-100"
               >
                 Custom Orders
+              </button>
+
+              <button
+                onClick={() => handleCategoryClick('games')}
+                className="block w-full text-left px-4 py-2 text-amber-700 font-semibold hover:bg-amber-50 hover:text-amber-800 transition-colors"
+              >
+                Games
               </button>
 
               <div className="px-4 py-2">
