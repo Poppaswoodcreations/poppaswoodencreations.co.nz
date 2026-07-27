@@ -86,12 +86,12 @@ const WhackAMole: React.FC = () => {
             >
               {activeHole === i && (
                 <div
-                  className={`absolute inset-3 rounded-full bg-gradient-to-br from-amber-700 to-amber-900 border-2 border-amber-950 shadow-lg transition-transform ${
+                  className={`absolute inset-3 rounded-full bg-gradient-to-br from-orange-100 to-amber-200 border-2 border-amber-500 shadow-lg transition-transform ${
                     whacked === i ? 'scale-0' : 'scale-100'
                   }`}
                   style={{
                     backgroundImage:
-                      'repeating-radial-gradient(circle at 50% 50%, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px, transparent 2px, transparent 6px)',
+                      'repeating-radial-gradient(circle at 50% 50%, rgba(120,53,15,0.35) 0px, rgba(120,53,15,0.35) 2px, transparent 2px, transparent 6px)',
                   }}
                 />
               )}
