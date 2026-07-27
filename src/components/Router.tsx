@@ -11,6 +11,7 @@ import TermsOfService from './TermsOfService';
 import Reviews from './Reviews';
 import ReviewsAdmin from './ReviewsAdmin';
 import SearchResultsPage from '../pages/SearchResultsPage';
+import Games from './Games';
 import { Product } from '../types';
 
 interface RouterProps {
@@ -55,6 +56,9 @@ const Router: React.FC<RouterProps> = ({ products, onAddToCart }) => {
       
       {/* Reviews Page - DEDICATED COMPONENT */}
       <Route path="/reviews" element={<Reviews />} />
+
+      {/* Games Page - DEDICATED COMPONENT */}
+      <Route path="/games" element={<Games />} />
 
       {/* Reviews Admin Page */}
       <Route path="/admin/reviews" element={<ReviewsAdmin />} />
