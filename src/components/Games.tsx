@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { RotateCcw } from 'lucide-react';
 
 /* ---------------------------------------------
@@ -238,14 +237,6 @@ const Games: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Games | Poppa's Wooden Creations</title>
-        <meta
-          name="description"
-          content="Take a break with Poppa's Workshop Games — Hangman and Guess the Number, free to play."
-        />
-      </Helmet>
-
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-8">
