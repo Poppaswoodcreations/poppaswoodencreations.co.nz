@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { RotateCcw } from 'lucide-react';
+import Snake from './games/Snake';
+import MemoryMatch from './games/MemoryMatch';
+import WordGuess from './games/WordGuess';
+import WhackAMole from './games/WhackAMole';
 
 /* ---------------------------------------------
    Hangman data — drawn from Poppa's own world
@@ -232,42 +236,51 @@ const GuessTheNumber: React.FC = () => {
 /* ---------------------------------------------
    Games page
 --------------------------------------------- */
+type TabKey = 'hangman' | 'gtn' | 'snake' | 'memory' | 'word' | 'whack';
+
+const TABS: { key: TabKey; label: string }[] = [
+  { key: 'hangman', label: 'Hangman' },
+  { key: 'gtn', label: 'Guess the Number' },
+  { key: 'snake', label: 'Snake' },
+  { key: 'memory', label: 'Memory Match' },
+  { key: 'word', label: 'Word Guess' },
+  { key: 'whack', label: 'Whack-a-Knot' },
+];
+
 const Games: React.FC = () => {
-  const [tab, setTab] = useState<'hangman' | 'gtn'>('hangman');
+  const [tab, setTab] = useState<TabKey>('hangman');
 
   return (
     <>
       <div className="min-h-screen bg-gray-50 py-12">
-        <div className="container mx-auto px-4 max-w-3xl">
+        <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">The Workshop Games</h1>
-            <p className="text-gray-600">Two old favourites, whittled back into shape</p>
+            <p className="text-gray-600">A few old favourites, whittled back into shape</p>
           </div>
 
-          <div className="flex justify-center gap-3 mb-8">
-            <button
-              onClick={() => setTab('hangman')}
-              className={`px-6 py-2 rounded-lg font-semibold border-2 transition-colors ${
-                tab === 'hangman'
-                  ? 'bg-amber-700 border-amber-700 text-white'
-                  : 'border-amber-300 text-amber-800 hover:bg-amber-50'
-              }`}
-            >
-              Hangman
-            </button>
-            <button
-              onClick={() => setTab('gtn')}
-              className={`px-6 py-2 rounded-lg font-semibold border-2 transition-colors ${
-                tab === 'gtn'
-                  ? 'bg-amber-700 border-amber-700 text-white'
-                  : 'border-amber-300 text-amber-800 hover:bg-amber-50'
-              }`}
-            >
-              Guess the Number
-            </button>
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8">
+            {TABS.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => setTab(t.key)}
+                className={`px-4 sm:px-6 py-2 rounded-lg font-semibold border-2 text-sm sm:text-base transition-colors ${
+                  tab === t.key
+                    ? 'bg-amber-700 border-amber-700 text-white'
+                    : 'border-amber-300 text-amber-800 hover:bg-amber-50'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
           </div>
 
-          {tab === 'hangman' ? <Hangman /> : <GuessTheNumber />}
+          {tab === 'hangman' && <Hangman />}
+          {tab === 'gtn' && <GuessTheNumber />}
+          {tab === 'snake' && <Snake />}
+          {tab === 'memory' && <MemoryMatch />}
+          {tab === 'word' && <WordGuess />}
+          {tab === 'whack' && <WhackAMole />}
         </div>
       </div>
     </>
