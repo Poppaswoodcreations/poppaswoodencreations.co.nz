@@ -11,9 +11,9 @@ import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
 import ErrorMonitor from './components/ErrorMonitor';
-import NotFound from './components/NotFound';
 
 // Lazy load components not needed for initial render
+const NotFound = lazy(() => import('./components/NotFound'));
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
 const ProductDetail = lazy(() => import('./components/ProductDetail'));
 const ProductSearch = lazy(() => import('./components/ProductSearch'));
