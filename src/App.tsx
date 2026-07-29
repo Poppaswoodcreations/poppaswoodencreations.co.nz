@@ -11,6 +11,7 @@ import SEOHead from './components/SEOHead';
 import PoppaChatbot from './components/PoppaChatbot';
 import { HomePageSchema } from './components/HomePageSchema';
 import ErrorMonitor from './components/ErrorMonitor';
+import NotFound from './components/NotFound';
 
 // Lazy load components not needed for initial render
 const ProductGrid = lazy(() => import('./components/ProductGrid'));
@@ -477,6 +478,14 @@ const AppContent: React.FC = () => {
             {/* ── BLOG ── */}
             <Route path="/blog" element={<><SEOHead title="Blog - Wooden Toy Tips" description="Tips and guides for wooden toys and Montessori education." canonicalPath="/blog" ogType="website" /><BlogListView /></>} />
             <Route path="/blog/:slug" element={<BlogPostWrapper />} />
+
+            {/* ── 404 ── */}
+            <Route path="*" element={
+              <>
+                <SEOHead title="Page Not Found" noindex={true} />
+                <NotFound />
+              </>
+            } />
 
           </Routes>
         </Suspense>
