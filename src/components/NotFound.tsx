@@ -1,46 +1,59 @@
 import React from 'react';
-import { Home, Search, Package } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface NotFoundProps {
-  onGoHome: () => void;
-}
+const POPULAR_CATEGORIES = [
+  { path: '/wooden-trucks', label: 'Wooden Toy Trucks' },
+  { path: '/wooden-baby-toys', label: 'Wooden Baby Toys' },
+  { path: '/wooden-kitchenware', label: 'Wooden Kitchenware' },
+  { path: '/wooden-cars', label: 'Wooden Cars' },
+  { path: '/wooden-trains', label: 'Wooden Train Sets' },
+  { path: '/products', label: 'All Products' },
+];
 
-const NotFound: React.FC<NotFoundProps> = ({ onGoHome }) => {
+const NotFound: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center p-4">
-      <div className="text-center max-w-md">
-        <div className="text-8xl mb-6">🪵</div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Page Not Found</h1>
-        <p className="text-gray-600 mb-8 leading-relaxed">
-          Sorry, we couldn't find the page you're looking for. 
-          Let's get you back to our beautiful wooden toys!
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center px-4 py-16">
+      <div className="max-w-xl w-full text-center">
+        <div className="text-7xl mb-4">🪵</div>
+        <h1 className="text-4xl sm:text-5xl font-bold text-amber-900 mb-3">
+          Page Not Found
+        </h1>
+        <p className="text-lg text-gray-600 mb-8">
+          Looks like this page has been sanded down to nothing. The page you're
+          looking for doesn't exist, but here are some places to find what you need.
         </p>
-        
-        <div className="space-y-4">
-          <button
-            onClick={onGoHome}
-            className="w-full bg-amber-600 text-white py-3 px-6 rounded-lg hover:bg-amber-700 transition-colors flex items-center justify-center space-x-2"
-          >
-            <Home size={20} />
-            <span>Back to Home</span>
-          </button>
-          
-          <div className="flex space-x-4">
-            <button
-              onClick={() => window.history.back()}
-              className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Go Back
-            </button>
-            <button
-              onClick={onGoHome}
-              className="flex-1 border border-amber-300 text-amber-700 py-2 px-4 rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center space-x-1"
-            >
-              <Package size={16} />
-              <span>Shop Toys</span>
-            </button>
+
+        <Link
+          to="/"
+          className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-3 rounded-lg transition mb-10"
+        >
+          Back to Homepage
+        </Link>
+
+        <div className="border-t border-amber-200 pt-8">
+          <p className="text-sm font-semibold text-amber-900 mb-4 uppercase tracking-wide">
+            Popular Categories
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {POPULAR_CATEGORIES.map(cat => (
+              <Link
+                key={cat.path}
+                to={cat.path}
+                className="bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-100 text-amber-900 font-medium py-3 px-3 rounded-lg text-sm transition"
+              >
+                {cat.label}
+              </Link>
+            ))}
           </div>
         </div>
+
+        <p className="text-sm text-gray-400 mt-10">
+          Still stuck?{' '}
+          <Link to="/contact" className="underline hover:text-amber-700">
+            Contact us
+          </Link>{' '}
+          and we'll help you find it.
+        </p>
       </div>
     </div>
   );
