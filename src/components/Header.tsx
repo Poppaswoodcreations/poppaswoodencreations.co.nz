@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
   };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-30">
+    <header className={`bg-white shadow-md z-30 ${isMenuOpen ? 'relative' : 'sticky top-0'}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
@@ -251,7 +251,7 @@ const Header: React.FC<HeaderProps> = ({ onShowAdmin, onShowCart, cartItemCount 
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4 bg-white">
+          <div className="lg:hidden border-t border-gray-200 py-4 bg-white max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="space-y-2">
 
               <button
