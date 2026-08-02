@@ -308,7 +308,7 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
     ],
   },
   'wooden-pens': {
-    title: "Handcrafted Wooden Pens NZ | Native Timber Pens | Poppa's Wooden Creations",
+    title: "Handcrafted Wooden Pens NZ | Poppa's Wooden Creations",
     description: 'Handcrafted wooden pens turned from native New Zealand timber — Kauri, Rimu, Rewa-Rewa and Totara. Unique heirloom gifts made in Whangarei.',
     h1: 'Handcrafted Wooden Pens',
     intro: 'Our wooden pens are hand-turned in Whangarei from rare native New Zealand timbers including ancient Kauri, Rimu, Rewa-Rewa and Totara. Available as click pens, stylus pens and larger ballpoint pens — each one completely unique.',
@@ -321,7 +321,7 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
     ],
   },
   'wooden-crosses': {
-    title: "Handcrafted Wooden Crosses NZ | Native Timber | Poppa's Wooden Creations",
+    title: "Handcrafted Wooden Crosses NZ | Poppa's Wooden Creations",
     description: 'Handcrafted wooden crosses made from native New Zealand Rimu timber. Beautiful religious gifts and heirloom pieces, made by hand in Whangarei.',
     h1: 'Handcrafted Wooden Crosses',
     intro: 'Our wooden crosses are handcrafted in Whangarei from native New Zealand Rimu timber. A meaningful and lasting gift for baptisms, confirmations, Easter and other occasions.',
@@ -334,7 +334,7 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
     ],
   },
   'wooden-toys-nz': {
-    title: "Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa's Wooden Creations",
+    title: "Handmade Wooden Toys NZ | Poppa's Wooden Creations",
     description: "Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ's trusted wooden toy maker since 2015.",
     h1: 'Handcrafted Wooden Toys NZ',
     intro: "Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa's Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.",
@@ -507,7 +507,7 @@ const INFO_PAGES: Record<string, {
   content: string;
 }> = {
   '/about': {
-    title: "About Us | Handcrafted in Whangarei NZ Since 2015 | Poppa's Wooden Creations",
+    title: "About Us | Poppa's Wooden Creations, Whangarei NZ",
     description: "Learn about Poppa's Wooden Creations. Handcrafting premium wooden toys and kitchenware from native NZ timber in Whangarei, Northland, since 2015.",
     h1: "About Poppa's Wooden Creations",
     content: `
@@ -1160,7 +1160,10 @@ function buildProductHTML(product: any, productId: string): string {
   const fullImage = image.startsWith('http') ? image : `${BASE_URL}${image}`;
   const inStock = product.in_stock !== false;
   const category = (product.category || 'wooden-toys').replace(/-/g, ' ');
-  const seoTitle = product.seo_title || `${name} | Handcrafted Wooden Toy | Made in NZ | Poppa's Wooden Creations`;
+  // Fallback title kept short (name + brand only) so it stays under the
+  // 70-char limit search engines truncate at, regardless of product name
+  // length. Set product.seo_title in Supabase to override per-product.
+  const seoTitle = product.seo_title || `${name} | Poppa's Wooden Creations`;
   const seoDescription = product.seo_description || description.substring(0, 160);
   const ageLabel = product.age_label || '';
   const productSchema = JSON.stringify({
