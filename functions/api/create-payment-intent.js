@@ -7,13 +7,15 @@
 // where a modified request could previously charge any amount the caller
 // wanted, regardless of what was actually in the cart.
 //
-// SHIPPING: cost is based on weight tiers, but weight alone undercharges
-// orders with several separate small items (e.g. a T-Rex + rattle +
-// helicopter can be light in total but needs a bigger box than a single
-// item of the same weight, since NZ Post prices by box size). To fix this,
-// a distinct-item-count floor is applied on top of the weight tier, so a
-// light multi-item order can't fall into a tier below what the box size
-// actually costs.
+// SHIPPING: NZ Post charges by billable weight, which is the GREATER of
+// actual weight and volumetric weight — not actual weight alone. Volumetric
+// weight = (length_cm x width_cm x height_cm) / 5000, per NZ Post's own
+// formula. A weight-only calculation undercharges any order with several
+// small, differently-shaped items (e.g. a T-Rex + rattle + helicopter is
+// light in total but needs a bigger box than its weight alone suggests).
+// This is computed from real product dimensions stored in Supabase
+// (length_mm/width_mm/height_mm), falling back to actual weight only for
+// any product missing dimension data.
 
 const RURAL_SURCHARGE = 5.70;
 
@@ -49,30 +51,18 @@ function isRuralPostcode(postcode) {
   return NZ_RURAL_POSTCODES.has(String(postcode || '').trim());
 }
 
-// NZ weight-bracket tiers, in ascending order.
-const NZ_TIERS = [10, 13, 19, 26, 32];
-
-// AU/US/CA/GB/default only have two brackets: [<=1kg, >1kg].
-function nzWeightTierIndex(weight) {
-  if (weight <= 1) return 0;
-  if (weight <= 2) return 1;
-  if (weight <= 3) return 2;
-  if (weight <= 4) return 3;
-  return 4;
+// NZ Post's own formula: volumetric weight (kg) = (L cm x W cm x H cm) / 5000
+function volumetricWeightKg(lengthMm, widthMm, heightMm) {
+  if (!lengthMm || !widthMm || !heightMm) return 0; // missing dims -> no volumetric contribution
+  const lCm = lengthMm / 10, wCm = widthMm / 10, hCm = heightMm / 10;
+  return (lCm * wCm * hCm) / 5000;
 }
 
-// How many separate boxes/packing-volume steps a distinct-item count
-// realistically needs, regardless of how light the items are individually.
-// Tuned against real NZ Post charges: 3 distinct light items priced out at
-// $12.90 (the $13 tier), not the $10 bottom tier the old weight-only logic
-// picked.
-function itemCountFloorIndex(distinctItemCount) {
-  if (distinctItemCount <= 1) return 0;
-  if (distinctItemCount <= 3) return 1;
-  return 2;
+function nzWeightTier(weight) {
+  return weight <= 1 ? 10 : weight <= 2 ? 13 : weight <= 3 ? 19 : weight <= 4 ? 26 : 32;
 }
 
-function calculateShipping({ items, dbProducts, subtotal, totalWeight, country, deliveryMethod, postalCode }) {
+function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode }) {
   if (deliveryMethod === 'pickup') return 0;
 
   // Same "small pine vehicle" free-shipping rule as the client, but checked
@@ -89,27 +79,23 @@ function calculateShipping({ items, dbProducts, subtotal, totalWeight, country, 
 
   if (subtotal >= 1000) return 0;
 
-  const distinctItemCount = new Set(items.map(i => i.id)).size;
-
   let base;
   switch (country) {
-    case 'NZ': {
-      const tierIndex = Math.max(nzWeightTierIndex(totalWeight), itemCountFloorIndex(distinctItemCount));
-      base = NZ_TIERS[tierIndex];
+    case 'NZ':
+      base = nzWeightTier(billableWeight);
       break;
-    }
     case 'AU':
-      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 25 : 35;
+      base = billableWeight <= 1 ? 25 : 35;
       break;
     case 'US':
     case 'CA':
-      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 35 : 50;
+      base = billableWeight <= 1 ? 35 : 50;
       break;
     case 'GB':
-      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 40 : 55;
+      base = billableWeight <= 1 ? 40 : 55;
       break;
     default:
-      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 50 : 70;
+      base = billableWeight <= 1 ? 50 : 70;
   }
 
   const isRural = country === 'NZ' && deliveryMethod === 'shipping' && isRuralPostcode(postalCode);
@@ -121,7 +107,7 @@ async function fetchProducts(supabaseUrl, supabaseKey, ids) {
   const uniqueIds = [...new Set(ids)];
   const idList = uniqueIds.map(id => `"${id}"`).join(',');
   const res = await fetch(
-    `${supabaseUrl}/rest/v1/products?id=in.(${idList})&select=id,name,price,weight,in_stock`,
+    `${supabaseUrl}/rest/v1/products?id=in.(${idList})&select=id,name,price,weight,length_mm,width_mm,height_mm,in_stock`,
     {
       headers: {
         apikey: supabaseKey,
@@ -170,21 +156,26 @@ export async function onRequest(context) {
     const dbProducts = await fetchProducts(SUPABASE_URL, SUPABASE_ANON_KEY, cleanItems.map(i => i.id));
 
     let subtotal = 0;
-    let totalWeight = 0;
+    let totalActualWeight = 0;
+    let totalVolumetricWeight = 0;
     for (const item of cleanItems) {
       const product = dbProducts[item.id];
       if (!product) {
         return json({ error: `Product not found: ${item.id}` }, 400);
       }
       subtotal += Number(product.price || 0) * item.quantity;
-      totalWeight += Number(product.weight || 0.5) * item.quantity;
+      totalActualWeight += Number(product.weight || 0.5) * item.quantity;
+      totalVolumetricWeight += volumetricWeightKg(product.length_mm, product.width_mm, product.height_mm) * item.quantity;
     }
+
+    // NZ Post bills whichever is greater: actual weight or volumetric weight.
+    const billableWeight = Math.max(totalActualWeight, totalVolumetricWeight);
 
     const shipping = calculateShipping({
       items: cleanItems,
       dbProducts,
       subtotal,
-      totalWeight,
+      billableWeight,
       country: country || 'NZ',
       deliveryMethod: deliveryMethod || 'shipping',
       postalCode: postalCode || '',
