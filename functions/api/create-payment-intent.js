@@ -6,6 +6,14 @@
 // quantities, never a dollar amount. This closes a price-tampering hole
 // where a modified request could previously charge any amount the caller
 // wanted, regardless of what was actually in the cart.
+//
+// SHIPPING: cost is based on weight tiers, but weight alone undercharges
+// orders with several separate small items (e.g. a T-Rex + rattle +
+// helicopter can be light in total but needs a bigger box than a single
+// item of the same weight, since NZ Post prices by box size). To fix this,
+// a distinct-item-count floor is applied on top of the weight tier, so a
+// light multi-item order can't fall into a tier below what the box size
+// actually costs.
 
 const RURAL_SURCHARGE = 5.70;
 
@@ -41,6 +49,29 @@ function isRuralPostcode(postcode) {
   return NZ_RURAL_POSTCODES.has(String(postcode || '').trim());
 }
 
+// NZ weight-bracket tiers, in ascending order.
+const NZ_TIERS = [10, 13, 19, 26, 32];
+
+// AU/US/CA/GB/default only have two brackets: [<=1kg, >1kg].
+function nzWeightTierIndex(weight) {
+  if (weight <= 1) return 0;
+  if (weight <= 2) return 1;
+  if (weight <= 3) return 2;
+  if (weight <= 4) return 3;
+  return 4;
+}
+
+// How many separate boxes/packing-volume steps a distinct-item count
+// realistically needs, regardless of how light the items are individually.
+// Tuned against real NZ Post charges: 3 distinct light items priced out at
+// $12.90 (the $13 tier), not the $10 bottom tier the old weight-only logic
+// picked.
+function itemCountFloorIndex(distinctItemCount) {
+  if (distinctItemCount <= 1) return 0;
+  if (distinctItemCount <= 3) return 1;
+  return 2;
+}
+
 function calculateShipping({ items, dbProducts, subtotal, totalWeight, country, deliveryMethod, postalCode }) {
   if (deliveryMethod === 'pickup') return 0;
 
@@ -58,23 +89,27 @@ function calculateShipping({ items, dbProducts, subtotal, totalWeight, country, 
 
   if (subtotal >= 1000) return 0;
 
+  const distinctItemCount = new Set(items.map(i => i.id)).size;
+
   let base;
   switch (country) {
-    case 'NZ':
-      base = totalWeight <= 1 ? 10 : totalWeight <= 2 ? 13 : totalWeight <= 3 ? 19 : totalWeight <= 4 ? 26 : 32;
+    case 'NZ': {
+      const tierIndex = Math.max(nzWeightTierIndex(totalWeight), itemCountFloorIndex(distinctItemCount));
+      base = NZ_TIERS[tierIndex];
       break;
+    }
     case 'AU':
-      base = totalWeight <= 1 ? 25 : 35;
+      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 25 : 35;
       break;
     case 'US':
     case 'CA':
-      base = totalWeight <= 1 ? 35 : 50;
+      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 35 : 50;
       break;
     case 'GB':
-      base = totalWeight <= 1 ? 40 : 55;
+      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 40 : 55;
       break;
     default:
-      base = totalWeight <= 1 ? 50 : 70;
+      base = (totalWeight <= 1 && distinctItemCount <= 1) ? 50 : 70;
   }
 
   const isRural = country === 'NZ' && deliveryMethod === 'shipping' && isRuralPostcode(postalCode);
