@@ -129,10 +129,19 @@ const AdminPage: React.FC = () => {
 
   const ADMIN_PASSWORD = 'Adrianbar1?';
 
+  // Auto-login if this browser already logged in on another admin page
+  useEffect(() => {
+    const saved = localStorage.getItem('poppaAdminPassword');
+    if (saved === ADMIN_PASSWORD) {
+      setAuthed(true);
+    }
+  }, []);
+
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
       setAuthed(true);
       setLoginError('');
+      localStorage.setItem('poppaAdminPassword', password);
     } else {
       setLoginError('Incorrect password');
     }
