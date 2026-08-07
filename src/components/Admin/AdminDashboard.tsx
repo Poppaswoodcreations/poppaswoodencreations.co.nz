@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Eye, FileEdit, Star } from 'lucide-react';
+import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Eye, FileEdit, Star, TreePine } from 'lucide-react';
 import { Product } from '../../types';
 import { saveProductsToStorage } from '../../utils/productStorage';
 import ProductForm from './ProductForm';
@@ -38,6 +38,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     { id: 'blog-admin', label: '📝 Blog Manager', icon: FileEdit },
     { id: 'reviews', label: '⭐ Reviews', icon: Star },
     { id: 'orders', label: '📋 Orders', icon: BarChart3 },
+    { id: 'custom-orders', label: '🪵 Custom Orders', icon: TreePine },
     { id: 'hero-editor', label: '🎨 Edit Hero', icon: Edit3 },
     { id: 'footer-editor', label: '📄 Edit Footer', icon: Settings },
     { id: 'add-category', label: '➕ Add Category', icon: Plus },
@@ -225,6 +226,36 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <li>👁️ <strong>Hide/Show</strong> reviews without deleting them</li>
                 <li>➕ <strong>Add</strong> reviews manually from Google My Business</li>
                 <li>🗑️ <strong>Delete</strong> reviews you don't want to display</li>
+              </ul>
+            </div>
+          </div>
+        );
+
+      case 'custom-orders':
+        return (
+          <div className="space-y-4">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+              <h3 className="text-2xl font-bold text-amber-900 mb-3">🪵 Custom Orders</h3>
+              <p className="text-amber-700 mb-6">
+                View and manage custom order requests submitted through your website — update their status, add internal notes, or remove completed ones.
+              </p>
+              <a
+                href="/admin/custom-orders"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors font-semibold text-lg"
+              >
+                <TreePine size={20} />
+                Open Custom Orders Manager
+              </a>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h4 className="font-semibold text-gray-900 mb-3">What you can do in Custom Orders Manager:</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li>📋 <strong>View</strong> every custom order request, newest first</li>
+                <li>🔄 <strong>Update status</strong> — new, quoted, in progress, completed, or cancelled</li>
+                <li>📝 <strong>Add internal notes</strong> for quotes sent or timeframes agreed</li>
+                <li>🗑️ <strong>Delete</strong> orders once they're no longer needed</li>
               </ul>
             </div>
           </div>
