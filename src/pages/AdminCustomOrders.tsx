@@ -57,6 +57,7 @@ const AdminCustomOrders: React.FC = () => {
       setOrders(data.orders || []);
       setAuthed(true);
       setAuthError('');
+      localStorage.setItem('poppaAdminPassword', password);
     } catch (err) {
       setAuthError(err instanceof Error ? err.message : 'Login failed');
       setAuthed(false);
@@ -78,6 +79,24 @@ const AdminCustomOrders: React.FC = () => {
 
   useEffect(() => {
     if (authed) fetchOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auto-login if this browser already logged in on the main admin page
+  useEffect(() => {
+    const saved = localStorage.getItem('poppaAdminPassword');
+    if (saved) {
+      setPassword(saved);
+      callApi({ action: 'list', password: saved })
+        .then((data) => {
+          setOrders(data.orders || []);
+          setAuthed(true);
+        })
+        .catch(() => {
+          // Saved password no longer valid — clear it and let them log in manually
+          localStorage.removeItem('poppaAdminPassword');
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
