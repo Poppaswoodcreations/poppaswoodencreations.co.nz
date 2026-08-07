@@ -35,6 +35,7 @@ const ReviewForm = lazy(() => import('./components/ReviewForm'));
 const ReviewsAdmin = lazy(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 const CustomOrderPage = lazy(() => import('./pages/CustomOrderPage'));
+const AdminCustomOrders = lazy(() => import('./pages/AdminCustomOrders'));
 const Games = lazy(() => import('./components/Games'));
 import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
 import WoodenPensPage from './pages/WoodenPensPage';
@@ -308,6 +309,14 @@ const AppContent: React.FC = () => {
                   ogType="website"
                 />
                 <CustomOrderPage />
+              </>
+            } />
+
+            {/* ── ADMIN: CUSTOM ORDERS ── */}
+            <Route path="/admin/custom-orders" element={
+              <>
+                <SEOHead title="Manage Custom Orders" noindex={true} />
+                <AdminCustomOrders />
               </>
             } />
 
