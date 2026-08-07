@@ -24,6 +24,56 @@ export async function onRequest(context) {
   });
 }
 
+// Saves the order to Supabase. Never throws — logs and returns null on failure
+// so a DB hiccup can never block the email notification going out.
+async function saveCustomOrderToSupabase(order) {
+  const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY =
+    process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('saveCustomOrderToSupabase: missing Supabase env vars');
+    return null;
+  }
+
+  const row = {
+    name: order.name,
+    email: order.email,
+    phone: order.phone || null,
+    product_type: order.productType || null,
+    wood_type: order.woodType || null,
+    size_preset: order.sizePreset || null,
+    length_cm: order.length ? Number(order.length) : null,
+    width_cm: order.width ? Number(order.width) : null,
+    height_cm: order.height ? Number(order.height) : null,
+    finish: order.finish || null,
+    quantity: order.quantity ? Number(order.quantity) : 1,
+    details: order.details || null,
+  };
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/custom_orders`, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_SERVICE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation',
+      },
+      body: JSON.stringify(row),
+    });
+    if (!res.ok) {
+      console.error('saveCustomOrderToSupabase failed:', res.status, await res.text());
+      return null;
+    }
+    const data = await res.json();
+    return data && data[0] ? data[0] : null;
+  } catch (err) {
+    console.error('saveCustomOrderToSupabase error:', err.message);
+    return null;
+  }
+}
+
 const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -43,6 +93,12 @@ const handler = async (event) => {
       length, width, height,
       finish, quantity, details,
     } = JSON.parse(event.body);
+
+    // Save to Supabase first (best-effort — does not block the email below).
+    await saveCustomOrderToSupabase({
+      name, email, phone, productType, woodType, sizePreset,
+      length, width, height, finish, quantity, details,
+    });
 
     const dimensionStr = [
       length && `L: ${length}cm`,
