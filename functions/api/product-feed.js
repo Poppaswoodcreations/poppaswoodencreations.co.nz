@@ -14,12 +14,16 @@
 //
 // identifier_exists is always "FALSE" — these are handmade goods with no
 // GTIN/MPN, which Google requires to be explicitly declared.
+//
+// shipping_weight is read from Supabase products.weight (kg) — the same
+// field already used by create-payment-intent.js for volumetric shipping
+// calculations at checkout.
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 const BRAND = "Poppa's Wooden Creations";
 
 async function fetchAllProducts(supabaseUrl, supabaseKey) {
   const res = await fetch(
-    `${supabaseUrl}/rest/v1/products?select=id,name,description,price,category,images,in_stock,stock_quantity,seo_title,seo_description,google_product_category`,
+    `${supabaseUrl}/rest/v1/products?select=id,name,description,price,category,images,in_stock,stock_quantity,seo_title,seo_description,google_product_category,weight`,
     {
       headers: {
         apikey: supabaseKey,
@@ -68,6 +72,7 @@ export async function onRequest(context) {
       'condition',
       'identifier_exists',
       'google_product_category',
+      'shipping_weight',
     ].join('\t');
 
     const lines = [header];
@@ -88,6 +93,14 @@ export async function onRequest(context) {
 
       const googleCategory = tsvEscape(p.google_product_category || '');
 
+      // Google expects shipping_weight as "<number> kg" (or lb/oz/g).
+      // Fall back to a conservative default if weight is missing/invalid
+      // in Supabase, rather than omitting the field entirely.
+      const weightRaw = Number(p.weight);
+      const shippingWeight = Number.isFinite(weightRaw) && weightRaw > 0
+        ? `${weightRaw} kg`
+        : '0.5 kg';
+
       lines.push(
         [
           id,
@@ -101,6 +114,7 @@ export async function onRequest(context) {
           'new',
           'FALSE',
           googleCategory,
+          shippingWeight,
         ].join('\t')
       );
     }
