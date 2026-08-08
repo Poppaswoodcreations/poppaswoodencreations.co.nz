@@ -72,10 +72,15 @@ export async function onRequest(context) {
   const city           = m.city            || '';
   const postalCode     = m.postal_code     || '';
   const country        = m.country         || 'NZ';
-  const subtotal       = parseFloat(m.subtotal || '0');
-  const shippingCost   = parseFloat(m.shipping || '0');
-  const grandTotal     = amountTotal;
-  const paymentMethod  = m.payment_method  || 'Card';
+
+  // create-payment-intent.js writes these as server_computed_subtotal /
+  // server_computed_shipping (see that file). Fall back to the older
+  // subtotal/shipping keys too, in case any other checkout path still
+  // sets those directly, so we never silently default to $0.
+  const subtotal     = parseFloat(m.server_computed_subtotal ?? m.subtotal ?? '0');
+  const shippingCost = parseFloat(m.server_computed_shipping ?? m.shipping ?? '0');
+  const grandTotal    = amountTotal;
+  const paymentMethod = m.payment_method || 'Card';
 
   const refTail = (stripeRef || '').slice(-8).toUpperCase();
   const orderId = `STR-${refTail}`;
