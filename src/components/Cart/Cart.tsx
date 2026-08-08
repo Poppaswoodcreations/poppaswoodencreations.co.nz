@@ -390,7 +390,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     localStorage.removeItem('poppas-cart');
     setCompletedOrderId(orderId);
     setOrderComplete(true);
-    window.location.href = `/order-confirmation?order_id=${orderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&source=stripe`;
+    window.location.href = `/order-confirmation?order_id=${orderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&country=${formData.country}&source=stripe`;
   };
 
   const handlePayPalSuccess = () => {
@@ -399,7 +399,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     if (window.gtag) window.gtag('event', 'purchase', { transaction_id: paypalOrderId, value: grandTotal, currency: 'NZD' });
     onClearCart();
     localStorage.removeItem('poppas-cart');
-    window.location.href = `/order-confirmation?order_id=${paypalOrderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&source=paypal`;
+    window.location.href = `/order-confirmation?order_id=${paypalOrderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&country=${formData.country}&source=paypal`;
   };
 
   // ─── Order Complete ─────────────────────────────────────────────────────────
@@ -544,7 +544,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                   <div className="space-y-2 text-sm text-green-700">
                     <p><strong>Address:</strong> 102 Kiripaka Rd, Whangarei, New Zealand</p>
                     <p><strong>Hours:</strong> Monday–Friday 9AM–5PM, Saturday 10AM–2PM</p>
-                    <p><strong>Contact:</strong> 021 022 8166</p>
+                    <p><strong>Contact:</strong> 021 022 88166</p>
                     <p><strong>Note:</strong> Please call ahead to arrange pickup time</p>
                   </div>
                 </div>
