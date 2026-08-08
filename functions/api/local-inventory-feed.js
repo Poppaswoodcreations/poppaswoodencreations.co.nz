@@ -13,9 +13,7 @@
 // Required Merchant Center attributes for local inventory: id, store_code,
 // availability, quantity. A product counts as "in stock" only if BOTH
 // in_stock is true AND stock_quantity is greater than zero.
-
 const STORE_CODE = '10089051641764592169';
-
 async function fetchAllProducts(supabaseUrl, supabaseKey) {
   const res = await fetch(
     `${supabaseUrl}/rest/v1/products?select=id,in_stock,stock_quantity`,
@@ -31,37 +29,34 @@ async function fetchAllProducts(supabaseUrl, supabaseKey) {
   }
   return res.json();
 }
-
 function tsvEscape(value) {
   return String(value ?? '').replace(/[\t\r\n]/g, ' ');
 }
-
 export async function onRequest(context) {
   const { env } = context;
-
   const SUPABASE_URL = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
   const SUPABASE_ANON_KEY = env.SUPABASE_ANON_KEY || env.VITE_SUPABASE_ANON_KEY;
-
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.error('local-inventory-feed: missing Supabase env vars');
     return new Response('Supabase env vars not configured', { status: 500 });
   }
-
   try {
     const products = await fetchAllProducts(SUPABASE_URL, SUPABASE_ANON_KEY);
-
     const lines = ['id\tstore_code\tavailability\tquantity'];
-
     for (const p of products) {
-      const qty = Number.isFinite(Number(p.stock_quantity)) ? parseInt(p.stock_quantity, 10) : 0;
+      // Parse stock_quantity ONCE and reuse the parsed number — the previous
+      // version called Number() to validate but parseInt(p.stock_quantity, 10)
+      // to build the value. When stock_quantity was null in Supabase,
+      // Number(null) === 0 (passes the finite check) but parseInt(null, 10)
+      // === NaN, silently writing "NaN" into the feed's quantity column.
+      const qtyRaw = Number(p.stock_quantity);
+      const qty = Number.isFinite(qtyRaw) ? Math.max(0, Math.trunc(qtyRaw)) : 0;
       const availability = p.in_stock === true && qty > 0 ? 'in stock' : 'out of stock';
       lines.push(
         [tsvEscape(p.id), STORE_CODE, availability, qty].join('\t')
       );
     }
-
     const body = lines.join('\r\n') + '\r\n';
-
     return new Response(body, {
       status: 200,
       headers: {
