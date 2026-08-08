@@ -70,6 +70,9 @@ const GHOST_SLUGS = new Set([
   'bongo-drum',
   'gliders',
   'car-hauler',
+  'wooden-kauri-car-6',
+  'pine-kiwi',
+  'french-rolling-pin',
 ]);
 
 // ─────────────────────────────────────────────────────────────
