@@ -9,6 +9,7 @@ const OrderConfirmation: React.FC = () => {
     const orderId = searchParams.get('order_id');
     const email = searchParams.get('email');
     const deliveryDate = searchParams.get('delivery_date');
+    const country = searchParams.get('country') || 'NZ';
     
     if (!orderId || !email) return;
 
@@ -24,7 +25,7 @@ const OrderConfirmation: React.FC = () => {
           "merchant_id": 5825166305,
           "order_id": orderId,
           "email": email,
-          "delivery_country": "NZ",
+          "delivery_country": country,
           "estimated_delivery_date": deliveryDate || calculateDeliveryDate(),
         });
       });
@@ -118,7 +119,7 @@ const OrderConfirmation: React.FC = () => {
               <p className="text-gray-700 text-sm mb-3">We are here to help! Contact us anytime:</p>
               <div className="space-y-2 text-sm">
                 <p className="text-gray-700">Email: poppas.wooden.creations@gmail.com</p>
-                <p className="text-gray-700">Phone: 021 022 8166</p>
+                <p className="text-gray-700">Phone: 021 022 88166</p>
               </div>
             </div>
 
