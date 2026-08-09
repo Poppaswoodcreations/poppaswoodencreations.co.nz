@@ -74,7 +74,9 @@ const NZ_RURAL_POSTCODES = new Set([
   '7886','9781','9782','9783','9891','9892','9893',
 ]);
 
-const RURAL_SURCHARGE = 5.70;
+// NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
+// delivery to door, next working day). Source: NZ Post small parcel rate card.
+const RURAL_SURCHARGE = 6.00;
 
 function isRuralPostcode(postcode: string): boolean {
   return NZ_RURAL_POSTCODES.has(postcode.trim());
@@ -364,7 +366,11 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     if (hasPineCars) return 0;
     if (total >= 1000) return 0;
     switch (formData.country) {
-      case 'NZ': return totalWeight <= 1 ? 10 : totalWeight <= 2 ? 13 : totalWeight <= 3 ? 19 : totalWeight <= 4 ? 26 : 32;
+      // Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
+      // total weight as a proxy. Prices are the Courier column from NZ
+      // Post's small-parcel rate card, effective 1 July 2026. Floored at
+      // $10 on the smallest tier so we never undercharge vs our old minimum.
+      case 'NZ': return totalWeight <= 1 ? 10.00 : totalWeight <= 2 ? 10.40 : totalWeight <= 3 ? 12.40 : totalWeight <= 4 ? 13.40 : 18.70;
       case 'AU': return totalWeight <= 1 ? 25 : 35;
       case 'US': case 'CA': return totalWeight <= 1 ? 35 : 50;
       case 'GB': return totalWeight <= 1 ? 40 : 55;
@@ -455,7 +461,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                     {isRural && (
                       <div className="flex justify-between text-sm text-orange-700">
                         <span>Rural delivery surcharge:</span>
-                        <span>$5.70</span>
+                        <span>${RURAL_SURCHARGE.toFixed(2)}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-bold mt-1"><span>Total:</span><span>${grandTotal.toFixed(2)} NZD</span></div>
@@ -521,7 +527,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                       <div className="flex items-start space-x-2 bg-orange-50 border border-orange-300 rounded-lg p-3">
                         <span className="text-orange-500 text-lg leading-none">🚐</span>
                         <p className="text-sm text-orange-800">
-                          <strong>Rural delivery detected</strong> — NZ Post charges an additional $5.70 for rural addresses. This has been added to your order total.
+                          <strong>Rural delivery detected</strong> — NZ Post charges an additional ${RURAL_SURCHARGE.toFixed(2)} for rural addresses. This has been added to your order total.
                         </p>
                       </div>
                     )}
