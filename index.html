@@ -7,16 +7,13 @@
     
     <!-- Base title - React Helmet will override this per page -->
     <title>Poppa's Wooden Creations - Handcrafted Wooden Toys Made in New Zealand</title>
-
     <!-- NOTE: No base meta description here — React Helmet manages this per-page -->
     <!-- Having both causes "duplicate meta description" errors in Bing/SEO tools -->
-
     <!-- Preconnect to critical origins -->
-    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://hfirnolwhesjkxshidxo.supabase.co" crossorigin />
     <!-- Defer GTM connection until after load -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://www.gstatic.com" />
-
     <!-- Google Customer Reviews Badge Script - defer until after load -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
     
@@ -59,27 +56,22 @@
       (function () {
         var gtmLoaded = false;
         var interactionEvents = ['scroll', 'keydown', 'mousemove', 'touchstart', 'click'];
-
         function loadGTM() {
           if (gtmLoaded) return;
           gtmLoaded = true;
-
           interactionEvents.forEach(function (evt) {
             window.removeEventListener(evt, loadGTM);
           });
-
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           'https://www.googletagmanager.com/gtag/js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','G-VM9XERD2RB');
-
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-VM9XERD2RB');
         }
-
         window.addEventListener('load', function () {
           interactionEvents.forEach(function (evt) {
             window.addEventListener(evt, loadGTM, { once: true, passive: true });
