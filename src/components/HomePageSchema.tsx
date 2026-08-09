@@ -17,14 +17,16 @@ export const HomePageSchema = () => {
     "foundingDate": "2015",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "102 Kiripaka Road, Tikipunga",
       "addressLocality": "Whangarei",
       "addressRegion": "Northland",
-      "postalCode": "0110",
+      "postalCode": "0112",
       "addressCountry": "NZ"
     },
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
+      "telephone": "+64-21-022-88166",
       "email": "poppas.wooden.creations@gmail.com",
       "availableLanguage": ["English"]
     },
@@ -43,9 +45,10 @@ export const HomePageSchema = () => {
     "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Trusted supplier to Montessori schools across New Zealand.",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "102 Kiripaka Road, Tikipunga",
       "addressLocality": "Whangarei",
       "addressRegion": "Northland",
-      "postalCode": "0110",
+      "postalCode": "0112",
       "addressCountry": "NZ"
     },
     "geo": {
@@ -54,6 +57,7 @@ export const HomePageSchema = () => {
       "longitude": 174.3166
     },
     "url": "https://poppaswoodencreations.co.nz",
+    "telephone": "+64-21-022-88166",
     "email": "poppas.wooden.creations@gmail.com",
     "priceRange": "$$",
     "openingHoursSpecification": [
@@ -61,10 +65,10 @@ export const HomePageSchema = () => {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         "opens": "09:00",
-        "closes": "17:00"
+        "closes": "15:00"
       }
     ],
-    "paymentAccepted": ["Credit Card", "Bank Transfer"],
+    "paymentAccepted": ["Credit Card", "Bank Transfer", "PayPal"],
     "currenciesAccepted": "NZD",
     "areaServed": {
       "@type": "Country",
