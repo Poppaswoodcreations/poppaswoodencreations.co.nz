@@ -1,103 +1,264 @@
-diff --git a/functions/api/create-payment-intent.js b/functions/api/create-payment-intent.js
-index 196d660..5ba3861 100644
---- a/functions/api/create-payment-intent.js
-+++ b/functions/api/create-payment-intent.js
-@@ -17,7 +17,9 @@
- // (length_mm/width_mm/height_mm), falling back to actual weight only for
- // any product missing dimension data.
- 
--const RURAL_SURCHARGE = 5.70;
-+// NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
-+// delivery to door, next working day). Source: NZ Post small parcel rate card.
-+const RURAL_SURCHARGE = 6.00;
- 
- const NZ_RURAL_POSTCODES = new Set([
-   // North Island
-@@ -58,8 +60,14 @@ function volumetricWeightKg(lengthMm, widthMm, heightMm) {
-   return (lCm * wCm * hCm) / 5000;
- }
- 
-+// Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
-+// billable weight as a proxy, since we don't store box-size categories.
-+// Prices are the Courier column from NZ Post's small-parcel rate card,
-+// effective 1 July 2026: XS $9.10, S $10.40, M $12.40, L $13.40, XL $18.70.
-+// Floored at $10 on the smallest tier — the last few orders showed Courier
-+// coming in cheaper than our old $10 minimum, so we keep $10 as the floor.
- function nzWeightTier(weight) {
--  return weight <= 1 ? 10 : weight <= 2 ? 13 : weight <= 3 ? 19 : weight <= 4 ? 26 : 32;
-+  return weight <= 1 ? 10.00 : weight <= 2 ? 10.40 : weight <= 3 ? 12.40 : weight <= 4 ? 13.40 : 18.70;
- }
- 
- function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode }) {
-diff --git a/src/components/Cart/Cart.tsx b/src/components/Cart/Cart.tsx
-index 1266cb5..c396d3c 100644
---- a/src/components/Cart/Cart.tsx
-+++ b/src/components/Cart/Cart.tsx
-@@ -74,7 +74,9 @@ const NZ_RURAL_POSTCODES = new Set([
-   '7886','9781','9782','9783','9891','9892','9893',
- ]);
- 
--const RURAL_SURCHARGE = 5.70;
-+// NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
-+// delivery to door, next working day). Source: NZ Post small parcel rate card.
-+const RURAL_SURCHARGE = 6.00;
- 
- function isRuralPostcode(postcode: string): boolean {
-   return NZ_RURAL_POSTCODES.has(postcode.trim());
-@@ -364,7 +366,11 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
-     if (hasPineCars) return 0;
-     if (total >= 1000) return 0;
-     switch (formData.country) {
--      case 'NZ': return totalWeight <= 1 ? 10 : totalWeight <= 2 ? 13 : totalWeight <= 3 ? 19 : totalWeight <= 4 ? 26 : 32;
-+      // Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
-+      // total weight as a proxy. Prices are the Courier column from NZ
-+      // Post's small-parcel rate card, effective 1 July 2026. Floored at
-+      // $10 on the smallest tier so we never undercharge vs our old minimum.
-+      case 'NZ': return totalWeight <= 1 ? 10.00 : totalWeight <= 2 ? 10.40 : totalWeight <= 3 ? 12.40 : totalWeight <= 4 ? 13.40 : 18.70;
-       case 'AU': return totalWeight <= 1 ? 25 : 35;
-       case 'US': case 'CA': return totalWeight <= 1 ? 35 : 50;
-       case 'GB': return totalWeight <= 1 ? 40 : 55;
-@@ -455,7 +461,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
-                     {isRural && (
-                       <div className="flex justify-between text-sm text-orange-700">
-                         <span>Rural delivery surcharge:</span>
--                        <span>$5.70</span>
-+                        <span>${RURAL_SURCHARGE.toFixed(2)}</span>
-                       </div>
-                     )}
-                     <div className="flex justify-between font-bold mt-1"><span>Total:</span><span>${grandTotal.toFixed(2)} NZD</span></div>
-@@ -521,7 +527,7 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
-                       <div className="flex items-start space-x-2 bg-orange-50 border border-orange-300 rounded-lg p-3">
-                         <span className="text-orange-500 text-lg leading-none">🚐</span>
-                         <p className="text-sm text-orange-800">
--                          <strong>Rural delivery detected</strong> — NZ Post charges an additional $5.70 for rural addresses. This has been added to your order total.
-+                          <strong>Rural delivery detected</strong> — NZ Post charges an additional ${RURAL_SURCHARGE.toFixed(2)} for rural addresses. This has been added to your order total.
-                         </p>
-                       </div>
-                     )}
-diff --git a/src/components/ProductDetail.tsx b/src/components/ProductDetail.tsx
-index b052e33..bd494e0 100644
---- a/src/components/ProductDetail.tsx
-+++ b/src/components/ProductDetail.tsx
-@@ -627,7 +627,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
-                 <h4 className="font-medium text-blue-900 mb-2">Shipping Information</h4>
-                 <div className="text-sm text-blue-800 space-y-1">
-                   <p>• NZ shipping from $10.00 NZD (by weight), FREE on orders over $1000 NZD</p>
--                  <p>• Rural delivery: +$5.70 NZD surcharge may apply</p>
-+                  <p>• Rural delivery: +$6.00 NZD surcharge may apply</p>
-                   <p>• Free pickup available from our Whangarei workshop</p>
-                   <p>• Worldwide shipping available</p>
-                   <p>• Processing time: 1-2 business days</p>
-diff --git a/src/components/ShippingPolicy.tsx b/src/components/ShippingPolicy.tsx
-index e145204..e457f88 100644
---- a/src/components/ShippingPolicy.tsx
-+++ b/src/components/ShippingPolicy.tsx
-@@ -65,7 +65,7 @@ const ShippingPolicy: React.FC = () => {
-                   </li>
-                   <li className="flex items-start">
-                     <span className="text-amber-600 mr-2">•</span>
--                    <span><strong>Rural delivery surcharge:</strong> An additional $5.70 NZD applies to addresses on NZ Post's rural delivery list, calculated automatically at checkout once you enter your postcode.</span>
-+                    <span><strong>Rural delivery surcharge:</strong> An additional $6.00 NZD applies to addresses on NZ Post's rural delivery list, calculated automatically at checkout once you enter your postcode.</span>
-                   </li>
-                 </ul>
-                 <p className="text-sm text-gray-600 mt-3 italic">
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { Package, Clock, MapPin, Shield, Truck } from 'lucide-react';
+
+const ShippingPolicy: React.FC = () => {
+  return (
+    <>
+      <Helmet>
+        <title>Shipping Policy | Poppa's Wooden Creations</title>
+        <meta name="description" content="Learn about our worldwide shipping, delivery times, and free shipping offers for handcrafted wooden toys from New Zealand." />
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          {/* Header */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Shipping & Delivery Policy</h1>
+            <p className="text-gray-600 text-lg">
+              Fast, secure, and eco-friendly shipping for your handcrafted wooden toys from Whangarei, New Zealand.
+            </p>
+          </div>
+
+          {/* Quick Facts */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <Truck className="w-12 h-12 text-amber-600 mx-auto mb-3" />
+              <h3 className="font-bold text-lg mb-2">Free Shipping</h3>
+              <p className="text-sm text-gray-600">Orders over $1000 NZD</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <Package className="w-12 h-12 text-amber-600 mx-auto mb-3" />
+              <h3 className="font-bold text-lg mb-2">Tracked Delivery</h3>
+              <p className="text-sm text-gray-600">All orders include tracking</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <Shield className="w-12 h-12 text-amber-600 mx-auto mb-3" />
+              <h3 className="font-bold text-lg mb-2">Secure Packaging</h3>
+              <p className="text-sm text-gray-600">Eco-friendly materials</p>
+            </div>
+          </div>
+
+          {/* Shipping Information */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <MapPin className="w-6 h-6 text-amber-600 mr-2" />
+              Shipping Locations
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">New Zealand Shipping</h3>
+                <ul className="space-y-2 text-gray-700">
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Standard Shipping:</strong> 3-5 business days to major cities (Auckland, Wellington, Christchurch)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Regional Areas:</strong> 5-7 business days</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Cost:</strong> Calculated by order weight — $10.00 NZD (up to 1kg), $13.00 (1–2kg), $19.00 (2–3kg), $26.00 (3–4kg), $32.00 (over 4kg). FREE for orders over $1000 NZD.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Rural delivery surcharge:</strong> An additional $6.00 NZD applies to addresses on NZ Post's rural delivery list, calculated automatically at checkout once you enter your postcode.</span>
+                  </li>
+                </ul>
+                <p className="text-sm text-gray-600 mt-3 italic">
+                  * Exact shipping cost is shown in your cart before you enter payment details.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">International Shipping</h3>
+                <ul className="space-y-2 text-gray-700">
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Australia:</strong> 7-14 business days - $25.00 NZD (up to 1kg), $35.00 NZD (over 1kg)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>USA & Canada:</strong> 10-21 business days - $35.00 NZD (up to 1kg), $50.00 NZD (over 1kg)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>UK & Europe:</strong> 14-28 business days - $40.00 NZD (up to 1kg), $55.00 NZD (over 1kg)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-600 mr-2">•</span>
+                    <span><strong>Rest of World:</strong> 10-21 business days - $50.00 NZD (up to 1kg), $70.00 NZD (over 1kg)</span>
+                  </li>
+                </ul>
+                <p className="text-sm text-gray-600 mt-3 italic">
+                  * International shipping times may vary due to customs processing. Customer is responsible for any import duties or taxes. Exact cost is calculated by order weight and shown in your cart before payment.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Processing Time */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <Clock className="w-6 h-6 text-amber-600 mr-2" />
+              Processing & Handling
+            </h2>
+            
+            <div className="space-y-4 text-gray-700">
+              <p>
+                <strong>Standard Products:</strong> Most in-stock items are processed and shipped within 1-3 business days of order confirmation.
+              </p>
+              <p>
+                <strong>Custom Orders:</strong> Handcrafted custom pieces require 2-4 weeks production time before shipping. You'll receive updates throughout the creation process.
+              </p>
+              <p>
+                <strong>Business Days:</strong> Monday - Friday, 9:00 AM - 3:00 PM NZST. Orders placed after 12:00 PM NZST will be processed the next business day.
+              </p>
+              <div className="bg-amber-50 border-l-4 border-amber-600 p-4 mt-4">
+                <p className="text-sm">
+                  <strong>Note:</strong> During peak holiday seasons (November-December), processing times may extend by 2-3 business days.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tracking */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <Package className="w-6 h-6 text-amber-600 mr-2" />
+              Order Tracking
+            </h2>
+            
+            <div className="space-y-4 text-gray-700">
+              <p>
+                All orders include tracking information. Once your order ships, you'll receive:
+              </p>
+              <ul className="space-y-2 ml-6">
+                <li className="flex items-start">
+                  <span className="text-amber-600 mr-2">✓</span>
+                  <span>Email confirmation with tracking number</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-amber-600 mr-2">✓</span>
+                  <span>Direct link to track your parcel</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-amber-600 mr-2">✓</span>
+                  <span>Estimated delivery date</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-amber-600 mr-2">✓</span>
+                  <span>Delivery updates via email</span>
+                </li>
+              </ul>
+              <p className="text-sm text-gray-600 mt-4">
+                If you have any questions about your shipment, please contact us at{' '}
+                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                  poppas.wooden.creations@gmail.com
+                </a>
+              </p>
+            </div>
+          </div>
+
+          {/* Packaging */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Eco-Friendly Packaging</h2>
+            
+            <div className="space-y-4 text-gray-700">
+              <p>
+                We care about the environment as much as we care about our toys. All orders are packaged using:
+              </p>
+              <ul className="space-y-2 ml-6">
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">🌱</span>
+                  <span>Recycled cardboard boxes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">🌱</span>
+                  <span>Biodegradable packing peanuts</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">🌱</span>
+                  <span>Paper tape (plastic-free)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">🌱</span>
+                  <span>Minimal packaging materials</span>
+                </li>
+              </ul>
+              <p className="text-sm text-gray-600 mt-4">
+                Every toy is carefully wrapped to ensure it arrives in perfect condition while minimizing environmental impact.
+              </p>
+            </div>
+          </div>
+
+          {/* Shipping Issues */}
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Shipping Issues</h2>
+            
+            <div className="space-y-4 text-gray-700">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Lost or Damaged Parcels</h3>
+                <p>
+                  If your order is lost in transit or arrives damaged, please contact us immediately at{' '}
+                  <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                    poppas.wooden.creations@gmail.com
+                  </a>
+                  {' '}with your order number and photos (if damaged). We'll arrange a replacement or full refund within 48 hours.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Delivery Delays</h3>
+                <p>
+                  While rare, delays can occur due to weather, customs, or carrier issues. If your order hasn't arrived within the expected timeframe, we'll investigate with the courier and keep you updated.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Incorrect Address</h3>
+                <p>
+                  Please double-check your shipping address before completing your order. If you notice an error after placing your order, contact us immediately. We cannot change the address once the parcel has been dispatched.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="bg-amber-50 rounded-lg p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Questions About Shipping?</h2>
+            <p className="text-gray-700 mb-6">
+              Our team is here to help with any shipping questions or concerns.
+            </p>
+            <div className="space-y-2">
+              <p className="text-gray-700">
+                <strong>Email:</strong>{' '}
+                <a href="mailto:poppas.wooden.creations@gmail.com" className="text-amber-600 hover:underline">
+                  poppas.wooden.creations@gmail.com
+                </a>
+              </p>
+              <p className="text-gray-700">
+                <strong>Phone:</strong>{' '}
+                <a href="tel:+64210228816" className="text-amber-600 hover:underline">
+                  +64 21 022 88166
+                </a>
+              </p>
+              <p className="text-sm text-gray-600 mt-2">Monday-Friday, 9:00 AM - 3:00 PM NZST</p>
+            </div>
+            <Link 
+              to="/contact" 
+              className="inline-block mt-6 bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ShippingPolicy;
