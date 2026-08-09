@@ -130,7 +130,7 @@ const BASE_URL = 'https://poppaswoodencreations.co.nz';
 // HOME PAGE META
 // ─────────────────────────────────────────────────────────────
 const HOME_META = {
-  title: "Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations",
+  title: "Handmade Wooden Toys | Tikipunga, Whangarei NZ",
   description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $1000.",
   h1: 'Handmade Wooden Toys & Kitchenware from New Zealand',
   intro: 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.',
