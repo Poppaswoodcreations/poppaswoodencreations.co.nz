@@ -17,7 +17,9 @@
 // (length_mm/width_mm/height_mm), falling back to actual weight only for
 // any product missing dimension data.
 
-const RURAL_SURCHARGE = 5.70;
+// NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
+// delivery to door, next working day). Source: NZ Post small parcel rate card.
+const RURAL_SURCHARGE = 6.00;
 
 const NZ_RURAL_POSTCODES = new Set([
   // North Island
@@ -58,8 +60,14 @@ function volumetricWeightKg(lengthMm, widthMm, heightMm) {
   return (lCm * wCm * hCm) / 5000;
 }
 
+// Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
+// billable weight as a proxy, since we don't store box-size categories.
+// Prices are the Courier column from NZ Post's small-parcel rate card,
+// effective 1 July 2026: XS $9.10, S $10.40, M $12.40, L $13.40, XL $18.70.
+// Floored at $10 on the smallest tier — the last few orders showed Courier
+// coming in cheaper than our old $10 minimum, so we keep $10 as the floor.
 function nzWeightTier(weight) {
-  return weight <= 1 ? 10 : weight <= 2 ? 13 : weight <= 3 ? 19 : weight <= 4 ? 26 : 32;
+  return weight <= 1 ? 10.00 : weight <= 2 ? 10.40 : weight <= 3 ? 12.40 : weight <= 4 ? 13.40 : 18.70;
 }
 
 function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode }) {
