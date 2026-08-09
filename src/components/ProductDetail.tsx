@@ -627,7 +627,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                 <h4 className="font-medium text-blue-900 mb-2">Shipping Information</h4>
                 <div className="text-sm text-blue-800 space-y-1">
                   <p>• NZ shipping from $10.00 NZD (by weight), FREE on orders over $1000 NZD</p>
-                  <p>• Rural delivery: +$5.70 NZD surcharge may apply</p>
+                  <p>• Rural delivery: +$6.00 NZD surcharge may apply</p>
                   <p>• Free pickup available from our Whangarei workshop</p>
                   <p>• Worldwide shipping available</p>
                   <p>• Processing time: 1-2 business days</p>
