@@ -47,6 +47,22 @@ function firstImage(images) {
   return img.startsWith('http') ? img : `${BASE_URL}${img}`;
 }
 
+function toAbsolute(img) {
+  return img.startsWith('http') ? img : `${BASE_URL}${img}`;
+}
+
+// Google accepts up to 10 additional_image_link values, comma-separated
+// within a single TSV field. Skips the first image (already sent as
+// image_link) and any empty/falsy entries.
+function additionalImages(images) {
+  if (!Array.isArray(images) || images.length <= 1) return '';
+  return images
+    .slice(1, 11)
+    .filter(Boolean)
+    .map(toAbsolute)
+    .join(',');
+}
+
 export async function onRequest(context) {
   const { env } = context;
   const SUPABASE_URL = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
@@ -66,6 +82,7 @@ export async function onRequest(context) {
       'description',
       'link',
       'image_link',
+      'additional_image_link',
       'availability',
       'price',
       'brand',
@@ -83,6 +100,7 @@ export async function onRequest(context) {
       const description = tsvEscape(p.description || p.seo_description || p.name);
       const link = `${BASE_URL}/products/${p.id}`;
       const imageLink = firstImage(p.images);
+      const additionalImageLink = additionalImages(p.images);
 
       const qtyRaw = Number(p.stock_quantity);
       const qty = Number.isFinite(qtyRaw) ? Math.max(0, Math.trunc(qtyRaw)) : 0;
@@ -108,6 +126,7 @@ export async function onRequest(context) {
           description,
           link,
           imageLink,
+          additionalImageLink,
           availability,
           price,
           BRAND,
