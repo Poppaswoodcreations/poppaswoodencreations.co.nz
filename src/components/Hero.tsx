@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
-import { supabase } from '../lib/supabase';
 
 interface HeroProps {
   onCategorySelect: (category: string) => void;
@@ -18,6 +17,30 @@ interface SiteSettings {
 const DEFAULT_TITLE = 'Handmade Wooden Toys & Kitchenware from Whangarei, New Zealand';
 const DEFAULT_SUBTITLE = 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.';
 
+// Lightweight read path — plain fetch against the Supabase REST API,
+// using only the anon key. No supabase-js import, so this never adds
+// the ~42KB SDK chunk to the homepage's initial bundle. Matches the
+// same pattern used in src/hooks/useProducts.ts.
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+
+async function fetchSiteSettings(): Promise<SiteSettings | null> {
+  if (!supabaseUrl || !supabaseAnonKey) return null;
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/site_settings?select=*&limit=1`, {
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return Array.isArray(data) ? (data[0] || null) : (data || null);
+  } catch {
+    return null;
+  }
+}
+
 const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   const [siteSettings, setSiteSettings] = useState<SiteSettings>({});
 
@@ -29,18 +52,11 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
   // Load site settings in background — does NOT block image render
   useEffect(() => {
     const loadSettings = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('site_settings')
-          .select('*')
-          .single();
-
-        if (!error && data) {
-          setSiteSettings(data);
-        }
-      } catch (err) {
-        // Silently fail — fallback content already showing
+      const data = await fetchSiteSettings();
+      if (data) {
+        setSiteSettings(data);
       }
+      // Silently fail — fallback content already showing
     };
 
     loadSettings();
