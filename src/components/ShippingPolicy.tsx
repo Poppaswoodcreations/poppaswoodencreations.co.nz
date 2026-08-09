@@ -61,7 +61,7 @@ const ShippingPolicy: React.FC = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
-                    <span><strong>Cost:</strong> Calculated by order weight — $10.00 NZD (up to 1kg), $13.00 (1–2kg), $19.00 (2–3kg), $26.00 (3–4kg), $32.00 (over 4kg). FREE for orders over $1000 NZD.</span>
+                    <span><strong>Cost:</strong> Calculated by order weight — $10.00 NZD (up to 1kg), $10.40 (1–2kg), $12.40 (2–3kg), $13.40 (3–4kg), $18.70 (over 4kg). FREE for orders over $1000 NZD.</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-amber-600 mr-2">•</span>
