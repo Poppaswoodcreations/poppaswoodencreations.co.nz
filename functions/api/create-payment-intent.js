@@ -53,6 +53,17 @@ function isRuralPostcode(postcode) {
   return NZ_RURAL_POSTCODES.has(String(postcode || '').trim());
 }
 
+// NZ Post's own addressing convention marks rural delivery addresses with an
+// explicit "RD" (Rural Delivery) number in the address line itself, e.g.
+// "RD 3", "RD10", "R D 5". This catches genuinely rural addresses whose
+// postcode isn't in our (necessarily incomplete) NZ_RURAL_POSTCODES list —
+// postcodes can cover a mix of urban and rural delivery points, so the list
+// alone will always miss some. RD-in-address is a much stronger per-address
+// signal and costs nothing to check.
+function isRuralAddressText(address) {
+  return /\bR\.?\s?D\.?\s?\d+\b/i.test(String(address || ''));
+}
+
 // NZ Post's own formula: volumetric weight (kg) = (L cm x W cm x H cm) / 5000
 function volumetricWeightKg(lengthMm, widthMm, heightMm) {
   if (!lengthMm || !widthMm || !heightMm) return 0; // missing dims -> no volumetric contribution
@@ -70,7 +81,7 @@ function nzWeightTier(weight) {
   return weight <= 1 ? 10.00 : weight <= 2 ? 10.40 : weight <= 3 ? 12.40 : weight <= 4 ? 13.40 : 18.70;
 }
 
-function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode }) {
+function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode, address }) {
   if (deliveryMethod === 'pickup') return 0;
 
   // Same "small pine vehicle" free-shipping rule as the client, but checked
@@ -106,7 +117,8 @@ function calculateShipping({ items, dbProducts, subtotal, billableWeight, countr
       base = billableWeight <= 1 ? 50 : 70;
   }
 
-  const isRural = country === 'NZ' && deliveryMethod === 'shipping' && isRuralPostcode(postalCode);
+  const isRural = country === 'NZ' && deliveryMethod === 'shipping' &&
+    (isRuralPostcode(postalCode) || isRuralAddressText(address));
   return base + (isRural ? RURAL_SURCHARGE : 0);
 }
 
@@ -146,7 +158,8 @@ export async function onRequest(context) {
 
   try {
     const body = await request.json();
-    const { items, deliveryMethod, country, postalCode, metadata } = body || {};
+    const { items, deliveryMethod, country, postalCode, address, metadata } = body || {};
+    const shippingAddress = address || (metadata && metadata.address) || '';
 
     if (!Array.isArray(items) || items.length === 0) {
       return json({ error: 'Cart items are required' }, 400);
@@ -187,6 +200,7 @@ export async function onRequest(context) {
       country: country || 'NZ',
       deliveryMethod: deliveryMethod || 'shipping',
       postalCode: postalCode || '',
+      address: shippingAddress,
     });
 
     const grandTotal = subtotal + shipping;
