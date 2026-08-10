@@ -82,6 +82,16 @@ function isRuralPostcode(postcode: string): boolean {
   return NZ_RURAL_POSTCODES.has(postcode.trim());
 }
 
+// NZ Post's own addressing convention marks rural delivery addresses with an
+// explicit "RD" (Rural Delivery) number in the address line, e.g. "RD 3",
+// "RD10", "R D 5". Mirrors the same check on the server so the checkout UI
+// and the actual charge always agree. Catches genuinely rural addresses
+// whose postcode isn't in NZ_RURAL_POSTCODES (postcodes can cover a mix of
+// urban and rural delivery points, so the list alone will always miss some).
+function isRuralAddressText(address: string): boolean {
+  return /\bR\.?\s?D\.?\s?\d+\b/i.test(address || '');
+}
+
 // ─── Shared checkout validation (now actually enforced before payment) ───────
 function validateCheckoutFields(formData: any): string | null {
   if (!formData.email || !formData.name) return 'Please fill in all required fields';
@@ -150,6 +160,7 @@ const createPaymentIntent = async (
       deliveryMethod: formData.deliveryMethod,
       country: formData.country || 'NZ',
       postalCode: formData.postalCode || '',
+      address: formData.address || '',
       metadata: {
         customer_name:   formData.name,
         customer_email:  formData.email,
@@ -161,7 +172,7 @@ const createPaymentIntent = async (
         is_rural:        String(
           formData.country === 'NZ' &&
           formData.deliveryMethod === 'shipping' &&
-          isRuralPostcode(formData.postalCode)
+          (isRuralPostcode(formData.postalCode) || isRuralAddressText(formData.address))
         ),
         payment_method:  'Card',
         items:           items
@@ -349,7 +360,8 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const totalWeight = items.reduce((sum, item) => sum + (item.product.weight || 0.5) * item.quantity, 0);
 
-  const isRural = formData.country === 'NZ' && formData.deliveryMethod === 'shipping' && isRuralPostcode(formData.postalCode);
+  const isRural = formData.country === 'NZ' && formData.deliveryMethod === 'shipping' &&
+    (isRuralPostcode(formData.postalCode) || isRuralAddressText(formData.address));
   const ruralSurcharge = isRural ? RURAL_SURCHARGE : 0;
   const baseShipping = calculateBaseShipping();
   const shipping = baseShipping + ruralSurcharge;
