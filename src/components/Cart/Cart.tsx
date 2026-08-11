@@ -571,6 +571,9 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
               {/* PAYMENT METHOD TABS */}
               <div className="mb-4">
                 <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
+                <p className="text-xs text-gray-500 mb-3">
+                  We accept PayPal, Apple Pay, Google Pay, and all major credit/debit cards. Guest checkout — no account required.
+                </p>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <button type="button" onClick={() => setPaymentMethod('stripe')}
                     className={`p-3 border-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-2 ${paymentMethod === 'stripe' ? 'border-amber-500 bg-amber-50 text-amber-800' : 'border-gray-300 text-gray-600 hover:border-gray-400'}`}>
@@ -685,6 +688,9 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                     <span className="text-lg font-semibold text-gray-900">Total:</span>
                     <span className="text-2xl font-bold text-amber-600">${total.toFixed(2)} NZD</span>
                   </div>
+                  <p className="text-xs text-gray-500 text-center mb-3">
+                    We accept PayPal, Apple Pay, Google Pay, and all major credit/debit cards.
+                  </p>
                   <div className="space-y-3">
                     <button onClick={() => setShowCheckout(true)} className="w-full bg-amber-600 text-white py-4 rounded-lg font-medium hover:bg-amber-700 transition-colors">
                       Proceed to Checkout
