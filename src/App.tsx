@@ -37,6 +37,7 @@ const ReviewsAdmin = lazyWithRetry(() => import('./components/ReviewsAdmin'));
 const OrderConfirmation = lazyWithRetry(() => import('./pages/OrderConfirmation'));
 const CustomOrderPage = lazyWithRetry(() => import('./pages/CustomOrderPage'));
 const AdminCustomOrders = lazyWithRetry(() => import('./pages/AdminCustomOrders'));
+const AdminInventory = lazyWithRetry(() => import('./pages/AdminInventory'));
 const Games = lazyWithRetry(() => import('./components/Games'));
 import WoodenPlanesHelicoptersPage from './pages/WoodenPlanesHelicoptersPage';
 import WoodenPensPage from './pages/WoodenPensPage';
@@ -327,6 +328,14 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead title="Manage Custom Orders" noindex={true} />
                 <AdminCustomOrders />
+              </>
+            } />
+
+            {/* ── ADMIN: INVENTORY (LOW STOCK) ── */}
+            <Route path="/admin/inventory" element={
+              <>
+                <SEOHead title="Inventory - Low Stock" noindex={true} />
+                <AdminInventory />
               </>
             } />
 
