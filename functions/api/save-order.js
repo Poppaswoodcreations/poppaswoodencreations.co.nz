@@ -7,6 +7,13 @@
 // duplicate webhook endpoints configured) — without this check, every
 // re-delivery created a second order row and triggered a second round of
 // emails.
+//
+// STOCK TRACKING (13 Aug 2026): when the incoming order carries a
+// `stockItems` array (id + quantity per line item — see stripe-webhook.js),
+// this decrements stock_quantity for each product straight after a
+// genuinely new insert. Because this only runs on the non-duplicate branch,
+// Stripe re-delivering the same webhook event can never double-decrement.
+// If a product's stock lands on exactly 1, a low-stock alert email fires.
 export async function onRequest(context) {
   const { request, env } = context;
   if (request.method !== 'POST') {
@@ -74,11 +81,86 @@ export async function onRequest(context) {
       return json({ error: errText }, 500);
     }
     const data = await res.json();
+
+    // ── Stock decrement — only on a genuinely new order ─────────────────
+    if (Array.isArray(o.stockItems) && o.stockItems.length > 0) {
+      try {
+        const lowStockProducts = await decrementStock(SUPABASE_URL, headers, o.stockItems);
+        if (lowStockProducts.length > 0) {
+          const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
+          fetch(`${baseUrl}/api/send-low-stock-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ products: lowStockProducts }),
+          }).catch(e => console.error('send-low-stock-email fetch error:', e.message));
+        }
+      } catch (stockErr) {
+        // Never let a stock hiccup fail the order save — the order and
+        // customer email matter more than the stock count being exact.
+        console.error('Stock decrement error:', stockErr.message);
+      }
+    }
+
     return json({ success: true, alreadyExisted: false, order: Array.isArray(data) ? data[0] : data });
   } catch (error) {
     console.error('save-order error:', error);
     return json({ error: error.message }, 500);
   }
+}
+
+// Decrements stock_quantity for each { id, quantity } item, floored at 0,
+// and flips in_stock to false once a product hits 0. Returns the list of
+// products that landed on exactly 1 — the threshold for a low-stock alert.
+async function decrementStock(SUPABASE_URL, headers, items) {
+  const lowStock = [];
+
+  for (const item of items) {
+    if (!item.id || !item.quantity) continue;
+    try {
+      const getRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/products?id=eq.${encodeURIComponent(item.id)}&select=id,name,stock_quantity`,
+        { headers }
+      );
+      if (!getRes.ok) {
+        console.error(`Stock lookup failed for ${item.id}:`, await getRes.text());
+        continue;
+      }
+      const rows = await getRes.json();
+      if (!rows.length) {
+        console.error(`Stock decrement: product not found for id ${item.id}`);
+        continue;
+      }
+      const product = rows[0];
+      const currentStock = typeof product.stock_quantity === 'number' ? product.stock_quantity : 0;
+      const newStock = Math.max(0, currentStock - item.quantity);
+
+      const patchBody = { stock_quantity: newStock };
+      if (newStock === 0) patchBody.in_stock = false;
+
+      const patchRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/products?id=eq.${encodeURIComponent(item.id)}`,
+        {
+          method: 'PATCH',
+          headers: { ...headers, Prefer: 'return=representation' },
+          body: JSON.stringify(patchBody),
+        }
+      );
+      if (!patchRes.ok) {
+        console.error(`Stock decrement failed for ${item.id}:`, await patchRes.text());
+        continue;
+      }
+
+      console.log(`Stock for ${product.name} (${item.id}): ${currentStock} -> ${newStock}`);
+
+      if (newStock === 1) {
+        lowStock.push({ id: product.id, name: product.name, stock_quantity: newStock });
+      }
+    } catch (err) {
+      console.error(`Stock decrement error for ${item.id}:`, err.message);
+    }
+  }
+
+  return lowStock;
 }
 
 function json(obj, status = 200) {
