@@ -1,6 +1,11 @@
 // Cloudflare Pages Function: POST /api/stripe-webhook
 // Verifies the Stripe signature with Web Crypto (no SDK), then saves the order
 // and triggers order emails. Order-handling logic is unchanged from the original.
+//
+// STOCK TRACKING (13 Aug 2026): now also parses the `stock_items` metadata
+// written by create-payment-intent.js ("id:qty,id:qty") and forwards it to
+// save-order.js as `stockItems`, which does the actual decrement — this file
+// stays a pure pass-through so the decrement only ever happens in one place.
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -98,12 +103,25 @@ export async function onRequest(context) {
       })
     : [];
 
+  // Parse "id:qty,id:qty" back into an array of { id, quantity } for
+  // save-order.js to decrement stock against. Malformed/empty entries are
+  // dropped rather than failing the whole webhook — a stock hiccup should
+  // never block an order from being saved and emailed.
+  const stockItemsStr = m.stock_items || '';
+  const stockItems = stockItemsStr
+    ? stockItemsStr.split(',').map(pair => {
+        const [id, qty] = pair.split(':');
+        return { id: (id || '').trim(), quantity: parseInt(qty, 10) || 0 };
+      }).filter(i => i.id && i.quantity > 0)
+    : [];
+
   const payload = {
     orderNumber: orderId,
     orderTotal: grandTotal,
     subtotal,
     shipping: shippingCost,
     items,
+    stockItems,
     customer: {
       name: customerName,
       email: customerEmail,
@@ -120,7 +138,8 @@ export async function onRequest(context) {
 
   // Save order to Supabase — save-order.js is idempotent, so this returns
   // alreadyExisted:true if this exact order was already saved (e.g. Stripe
-  // re-delivering the same webhook event).
+  // re-delivering the same webhook event). Stock is only ever decremented
+  // on the first save (see save-order.js), so retries never double-decrement.
   let alreadyExisted = false;
   try {
     const saveRes = await fetch(`${baseUrl}/api/save-order`, {
