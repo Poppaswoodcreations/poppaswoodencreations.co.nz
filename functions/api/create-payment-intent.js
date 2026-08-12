@@ -27,6 +27,14 @@
 // saw the correct rural banner/line-item on the checkout page. Replaced
 // with the full, complete set below — now byte-for-byte identical to
 // Cart.tsx so client display and server charge can never drift apart again.
+//
+// STOCK TRACKING (13 Aug 2026): item IDs + quantities are now also written
+// into Stripe metadata as `stock_items` ("id1:qty1,id2:qty2"). The webhook
+// reads this back and passes it to save-order.js, which decrements
+// stock_quantity for each product and fires a low-stock alert once a
+// product's stock hits 1. This file never touches stock itself — it only
+// carries the IDs through so the webhook (which fires after payment
+// actually succeeds) can act on them.
 
 // NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
 // delivery to door, next working day). Source: NZ Post small parcel rate card.
@@ -258,6 +266,15 @@ export async function onRequest(context) {
     form.set('metadata[server_computed_subtotal]', subtotal.toFixed(2));
     form.set('metadata[server_computed_shipping]', shipping.toFixed(2));
     form.set('metadata[server_computed_total]', grandTotal.toFixed(2));
+
+    // Stock tracking: carry exact product IDs + quantities through to the
+    // webhook (which fires only after payment actually succeeds), so it can
+    // tell save-order.js precisely what to decrement. Format: "id:qty,id:qty".
+    // Stripe metadata values cap at 500 chars — for a handmade shop's cart
+    // sizes this is comfortably enough room; if a cart is ever large enough
+    // to exceed it, we just truncate rather than fail the whole payment.
+    const stockItemsStr = cleanItems.map(i => `${i.id}:${i.quantity}`).join(',').slice(0, 490);
+    form.set('metadata[stock_items]', stockItemsStr);
 
     const res = await fetch('https://api.stripe.com/v1/payment_intents', {
       method: 'POST',
