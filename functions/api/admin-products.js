@@ -2,12 +2,20 @@
 // Handles all admin product writes (save/update/delete/bulk-sync) server-side.
 // The service role key never leaves this function — the browser only ever
 // sends the admin password + the data, and gets JSON back.
+//
+// LOW STOCK (13 Aug 2026): 'update' and 'save' now also check the resulting
+// stock_quantity after a successful write. If it lands on exactly 1, this
+// fires the same low-stock alert email used by order-driven decrements in
+// save-order.js — so manually editing stock in the admin panel (not just
+// stock changing because of an order) triggers the alert too.
 
 const REQUEST_LIMIT = 30;             // max requests
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
 
 const AUTH_FAIL_LIMIT = 5;             // max wrong-password attempts
 const AUTH_FAIL_WINDOW_SECONDS = 900;  // per 15 minutes
+
+const LOW_STOCK_THRESHOLD = 1;
 
 async function checkLimit(kv, key, limit, windowSeconds) {
   if (!kv) return { allowed: true }; // KV not bound yet — fail open
@@ -23,6 +31,23 @@ async function checkLimit(kv, key, limit, windowSeconds) {
   await kv.put(key, JSON.stringify(data), { expirationTtl: windowSeconds });
 
   return { allowed: data.count <= limit };
+}
+
+// Fires the low-stock email if the saved/updated product's stock landed on
+// exactly the threshold. Never throws — a notification hiccup should never
+// fail the product save itself.
+function maybeAlertLowStock(env, product) {
+  if (!product || typeof product.stock_quantity !== 'number') return;
+  if (product.stock_quantity !== LOW_STOCK_THRESHOLD) return;
+
+  const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
+  fetch(`${baseUrl}/api/send-low-stock-email`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      products: [{ id: product.id, name: product.name, stock_quantity: product.stock_quantity }],
+    }),
+  }).catch(e => console.error('send-low-stock-email fetch error:', e.message));
 }
 
 export async function onRequest(context) {
@@ -101,7 +126,10 @@ export async function onRequest(context) {
         body: JSON.stringify(row),
       });
       if (!res.ok) return json({ error: await res.text() }, 500);
-      return json({ success: true, product: await res.json() });
+      const data = await res.json();
+      const saved = Array.isArray(data) ? data[0] : data;
+      maybeAlertLowStock(env, saved);
+      return json({ success: true, product: saved });
     }
 
     if (action === 'update') {
@@ -127,7 +155,12 @@ export async function onRequest(context) {
         body: JSON.stringify(dbUpdates),
       });
       if (!res.ok) return json({ error: await res.text() }, 500);
-      return json({ success: true, product: await res.json() });
+      const data = await res.json();
+      const updated = Array.isArray(data) ? data[0] : data;
+      if (dbUpdates.stock_quantity !== undefined) {
+        maybeAlertLowStock(env, updated);
+      }
+      return json({ success: true, product: updated });
     }
 
     if (action === 'delete') {
