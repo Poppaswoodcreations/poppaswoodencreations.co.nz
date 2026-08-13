@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Eye, FileEdit, Star, TreePine } from 'lucide-react';
+import { X, Package, Settings, Upload, Download, Database, Truck, CreditCard as Edit3, Globe, Image, FileText, BarChart3, Plus, CreditCard as Edit, Trash2, Eye, FileEdit, Star, TreePine, AlertTriangle } from 'lucide-react';
 import { Product } from '../../types';
 import { saveProductsToStorage } from '../../utils/productStorage';
 import ProductForm from './ProductForm';
@@ -45,6 +45,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     { id: 'database', label: '🗄️ Database Sync', icon: Database },
     { id: 'email', label: '📧 Email Manager', icon: Settings },
     { id: 'inventory', label: '📊 Inventory Manager', icon: BarChart3 },
+    { id: 'low-stock', label: '🔴 Low Stock', icon: AlertTriangle },
     { id: 'import', label: '📥 CSV Import', icon: Upload },
     { id: 'images', label: '🖼️ Upload Images', icon: Upload },
     { id: 'category-images', label: '🖼️ Category Images', icon: Image }
@@ -548,7 +549,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  // "Low Stock" is a separate page (/admin/inventory), not one
+                  // of this modal's content panels — open it in a new tab
+                  // instead of switching activeTab.
+                  if (tab.id === 'low-stock') {
+                    window.open('/admin/inventory', '_blank');
+                    return;
+                  }
+                  setActiveTab(tab.id);
+                }}
                 className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'border-b-2 border-amber-500 text-amber-600 bg-amber-50'
