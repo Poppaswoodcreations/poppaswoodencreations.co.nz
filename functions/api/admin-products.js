@@ -36,18 +36,35 @@ async function checkLimit(kv, key, limit, windowSeconds) {
 // Fires the low-stock email if the saved/updated product's stock landed on
 // exactly the threshold. Never throws — a notification hiccup should never
 // fail the product save itself.
-function maybeAlertLowStock(env, product) {
+//
+// IMPORTANT: this fetch is passed to context.waitUntil(). Cloudflare Pages
+// Functions can terminate execution the instant the response is returned —
+// a bare un-awaited fetch() gets silently killed mid-flight before it ever
+// reaches Resend. waitUntil() tells the runtime to keep the function alive
+// until this promise settles, even after the response has already gone
+// back to the browser. (This was the actual cause of test emails not
+// arriving — the request never got the chance to complete.)
+function maybeAlertLowStock(context, product) {
+  const { env, waitUntil } = context;
   if (!product || typeof product.stock_quantity !== 'number') return;
   if (product.stock_quantity !== LOW_STOCK_THRESHOLD) return;
 
   const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
-  fetch(`${baseUrl}/api/send-low-stock-email`, {
+  const alertPromise = fetch(`${baseUrl}/api/send-low-stock-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       products: [{ id: product.id, name: product.name, stock_quantity: product.stock_quantity }],
     }),
-  }).catch(e => console.error('send-low-stock-email fetch error:', e.message));
+  })
+    .then(res => {
+      if (!res.ok) console.error('send-low-stock-email responded', res.status);
+    })
+    .catch(e => console.error('send-low-stock-email fetch error:', e.message));
+
+  if (waitUntil) {
+    waitUntil(alertPromise);
+  }
 }
 
 export async function onRequest(context) {
@@ -128,7 +145,7 @@ export async function onRequest(context) {
       if (!res.ok) return json({ error: await res.text() }, 500);
       const data = await res.json();
       const saved = Array.isArray(data) ? data[0] : data;
-      maybeAlertLowStock(env, saved);
+      maybeAlertLowStock(context, saved);
       return json({ success: true, product: saved });
     }
 
@@ -158,7 +175,7 @@ export async function onRequest(context) {
       const data = await res.json();
       const updated = Array.isArray(data) ? data[0] : data;
       if (dbUpdates.stock_quantity !== undefined) {
-        maybeAlertLowStock(env, updated);
+        maybeAlertLowStock(context, updated);
       }
       return json({ success: true, product: updated });
     }
