@@ -88,11 +88,23 @@ export async function onRequest(context) {
         const lowStockProducts = await decrementStock(SUPABASE_URL, headers, o.stockItems);
         if (lowStockProducts.length > 0) {
           const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
-          fetch(`${baseUrl}/api/send-low-stock-email`, {
+          // IMPORTANT: wrapped in context.waitUntil() — Cloudflare Pages
+          // Functions can kill an un-awaited fetch the instant the response
+          // is returned below, before it ever reaches Resend. waitUntil()
+          // keeps this request alive until it actually settles.
+          const alertPromise = fetch(`${baseUrl}/api/send-low-stock-email`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ products: lowStockProducts }),
-          }).catch(e => console.error('send-low-stock-email fetch error:', e.message));
+          })
+            .then(res => {
+              if (!res.ok) console.error('send-low-stock-email responded', res.status);
+            })
+            .catch(e => console.error('send-low-stock-email fetch error:', e.message));
+
+          if (context.waitUntil) {
+            context.waitUntil(alertPromise);
+          }
         }
       } catch (stockErr) {
         // Never let a stock hiccup fail the order save — the order and
