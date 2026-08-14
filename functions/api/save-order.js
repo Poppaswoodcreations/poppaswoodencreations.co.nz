@@ -13,7 +13,7 @@
 // this decrements stock_quantity for each product straight after a
 // genuinely new insert. Because this only runs on the non-duplicate branch,
 // Stripe re-delivering the same webhook event can never double-decrement.
-// If a product's stock lands on exactly 1, a low-stock alert email fires.
+// If a product's stock lands at 1 or 0, a low-stock alert email fires.
 export async function onRequest(context) {
   const { request, env } = context;
   if (request.method !== 'POST') {
@@ -164,7 +164,7 @@ async function decrementStock(SUPABASE_URL, headers, items) {
 
       console.log(`Stock for ${product.name} (${item.id}): ${currentStock} -> ${newStock}`);
 
-      if (newStock === 1) {
+      if (newStock <= 1) {
         lowStock.push({ id: product.id, name: product.name, stock_quantity: newStock });
       }
     } catch (err) {
