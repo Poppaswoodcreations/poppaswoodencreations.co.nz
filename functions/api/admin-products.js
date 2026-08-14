@@ -4,7 +4,7 @@
 // sends the admin password + the data, and gets JSON back.
 //
 // LOW STOCK (13 Aug 2026): 'update' and 'save' now also check the resulting
-// stock_quantity after a successful write. If it lands on exactly 1, this
+// stock_quantity after a successful write. If it lands at 1 or 0, this
 // fires the same low-stock alert email used by order-driven decrements in
 // save-order.js — so manually editing stock in the admin panel (not just
 // stock changing because of an order) triggers the alert too.
@@ -47,7 +47,7 @@ async function checkLimit(kv, key, limit, windowSeconds) {
 function maybeAlertLowStock(context, product) {
   const { env, waitUntil } = context;
   if (!product || typeof product.stock_quantity !== 'number') return;
-  if (product.stock_quantity !== LOW_STOCK_THRESHOLD) return;
+  if (product.stock_quantity > LOW_STOCK_THRESHOLD) return;
 
   const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
   const alertPromise = fetch(`${baseUrl}/api/send-low-stock-email`, {
