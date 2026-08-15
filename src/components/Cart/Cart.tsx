@@ -9,7 +9,6 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import { Product } from '../../types';
-import { sendOrderNotification } from '../../utils/orderNotifications';
 import PayPalButton from './PayPalButton';
 
 declare global {
@@ -355,7 +354,6 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     email: '', name: '', address: '', city: '', postalCode: '', country: 'NZ', deliveryMethod: 'shipping',
   });
   const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'paypal'>('stripe');
-  const [paypalOrderId] = useState(`PAY-${Date.now()}`);
 
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const totalWeight = items.reduce((sum, item) => sum + (item.product.weight || 0.5) * item.quantity, 0);
@@ -411,13 +409,23 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
     window.location.href = `/order-confirmation?order_id=${orderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&country=${formData.country}&source=stripe`;
   };
 
-  const handlePayPalSuccess = () => {
-    localStorage.setItem('pending-order', JSON.stringify(buildOrderData(paypalOrderId, grandTotal, total, shipping, items, formData)));
-    sendOrderNotification({ orderTotal: grandTotal, items, customer: formData, paymentMethod: 'PayPal', orderNumber: paypalOrderId }).catch(console.error);
-    if (window.gtag) window.gtag('event', 'purchase', { transaction_id: paypalOrderId, value: grandTotal, currency: 'NZD' });
+  // FIX (16 Aug 2026): PayPal order creation + capture now happen
+  // server-side (see PayPalButton.tsx, create-paypal-order.js,
+  // capture-paypal-order.js). This handler receives the real order number
+  // the server generated after actually capturing payment — it no longer
+  // generates its own client-side ID, and no longer calls
+  // sendOrderNotification itself, since /api/capture-paypal-order now
+  // saves the order (with stock decrement) and sends the confirmation
+  // emails server-side, the same way the Stripe webhook does for card
+  // payments. Calling sendOrderNotification here too used to mean the
+  // order was recorded via one path and "notified" via a separate one that
+  // never touched real stock at all.
+  const handlePayPalSuccess = (orderNumber: string) => {
+    localStorage.setItem('pending-order', JSON.stringify(buildOrderData(orderNumber, grandTotal, total, shipping, items, formData)));
+    if (window.gtag) window.gtag('event', 'purchase', { transaction_id: orderNumber, value: grandTotal, currency: 'NZD' });
     onClearCart();
     localStorage.removeItem('poppas-cart');
-    window.location.href = `/order-confirmation?order_id=${paypalOrderId}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&country=${formData.country}&source=paypal`;
+    window.location.href = `/order-confirmation?order_id=${orderNumber}&email=${encodeURIComponent(formData.email)}&delivery_date=${calculateDeliveryDate()}&country=${formData.country}&source=paypal`;
   };
 
   // ─── Order Complete ─────────────────────────────────────────────────────────
@@ -613,10 +621,8 @@ const Cart: React.FC<CartProps> = ({ items, onClose, onUpdateQuantity, onRemoveI
                       <p className="text-amber-600 text-sm mb-3">⚠️ {checkoutError}</p>
                     ) : (
                       <PayPalButton
-                        grandTotal={grandTotal}
-                        orderId={paypalOrderId}
-                        customerEmail={formData.email}
-                        deliveryDate={calculateDeliveryDate()}
+                        items={items.map(item => ({ id: item.product.id, quantity: item.quantity }))}
+                        formData={formData}
                         onSuccess={handlePayPalSuccess}
                         onError={msg => setError(msg)}
                       />
