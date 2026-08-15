@@ -506,8 +506,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${product.price.toFixed(2)} NZD</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <input type="number" min="0" max="999" value={product.stockQuantity || 0}
-                          onChange={(e) => handleUpdateStockQuantity(product.id, parseInt(e.target.value) || 0)}
+                        <input type="number" min="0" max="999"
+                          defaultValue={product.stockQuantity || 0}
+                          key={`${product.id}-${product.stockQuantity}`}
+                          onBlur={(e) => {
+                            const newQty = parseInt(e.target.value, 10);
+                            const currentQty = product.stockQuantity || 0;
+                            if (!isNaN(newQty) && newQty !== currentQty) {
+                              handleUpdateStockQuantity(product.id, newQty);
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              (e.target as HTMLInputElement).blur();
+                            }
+                          }}
                           className="w-20 px-2 py-1 border border-gray-300 rounded text-center focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
