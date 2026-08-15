@@ -70,6 +70,18 @@ const normalizeHeader = (header: string): string => {
     'in stock': 'inStock',
     'available': 'inStock',
     'inventory': 'inStock',
+    // Stock QUANTITY (a number) is distinct from the inStock boolean above —
+    // map these variants to their own canonical field so a numeric stock
+    // count from the CSV doesn't get lost or confused with the yes/no
+    // in-stock flag.
+    'stock quantity': 'stockQuantity',
+    'stockquantity': 'stockQuantity',
+    'stock qty': 'stockQuantity',
+    'stockqty': 'stockQuantity',
+    'quantity': 'stockQuantity',
+    'qty': 'stockQuantity',
+    'stock count': 'stockQuantity',
+    'stock_quantity': 'stockQuantity',
     'is featured': 'featured',
     'highlight': 'featured',
     'promoted': 'featured',
@@ -373,9 +385,42 @@ export const convertCSVToProducts = (csvProducts: CSVProduct[]) => {
     
     const images = processImages(imageStr, name);
 
-    // Handle stock status
-    const stockStr = csvProduct.inStock || csvProduct.InStock || csvProduct.stock || csvProduct.Stock || 'true';
-    const inStock = stockStr.toLowerCase() === 'true' || stockStr.toLowerCase() === 'yes' || stockStr === '1';
+    // FIX (16 Aug 2026): stockQuantity was never read from the CSV at all —
+    // every imported product silently got stockQuantity: undefined, which
+    // admin-products.js's `|| 0` then wrote to the database as 0. Meanwhile
+    // inStock was read from a totally separate CSV column (defaulting to
+    // 'true' if absent), so an imported product could easily end up marked
+    // "in stock: true" with an actual quantity of 0 — purchasable on the
+    // live site with nothing behind it. Now: read a numeric quantity if the
+    // CSV provides one (via the stockQuantity header mapping above), and
+    // derive inStock from it when a quantity is present, rather than
+    // treating the two as unrelated. Falls back to 5 if the CSV gives
+    // neither a quantity nor an inStock column, matching ProductForm's
+    // default for a brand-new manually-added product.
+    const qtyStr = csvProduct.stockQuantity || csvProduct.StockQuantity || csvProduct.STOCKQUANTITY || '';
+    let stockQuantity: number | null = null;
+    if (qtyStr && qtyStr.trim()) {
+      const qtyMatch = qtyStr.match(/\d+/);
+      if (qtyMatch) {
+        stockQuantity = parseInt(qtyMatch[0], 10);
+      }
+    }
+
+    // Handle stock status. If the CSV gave an explicit quantity, that's the
+    // source of truth for inStock (qty > 0). Otherwise fall back to any
+    // separate inStock/Stock column, defaulting to true only when neither
+    // is present.
+    let inStock: boolean;
+    if (stockQuantity !== null) {
+      inStock = stockQuantity > 0;
+    } else {
+      const stockStr = csvProduct.inStock || csvProduct.InStock || csvProduct.stock || csvProduct.Stock || 'true';
+      inStock = stockStr.toLowerCase() === 'true' || stockStr.toLowerCase() === 'yes' || stockStr === '1';
+      // No explicit quantity in the CSV — default to 5 so this doesn't
+      // silently become 0 in the database (matches ProductForm's default
+      // for a new product), unless the CSV explicitly marked it out of stock.
+      stockQuantity = inStock ? 5 : 0;
+    }
 
     // Handle featured status
     const featuredStr = csvProduct.featured || csvProduct.Featured || csvProduct.FEATURED || 'false';
@@ -408,6 +453,7 @@ export const convertCSVToProducts = (csvProducts: CSVProduct[]) => {
       category: category,
       images: images,
       inStock: inStock,
+      stockQuantity: stockQuantity,
       featured: featured,
       weight: weight,
       seoTitle: providedSEO.seoTitle || autoSEO.seoTitle,
@@ -417,7 +463,7 @@ export const convertCSVToProducts = (csvProducts: CSVProduct[]) => {
       updatedAt: new Date().toISOString()
     };
     
-    console.log(`Converted product ${index + 1}: ${result.name} (${result.category})`);
+    console.log(`Converted product ${index + 1}: ${result.name} (${result.category}) — stock: ${result.stockQuantity}`);
     return result;
   });
 };
