@@ -1,17 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 
-// FIX (16 Aug 2026): previously this component computed the charge amount
-// entirely client-side (a `grandTotal` prop passed from Cart.tsx) and sent
-// it straight to PayPal via actions.order.create() and actions.order.capture()
-// — both running in the browser. Anyone with dev tools open could edit
-// that number before paying, and the order/stock-decrement was never
-// recorded anywhere real (Cart.tsx's old success handler only called
-// sendOrderNotification, which never touched save-order.js). Order
-// creation and capture now happen server-side via /api/create-paypal-order
-// and /api/capture-paypal-order, which compute the real charge from actual
-// Supabase prices and hook into the same save-order.js /
-// send-order-email.js pipeline Stripe orders already use — mirroring the
-// fix already in place for Stripe (see create-payment-intent.js).
+// FIX (16 Aug 2026, earlier): order creation and capture now happen
+// server-side via /api/create-paypal-order and /api/capture-paypal-order
+// (see those files) instead of trusting a client-computed amount.
+//
+// FIX (16 Aug 2026): the effect that mounts the PayPal button was
+// depending on `items` and `formData` directly. `items` is rebuilt as a
+// brand-new array on every render of Cart.tsx (it's created inline with
+// .map() in the JSX), and `formData` gets a new object reference on every
+// keystroke in the checkout form — so the button was tearing down and
+// re-rendering the entire PayPal SDK on every single character typed,
+// which looked like constant flashing. The effect now only runs once on
+// mount; `items` and `formData` are read via refs inside the click
+// handlers instead, so they're always current at the moment the customer
+// actually clicks, without forcing a re-render of the button itself.
 
 interface CartItemInput {
   id: string;
@@ -46,6 +48,18 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const renderedRef = useRef(false);
 
+  // Always hold the latest values without forcing the button to
+  // re-initialize when they change.
+  const itemsRef = useRef(items);
+  const formDataRef = useRef(formData);
+  itemsRef.current = items;
+  formDataRef.current = formData;
+
+  const onSuccessRef = useRef(onSuccess);
+  const onErrorRef = useRef(onError);
+  onSuccessRef.current = onSuccess;
+  onErrorRef.current = onError;
+
   useEffect(() => {
     if (renderedRef.current) return;
     const existingScript = document.getElementById('paypal-sdk');
@@ -59,7 +73,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
       if (renderedRef.current) return;
       renderedRef.current = true;
       const paypal = (window as any).paypal;
-      if (!paypal) { onError('PayPal SDK failed to load'); return; }
+      if (!paypal) { onErrorRef.current('PayPal SDK failed to load'); return; }
 
       paypal.Buttons({
         style: {
@@ -73,20 +87,22 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         // actual product prices — the browser only ever supplies item
         // IDs and quantities, never a dollar figure.
         createOrder: async () => {
+          const currentItems = itemsRef.current;
+          const currentFormData = formDataRef.current;
           const res = await fetch('/api/create-paypal-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              items,
-              deliveryMethod: formData.deliveryMethod,
-              country: formData.country || 'NZ',
-              postalCode: formData.postalCode || '',
-              address: formData.address || '',
+              items: currentItems,
+              deliveryMethod: currentFormData.deliveryMethod,
+              country: currentFormData.country || 'NZ',
+              postalCode: currentFormData.postalCode || '',
+              address: currentFormData.address || '',
             }),
           });
           const data = await res.json();
           if (!res.ok || data.error) {
-            onError(data.error || 'Could not start PayPal checkout');
+            onErrorRef.current(data.error || 'Could not start PayPal checkout');
             throw new Error(data.error || 'create-paypal-order failed');
           }
           return data.orderId;
@@ -95,47 +111,50 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         // actually moves, and it's also where the order gets saved and
         // stock decremented (see capture-paypal-order.js).
         onApprove: async (data: any) => {
+          const currentItems = itemsRef.current;
+          const currentFormData = formDataRef.current;
           try {
             const res = await fetch('/api/capture-paypal-order', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 paypalOrderId: data.orderID,
-                items,
-                deliveryMethod: formData.deliveryMethod,
-                country: formData.country || 'NZ',
-                postalCode: formData.postalCode || '',
-                address: formData.address || '',
-                customerName: formData.name,
-                customerEmail: formData.email,
-                city: formData.city || '',
+                items: currentItems,
+                deliveryMethod: currentFormData.deliveryMethod,
+                country: currentFormData.country || 'NZ',
+                postalCode: currentFormData.postalCode || '',
+                address: currentFormData.address || '',
+                customerName: currentFormData.name,
+                customerEmail: currentFormData.email,
+                city: currentFormData.city || '',
               }),
             });
             const result = await res.json();
             if (!res.ok || result.error) {
-              onError(result.error || 'Payment capture failed');
+              onErrorRef.current(result.error || 'Payment capture failed');
               return;
             }
-            onSuccess(result.orderNumber);
+            onSuccessRef.current(result.orderNumber);
           } catch (err: any) {
-            onError(err.message || 'Payment capture failed');
+            onErrorRef.current(err.message || 'Payment capture failed');
           }
         },
         onError: (err: any) => {
           console.error('PayPal error:', err);
-          onError('PayPal payment failed. Please try again or use card payment.');
+          onErrorRef.current('PayPal payment failed. Please try again or use card payment.');
         },
         onCancel: () => {
           console.log('PayPal payment cancelled');
         },
       }).render(containerRef.current);
     };
-    script.onerror = () => onError('Failed to load PayPal');
+    script.onerror = () => onErrorRef.current('Failed to load PayPal');
     document.body.appendChild(script);
     return () => {
       renderedRef.current = false;
     };
-  }, [items, formData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
