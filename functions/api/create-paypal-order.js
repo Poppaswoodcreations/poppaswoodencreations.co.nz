@@ -1,26 +1,19 @@
-// Cloudflare Pages Function: POST /api/capture-paypal-order
+// Cloudflare Pages Function: POST /api/create-paypal-order
 //
-// Captures a PayPal order server-side (payment actually settles here, not
-// in the browser), then saves the order and decrements stock through the
-// same /api/save-order endpoint the Stripe webhook uses, and sends order
-// confirmation emails through /api/send-order-email — so PayPal orders now
-// get the same stock-tracking and notification behaviour Stripe orders
-// already have.
+// FIX (16 Aug 2026): PayPal checkout previously computed the charge amount
+// entirely in the browser (PayPalButton.tsx's `grandTotal` prop, set by
+// Cart.tsx) and sent that number straight to PayPal via the client-side
+// SDK's actions.order.create(). Anyone with browser dev tools open could
+// edit that value before paying — the same price-tampering hole already
+// closed for Stripe in create-payment-intent.js. This endpoint recomputes
+// the real charge server-side from actual Supabase product prices,
+// mirroring create-payment-intent.js's logic as closely as possible, and
+// order creation now happens here rather than in the browser.
 //
-// Previously, PayPal orders never decremented stock at all — Cart.tsx's
-// PayPal success handler only ever built order data client-side and called
-// sendOrderNotification, a separate older path that never touched
-// save-order.js. A customer could buy the last unit of something via
-// PayPal and the site would still show it in stock afterward.
-//
-// KNOWN LIMITATION: this isn't a true PayPal webhook (unlike
-// stripe-webhook.js for Stripe) — it fires when the browser calls this
-// endpoint right after capture completes. If the browser closes in the
-// split second between a successful capture and this call completing, the
-// order wouldn't get saved even though PayPal was charged. A real PayPal
-// webhook subscription (PAYMENT.CAPTURE.COMPLETED) would close that gap
-// the same way Stripe's does, but needs to be configured in the PayPal
-// Developer Dashboard first — worth doing as a follow-up.
+// NZ_RURAL_POSTCODES / shipping logic duplicated from create-payment-intent.js
+// and Cart.tsx, per the existing project convention (see create-payment-intent.js's
+// own comments for why — no shared module setup yet in this codebase). Keep
+// all three copies byte-for-byte identical if shipping rates ever change.
 
 const PAYPAL_CLIENT_ID = 'AaTKWO_kVwBAySr7UBFWRQCKSZXzrwZCjeMcxKG5cggnG_6M2L-KGiqUI8ZYTxCudlo_qayN15nTIzdt';
 const PAYPAL_API_BASE = 'https://api-m.paypal.com';
@@ -174,62 +167,43 @@ export async function onRequest(context) {
   const SUPABASE_ANON_KEY = env.SUPABASE_ANON_KEY || env.VITE_SUPABASE_ANON_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('capture-paypal-order: missing Supabase env vars');
+    console.error('create-paypal-order: missing Supabase env vars');
     return json({ error: 'Supabase env vars not configured' }, 500);
   }
 
   try {
     const body = await request.json();
-    const {
-      paypalOrderId, items, deliveryMethod, country, postalCode, address,
-      customerName, customerEmail, city,
-    } = body || {};
+    const { items, deliveryMethod, country, postalCode, address } = body || {};
 
-    if (!paypalOrderId) return json({ error: 'paypalOrderId is required' }, 400);
-    if (!Array.isArray(items) || items.length === 0) return json({ error: 'Cart items are required' }, 400);
+    if (!Array.isArray(items) || items.length === 0) {
+      return json({ error: 'Cart items are required' }, 400);
+    }
 
     const cleanItems = items
       .map(i => ({ id: String(i.id || ''), quantity: Math.max(1, Math.min(50, parseInt(i.quantity, 10) || 1)) }))
       .filter(i => i.id);
-    if (cleanItems.length === 0) return json({ error: 'Invalid cart items' }, 400);
 
-    // ── Capture the actual payment first ──────────────────────────────
-    const accessToken = await getPayPalAccessToken(env);
-    const captureRes = await fetch(
-      `${PAYPAL_API_BASE}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}/capture`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    const captureData = await captureRes.json();
-    if (!captureRes.ok || captureData.status !== 'COMPLETED') {
-      console.error('PayPal capture error:', captureData);
-      return json({ error: captureData.message || 'PayPal capture failed' }, captureRes.status || 500);
+    if (cleanItems.length === 0) {
+      return json({ error: 'Invalid cart items' }, 400);
     }
 
-    const captureId =
-      captureData?.purchase_units?.[0]?.payments?.captures?.[0]?.id || captureData.id;
-
-    // ── Recompute real order data server-side for our own records ─────
     const dbProducts = await fetchProducts(SUPABASE_URL, SUPABASE_ANON_KEY, cleanItems.map(i => i.id));
 
     let subtotal = 0;
     let totalActualWeight = 0;
     let totalVolumetricWeight = 0;
-    const orderItems = [];
     for (const item of cleanItems) {
       const product = dbProducts[item.id];
-      if (!product) continue; // payment already captured — don't fail the whole order over a lookup miss
+      if (!product) {
+        return json({ error: `Product not found: ${item.id}` }, 400);
+      }
       subtotal += Number(product.price || 0) * item.quantity;
       totalActualWeight += Number(product.weight || 0.5) * item.quantity;
       totalVolumetricWeight += volumetricWeightKg(product.length_mm, product.width_mm, product.height_mm) * item.quantity;
-      orderItems.push({ name: product.name, quantity: item.quantity, price: Number(product.price || 0) });
     }
+
     const billableWeight = Math.max(totalActualWeight, totalVolumetricWeight);
+
     const shipping = calculateShipping({
       items: cleanItems,
       dbProducts,
@@ -240,67 +214,48 @@ export async function onRequest(context) {
       postalCode: postalCode || '',
       address: address || '',
     });
+
     const grandTotal = subtotal + shipping;
 
-    const orderNumber = `PP-${String(captureId || paypalOrderId).slice(-8).toUpperCase()}`;
+    if (!(grandTotal > 0)) {
+      return json({ error: 'Computed total must be greater than zero' }, 400);
+    }
 
-    const payload = {
-      orderNumber,
-      orderTotal: grandTotal,
+    const accessToken = await getPayPalAccessToken(env);
+
+    const orderRes = await fetch(`${PAYPAL_API_BASE}/v2/checkout/orders`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: { currency_code: 'NZD', value: grandTotal.toFixed(2) },
+          description: "Poppa's Wooden Creations Order",
+        }],
+        application_context: {
+          shipping_preference: 'NO_SHIPPING',
+          user_action: 'PAY_NOW',
+        },
+      }),
+    });
+
+    const orderData = await orderRes.json();
+    if (!orderRes.ok) {
+      console.error('PayPal order create error:', orderData);
+      return json({ error: orderData.message || 'PayPal order creation failed' }, orderRes.status);
+    }
+
+    return json({
+      orderId: orderData.id,
       subtotal,
       shipping,
-      items: orderItems,
-      stockItems: cleanItems,
-      customer: {
-        name: customerName || 'Not provided',
-        email: customerEmail || 'Not provided',
-        address: address || '',
-        city: city || '',
-        postalCode: postalCode || '',
-        country: country || 'NZ',
-        deliveryMethod: deliveryMethod || 'shipping',
-      },
-      paymentMethod: 'PayPal',
-    };
-
-    const baseUrl = env.SITE_URL || 'https://poppaswoodencreations.co.nz';
-
-    // Save order + decrement stock — idempotent, same as the Stripe webhook uses.
-    let alreadyExisted = false;
-    try {
-      const saveRes = await fetch(`${baseUrl}/api/save-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (saveRes.ok) {
-        const saveData = await saveRes.json();
-        alreadyExisted = !!saveData.alreadyExisted;
-        console.log(`PayPal order ${orderNumber} saved (alreadyExisted=${alreadyExisted})`);
-      } else {
-        console.error('save-order failed:', await saveRes.text());
-      }
-    } catch (saveErr) {
-      console.error('save-order fetch error:', saveErr);
-    }
-
-    // Send confirmation emails — only on genuinely new orders, same rule as Stripe.
-    if (!alreadyExisted) {
-      try {
-        const emailRes = await fetch(`${baseUrl}/api/send-order-email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!emailRes.ok) console.error('send-order-email failed:', await emailRes.text());
-      } catch (emailErr) {
-        console.error('send-order-email fetch error:', emailErr);
-      }
-    }
-
-    return json({ success: true, orderNumber, grandTotal });
+      grandTotal,
+    });
   } catch (error) {
-    console.error('capture-paypal-order error:', error);
+    console.error('create-paypal-order error:', error);
     return json({ error: error.message }, 500);
   }
 }
