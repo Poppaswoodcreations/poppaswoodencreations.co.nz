@@ -88,7 +88,14 @@ const SupabaseSync: React.FC<SupabaseSyncProps> = ({ products, onProductsUpdate 
           inStock: item.in_stock,
           featured: item.featured,
           weight: item.weight,
-          stockQuantity: item.stock_quantity || 5,
+          // FIX (16 Aug 2026): was `item.stock_quantity || 5`, which treats
+          // a genuine 0 (out of stock) as "no value" and silently rewrites
+          // it to 5 the moment "Load from Database" is clicked. Since this
+          // loads straight into local component state, hitting Save on any
+          // product afterward — or running "Sync to Database" — would push
+          // that corrupted 5 back into Supabase, undoing a correct 0. `?? 5`
+          // only falls back when stock_quantity is actually null/undefined.
+          stockQuantity: item.stock_quantity ?? 5,
           seoTitle: item.seo_title,
           seoDescription: item.seo_description,
           seoKeywords: item.seo_keywords,
