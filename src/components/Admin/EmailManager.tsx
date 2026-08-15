@@ -1,71 +1,112 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Save, Send, CheckCircle, AlertCircle, Settings, Bell } from 'lucide-react';
+import { Mail, Save, Send, CheckCircle, AlertCircle, Settings, Bell, RefreshCw } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+
+const ADMIN_PASSWORD = 'Adrianbar1?';
 
 interface EmailSettings {
   adminEmail: string;
   notificationsEnabled: boolean;
-  emailService: 'formspree' | 'emailjs' | 'mailto';
-  formspreeEndpoint: string;
-  emailjsServiceId: string;
-  emailjsTemplateId: string;
-  emailjsUserId: string;
 }
 
+// FIX (16 Aug 2026): two separate problems fixed here.
+//
+// 1. Persistence — this previously saved only to
+//    localStorage['poppas-email-settings'], so changes never reached the
+//    live site. Rewired to site_settings (same pattern as HeroEditor), via
+//    /api/admin-site-settings. send-low-stock-email.js now reads
+//    email_settings.adminEmail from the same row, so this setting actually
+//    controls where real low-stock alerts go.
+//
+// 2. Test Email — previously posted to a Formspree endpoint entirely
+//    unrelated to the real order-notification system (which uses Resend).
+//    A successful or failed test told you nothing about whether real
+//    emails work. "Send Test Email" now sends a real test through
+//    /api/send-low-stock-email, the actual endpoint used for live low-stock
+//    alerts — a genuine end-to-end test of the real pipeline.
+//
+// KNOWN GAP: order-confirmation emails go through a separate endpoint
+// (send-order-email.js) that wasn't available to update here — it may
+// still have its own hardcoded recipient. Worth checking separately if
+// you want the adminEmail setting to control that too.
 const EmailManager: React.FC = () => {
+  const [settingsId, setSettingsId] = useState<string | null>(null);
   const [emailSettings, setEmailSettings] = useState<EmailSettings>({
-    adminEmail: 'adrianbarber8@gmail.com',
+    adminEmail: 'poppas.wooden.creations@gmail.com',
     notificationsEnabled: true,
-    emailService: 'formspree',
-    formspreeEndpoint: 'https://formspree.io/f/xdkogkpw',
-    emailjsServiceId: '',
-    emailjsTemplateId: '',
-    emailjsUserId: ''
   });
 
-  const [testEmail, setTestEmail] = useState('');
+  const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
-  // Load saved email settings
   useEffect(() => {
+    loadEmailSettings();
+  }, []);
+
+  const loadEmailSettings = async () => {
+    setLoading(true);
     try {
-      const saved = localStorage.getItem('poppas-email-settings');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setEmailSettings({ ...emailSettings, ...parsed });
-        console.log('📧 Loaded saved email settings');
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .single();
+
+      if (error) {
+        console.error('Error loading email settings from Supabase:', error);
+        return;
+      }
+
+      if (data) {
+        setSettingsId(data.id);
+        const stored = data.email_settings;
+        if (stored && typeof stored === 'object') {
+          setEmailSettings({
+            adminEmail: stored.adminEmail || 'poppas.wooden.creations@gmail.com',
+            notificationsEnabled: stored.notificationsEnabled ?? true,
+          });
+          console.log('📧 Loaded email settings from Supabase');
+        }
       }
     } catch (error) {
       console.error('Error loading email settings:', error);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    setSaving(true);
+    setStatus('idle');
+    setMessage('');
     try {
-      localStorage.setItem('poppas-email-settings', JSON.stringify(emailSettings));
-      
-      // Also update the orderNotifications.ts file
-      const orderNotificationsCode = `
-// Updated email configuration
-const adminEmail = '${emailSettings.adminEmail}';
-const notificationsEnabled = ${emailSettings.notificationsEnabled};
-const emailService = '${emailSettings.emailService}';
-`;
-      
-      console.log('💾 Email settings saved:', emailSettings);
-      setStatus('success');
-      setMessage('Email settings saved successfully! Order notifications will be sent to ' + emailSettings.adminEmail);
-      
-      // Verify save
-      const verification = localStorage.getItem('poppas-email-settings');
-      if (verification) {
-        console.log('✅ Email settings save verified');
+      if (!settingsId) {
+        throw new Error('Missing site_settings row id — try refreshing the page.');
       }
+      const res = await fetch('/api/admin-site-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: ADMIN_PASSWORD,
+          action: 'update',
+          id: settingsId,
+          updates: { email_settings: emailSettings },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed to save email settings');
+
+      console.log('💾 Email settings saved to Supabase:', emailSettings);
+      setStatus('success');
+      setMessage('Email settings saved! Low-stock alerts will now be sent to ' + emailSettings.adminEmail);
     } catch (error) {
       console.error('❌ Failed to save email settings:', error);
       setStatus('error');
-      setMessage('Failed to save email settings. Please try again.');
+      setMessage(error instanceof Error ? error.message : 'Failed to save email settings.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -75,75 +116,42 @@ const emailService = '${emailSettings.emailService}';
     setMessage('');
 
     try {
-      // Create test email content
-      const testEmailContent = {
-        subject: '🧪 Test Email from Poppa\'s Wooden Creations Admin',
-        text: `This is a test email from your Poppa's Wooden Creations website admin panel.
-
-Email Settings:
-- Admin Email: ${emailSettings.adminEmail}
-- Service: ${emailSettings.emailService}
-- Notifications: ${emailSettings.notificationsEnabled ? 'Enabled' : 'Disabled'}
-
-If you received this email, your order notification system is working correctly!
-
-Test sent at: ${new Date().toLocaleString('en-NZ')}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #d97706;">🧪 Test Email</h1>
-            <p>This is a test email from your Poppa's Wooden Creations website admin panel.</p>
-            
-            <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-              <h3>Email Settings:</h3>
-              <ul>
-                <li><strong>Admin Email:</strong> ${emailSettings.adminEmail}</li>
-                <li><strong>Service:</strong> ${emailSettings.emailService}</li>
-                <li><strong>Notifications:</strong> ${emailSettings.notificationsEnabled ? 'Enabled' : 'Disabled'}</li>
-              </ul>
-            </div>
-            
-            <p>If you received this email, your order notification system is working correctly!</p>
-            <p><small>Test sent at: ${new Date().toLocaleString('en-NZ')}</small></p>
-          </div>
-        `
-      };
-
-      // Send test email using Formspree
-      const response = await fetch('https://formspree.io/f/xdkogkpw', {
+      // Sends a real test through the actual low-stock alert pipeline
+      // (Resend), addressed to whichever email is currently saved in
+      // site_settings — a genuine test of the real system, not a
+      // disconnected legacy form service.
+      const res = await fetch('/api/send-low-stock-email', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: emailSettings.adminEmail,
-          subject: testEmailContent.subject,
-          message: testEmailContent.text,
-          _replyto: emailSettings.adminEmail
-        })
+          products: [{ id: 'test-product', name: '🧪 Test Product (Email Manager test)', stock_quantity: 0 }],
+        }),
       });
+      const data = await res.json().catch(() => ({}));
 
-      if (response.ok) {
+      if (res.ok && !data.error) {
         setStatus('success');
-        setMessage(`✅ Test email sent successfully to ${emailSettings.adminEmail}! Check your inbox.`);
+        setMessage(`✅ Test alert sent through the real notification system to ${emailSettings.adminEmail}! Check your inbox.`);
       } else {
-        throw new Error('Email service responded with error');
+        throw new Error(data.error || `Request failed (${res.status})`);
       }
-
     } catch (error) {
       console.error('❌ Test email failed:', error);
       setStatus('error');
-      setMessage(`❌ Test email failed. Trying backup method...`);
-      
-      // Fallback to mailto
-      const mailtoLink = `mailto:${emailSettings.adminEmail}?subject=${encodeURIComponent('🧪 Test Email from Admin Panel')}&body=${encodeURIComponent('This is a test email from your admin panel. If you see this, the backup email method is working.')}`;
-      window.open(mailtoLink);
-      
-      setMessage(`❌ Direct email failed, but opened backup email client. Check if your email client opened.`);
+      setMessage(`❌ Test failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setSending(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <RefreshCw className="animate-spin mr-2" size={20} />
+        <span>Loading email settings...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -155,11 +163,17 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
         </h3>
         <button
           onClick={handleSave}
-          className="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2"
+          disabled={saving}
+          className="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save size={16} />
-          <span>Save Settings</span>
+          {saving ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+          <span>{saving ? 'Saving...' : 'Save Settings'}</span>
         </button>
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+        <strong>Note:</strong> this controls where <em>low-stock alert</em> emails go. Order-confirmation
+        emails are sent through a separate part of the system and aren't controlled by this setting.
       </div>
 
       {/* Status Message */}
@@ -186,9 +200,9 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
       <div className="bg-white p-6 rounded-lg border border-gray-200">
         <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
           <Settings className="mr-2 text-gray-600" size={20} />
-          Email Configuration
+          Low-Stock Alert Configuration
         </h4>
-        
+
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -202,7 +216,7 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
               placeholder="your-email@example.com"
             />
             <p className="text-xs text-gray-500 mt-1">
-              This email will receive all order notifications
+              This email will receive low-stock alerts
             </p>
           </div>
 
@@ -215,26 +229,8 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
               className="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"
             />
             <label htmlFor="notificationsEnabled" className="text-sm font-medium text-gray-700">
-              Enable email notifications for new orders
+              Enable low-stock email alerts
             </label>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Service
-            </label>
-            <select
-              value={emailSettings.emailService}
-              onChange={(e) => setEmailSettings({ ...emailSettings, emailService: e.target.value as any })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-            >
-              <option value="formspree">Formspree (Recommended)</option>
-              <option value="emailjs">EmailJS</option>
-              <option value="mailto">Mailto (Backup)</option>
-            </select>
-            <p className="text-xs text-gray-500 mt-1">
-              Formspree is recommended for reliable email delivery
-            </p>
           </div>
         </div>
       </div>
@@ -243,13 +239,13 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
       <div className="bg-white p-6 rounded-lg border border-gray-200">
         <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
           <Send className="mr-2 text-green-600" size={20} />
-          Test Email System
+          Test the Real Notification System
         </h4>
-        
+
         <p className="text-gray-600 mb-4">
-          Send a test email to verify your notification system is working correctly.
+          Sends a real test alert through the actual Resend pipeline used for live low-stock notifications.
         </p>
-        
+
         <button
           onClick={handleTestEmail}
           disabled={sending || !emailSettings.adminEmail}
@@ -258,12 +254,12 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
           {sending ? (
             <>
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              <span>Sending Test Email...</span>
+              <span>Sending Test Alert...</span>
             </>
           ) : (
             <>
               <Send size={16} />
-              <span>Send Test Email to {emailSettings.adminEmail}</span>
+              <span>Send Test Alert to {emailSettings.adminEmail}</span>
             </>
           )}
         </button>
@@ -273,25 +269,11 @@ Test sent at: ${new Date().toLocaleString('en-NZ')}`,
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
         <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
           <Bell className="mr-2" size={20} />
-          Current Email Setup
+          Current Setup
         </h4>
         <div className="text-sm text-blue-800 space-y-2">
           <p><strong>Admin Email:</strong> {emailSettings.adminEmail}</p>
-          <p><strong>Notifications:</strong> {emailSettings.notificationsEnabled ? '✅ Enabled' : '❌ Disabled'}</p>
-          <p><strong>Service:</strong> {emailSettings.emailService}</p>
-          <p><strong>Status:</strong> {emailSettings.notificationsEnabled ? 'Ready to receive order notifications' : 'Notifications disabled'}</p>
-        </div>
-      </div>
-
-      {/* Instructions */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <h4 className="font-medium text-amber-900 mb-2">📧 How Email Notifications Work</h4>
-        <div className="text-sm text-amber-800 space-y-1">
-          <p><strong>1.</strong> Customer places order on your website</p>
-          <p><strong>2.</strong> System automatically sends email to {emailSettings.adminEmail}</p>
-          <p><strong>3.</strong> Email includes all order details, customer info, and payment method</p>
-          <p><strong>4.</strong> Order also stored in Admin Dashboard → Order Management</p>
-          <p><strong>5.</strong> Browser notification shown (if enabled)</p>
+          <p><strong>Low-Stock Alerts:</strong> {emailSettings.notificationsEnabled ? '✅ Enabled' : '❌ Disabled'}</p>
         </div>
       </div>
     </div>
