@@ -52,7 +52,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
     name: product?.name || '',
     description: product?.description || '',
     price: product?.price || 0,
-    stockQuantity: product?.stockQuantity || 5,
+    // FIX (16 Aug 2026): was `product?.stockQuantity || 5`, which treats a
+    // genuine 0 (out of stock) as "no value" and silently pre-fills the
+    // form with 5. Editing and saving any 0-stock product (e.g. just to
+    // fix a typo in its description) would re-break its stock count back
+    // to 5 unless you happened to notice and manually re-zero it. `?? 5`
+    // only falls back to 5 when stockQuantity is actually null/undefined
+    // (i.e. a genuinely new product), preserving a real 0.
+    stockQuantity: product?.stockQuantity ?? 5,
     weight: product?.weight || 0.5,
     category: product?.category || categories[0].slug,
     images: (() => {
@@ -289,7 +296,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
                   min="0"
                   max="999"
                   required
-                  value={formData.stockQuantity || ''}
+                  // FIX (16 Aug 2026): was `formData.stockQuantity || ''`,
+                  // which rendered a genuine 0 as a blank field — you'd see
+                  // an empty box instead of "0", which is misleading (looks
+                  // unset rather than explicitly zero). `?? ''` only blanks
+                  // the field for null/undefined.
+                  value={formData.stockQuantity ?? ''}
                   onChange={(e) => {
                     const qty = parseInt(e.target.value) || 0;
                     setFormData({ 
