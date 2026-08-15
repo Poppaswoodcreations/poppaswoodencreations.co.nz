@@ -4,13 +4,18 @@
 // genuinely new order is saved and stock is decremented, and from
 // admin-products.js after a manual save/update in the admin panel.
 //
-// FIX (16 Aug 2026): the subject line and body text were hardcoded to say
-// "down to 1" / "1 in stock" regardless of the product's actual quantity.
-// Since the trigger fires at stock_quantity <= 1, a product that just hit
-// 0 (genuinely sold out) still got an email saying "1 in stock" — the
-// table below showed the real number, but the headline text was
-// misleading at a glance and could read as "no rush" when it's actually
-// out of stock. Wording is now threshold-agnostic and per-row.
+// FIX (16 Aug 2026, earlier): the subject line and body text were
+// hardcoded to say "down to 1" / "1 in stock" regardless of the product's
+// actual quantity. Wording is now threshold-agnostic and per-row.
+//
+// FIX (16 Aug 2026): the recipient was hardcoded to
+// poppas.wooden.creations@gmail.com and there was no way to actually turn
+// alerts off, even though EmailManager.tsx had an "Enable notifications"
+// checkbox — it just didn't do anything. Now reads email_settings from
+// site_settings (the same row EmailManager.tsx saves to) for both the
+// recipient address and the enabled flag, with a safe fallback to the
+// original hardcoded values if that lookup fails for any reason — a
+// settings-lookup hiccup should never silently kill a real stock alert.
 export async function onRequest(context) {
   const { request, env } = context;
   if (request.method !== 'POST') {
@@ -21,6 +26,48 @@ export async function onRequest(context) {
     console.error('RESEND_API_KEY not set');
     return json({ error: 'Email service not configured' }, 500);
   }
+
+  const DEFAULT_RECIPIENT = 'poppas.wooden.creations@gmail.com';
+  let recipient = DEFAULT_RECIPIENT;
+  let notificationsEnabled = true;
+
+  const SUPABASE_URL = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY =
+    env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || env.VITE_SUPABASE_SERVICE_KEY;
+
+  if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
+    try {
+      const settingsRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/site_settings?select=email_settings&limit=1`,
+        {
+          headers: {
+            apikey: SUPABASE_SERVICE_KEY,
+            Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+          },
+        }
+      );
+      if (settingsRes.ok) {
+        const rows = await settingsRes.json();
+        const settings = rows?.[0]?.email_settings;
+        if (settings && typeof settings === 'object') {
+          if (settings.adminEmail) recipient = settings.adminEmail;
+          if (typeof settings.notificationsEnabled === 'boolean') {
+            notificationsEnabled = settings.notificationsEnabled;
+          }
+        }
+      } else {
+        console.error('Could not load email_settings, using default recipient:', await settingsRes.text());
+      }
+    } catch (e) {
+      console.error('email_settings lookup failed, using default recipient:', e.message);
+    }
+  }
+
+  if (!notificationsEnabled) {
+    console.log('Low-stock notifications disabled in site_settings — skipping send.');
+    return json({ success: true, skipped: true, reason: 'notifications disabled' });
+  }
+
   try {
     const { products } = await request.json();
     if (!Array.isArray(products) || products.length === 0) {
@@ -42,8 +89,6 @@ export async function onRequest(context) {
     `;
     }).join('');
 
-    // Build a subject/summary line that reflects what's actually in the
-    // batch, rather than assuming everything hit the same number.
     let summaryPhrase;
     if (outOfStockCount > 0 && lowStockCount > 0) {
       summaryPhrase = `${outOfStockCount} out of stock, ${lowStockCount} down to 1`;
@@ -55,7 +100,7 @@ export async function onRequest(context) {
 
     const payload = {
       from: "Poppa's Website <noreply@poppaswoodencreations.co.nz>",
-      to: ['poppas.wooden.creations@gmail.com'],
+      to: [recipient],
       subject: `⚠️ Low Stock Alert — ${summaryPhrase}`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#f9fafb;">
@@ -80,7 +125,7 @@ export async function onRequest(context) {
         </div>
       `,
     };
-    console.log('Sending low-stock alert email to Resend...');
+    console.log(`Sending low-stock alert email to Resend (recipient: ${recipient})...`);
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
