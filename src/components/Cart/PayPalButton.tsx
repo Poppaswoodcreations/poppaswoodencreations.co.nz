@@ -1,17 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 
-// FIX (16 Aug 2026, earlier x2): order creation/capture moved server-side;
-// effect no longer re-initializes on every keystroke (see prior comments
-// in git history for this file).
+// FIX (16 Aug 2026, earlier x3): order creation/capture moved server-side;
+// effect no longer re-initializes on every keystroke; generic SDK error no
+// longer overwrites a specific server error message.
 //
-// FIX (16 Aug 2026): when create-paypal-order failed, this both showed the
-// specific server error message AND threw (required, to tell the PayPal
-// SDK the createOrder call failed) — but throwing also makes the SDK's own
-// `onError` handler fire right afterward, which immediately overwrote the
-// specific message with a generic "PayPal payment failed" string. The
-// person never actually saw what went wrong. `suppressNextGenericErrorRef`
-// now tracks whether we've already shown a specific message, so the SDK's
-// generic handler skips firing right after.
+// DIAGNOSTIC ADD (16 Aug 2026): "paypalOrderId is required" was reaching
+// the server, meaning the approval callback's order ID came back empty.
+// Added console logging at each stage plus a client-side guard that stops
+// and shows a clear message rather than silently sending an empty ID to
+// the server — this should surface exactly where things are going wrong
+// on the next attempt.
 
 interface CartItemInput {
   id: string;
@@ -56,9 +54,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   onSuccessRef.current = onSuccess;
   onErrorRef.current = onError;
 
-  // Set to true right before we show a specific error message, so the
-  // SDK's own generic onError (fired when createOrder rejects) doesn't
-  // immediately stomp over it.
   const suppressNextGenericErrorRef = useRef(false);
 
   useEffect(() => {
@@ -100,25 +95,44 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
               }),
             });
             const data = await res.json().catch(() => ({}));
+            console.log('[PayPal] create-paypal-order response:', res.status, data);
+
             if (!res.ok || data.error) {
               const msg = data.error || `Could not start PayPal checkout (${res.status})`;
-              console.error('create-paypal-order failed:', msg);
+              console.error('[PayPal] createOrder failed:', msg);
               suppressNextGenericErrorRef.current = true;
               onErrorRef.current(msg);
               throw new Error(msg);
             }
+            if (!data.orderId) {
+              const msg = 'PayPal did not return an order ID from create-paypal-order.';
+              console.error('[PayPal]', msg, data);
+              suppressNextGenericErrorRef.current = true;
+              onErrorRef.current(msg);
+              throw new Error(msg);
+            }
+            console.log('[PayPal] Using orderId:', data.orderId);
             return data.orderId;
           } catch (err: any) {
             const msg = err?.message || 'Could not start PayPal checkout';
-            console.error('create-paypal-order fetch error:', err);
+            console.error('[PayPal] createOrder exception:', err);
             suppressNextGenericErrorRef.current = true;
             onErrorRef.current(msg);
             throw err;
           }
         },
         onApprove: async (data: any) => {
+          console.log('[PayPal] onApprove raw data:', data);
           const currentItems = itemsRef.current;
           const currentFormData = formDataRef.current;
+
+          if (!data || !data.orderID) {
+            const msg = 'PayPal approval did not include an order ID — please try again.';
+            console.error('[PayPal]', msg, data);
+            onErrorRef.current(msg);
+            return;
+          }
+
           try {
             const res = await fetch('/api/capture-paypal-order', {
               method: 'POST',
@@ -136,20 +150,22 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
               }),
             });
             const result = await res.json().catch(() => ({}));
+            console.log('[PayPal] capture-paypal-order response:', res.status, result);
+
             if (!res.ok || result.error) {
               const msg = result.error || `Payment capture failed (${res.status})`;
-              console.error('capture-paypal-order failed:', msg);
+              console.error('[PayPal] capture failed:', msg);
               onErrorRef.current(msg);
               return;
             }
             onSuccessRef.current(result.orderNumber);
           } catch (err: any) {
-            console.error('capture-paypal-order fetch error:', err);
+            console.error('[PayPal] capture-paypal-order exception:', err);
             onErrorRef.current(err.message || 'Payment capture failed');
           }
         },
         onError: (err: any) => {
-          console.error('PayPal SDK error:', err);
+          console.error('[PayPal] SDK-level onError:', err);
           if (suppressNextGenericErrorRef.current) {
             suppressNextGenericErrorRef.current = false;
             return;
@@ -157,7 +173,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
           onErrorRef.current('PayPal payment failed. Please try again or use card payment.');
         },
         onCancel: () => {
-          console.log('PayPal payment cancelled');
+          console.log('[PayPal] payment cancelled');
         },
       }).render(containerRef.current);
     };
