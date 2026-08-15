@@ -403,6 +403,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       case 'add-category':
         return (
           <CategoryManager
+            products={products}
             onSave={(categories) => {
               console.log('💾 Saving categories:', categories);
               alert('Categories saved successfully! Refresh the page to see changes.');
