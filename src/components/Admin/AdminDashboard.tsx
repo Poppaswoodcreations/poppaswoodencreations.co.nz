@@ -445,6 +445,39 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
                   All Out of Stock
                 </button>
+                <button onClick={() => {
+                    const header = ['Product', 'Category', 'Price (NZD)', 'Stock Quantity', 'Status'];
+                    const rows = products.map(p => [
+                      p.name,
+                      p.category,
+                      p.price.toFixed(2),
+                      String(p.stockQuantity || 0),
+                      p.inStock ? 'In Stock' : 'Out of Stock',
+                    ]);
+                    const escapeCell = (cell: string) => {
+                      if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
+                        return `"${cell.replace(/"/g, '""')}"`;
+                      }
+                      return cell;
+                    };
+                    const csv = [header, ...rows]
+                      .map(row => row.map(escapeCell).join(','))
+                      .join('\n');
+                    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    const date = new Date().toISOString().split('T')[0];
+                    a.href = url;
+                    a.download = `poppas-inventory-${date}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="px-3 py-1 bg-amber-600 text-white text-sm rounded hover:bg-amber-700 inline-flex items-center gap-1">
+                  <Download className="w-4 h-4" />
+                  Download CSV
+                </button>
               </div>
             </div>
             <div className="bg-white rounded-lg shadow overflow-hidden">
