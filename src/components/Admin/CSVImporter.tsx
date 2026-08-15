@@ -101,12 +101,15 @@ const CSVImporter: React.FC<CSVImporterProps> = ({ onImport, onClearAll }) => {
   };
 
   const downloadTemplate = () => {
-    const template = `name,description,price,weight,category,images,inStock,featured,seoTitle,seoDescription,seoKeywords
-"Wooden Train Engine","Classic wooden train engine with authentic railway details perfect for imaginative play",35.00,0.8,wooden-trains,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,true,"","",""
-"Steam Locomotive Toy","Beautiful steam locomotive with moving parts and realistic details",42.00,1.2,wooden-trains,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,true,"","",""
-"Freight Train Set","Complete freight train with multiple cars and locomotive",48.00,2.5,wooden-trains,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""
-"Baby Rattle","Safe wooden rattle for babies and toddlers with smooth finish",15.00,0.2,wooden-baby-toys,"https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""
-"Wooden Dump Truck","Heavy-duty wooden dump truck with tilting bed",28.00,1.8,wooden-trucks,"https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""`;
+    // FIX (16 Aug 2026): added stockQuantity column. It was missing before,
+    // which meant CSV imports never carried a real stock count — see
+    // csvImporter.ts for the corresponding parsing fix.
+    const template = `name,description,price,weight,category,stockQuantity,images,inStock,featured,seoTitle,seoDescription,seoKeywords
+"Wooden Train Engine","Classic wooden train engine with authentic railway details perfect for imaginative play",35.00,0.8,wooden-trains,5,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,true,"","",""
+"Steam Locomotive Toy","Beautiful steam locomotive with moving parts and realistic details",42.00,1.2,wooden-trains,5,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,true,"","",""
+"Freight Train Set","Complete freight train with multiple cars and locomotive",48.00,2.5,wooden-trains,3,"https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""
+"Baby Rattle","Safe wooden rattle for babies and toddlers with smooth finish",15.00,0.2,wooden-baby-toys,10,"https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""
+"Wooden Dump Truck","Heavy-duty wooden dump truck with tilting bed",28.00,1.8,wooden-trucks,2,"https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=800",true,false,"","",""`;
     
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -129,6 +132,7 @@ const CSVImporter: React.FC<CSVImporterProps> = ({ onImport, onClearAll }) => {
             <div className="text-xs text-amber-600 space-y-1">
               <div><strong>Required:</strong> name, description, price, weight</div>
               <div><strong>Important:</strong> category should match: wooden-trains, wooden-baby-toys, wooden-trucks, etc.</div>
+              <div><strong>Stock:</strong> stockQuantity (a number). If omitted, defaults to 5 in stock.</div>
               <div><strong>Images:</strong> Use full URLs like https://images.pexels.com/... (separated by | ; , or newlines)</div>
               <div><strong>SEO:</strong> seoTitle, seoDescription, seoKeywords (auto-generated if not provided)</div>
               <div className="mt-2 text-amber-700">
