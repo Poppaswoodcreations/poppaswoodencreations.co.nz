@@ -8,6 +8,12 @@
 // fires the same low-stock alert email used by order-driven decrements in
 // save-order.js — so manually editing stock in the admin panel (not just
 // stock changing because of an order) triggers the alert too.
+//
+// FIX (16 Aug 2026): 'bulk-sync' was using `p.stockQuantity || 5`, which
+// treats a genuine 0 (out of stock) as "no value" and silently replaces it
+// with 5. Any product legitimately at 0 stock that went through a Database
+// Sync got bumped back up to 5. Changed to `?? 0` (nullish coalescing) so
+// only null/undefined fall back — a real 0 is preserved.
 
 const REQUEST_LIMIT = 30;             // max requests
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
@@ -200,7 +206,7 @@ export async function onRequest(context) {
         in_stock: p.inStock,
         featured: p.featured,
         weight: p.weight || 0.5,
-        stock_quantity: p.stockQuantity || 5,
+        stock_quantity: p.stockQuantity ?? 0,
       }));
 
       const batchSize = 10;
