@@ -24,6 +24,37 @@ export async function onRequest(context) {
   });
 }
 
+// FIX (16 Aug 2026): looks up the real notification recipient from
+// site_settings.email_settings (the same row EmailManager.tsx now saves to
+// — see send-low-stock-email.js for the same pattern), instead of a
+// hardcoded constant. Falls back to the original hardcoded address if the
+// lookup fails for any reason, so a settings hiccup can never silently
+// swallow a real order email.
+async function resolveOwnerEmail() {
+  const DEFAULT_OWNER_EMAIL = 'poppas.wooden.creations@gmail.com';
+  const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY =
+    process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return DEFAULT_OWNER_EMAIL;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/site_settings?select=email_settings&limit=1`, {
+      headers: {
+        apikey: SUPABASE_SERVICE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+      },
+    });
+    if (!res.ok) return DEFAULT_OWNER_EMAIL;
+    const rows = await res.json();
+    const settings = rows?.[0]?.email_settings;
+    return (settings && settings.adminEmail) || DEFAULT_OWNER_EMAIL;
+  } catch (e) {
+    console.error('resolveOwnerEmail lookup failed, using default:', e.message);
+    return DEFAULT_OWNER_EMAIL;
+  }
+}
+
 const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -53,7 +84,7 @@ const handler = async (event) => {
     paymentMethod,
   } = orderData;
 
-  const OWNER_EMAIL = 'poppas.wooden.creations@gmail.com';
+  const OWNER_EMAIL = await resolveOwnerEmail();
 
   const itemsHtml = items.map(item => `
     <tr>
@@ -176,7 +207,7 @@ const handler = async (event) => {
           <h3 style="color:#92400e;margin:0 0 8px;">Questions?</h3>
           <p style="color:#92400e;margin:0;">
             Email us at <a href="mailto:${OWNER_EMAIL}">${OWNER_EMAIL}</a><br>
-            or call <a href="tel:+64210228166">021 022 8166</a>
+            or call <a href="tel:+642102288166">021 022 88166</a>
           </p>
         </div>
 
