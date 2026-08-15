@@ -158,14 +158,19 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         for (const product of products) {
           await updateProduct(product.id, {
             inStock,
-            stockQuantity: inStock ? (product.stockQuantity || 5) : 0
+            // FIX (16 Aug 2026): was `product.stockQuantity || 5`, which
+            // treats a genuine 0 the same as "no value" — same bug pattern
+            // found and fixed in admin-products.js, ProductForm.tsx, and
+            // SupabaseSync.tsx. `?? 5` only falls back when the value is
+            // actually null/undefined, so a real 0 isn't silently bumped.
+            stockQuantity: inStock ? (product.stockQuantity ?? 5) : 0
           });
         }
       } else {
         const updatedProducts = products.map(product => ({
           ...product,
           inStock,
-          stockQuantity: inStock ? (product.stockQuantity || 5) : 0
+          stockQuantity: inStock ? (product.stockQuantity ?? 5) : 0
         }));
         onProductsUpdate(updatedProducts);
         saveProductsToStorage(updatedProducts);
@@ -317,7 +322,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <p><strong>✅ Access:</strong> Verified</p>
                 <p><strong>✅ Products:</strong> {products.length} loaded</p>
                 <p><strong>✅ Database:</strong> {isAdminConnected ? 'Admin connected - permanent saves!' : 'Local storage mode'}</p>
-                <p><strong>✅ Orders:</strong> Email notifications to adrianbarber8@gmail.com</p>
+                {/* FIX (16 Aug 2026): was showing the personal email
+                    (adrianbarber8@gmail.com). The real order notification
+                    recipient, per OrderManager.tsx, is the business email. */}
+                <p><strong>✅ Orders:</strong> Email notifications to poppas.wooden.creations@gmail.com</p>
               </div>
             </div>
             <div className="flex justify-between items-center">
