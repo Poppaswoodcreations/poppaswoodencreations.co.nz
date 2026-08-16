@@ -92,6 +92,7 @@ const GHOST_BLOG_SLUGS = new Set([
 // ─────────────────────────────────────────────────────────────
 const GHOST_CATEGORIES = new Set([
   'wooden-other-toys',
+  'wooden-toys',
 ]);
 
 // ─────────────────────────────────────────────────────────────
@@ -130,7 +131,7 @@ const BASE_URL = 'https://poppaswoodencreations.co.nz';
 // HOME PAGE META
 // ─────────────────────────────────────────────────────────────
 const HOME_META = {
-  title: "Handmade Wooden Toys | Tikipunga, Whangarei NZ",
+  title: "Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations",
   description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $1000.",
   h1: 'Handmade Wooden Toys & Kitchenware from New Zealand',
   intro: 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.',
@@ -850,49 +851,6 @@ function buildHomeHTML(featuredProducts: any[]): string {
     ],
   });
 
-  // Mirrors src/components/HomePageSchema.tsx (real-user/Helmet version)
-  // so bots and real users see the same LocalBusiness entity data.
-  // NOTE: address uses 102 Kiripaka Road / postcode 0112 to match the
-  // policy & contact pages elsewhere in this file — confirm this is
-  // correct, as HomePageSchema.tsx currently has postcode 0110 with no
-  // street address.
-  const localBusinessSchema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "@id": `${BASE_URL}/#store`,
-    "name": "Poppa's Wooden Creations",
-    "image": `${BASE_URL}/og-image.jpg`,
-    "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Trusted supplier to Montessori schools across New Zealand.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "102 Kiripaka Road, Tikipunga",
-      "addressLocality": "Whangarei",
-      "addressRegion": "Northland",
-      "postalCode": "0112",
-      "addressCountry": "NZ",
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -35.7275,
-      "longitude": 174.3166,
-    },
-    "url": BASE_URL,
-    "telephone": "+642102288166",
-    "email": "poppas.wooden.creations@gmail.com",
-    "priceRange": "$$",
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "15:00",
-      },
-    ],
-    "paymentAccepted": ["Credit Card", "PayPal"],
-    "currenciesAccepted": "NZD",
-    "areaServed": { "@type": "Country", "name": "New Zealand" },
-  });
-
   const itemListSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -923,7 +881,6 @@ function buildHomeHTML(featuredProducts: any[]): string {
   <meta property="og:locale" content="en_NZ" />
   <script type="application/ld+json">${breadcrumbSchema}</script>
   <script type="application/ld+json">${itemListSchema}</script>
-  <script type="application/ld+json">${localBusinessSchema}</script>
   <style>
     body { font-family: Georgia, serif; max-width: 1100px; margin: 0 auto; padding: 0; background: #fafaf9; color: #1c1917; line-height: 1.7; }
     main { padding: 40px 24px; }
