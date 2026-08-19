@@ -128,6 +128,50 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
 // ─────────────────────────────────────────────────────────────
+// MERCHANT RETURN POLICY & SHIPPING DEFAULTS
+// Used to fill the "hasMerchantReturnPolicy" and "shippingDetails"
+// fields on Product schema so Merchant Listings clear the
+// "non-critical issues" flag in Search Console / Rich Results.
+// Mirrors the site's actual /returns and /shipping policy pages.
+// ─────────────────────────────────────────────────────────────
+const MERCHANT_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  "applicableCountry": "NZ",
+  "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+  "merchantReturnDays": 30,
+  "returnMethod": "https://schema.org/ReturnByMail",
+  "returnFees": "https://schema.org/FreeReturn",
+};
+
+const SHIPPING_DETAILS = {
+  "@type": "OfferShippingDetails",
+  "shippingRate": {
+    "@type": "MonetaryAmount",
+    "value": "10.00",
+    "currency": "NZD",
+  },
+  "shippingDestination": {
+    "@type": "DefinedRegion",
+    "addressCountry": "NZ",
+  },
+  "deliveryTime": {
+    "@type": "ShippingDeliveryTime",
+    "handlingTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 1,
+      "maxValue": 2,
+      "unitCode": "DAY",
+    },
+    "transitTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 1,
+      "maxValue": 3,
+      "unitCode": "DAY",
+    },
+  },
+};
+
+// ─────────────────────────────────────────────────────────────
 // HOME PAGE META
 // ─────────────────────────────────────────────────────────────
 const HOME_META = {
@@ -1187,6 +1231,8 @@ function buildProductHTML(product: any, productId: string): string {
       "availability": inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": { "@type": "Organization", "name": "Poppa's Wooden Creations" },
+      "hasMerchantReturnPolicy": MERCHANT_RETURN_POLICY,
+      "shippingDetails": SHIPPING_DETAILS,
     },
     "aggregateRating": {
       "@type": "AggregateRating",
