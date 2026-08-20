@@ -243,6 +243,7 @@ const MATERIAL_OVERRIDES: Record<string, string> = {
   'pine-boat': 'Pine wood',
   'pine-helicopter': 'Pine wood',
   'pine-kiwi': 'Pine wood',
+  'pine-plane': 'Pine wood',
   'police-boat': 'Rewa Rewa & Kauri wood',
   'product-pen-kauri-chrome-black': 'Kauri wood',
   'product-pen-kauri-gold-stylus': 'Kauri wood',
