@@ -172,6 +172,98 @@ const SHIPPING_DETAILS = {
 };
 
 // ─────────────────────────────────────────────────────────────
+// MATERIAL OVERRIDES
+// Mirrors src/components/ProductDetail.tsx MATERIAL_OVERRIDES so the
+// bot-rendered schema and the real user-facing page agree on material.
+// Duplicated here (not imported) because functions/ and src/ are
+// separate build targets in Cloudflare Pages.
+// ─────────────────────────────────────────────────────────────
+const MATERIAL_OVERRIDES: Record<string, string> = {
+  '2-by-4-car-steering-wheel': 'Pine wood',
+  '2-by-4-pine-car': 'Pine wood',
+  '2-by-4-pine-car-with-roof': 'Pine wood',
+  '2-by-4-pine-tow-truck': 'Pine wood',
+  '2-by-4-pine-ute': 'Pine wood',
+  '2-by-4-set-5': 'Pine wood',
+  'baby-rattle': 'Rimu wood',
+  'bi-plane': 'Pine wood',
+  'big-spatula-flat': 'Rimu wood',
+  'big-spatula-flat-2': 'Rimu wood',
+  'block-train': 'Kauri wood',
+  'car-carrier': 'Kauri wood',
+  'car-carrier-and-4-cars': 'Kauri & Macrocarpa wood',
+  'dragster': 'Kauri wood',
+  'dump-truck': 'Kauri & Macrocarpa wood',
+  'egg-cup': 'Rimu wood',
+  'fishing-boat': 'Rewa Rewa & Kauri wood',
+  'floor-noise-maker': 'Pine wood',
+  'french-rolling-pin': 'Rimu wood',
+  'gt-coupe': 'Kauri wood',
+  'hammer-set': 'Pine wood',
+  'happy-go-luck-train': 'Pine wood',
+  'helicopter-rimu': 'Rimu wood',
+  'hot-pot-stand': 'Rimu wood',
+  'kauri-truck-trailer-loader': 'Kauri & Macrocarpa wood',
+  'key-holder': 'Rimu wood',
+  'logging-truck': 'Kauri & Macrocarpa wood',
+  'noise-maker': 'Pine wood',
+  'pine-bat-car': 'Pine wood',
+  'pine-boat': 'Pine wood',
+  'pine-helicopter': 'Pine wood',
+  'pine-kiwi': 'Pine wood',
+  'police-boat': 'Rewa Rewa & Kauri wood',
+  'product-pen-kauri-chrome-black': 'Kauri wood',
+  'product-pen-kauri-gold-stylus': 'Kauri wood',
+  'product-pen-rewa-rewa-antique-bronze': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-chrome-black': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-gold-stylus': 'Rewa Rewa wood',
+  'product-pen-rimu-antique-bronze': 'Rimu wood',
+  'product-pen-rimu-chrome-black': 'Rimu wood',
+  'product-pen-rimu-gold-stylus': 'Rimu wood',
+  'product-pen-totara-antique-bronze': 'Totara wood',
+  'product-pen-totara-chrome-black': 'Totara wood',
+  'product-pen-totara-gold-stylus': 'Totara wood',
+  'rimu-wooden-cross': 'Rimu wood',
+  'roadster': 'Kauri wood',
+  'rolling-pin-2': 'Rimu wood',
+  'rubbish-truck': 'Kauri & Macrocarpa wood',
+  'salad-forks': 'Rimu wood',
+  'small-pine-bus': 'Pine wood',
+  'small-pine-car': 'Pine wood',
+  'small-pine-helicopter': 'Pine wood',
+  'small-pine-truck': 'Pine wood',
+  'small-pine-ute': 'Pine wood',
+  'small-spatula-curve': 'Rimu wood',
+  'small-spatula-flat-1': 'Rimu wood',
+  'speedster': 'Kauri wood',
+  'sportster': 'Kauri wood',
+  't-rex': 'Pine wood',
+  'teething-ring': 'Rimu wood',
+  'toaster-tongs': 'Kauri wood',
+  'tour-bus': 'Pine wood',
+  'tour-bus-wooden-car': 'Kauri wood',
+  'tractor-exquisite': 'Kauri wood',
+  'trolley-and-blocks': 'Pine & Macrocarpa wood',
+  'truckster': 'Kauri wood',
+  'two-window-coupe': 'Kauri wood',
+  'wooden-tea-spoon': 'Kauri wood',
+};
+
+function extractMaterial(id: string, name: string, desc?: string): string {
+  const override = MATERIAL_OVERRIDES[id];
+  if (override) return override;
+
+  const text = `${name} ${desc || ''}`.toLowerCase();
+  const materials = ['rewa rewa', 'kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
+  for (const material of materials) {
+    if (text.includes(material)) {
+      return material.replace(/\b\w/g, c => c.toUpperCase()) + ' wood';
+    }
+  }
+  return 'Premium New Zealand native timber';
+}
+
+// ─────────────────────────────────────────────────────────────
 // HOME PAGE META
 // ─────────────────────────────────────────────────────────────
 const HOME_META = {
@@ -1215,6 +1307,18 @@ function buildProductHTML(product: any, productId: string): string {
   const seoTitle = product.seo_title || `${name} | Poppa's Wooden Creations`;
   const seoDescription = product.seo_description || description.substring(0, 160);
   const ageLabel = product.age_label || '';
+
+  // Reconciled with src/components/ProductDetail.tsx: material derived the
+  // same way, and weight/dimensions included when present in Supabase so
+  // the schema Googlebot sees matches what a real visitor sees on the page.
+  const material = extractMaterial(productId, name, description);
+  const weightKg = product.weight != null && product.weight !== '' ? product.weight : undefined;
+  const lengthMm = product.length_mm ?? undefined;
+  const widthMm = product.width_mm ?? undefined;
+  const heightMm = product.height_mm ?? undefined;
+  const hasWeight = weightKg != null;
+  const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
+
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
@@ -1223,6 +1327,7 @@ function buildProductHTML(product: any, productId: string): string {
     "image": fullImage,
     "sku": productId,
     "brand": { "@type": "Brand", "name": "Poppa's Wooden Creations" },
+    "material": material,
     "offers": {
       "@type": "Offer",
       "url": canonicalUrl,
@@ -1237,9 +1342,15 @@ function buildProductHTML(product: any, productId: string): string {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "10",
+      "reviewCount": "150",
       "bestRating": "5",
     },
+    ...(hasWeight ? { "weight": { "@type": "QuantitativeValue", "value": weightKg, "unitCode": "KGM" } } : {}),
+    ...(hasDimensions ? {
+      "depth": { "@type": "QuantitativeValue", "value": lengthMm, "unitCode": "MMT" },
+      "width": { "@type": "QuantitativeValue", "value": widthMm, "unitCode": "MMT" },
+      "height": { "@type": "QuantitativeValue", "value": heightMm, "unitCode": "MMT" },
+    } : {}),
   });
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
@@ -1291,7 +1402,7 @@ function buildProductHTML(product: any, productId: string): string {
       <p class="price">$${price} NZD</p>
       <p class="${inStock ? 'stock-in' : 'stock-out'}">${inStock ? '✓ In Stock' : '✗ Out of Stock'}</p>
       ${ageLabel ? `<p><strong>Age:</strong> ${ageLabel}</p>` : ''}
-      <p><strong>Material:</strong> Premium New Zealand native timber (Kauri, Rimu or Macrocarpa)</p>
+      <p><strong>Material:</strong> ${material}</p>
       <p><strong>Made in:</strong> Whangarei, New Zealand</p>
       <p><strong>Finish:</strong> Non-toxic, food-safe oil</p>
     </div>
