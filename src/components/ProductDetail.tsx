@@ -347,6 +347,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       "itemCondition": "https://schema.org/NewCondition",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "NZ",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn",
+        "returnPolicyCountry": "NZ"
+      },
       "shippingDetails": {
         "@type": "OfferShippingDetails",
         "shippingRate": {
