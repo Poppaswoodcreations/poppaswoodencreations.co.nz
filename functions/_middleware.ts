@@ -143,33 +143,65 @@ const MERCHANT_RETURN_POLICY = {
   "returnFees": "https://schema.org/FreeReturn",
 };
 
-const SHIPPING_DETAILS = {
-  "@type": "OfferShippingDetails",
-  "shippingRate": {
-    "@type": "MonetaryAmount",
-    "value": "10.00",
-    "currency": "NZD",
-  },
-  "shippingDestination": {
-    "@type": "DefinedRegion",
-    "addressCountry": "NZ",
-  },
-  "deliveryTime": {
-    "@type": "ShippingDeliveryTime",
-    "handlingTime": {
-      "@type": "QuantitativeValue",
-      "minValue": 1,
-      "maxValue": 2,
-      "unitCode": "DAY",
+// ─────────────────────────────────────────────────────────────
+// REAL NZ POST SHIPPING RATE — ported from
+// functions/api/create-payment-intent.js so the price Googlebot sees
+// matches what a customer actually pays at checkout for a single unit
+// of this product, instead of a flat placeholder.
+//
+// NZ Post bills by billable weight = greater of actual weight and
+// volumetric weight (L cm x W cm x H cm / 5000). Tiers effective
+// 1 July 2026: <=1kg $10.00, <=2kg $10.40, <=3kg $12.40, <=4kg $13.40,
+// else $18.70. $10.00 is the floor — it never shows less than that,
+// matching what checkout actually charges.
+// ─────────────────────────────────────────────────────────────
+function volumetricWeightKg(lengthMm?: number, widthMm?: number, heightMm?: number): number {
+  if (!lengthMm || !widthMm || !heightMm) return 0;
+  const lCm = lengthMm / 10, wCm = widthMm / 10, hCm = heightMm / 10;
+  return (lCm * wCm * hCm) / 5000;
+}
+
+function nzWeightTier(weight: number): number {
+  return weight <= 1 ? 10.00 : weight <= 2 ? 10.40 : weight <= 3 ? 12.40 : weight <= 4 ? 13.40 : 18.70;
+}
+
+function buildShippingDetails(weightKg?: number, lengthMm?: number, widthMm?: number, heightMm?: number) {
+  // Same 0.5kg fallback create-payment-intent.js uses for products missing
+  // a weight value, so the schema and real checkout agree even for
+  // incomplete product records.
+  const actualWeight = weightKg != null ? Number(weightKg) : 0.5;
+  const volWeight = volumetricWeightKg(lengthMm, widthMm, heightMm);
+  const billableWeight = Math.max(actualWeight, volWeight);
+  const rate = nzWeightTier(billableWeight);
+
+  return {
+    "@type": "OfferShippingDetails",
+    "shippingRate": {
+      "@type": "MonetaryAmount",
+      "value": rate.toFixed(2),
+      "currency": "NZD",
     },
-    "transitTime": {
-      "@type": "QuantitativeValue",
-      "minValue": 1,
-      "maxValue": 3,
-      "unitCode": "DAY",
+    "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": "NZ",
     },
-  },
-};
+    "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 1,
+        "maxValue": 2,
+        "unitCode": "DAY",
+      },
+      "transitTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 1,
+        "maxValue": 3,
+        "unitCode": "DAY",
+      },
+    },
+  };
+}
 
 // ─────────────────────────────────────────────────────────────
 // MATERIAL OVERRIDES
@@ -1318,6 +1350,7 @@ function buildProductHTML(product: any, productId: string): string {
   const heightMm = product.height_mm ?? undefined;
   const hasWeight = weightKg != null;
   const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
+  const shippingDetails = buildShippingDetails(weightKg, lengthMm, widthMm, heightMm);
 
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
@@ -1337,7 +1370,7 @@ function buildProductHTML(product: any, productId: string): string {
       "itemCondition": "https://schema.org/NewCondition",
       "seller": { "@type": "Organization", "name": "Poppa's Wooden Creations" },
       "hasMerchantReturnPolicy": MERCHANT_RETURN_POLICY,
-      "shippingDetails": SHIPPING_DETAILS,
+      "shippingDetails": shippingDetails,
     },
     "aggregateRating": {
       "@type": "AggregateRating",
