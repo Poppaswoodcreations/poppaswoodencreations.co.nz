@@ -108,6 +108,12 @@ const BLOG_SLUG_REDIRECTS: Record<string, string> = {
 // RENAMED PRODUCT SLUGS — 301 to the current product id
 // Old slugs Google still has indexed -> live product in Supabase.
 // Recovers ranking instead of throwing it away with a 410.
+//
+// NOTE: 'small-pine-helicopter' was removed from this map — it was
+// pointing at 'pine-helicopter' (the big helicopter) from back when
+// it was a dead slug, but it's since become a real, separate product
+// in Supabase. Leaving the redirect in place was hijacking traffic
+// away from the actual Small Pine Helicopter product page.
 // ─────────────────────────────────────────────────────────────
 const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'small-pine-cars': 'small-pine-car',
@@ -118,7 +124,6 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'tipper-truck': 'dump-truck',
   'kauri-helicopter': 'pine-helicopter',
   'helicopter-macrocarpa': 'pine-helicopter',
-  'small-pine-helicopter': 'pine-helicopter',
   'the-block-train-made-from-kauri': 'block-train',
   'happy-go-lucky-train': 'happy-go-luck-train',
 };
