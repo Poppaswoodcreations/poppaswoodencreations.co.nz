@@ -95,7 +95,7 @@ const WoodenCrossesPage = () => {
   return (
     <>
       <Helmet>
-        <title>Handcrafted Rimu Wooden Cross NZ | Memorial & Christening Gift | Poppa's Wooden Creations</title>
+        <title>Rimu Wooden Cross NZ | Poppa's Wooden Creations</title>
         <meta name="description" content="Hand-carved wooden crosses made in Whangarei from New Zealand Rimu timber. Meaningful gifts for christenings, confirmations, memorials and special occasions. Made by hand in NZ." />
         <meta name="keywords" content="wooden cross NZ, Rimu wooden cross, wooden cross gift New Zealand, memorial wooden cross, christening gift NZ, handcrafted cross Whangarei" />
         <link rel="canonical" href="https://poppaswoodencreations.co.nz/wooden-crosses" />
