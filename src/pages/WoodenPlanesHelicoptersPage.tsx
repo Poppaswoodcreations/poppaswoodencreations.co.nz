@@ -54,7 +54,7 @@ const WoodenPlanesHelicoptersPage = () => {
   return (
     <>
       <Helmet>
-        <title>Handcrafted Wooden Planes & Helicopters NZ | Montessori Toys | Poppa's Wooden Creations</title>
+        <title>Wooden Planes & Helicopters NZ | Poppa's Wooden Creations</title>
         <meta name="description" content="Hand-carved wooden planes and helicopters made in Whangarei, New Zealand from native Rimu and Pine. Heirloom-quality Montessori wooden toys for children aged 3+." />
         <meta name="keywords" content="wooden planes NZ, wooden helicopters, toy aircraft, wooden airplanes Whangarei, Montessori wooden toys NZ, wooden toy plane New Zealand" />
         <link rel="canonical" href="https://poppaswoodencreations.co.nz/wooden-planes-helicopters" />
