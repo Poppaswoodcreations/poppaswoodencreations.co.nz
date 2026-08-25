@@ -272,7 +272,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
 
   // useSEO always called — canonical always correct regardless of loading state
   useSEO({
-    title: product?.seoTitle || (product ? `${product.name} | Handcrafted Wooden Toy | Made in NZ` : `Wooden Toy | Poppa's Wooden Creations`),
+    title: product?.seoTitle || (product ? `${product.name} | Poppa's Wooden Creations` : `Wooden Toy | Poppa's Wooden Creations`),
     description: (product?.seoDescription || enhancedDescription).substring(0, 160),
     image: fullImageUrl,
     type: 'product',
