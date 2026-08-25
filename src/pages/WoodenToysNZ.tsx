@@ -9,7 +9,7 @@ const WoodenToysNZ: React.FC = () => {
   return (
     <>
       <SEOHead 
-        title="Handmade Wooden Toys NZ | Kauri, Rimu & Macrocarpa | Poppa's Wooden Creations"
+        title="Handmade Wooden Toys NZ"
         description="Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ's trusted wooden toy maker since 2015."
         canonicalPath="/wooden-toys-nz"
         ogType="website"
