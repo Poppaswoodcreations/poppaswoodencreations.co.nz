@@ -31,6 +31,16 @@ const BOT_USER_AGENTS = [
   'apis-google',
   'mediapartners-google',
   'googleother',
+  'gptbot',
+  'oai-searchbot',
+  'chatgpt-user',
+  'perplexitybot',
+  'perplexity-user',
+  'claudebot',
+  'claude-user',
+  'claude-searchbot',
+  'meta-externalagent',
+  'amazonbot',
 ];
 
 // ─────────────────────────────────────────────────────────────
