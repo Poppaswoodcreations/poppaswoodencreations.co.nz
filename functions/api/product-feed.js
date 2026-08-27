@@ -13,13 +13,105 @@
 // "poppas_wooden_creations_feed_fixed.tsv" primary source.
 //
 // identifier_exists is always "FALSE" — these are handmade goods with no
-// GTIN/MPN, which Google requires to be explicitly declared.
+// GTIN/MPN, which Google requires to be explicitly declared. mpn is set
+// to the product's own id as a substitute identifier (brand + mpn),
+// which helps Google's data confidence even without a barcode.
 //
 // shipping_weight is read from Supabase products.weight (kg) — the same
 // field already used by create-payment-intent.js for volumetric shipping
 // calculations at checkout.
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 const BRAND = "Poppa's Wooden Creations";
+
+// Mirrors functions/_middleware.ts MATERIAL_OVERRIDES so the GMC feed,
+// the bot-rendered schema, and the real product page all agree on material.
+// Duplicated here (not imported) because each Cloudflare Pages Function
+// file is bundled separately.
+const MATERIAL_OVERRIDES = {
+  '2-by-4-car-steering-wheel': 'Pine wood',
+  '2-by-4-pine-car': 'Pine wood',
+  '2-by-4-pine-car-with-roof': 'Pine wood',
+  '2-by-4-pine-tow-truck': 'Pine wood',
+  '2-by-4-pine-ute': 'Pine wood',
+  '2-by-4-set-5': 'Pine wood',
+  'baby-rattle': 'Rimu wood',
+  'bi-plane': 'Pine wood',
+  'big-spatula-flat': 'Rimu wood',
+  'big-spatula-flat-2': 'Rimu wood',
+  'block-train': 'Kauri wood',
+  'car-carrier': 'Kauri wood',
+  'car-carrier-and-4-cars': 'Kauri & Macrocarpa wood',
+  'dragster': 'Kauri wood',
+  'dump-truck': 'Kauri & Macrocarpa wood',
+  'egg-cup': 'Rimu wood',
+  'fishing-boat': 'Rewa Rewa & Kauri wood',
+  'floor-noise-maker': 'Pine wood',
+  'french-rolling-pin': 'Rimu wood',
+  'gt-coupe': 'Kauri wood',
+  'hammer-set': 'Pine wood',
+  'happy-go-luck-train': 'Pine wood',
+  'helicopter-rimu': 'Rimu wood',
+  'hot-pot-stand': 'Rimu wood',
+  'kauri-truck-trailer-loader': 'Kauri & Macrocarpa wood',
+  'key-holder': 'Rimu wood',
+  'logging-truck': 'Kauri & Macrocarpa wood',
+  'noise-maker': 'Pine wood',
+  'pine-bat-car': 'Pine wood',
+  'pine-boat': 'Pine wood',
+  'pine-helicopter': 'Pine wood',
+  'pine-kiwi': 'Pine wood',
+  'pine-plane': 'Pine wood',
+  'police-boat': 'Rewa Rewa & Kauri wood',
+  'product-pen-kauri-chrome-black': 'Kauri wood',
+  'product-pen-kauri-gold-stylus': 'Kauri wood',
+  'product-pen-rewa-rewa-antique-bronze': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-chrome-black': 'Rewa Rewa wood',
+  'product-pen-rewa-rewa-gold-stylus': 'Rewa Rewa wood',
+  'product-pen-rimu-antique-bronze': 'Rimu wood',
+  'product-pen-rimu-chrome-black': 'Rimu wood',
+  'product-pen-rimu-gold-stylus': 'Rimu wood',
+  'product-pen-totara-antique-bronze': 'Totara wood',
+  'product-pen-totara-chrome-black': 'Totara wood',
+  'product-pen-totara-gold-stylus': 'Totara wood',
+  'rimu-wooden-cross': 'Rimu wood',
+  'roadster': 'Kauri wood',
+  'rolling-pin-2': 'Rimu wood',
+  'rubbish-truck': 'Kauri & Macrocarpa wood',
+  'salad-forks': 'Rimu wood',
+  'small-pine-bus': 'Pine wood',
+  'small-pine-car': 'Pine wood',
+  'small-pine-helicopter': 'Pine wood',
+  'small-pine-truck': 'Pine wood',
+  'small-pine-ute': 'Pine wood',
+  'small-spatula-curve': 'Rimu wood',
+  'small-spatula-flat-1': 'Rimu wood',
+  'speedster': 'Kauri wood',
+  'sportster': 'Kauri wood',
+  't-rex': 'Pine wood',
+  'teething-ring': 'Rimu wood',
+  'toaster-tongs': 'Kauri wood',
+  'tour-bus': 'Pine wood',
+  'tour-bus-wooden-car': 'Kauri wood',
+  'tractor-exquisite': 'Kauri wood',
+  'trolley-and-blocks': 'Pine & Macrocarpa wood',
+  'truckster': 'Kauri wood',
+  'two-window-coupe': 'Kauri wood',
+  'wooden-tea-spoon': 'Kauri wood',
+};
+
+function extractMaterial(id, name, desc) {
+  const override = MATERIAL_OVERRIDES[id];
+  if (override) return override;
+
+  const text = `${name} ${desc || ''}`.toLowerCase();
+  const materials = ['rewa rewa', 'kauri', 'rimu', 'macrocarpa', 'pine', 'totara', 'matai'];
+  for (const material of materials) {
+    if (text.includes(material)) {
+      return material.replace(/\b\w/g, c => c.toUpperCase()) + ' wood';
+    }
+  }
+  return '';
+}
 
 async function fetchAllProducts(supabaseUrl, supabaseKey) {
   const res = await fetch(
@@ -88,6 +180,8 @@ export async function onRequest(context) {
       'brand',
       'condition',
       'identifier_exists',
+      'mpn',
+      'material',
       'google_product_category',
       'shipping_weight',
     ].join('\t');
@@ -109,6 +203,7 @@ export async function onRequest(context) {
       const priceRaw = Number(p.price);
       const price = Number.isFinite(priceRaw) ? `${priceRaw.toFixed(2)} NZD` : '0.00 NZD';
 
+      const material = tsvEscape(extractMaterial(p.id, p.name, p.description));
       const googleCategory = tsvEscape(p.google_product_category || '');
 
       // Google expects shipping_weight as "<number> kg" (or lb/oz/g).
@@ -132,6 +227,8 @@ export async function onRequest(context) {
           BRAND,
           'new',
           'FALSE',
+          id,
+          material,
           googleCategory,
           shippingWeight,
         ].join('\t')
