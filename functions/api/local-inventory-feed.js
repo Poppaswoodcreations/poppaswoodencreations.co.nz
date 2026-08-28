@@ -11,8 +11,14 @@
 // instead of relying on a manual re-upload.
 //
 // Required Merchant Center attributes for local inventory: id, store_code,
-// availability, quantity. A product counts as "in stock" only if BOTH
+// availability, quantity. A product counts as available only if BOTH
 // in_stock is true AND stock_quantity is greater than zero.
+//
+// Availability is sent as "on_display_to_order" rather than "in stock":
+// every product is handmade and customers view it in the workshop, then
+// it's made/ordered for them rather than taken off a shelf immediately.
+// This matches the verified on-display-to-order shipping policy on file
+// with Google Merchant Center (NZ).
 const STORE_CODE = '10089051641764592169';
 async function fetchAllProducts(supabaseUrl, supabaseKey) {
   const res = await fetch(
@@ -51,7 +57,7 @@ export async function onRequest(context) {
       // === NaN, silently writing "NaN" into the feed's quantity column.
       const qtyRaw = Number(p.stock_quantity);
       const qty = Number.isFinite(qtyRaw) ? Math.max(0, Math.trunc(qtyRaw)) : 0;
-      const availability = p.in_stock === true && qty > 0 ? 'in stock' : 'out of stock';
+      const availability = p.in_stock === true && qty > 0 ? 'on_display_to_order' : 'out of stock';
       lines.push(
         [tsvEscape(p.id), STORE_CODE, availability, qty].join('\t')
       );
