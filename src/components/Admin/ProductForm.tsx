@@ -385,10 +385,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
                 <h4 className="font-medium text-blue-900 mb-3">Upload Product Images</h4>
                 <ImageUpload
                   onImagesUploaded={(imageUrls) => {
+                    // FIX (29 Aug 2026): ImageUpload's onImagesUploaded callback
+                    // hands back an array of { id, url } objects, not plain
+                    // strings — but formData.images is a string[] (every image
+                    // is later run through img.trim()). Spreading imageUrls
+                    // directly pushed raw objects into formData.images, and the
+                    // very next .trim() call anywhere in this component (e.g.
+                    // handleSubmit, the preview filter) crashed with
+                    // "e.trim is not a function" the moment a second image was
+                    // added. Extract .url from each object before spreading so
+                    // formData.images stays a plain string array.
                     const currentImages = formData.images.filter(img => img.trim() !== '');
                     setFormData({
                       ...formData,
-                      images: [...currentImages, ...imageUrls]
+                      images: [...currentImages, ...imageUrls.map(img => img.url)]
                     });
                   }}
                   maxImages={5}
