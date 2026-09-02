@@ -1711,8 +1711,27 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 5. Pass real users straight through to the React SPA ────────────
+  // Cloudflare now rejects "/* -> /index.html 200" in _redirects as an
+  // infinite loop, so that rule no longer runs (see deploy log warning
+  // "Infinite loop detected in this rule and has been ignored"). Without
+  // it, a direct hit or refresh on any client-side-only route (e.g.
+  // /products/pine-helicopter, /wooden-cars) has no matching static
+  // file and falls through to the custom 404 page instead of the React
+  // app. Restore the fallback here instead: if context.next() 404s on a
+  // path-like URL (no file extension — so real missing assets like
+  // /foo.jpg still get the genuine 404 page), serve /index.html via the
+  // ASSETS binding so React Router can take over client-side.
   if (!isBot(userAgent)) {
-    return context.next();
+    const response = await context.next();
+    const looksLikeRoute = !pathname.includes('.');
+    if (response.status === 404 && looksLikeRoute && context.env.ASSETS) {
+      const indexResponse = await context.env.ASSETS.fetch(new URL('/index.html', request.url));
+      return new Response(indexResponse.body, {
+        status: 200,
+        headers: indexResponse.headers,
+      });
+    }
+    return response;
   }
 
   // ── 6. Canonicalise trailing slashes + /wooden-planes shortcut ──────
