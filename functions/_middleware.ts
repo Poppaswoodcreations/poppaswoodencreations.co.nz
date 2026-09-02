@@ -112,6 +112,7 @@ const GHOST_CATEGORIES = new Set([
 const BLOG_SLUG_REDIRECTS: Record<string, string> = {
   'how-to-clean-wooden-toys-naturally': 'how-to-clean-wooden-toys-naturally-and-safely',
   'wooden-pine-trolley-and-blocks': 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
+  'wooden-rubbish-truck-kauri-macrocarpa': 'best-handmade-wooden-toys-from-whangarei-new-zealand',
 };
 
 // ─────────────────────────────────────────────────────────────
