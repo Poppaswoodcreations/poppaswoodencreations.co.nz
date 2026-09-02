@@ -1636,13 +1636,18 @@ export const onRequest = async (context: any): Promise<Response> => {
 
   // ── 2.5 Renamed product slugs — 301 to the current product id ───────
   // Runs BEFORE the ghost 410 check so a renamed slug always redirects.
+  // Cache-Control kept short (1hr, not 1yr): this map gets edited as
+  // products are renamed, and a year-long cached redirect can keep
+  // pointing Googlebot at a slug we've already fixed or removed here —
+  // this is what caused the Aug 2026 Search Console "Redirect error"
+  // validation to fail even after the underlying map was corrected.
   const renamedProduct = extractProductId(pathname);
   if (renamedProduct && PRODUCT_SLUG_REDIRECTS[renamedProduct]) {
     return new Response(null, {
       status: 301,
       headers: {
         'Location': `${BASE_URL}/products/${PRODUCT_SLUG_REDIRECTS[renamedProduct]}`,
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
@@ -1666,13 +1671,16 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 3.5 Renamed blog slugs — 301 to the current published slug ──────
+  // Same reasoning as 2.5: short cache lifetime so edits to
+  // BLOG_SLUG_REDIRECTS take effect for Google promptly instead of
+  // being masked by a stale cached redirect for up to a year.
   const renamedBlog = extractBlogSlug(pathname);
   if (renamedBlog && BLOG_SLUG_REDIRECTS[renamedBlog]) {
     return new Response(null, {
       status: 301,
       headers: {
         'Location': `${BASE_URL}/blog/${BLOG_SLUG_REDIRECTS[renamedBlog]}`,
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
@@ -1706,24 +1714,30 @@ export const onRequest = async (context: any): Promise<Response> => {
     return context.next();
   }
 
-  // ── 6. Canonicalise trailing slashes ────────────────────────────────
+  // ── 6. Canonicalise trailing slashes + /wooden-planes shortcut ──────
+  // Collapsed into one step: a request for "/wooden-planes/" used to
+  // 301 to "/wooden-planes" (slash strip) and THEN 301 again to
+  // "/wooden-planes-helicopters" (old step 7) — a two-hop chain.
+  // Now it resolves in a single 301. Cache-Control shortened to 1hr
+  // for the same reason as 2.5/3.5 above.
   if (pathname !== '/' && pathname.endsWith('/')) {
+    const pathNoSlash = pathname.slice(0, -1);
+    const target = pathNoSlash === '/wooden-planes' ? '/wooden-planes-helicopters' : pathNoSlash;
     return new Response(null, {
       status: 301,
       headers: {
-        'Location': `${BASE_URL}${pathname.slice(0, -1)}`,
-        'Cache-Control': 'public, max-age=31536000',
+        'Location': `${BASE_URL}${target}`,
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
 
-  // ── 7. /wooden-planes → /wooden-planes-helicopters ──────────────────
   if (pathname === '/wooden-planes') {
     return new Response(null, {
       status: 301,
       headers: {
         'Location': `${BASE_URL}/wooden-planes-helicopters`,
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }
