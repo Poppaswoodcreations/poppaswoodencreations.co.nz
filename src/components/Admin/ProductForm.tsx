@@ -5,6 +5,7 @@ import { categories } from '../../data/products';
 import { cleanSEODescription, cleanSEOTitle, cleanSEOKeywords, stripHTML } from '../../utils/textCleaner';
 import ImageManager from './ImageManager';
 import ImageUpload from '../ImageUpload';
+import VideoUpload from '../VideoUpload';
 
 interface ProductFormProps {
   product?: Product;
@@ -72,6 +73,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
       }
       return [''];
     })(),
+    // Read defensively — the Product type may not yet declare video_url
+    // explicitly, same pattern as ProductDetail.tsx.
+    videoUrl: (product as any)?.video_url ?? (product as any)?.videoUrl ?? '',
     inStock: product?.inStock ?? true,
     featured: product?.featured || false,
     seoTitle: product?.seoTitle || '',
@@ -172,7 +176,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
       images: cleanedImages,
       price: Number(formData.price),
       weight: Number(formData.weight),
-      stockQuantity: Number(formData.stockQuantity)
+      stockQuantity: Number(formData.stockQuantity),
+      video_url: formData.videoUrl && formData.videoUrl.trim() !== '' ? formData.videoUrl : null
     };
 
     console.log('💾 Saving product:', productToSave.name);
@@ -404,6 +409,41 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onClose }) =
                   maxImages={5}
                   productName={formData.name || 'product'}
                 />
+              </div>
+
+              {/* Video Upload Section */}
+              <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-3">Upload Product Video</h4>
+                {formData.videoUrl ? (
+                  <div className="space-y-3">
+                    <div className="w-full max-w-sm aspect-square border border-gray-300 rounded-lg overflow-hidden bg-white">
+                      <video
+                        src={formData.videoUrl}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        controls
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, videoUrl: '' })}
+                      className="text-sm text-red-600 hover:underline flex items-center space-x-1"
+                    >
+                      <Trash2 size={12} />
+                      <span>Remove video</span>
+                    </button>
+                  </div>
+                ) : (
+                  <VideoUpload
+                    onVideoUploaded={(video) => {
+                      setFormData({ ...formData, videoUrl: video.url });
+                    }}
+                    productName={formData.name || 'product'}
+                  />
+                )}
               </div>
 
               {/* Current Product Images */}
