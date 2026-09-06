@@ -20,6 +20,12 @@
 // shipping_weight is read from Supabase products.weight (kg) — the same
 // field already used by create-payment-intent.js for volumetric shipping
 // calculations at checkout.
+//
+// CORS (7 Sep 2026): added Access-Control-Allow-Origin so the Photo
+// Cleaner tool (a local HTML file, run from outside this domain) can
+// fetch this feed directly to build its "sync product photos" list. This
+// feed only ever returns public catalogue data — no secrets, no admin
+// action — so an open CORS policy here carries no meaningful risk.
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 const BRAND = "Poppa's Wooden Creations";
 
@@ -241,6 +247,7 @@ export async function onRequest(context) {
       headers: {
         'Content-Type': 'text/tab-separated-values; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
+        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
