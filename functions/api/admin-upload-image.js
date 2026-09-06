@@ -1,27 +1,10 @@
-// Cloudflare Pages Function: POST /api/admin-upload-image
+// Cloudflare Pages Function: POST /api/admin-upload-video
 //
-// FIX (2 Sep 2026): src/components/ImageUpload.tsx used to convert every
-// uploaded image to a base64 data: URL and save THAT directly into the
-// product's `images` array in Supabase — it imported `uploadImageToSupabase`
-// from ../lib/supabase but that function never existed anywhere in the
-// codebase, so the "upload" step silently never happened. Any product that
-// had a second/third image added through the admin panel ended up with a
-// 400KB-1MB+ base64 string sitting in its images array instead of a proper
-// storage URL. That bloat then flowed straight into the Google Merchant
-// Center feed via product-feed.js's additionalImages(), which is what
-// triggered Merchant Center's "Item too big" error for hammer-set,
-// logging-truck, trolley-and-blocks, and big-spatula-flat-2.
-//
-// This endpoint does the upload that was always supposed to happen: takes
-// a base64 data URL from the browser, decodes it server-side, and PUTs the
-// binary to the "product-images" Supabase Storage bucket using the service
-// role key (same key-never-leaves-the-server pattern as admin-products.js).
-// Returns the public storage URL so the browser can store THAT in the
-// product's images array instead of the raw base64.
-//
-// Existing products with base64 already saved in their images array are
-// NOT touched by this endpoint — that's a one-off data cleanup, not an
-// upload-time problem, and needs a separate pass over the products table.
+// Mirrors admin-upload-image.js: takes a base64 data URL from the browser,
+// decodes it server-side, and PUTs the binary to the "product-videos"
+// Supabase Storage bucket using the service role key (key never leaves the
+// server). Returns the public storage URL so the browser can store THAT in
+// the product's video_url column.
 
 const REQUEST_LIMIT = 30;              // max requests
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
@@ -29,8 +12,9 @@ const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
 const AUTH_FAIL_LIMIT = 5;             // max wrong-password attempts
 const AUTH_FAIL_WINDOW_SECONDS = 900;  // per 15 minutes
 
-const BUCKET = 'product-images';
-const MAX_BYTES = 8 * 1024 * 1024; // 8MB safety ceiling per image
+const BUCKET = 'product-videos';
+const MAX_BYTES = 15 * 1024 * 1024; // 15MB safety ceiling per video
+const ALLOWED_TYPES = ['video/mp4', 'video/webm'];
 
 async function checkLimit(kv, key, limit, windowSeconds) {
   if (!kv) return { allowed: true }; // KV not bound yet — fail open
@@ -48,7 +32,7 @@ async function checkLimit(kv, key, limit, windowSeconds) {
   return { allowed: data.count <= limit };
 }
 
-// Decodes a "data:image/xxx;base64,...." URL into raw bytes + content type.
+// Decodes a "data:video/xxx;base64,...." URL into raw bytes + content type.
 function decodeDataUrl(dataUrl) {
   const match = /^data:([^;]+);base64,(.*)$/s.exec(dataUrl || '');
   if (!match) return null;
@@ -62,7 +46,7 @@ function decodeDataUrl(dataUrl) {
 }
 
 function sanitizeFilename(name) {
-  const fallback = `image-${Date.now()}.jpg`;
+  const fallback = `video-${Date.now()}.mp4`;
   if (!name || typeof name !== 'string') return fallback;
   const cleaned = name.replace(/[^a-zA-Z0-9._-]/g, '-');
   return cleaned || fallback;
@@ -77,7 +61,7 @@ export async function onRequest(context) {
   const kv = env.RATE_LIMIT_KV;
   const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const requestCheck = await checkLimit(kv, `admin-upload-image:req:${ip}`, REQUEST_LIMIT, REQUEST_WINDOW_SECONDS);
+  const requestCheck = await checkLimit(kv, `admin-upload-video:req:${ip}`, REQUEST_LIMIT, REQUEST_WINDOW_SECONDS);
   if (!requestCheck.allowed) {
     return json({ error: 'Too many requests. Please wait a few minutes and try again.' }, 429);
   }
@@ -88,7 +72,7 @@ export async function onRequest(context) {
   const ADMIN_PASSWORD = env.ADMIN_PASSWORD || 'Adrianbar1?';
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('admin-upload-image: missing Supabase env vars');
+    console.error('admin-upload-video: missing Supabase env vars');
     return json({ error: 'Supabase env vars not configured' }, 500);
   }
 
@@ -102,7 +86,7 @@ export async function onRequest(context) {
   const { password, filename, dataUrl } = body || {};
 
   if (password !== ADMIN_PASSWORD) {
-    const authCheck = await checkLimit(kv, `admin-upload-image:auth:${ip}`, AUTH_FAIL_LIMIT, AUTH_FAIL_WINDOW_SECONDS);
+    const authCheck = await checkLimit(kv, `admin-upload-video:auth:${ip}`, AUTH_FAIL_LIMIT, AUTH_FAIL_WINDOW_SECONDS);
     if (!authCheck.allowed) {
       return json({ error: 'Too many failed attempts. Please wait 15 minutes and try again.' }, 429);
     }
@@ -113,8 +97,11 @@ export async function onRequest(context) {
   if (!decoded) {
     return json({ error: 'dataUrl must be a base64 data: URL' }, 400);
   }
+  if (!ALLOWED_TYPES.includes(decoded.contentType)) {
+    return json({ error: 'Only mp4 or webm files are allowed' }, 400);
+  }
   if (decoded.bytes.length > MAX_BYTES) {
-    return json({ error: `Image too large (max ${MAX_BYTES / 1024 / 1024}MB)` }, 400);
+    return json({ error: `Video too large (max ${MAX_BYTES / 1024 / 1024}MB)` }, 400);
   }
 
   const path = sanitizeFilename(filename);
@@ -136,14 +123,14 @@ export async function onRequest(context) {
 
     if (!uploadRes.ok) {
       const errText = await uploadRes.text();
-      console.error('admin-upload-image: storage upload failed', uploadRes.status, errText);
+      console.error('admin-upload-video: storage upload failed', uploadRes.status, errText);
       return json({ error: `Storage upload failed: ${errText}` }, 500);
     }
 
     const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(path)}`;
     return json({ success: true, url: publicUrl });
   } catch (error) {
-    console.error('admin-upload-image error:', error);
+    console.error('admin-upload-video error:', error);
     return json({ error: error.message }, 500);
   }
 }
