@@ -22,6 +22,15 @@
 // Existing products with base64 already saved in their images array are
 // NOT touched by this endpoint — that's a one-off data cleanup, not an
 // upload-time problem, and needs a separate pass over the products table.
+//
+// CORS (7 Sep 2026): added an OPTIONS preflight handler and
+// Access-Control-Allow-Origin on every response. The browser-based Photo
+// Cleaner tool runs as a local HTML file (not this domain) and posts JSON,
+// which browsers always preflight with an OPTIONS request first — without
+// this, that preflight got the old "Method Not Allowed" 405 and the real
+// POST never even got sent. Auth is unaffected: the admin password check
+// below still gates every actual upload exactly as before, CORS only
+// controls which origins are allowed to ask.
 
 const REQUEST_LIMIT = 30;              // max requests
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
@@ -31,6 +40,12 @@ const AUTH_FAIL_WINDOW_SECONDS = 900;  // per 15 minutes
 
 const BUCKET = 'product-images';
 const MAX_BYTES = 8 * 1024 * 1024; // 8MB safety ceiling per image
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
 
 async function checkLimit(kv, key, limit, windowSeconds) {
   if (!kv) return { allowed: true }; // KV not bound yet — fail open
@@ -70,6 +85,11 @@ function sanitizeFilename(name) {
 
 export async function onRequest(context) {
   const { request, env } = context;
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
+
   if (request.method !== 'POST') {
     return json({ error: 'Method Not Allowed' }, 405);
   }
@@ -150,6 +170,10 @@ export async function onRequest(context) {
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
-    status, headers: { 'Content-Type': 'application/json' },
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      ...CORS_HEADERS,
+    },
   });
 }
