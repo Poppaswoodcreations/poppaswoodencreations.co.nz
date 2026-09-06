@@ -42,6 +42,12 @@ const mapRow = (row: any): Product => ({
   lengthMm: row.length_mm ?? null,
   widthMm: row.width_mm ?? null,
   heightMm: row.height_mm ?? null,
+  // FIX (6 Sep 2026): video_url was saved to Supabase correctly by
+  // admin-products.js, but this mapper never read it back out of the row
+  // into the Product object the rest of the app uses — so ProductForm and
+  // ProductDetail always saw an empty video field after a reload, even
+  // though the database write itself succeeded.
+  videoUrl: row.video_url ?? null,
   createdAt: row.created_at || new Date().toISOString(),
   updatedAt: row.updated_at || new Date().toISOString(),
 });
