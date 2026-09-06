@@ -246,6 +246,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
   const heightMm = product ? (product as any).height_mm ?? (product as any).heightMm : undefined;
   const weightKg = product ? (product as any).weight ?? undefined : undefined;
 
+  // Product video - read defensively in case the Product type hasn't been
+  // updated yet to declare video_url explicitly. Populated via
+  // admin-upload-video.js -> Supabase Storage "product-videos" bucket.
+  const videoUrl = product ? (product as any).video_url ?? (product as any).videoUrl : undefined;
+  const hasVideo = typeof videoUrl === 'string' && videoUrl.length > 0;
+
   const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
   const hasWeight = weightKg != null && weightKg !== '';
 
@@ -508,6 +514,23 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                       />
                     </div>
                   ))}
+                </div>
+              )}
+              {hasVideo && (
+                <div className="aspect-square bg-white rounded-xl shadow-lg overflow-hidden">
+                  <video
+                    src={videoUrl}
+                    poster={productImage || undefined}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                    controls
+                    className="w-full h-full object-cover"
+                    aria-label={`${product.name} - 360 degree turntable video showing ${productMaterial} craftsmanship`}
+                  >
+                    Your browser does not support embedded videos.
+                  </video>
                 </div>
               )}
             </div>
