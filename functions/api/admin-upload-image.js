@@ -32,7 +32,15 @@
 // below still gates every actual upload exactly as before, CORS only
 // controls which origins are allowed to ask.
 
-const REQUEST_LIMIT = 30;              // max requests
+const REQUEST_LIMIT = 250;             // max requests — raised (7 Sep 2026)
+                                        // from 30 so a full bulk photo sync
+                                        // (~180+ images in one run via the
+                                        // Photo Cleaner tool's push-back
+                                        // step) doesn't get self-throttled.
+                                        // The real gate against abuse is
+                                        // still the ADMIN_PASSWORD check
+                                        // below — this limit only exists to
+                                        // stop runaway/scripted flooding.
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
 
 const AUTH_FAIL_LIMIT = 5;             // max wrong-password attempts
