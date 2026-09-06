@@ -14,6 +14,12 @@
 // with 5. Any product legitimately at 0 stock that went through a Database
 // Sync got bumped back up to 5. Changed to `?? 0` (nullish coalescing) so
 // only null/undefined fall back — a real 0 is preserved.
+//
+// FIX (6 Sep 2026): 'save' and 'update' both build an explicit whitelist of
+// fields to write to Supabase — video_url wasn't in either list, so
+// ProductForm.tsx's video upload silently never reached the database even
+// though the form itself accepted and displayed it correctly. Accepts
+// either video_url (what ProductForm.tsx sends) or videoUrl for safety.
 
 const REQUEST_LIMIT = 30;             // max requests
 const REQUEST_WINDOW_SECONDS = 300;    // per 5 minutes
@@ -141,6 +147,7 @@ export async function onRequest(context) {
         length_mm: product.lengthMm ?? null,
         width_mm: product.widthMm ?? null,
         height_mm: product.heightMm ?? null,
+        video_url: product.video_url ?? product.videoUrl ?? null,
       };
 
       const res = await fetch(`${SUPABASE_URL}/rest/v1/products`, {
@@ -171,6 +178,8 @@ export async function onRequest(context) {
       if (updates.lengthMm !== undefined) dbUpdates.length_mm = updates.lengthMm;
       if (updates.widthMm !== undefined) dbUpdates.width_mm = updates.widthMm;
       if (updates.heightMm !== undefined) dbUpdates.height_mm = updates.heightMm;
+      if (updates.video_url !== undefined) dbUpdates.video_url = updates.video_url;
+      else if (updates.videoUrl !== undefined) dbUpdates.video_url = updates.videoUrl;
 
       const res = await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${encodeURIComponent(id)}`, {
         method: 'PATCH',
