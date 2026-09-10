@@ -190,6 +190,7 @@ export async function onRequest(context) {
       'material',
       'google_product_category',
       'shipping_weight',
+      'unit_pricing_measure',
     ].join('\t');
 
     const lines = [header];
@@ -220,6 +221,12 @@ export async function onRequest(context) {
         ? `${weightRaw} kg`
         : '0.5 kg';
 
+      // unit_pricing_measure: every product here is a single handcrafted
+      // item sold individually (not by weight/volume), so '1 count'
+      // satisfies Google's unit pricing attribute requirement uniformly
+      // and pre-empts the same flag appearing on other products later.
+      const unitPricingMeasure = '1 count';
+
       lines.push(
         [
           id,
@@ -237,6 +244,7 @@ export async function onRequest(context) {
           material,
           googleCategory,
           shippingWeight,
+          unitPricingMeasure,
         ].join('\t')
       );
     }
