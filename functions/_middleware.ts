@@ -748,22 +748,6 @@ const INFO_PAGES: Record<string, {
       </section>
     `,
   },
-  '/reviews': {
-    title: "Customer Reviews | Poppa's Wooden Creations NZ",
-    description: "Read genuine customer reviews of Poppa's Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.",
-    h1: 'Customer Reviews',
-    content: `
-      <section>
-        <h2>What Our Customers Say</h2>
-        <p>We are proud to be trusted by families and Montessori schools across New Zealand. Here is what some of our customers have to say about Poppa's Wooden Creations.</p>
-      </section>
-      <section>
-        <h2>Leave a Review</h2>
-        <p>Have you purchased from us? We'd love to hear your feedback. Please leave us a Google review or get in touch directly.</p>
-        <p>Email: <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a></p>
-      </section>
-    `,
-  },
   '/blog': {
     title: "Blog | Wooden Toys & Craftsmanship | Poppa's Wooden Creations NZ",
     description: "Read our blog for tips on wooden toys, Montessori play, NZ timber craftsmanship and more. Handcrafted wooden toys made in Whangarei since 2015.",
@@ -1000,10 +984,6 @@ async function fetchBlogPost(supabaseUrl: string, supabaseKey: string, slug: str
   }
 }
 
-// Added to fix the empty /blog listing: the old middleware treated /blog as
-// a static INFO_PAGES entry and never queried blog_posts at all, so bots
-// (and anyone viewing the prerendered shell) saw only the intro paragraph
-// with no posts and no links. This mirrors fetchCategoryProducts.
 async function fetchBlogPosts(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
   if (!supabaseUrl || !supabaseKey) return [];
   try {
@@ -1021,6 +1001,31 @@ async function fetchBlogPosts(supabaseUrl: string, supabaseKey: string): Promise
     return await response.json();
   } catch (err) {
     console.error('[bot-prerender] fetchBlogPosts error:', err);
+    return [];
+  }
+}
+
+// NEW — fetches real, visible customer reviews so the bot-rendered
+// /reviews page shows genuine content and genuine schema instead of
+// the static placeholder paragraph. Only is_visible=true rows, newest
+// first, capped at 100 (matches the real total of 48 comfortably).
+async function fetchReviews(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
+  if (!supabaseUrl || !supabaseKey) return [];
+  try {
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/reviews?is_visible=eq.true&select=id,author_name,rating,review_text,review_title,review_date,source,verified,owner_reply&order=review_date.desc&limit=100`,
+      {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) return [];
+    return await response.json();
+  } catch (err) {
+    console.error('[bot-prerender] fetchReviews error:', err);
     return [];
   }
 }
@@ -1217,9 +1222,6 @@ function buildInfoHTML(pathname: string): string {
 </html>`;
 }
 
-// New — replaces the generic INFO_PAGES('/blog') render with one that
-// actually fetches and lists the posts. Reuses INFO_PAGES['/blog'] for
-// title/description/h1/intro so nothing about the page's identity changes.
 function buildBlogListHTML(posts: any[]): string {
   const page = INFO_PAGES['/blog'];
   const canonicalUrl = buildCanonicalUrl('/blog');
@@ -1307,6 +1309,128 @@ function buildBlogListHTML(posts: any[]): string {
 </html>`;
 }
 
+// NEW — replaces the generic INFO_PAGES('/reviews') static render.
+// Renders real reviews with genuine Review + AggregateRating schema,
+// computed live from the actual fetched rows (never hardcoded), so
+// the numbers only ever reflect real data.
+function buildReviewsHTML(reviews: any[]): string {
+  const canonicalUrl = buildCanonicalUrl('/reviews');
+  const title = "Customer Reviews | Poppa's Wooden Creations NZ";
+  const count = reviews.length;
+  const avgRating = count > 0
+    ? (reviews.reduce((sum, r) => sum + (parseFloat(r.rating) || 0), 0) / count)
+    : 0;
+  const avgRatingStr = avgRating.toFixed(2);
+  const description = count > 0
+    ? `Read ${count} genuine customer reviews of Poppa's Wooden Creations, averaging ${avgRatingStr} out of 5 stars. Trusted by NZ families and Montessori schools since 2015.`
+    : "Read genuine customer reviews of Poppa's Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.";
+
+  const reviewCards = reviews.map(r => {
+    const rating = parseFloat(r.rating) || 0;
+    const dateStr = r.review_date
+      ? new Date(r.review_date).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' })
+      : '';
+    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    return `
+    <article style="border:1px solid #e7e5e4;border-radius:8px;padding:16px 20px;margin-bottom:16px;">
+      <p style="color:#f59e0b;font-size:1.1em;margin:0 0 6px;">${stars}</p>
+      ${r.review_title ? `<h3 style="margin:0 0 6px;font-size:1.05em;color:#78350f;">${r.review_title}</h3>` : ''}
+      <p style="margin:0 0 10px;">${r.review_text || ''}</p>
+      <p style="font-size:0.85em;color:#78716c;margin:0;">${r.author_name || 'Customer'}${r.verified === true || r.verified === 'true' ? ' &nbsp;·&nbsp; Verified' : ''}${dateStr ? ` &nbsp;·&nbsp; ${dateStr}` : ''}${r.source ? ` &nbsp;·&nbsp; via ${r.source}` : ''}</p>
+      ${r.owner_reply ? `<div style="margin-top:12px;padding:10px 14px;background:#fef3c7;border-radius:6px;"><p style="margin:0;font-size:0.9em;"><strong>Response from Poppa's Wooden Creations:</strong><br/>${r.owner_reply}</p></div>` : ''}
+    </article>`;
+  }).join('\n');
+
+  const aggregateRatingSchema = count > 0 ? {
+    "@type": "AggregateRating",
+    "ratingValue": avgRatingStr,
+    "reviewCount": String(count),
+    "bestRating": "5",
+    "worstRating": "1",
+  } : null;
+
+  const reviewSchemaEntries = reviews.slice(0, 50).map(r => ({
+    "@type": "Review",
+    "author": { "@type": "Person", "name": r.author_name || 'Customer' },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": String(parseFloat(r.rating) || 0),
+      "bestRating": "5",
+      "worstRating": "1",
+    },
+    "reviewBody": r.review_text || '',
+    "datePublished": r.review_date || undefined,
+  }));
+
+  const localBusinessSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Poppa's Wooden Creations",
+    "url": BASE_URL,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "102 Kiripaka Road, Tikipunga",
+      "addressLocality": "Whangarei",
+      "addressRegion": "Northland",
+      "postalCode": "0112",
+      "addressCountry": "NZ",
+    },
+    ...(aggregateRatingSchema ? { "aggregateRating": aggregateRatingSchema } : {}),
+    "review": reviewSchemaEntries,
+  });
+
+  const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
+      { "@type": "ListItem", "position": 2, "name": "Customer Reviews", "item": canonicalUrl },
+    ],
+  });
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title}</title>
+  <meta name="description" content="${description}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Poppa's Wooden Creations" />
+  <script type="application/ld+json">${breadcrumbSchema}</script>
+  <script type="application/ld+json">${localBusinessSchema}</script>
+  <style>
+    ${SHARED_CSS}
+    body { max-width: 900px; }
+  </style>
+</head>
+<body>
+  ${buildSharedNav('/reviews')}
+  <nav class="breadcrumb">
+    <a href="${BASE_URL}">Home</a> &rsaquo; <span>Customer Reviews</span>
+  </nav>
+  <main>
+    <h1>Customer Reviews</h1>
+    ${count > 0 ? `<p>${count} genuine customer reviews, averaging ${avgRatingStr} out of 5 stars.</p>` : `<p>We are proud to be trusted by families and Montessori schools across New Zealand.</p>`}
+    <section>
+      ${reviewCards || '<p>No reviews yet — check back soon.</p>'}
+    </section>
+    <section>
+      <h2>Leave a Review</h2>
+      <p>Have you purchased from us? We'd love to hear your feedback. Please leave us a Google review or get in touch directly.</p>
+      <p>Email: <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a></p>
+    </section>
+  </main>
+  ${buildSharedFooter()}
+</body>
+</html>`;
+}
+
 function buildCategoryHTML(slug: string, products: any[]): string {
   const meta = CATEGORY_META[slug];
   const canonicalUrl = `${BASE_URL}/${slug}`;
@@ -1368,7 +1492,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     },
   });
 
-  // Build FAQ schema if this category has FAQs
   const faqSchema = meta.faqs && meta.faqs.length > 0 ? JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -1382,7 +1505,6 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     })),
   }) : null;
 
-  // Build FAQ HTML if this category has FAQs
   const faqHTML = meta.faqs && meta.faqs.length > 0 ? `
     <section>
       <h2>Frequently Asked Questions</h2>
@@ -1465,16 +1587,10 @@ function buildProductHTML(product: any, productId: string): string {
   const fullImage = image.startsWith('http') ? image : `${BASE_URL}${image}`;
   const inStock = product.in_stock !== false;
   const category = (product.category || 'wooden-toys').replace(/-/g, ' ');
-  // Fallback title kept short (name + brand only) so it stays under the
-  // 70-char limit search engines truncate at, regardless of product name
-  // length. Set product.seo_title in Supabase to override per-product.
   const seoTitle = product.seo_title || `${name} | Poppa's Wooden Creations`;
   const seoDescription = product.seo_description || description.substring(0, 160);
   const ageLabel = product.age_label || '';
 
-  // Reconciled with src/components/ProductDetail.tsx: material derived the
-  // same way, and weight/dimensions included when present in Supabase so
-  // the schema Googlebot sees matches what a real visitor sees on the page.
   const material = extractMaterial(productId, name, description);
   const weightKg = product.weight != null && product.weight !== '' ? product.weight : undefined;
   const lengthMm = product.length_mm ?? undefined;
@@ -1484,6 +1600,13 @@ function buildProductHTML(product: any, productId: string): string {
   const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
   const shippingDetails = buildShippingDetails(weightKg, lengthMm, widthMm, heightMm);
 
+  // REMOVED: fabricated aggregateRating (was a hardcoded 4.9 / 150
+  // reviews, identical across every product, with no real per-product
+  // review data behind it). Given the account's history of GMC
+  // Misrepresentation suspensions, shipping fake review counts on
+  // every product schema is a real risk, not just inaccurate. Real,
+  // genuine reviews now live at /reviews with an honestly computed
+  // AggregateRating — see buildReviewsHTML.
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
@@ -1503,12 +1626,6 @@ function buildProductHTML(product: any, productId: string): string {
       "seller": { "@type": "Organization", "name": "Poppa's Wooden Creations" },
       "hasMerchantReturnPolicy": MERCHANT_RETURN_POLICY,
       "shippingDetails": shippingDetails,
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "150",
-      "bestRating": "5",
     },
     ...(hasWeight ? { "weight": { "@type": "QuantitativeValue", "value": weightKg, "unitCode": "KGM" } } : {}),
     ...(hasDimensions ? {
@@ -1752,12 +1869,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 2.5 Renamed product slugs — 301 to the current product id ───────
-  // Runs BEFORE the ghost 410 check so a renamed slug always redirects.
-  // Cache-Control kept short (1hr, not 1yr): this map gets edited as
-  // products are renamed, and a year-long cached redirect can keep
-  // pointing Googlebot at a slug we've already fixed or removed here —
-  // this is what caused the Aug 2026 Search Console "Redirect error"
-  // validation to fail even after the underlying map was corrected.
   const renamedProduct = extractProductId(pathname);
   if (renamedProduct && PRODUCT_SLUG_REDIRECTS[renamedProduct]) {
     return new Response(null, {
@@ -1788,9 +1899,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 3.5 Renamed blog slugs — 301 to the current published slug ──────
-  // Same reasoning as 2.5: short cache lifetime so edits to
-  // BLOG_SLUG_REDIRECTS take effect for Google promptly instead of
-  // being masked by a stale cached redirect for up to a year.
   const renamedBlog = extractBlogSlug(pathname);
   if (renamedBlog && BLOG_SLUG_REDIRECTS[renamedBlog]) {
     return new Response(null, {
@@ -1827,16 +1935,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 5. Pass real users straight through to the React SPA ────────────
-  // Cloudflare now rejects "/* -> /index.html 200" in _redirects as an
-  // infinite loop, so that rule no longer runs (see deploy log warning
-  // "Infinite loop detected in this rule and has been ignored"). Without
-  // it, a direct hit or refresh on any client-side-only route (e.g.
-  // /products/pine-helicopter, /wooden-cars) has no matching static
-  // file and falls through to the custom 404 page instead of the React
-  // app. Restore the fallback here instead: if context.next() 404s on a
-  // path-like URL (no file extension — so real missing assets like
-  // /foo.jpg still get the genuine 404 page), serve /index.html via the
-  // ASSETS binding so React Router can take over client-side.
   if (!isBot(userAgent)) {
     const response = await context.next();
     const looksLikeRoute = !pathname.includes('.');
@@ -1851,11 +1949,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 6. Canonicalise trailing slashes + /wooden-planes shortcut ──────
-  // Collapsed into one step: a request for "/wooden-planes/" used to
-  // 301 to "/wooden-planes" (slash strip) and THEN 301 again to
-  // "/wooden-planes-helicopters" (old step 7) — a two-hop chain.
-  // Now it resolves in a single 301. Cache-Control shortened to 1hr
-  // for the same reason as 2.5/3.5 above.
   if (pathname !== '/' && pathname.endsWith('/')) {
     const pathNoSlash = pathname.slice(0, -1);
     const target = pathNoSlash === '/wooden-planes' ? '/wooden-planes-helicopters' : pathNoSlash;
@@ -1936,11 +2029,27 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 9.5 Blog list page (/blog) ───────────────────────────────────────
-  // Special-cased ahead of the generic isInfoPage() branch: /blog needs
-  // a live post list from Supabase, not just the static intro text.
   if (pathname.replace(/\/$/, '') === '/blog') {
     const posts = await fetchBlogPosts(supabaseUrl, supabaseKey);
     const html = buildBlogListHTML(posts);
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=1800',
+        'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
+      },
+    });
+  }
+
+  // ── 9.6 Reviews page (/reviews) ──────────────────────────────────────
+  // Special-cased ahead of the generic isInfoPage() branch, same reasoning
+  // as /blog: this route needs real, live data from Supabase, not the
+  // static placeholder text.
+  if (pathname.replace(/\/$/, '') === '/reviews') {
+    const reviews = await fetchReviews(supabaseUrl, supabaseKey);
+    const html = buildReviewsHTML(reviews);
     return new Response(html, {
       status: 200,
       headers: {
