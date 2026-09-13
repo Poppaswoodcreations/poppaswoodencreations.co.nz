@@ -1000,6 +1000,31 @@ async function fetchBlogPost(supabaseUrl: string, supabaseKey: string, slug: str
   }
 }
 
+// Added to fix the empty /blog listing: the old middleware treated /blog as
+// a static INFO_PAGES entry and never queried blog_posts at all, so bots
+// (and anyone viewing the prerendered shell) saw only the intro paragraph
+// with no posts and no links. This mirrors fetchCategoryProducts.
+async function fetchBlogPosts(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
+  if (!supabaseUrl || !supabaseKey) return [];
+  try {
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/blog_posts?select=id,slug,title,excerpt,featured_image,category,author,published_at,read_time&order=published_at.desc&limit=100`,
+      {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!response.ok) return [];
+    return await response.json();
+  } catch (err) {
+    console.error('[bot-prerender] fetchBlogPosts error:', err);
+    return [];
+  }
+}
+
 // ─────────────────────────────────────────────────────────────
 // HTML BUILDERS
 // ─────────────────────────────────────────────────────────────
@@ -1186,6 +1211,96 @@ function buildInfoHTML(pathname: string): string {
   <main>
     <h1>${page.h1}</h1>
     ${page.content}
+  </main>
+  ${buildSharedFooter()}
+</body>
+</html>`;
+}
+
+// New — replaces the generic INFO_PAGES('/blog') render with one that
+// actually fetches and lists the posts. Reuses INFO_PAGES['/blog'] for
+// title/description/h1/intro so nothing about the page's identity changes.
+function buildBlogListHTML(posts: any[]): string {
+  const page = INFO_PAGES['/blog'];
+  const canonicalUrl = buildCanonicalUrl('/blog');
+
+  const postCards = posts.map(p => {
+    const img = (p.featured_image || `${BASE_URL}/og-image.jpg`);
+    const fullImg = img.startsWith('http') ? img : `${BASE_URL}${img}`;
+    const dateStr = p.published_at
+      ? new Date(p.published_at).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' })
+      : '';
+    return `
+    <article>
+      <a href="${BASE_URL}/blog/${p.slug}">
+        <img src="${fullImg}" alt="${p.title}" width="360" height="220" loading="lazy" />
+        <h3>${p.title}</h3>
+        ${p.excerpt ? `<p>${p.excerpt}</p>` : ''}
+        <p style="font-size:0.85em;color:#78716c;">${p.author || 'Adrian - Poppa'}${p.read_time ? ` &nbsp;·&nbsp; ${p.read_time}` : ''}${dateStr ? ` &nbsp;·&nbsp; ${dateStr}` : ''}</p>
+      </a>
+    </article>`;
+  }).join('\n');
+
+  const itemListSchema = posts.length > 0 ? JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Poppa's Wooden Creations Blog Posts",
+    "numberOfItems": posts.length,
+    "itemListElement": posts.map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": p.title,
+      "url": `${BASE_URL}/blog/${p.slug}`,
+    })),
+  }) : null;
+
+  const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
+      { "@type": "ListItem", "position": 2, "name": page.h1, "item": canonicalUrl },
+    ],
+  });
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${page.title}</title>
+  <meta name="description" content="${page.description}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${page.title}" />
+  <meta property="og:description" content="${page.description}" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Poppa's Wooden Creations" />
+  <script type="application/ld+json">${breadcrumbSchema}</script>
+  ${itemListSchema ? `<script type="application/ld+json">${itemListSchema}</script>` : ''}
+  <style>
+    ${SHARED_CSS}
+    body { max-width: 1100px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    article { border: 1px solid #e7e5e4; border-radius: 8px; padding: 12px; }
+    article a { text-decoration: none; color: inherit; display: block; }
+    img { max-width: 100%; border-radius: 6px; object-fit: cover; }
+  </style>
+</head>
+<body>
+  ${buildSharedNav('/blog')}
+  <nav class="breadcrumb">
+    <a href="${BASE_URL}">Home</a> &rsaquo; <span>${page.h1}</span>
+  </nav>
+  <main>
+    <h1>${page.h1}</h1>
+    ${page.content}
+    ${posts.length > 0 ? `
+    <section>
+      <h2>All Posts</h2>
+      <div class="grid">${postCards}</div>
+    </section>` : `<p>Posts are coming soon — check back shortly.</p>`}
   </main>
   ${buildSharedFooter()}
 </body>
@@ -1631,6 +1746,7 @@ export const onRequest = async (context: any): Promise<Response> => {
       headers: {
         'Location': `${BASE_URL}${pathname}`,
         'Cache-Control': 'public, max-age=3600',
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1772,6 +1888,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
         'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1786,6 +1903,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         headers: {
           'X-Robots-Tag': 'noindex',
           'Cache-Control': 'public, max-age=3600',
+          'Vary': 'User-Agent',
         },
       });
     }
@@ -1796,6 +1914,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
         'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1811,6 +1930,24 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
         'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
+      },
+    });
+  }
+
+  // ── 9.5 Blog list page (/blog) ───────────────────────────────────────
+  // Special-cased ahead of the generic isInfoPage() branch: /blog needs
+  // a live post list from Supabase, not just the static intro text.
+  if (pathname.replace(/\/$/, '') === '/blog') {
+    const posts = await fetchBlogPosts(supabaseUrl, supabaseKey);
+    const html = buildBlogListHTML(posts);
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=1800',
+        'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1827,6 +1964,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=86400',
         'X-Robots-Tag': robotsTag,
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1840,6 +1978,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=86400',
         'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
       },
     });
   }
@@ -1854,6 +1993,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         headers: {
           'X-Robots-Tag': 'noindex',
           'Cache-Control': 'public, max-age=3600',
+          'Vary': 'User-Agent',
         },
       });
     }
@@ -1864,6 +2004,7 @@ export const onRequest = async (context: any): Promise<Response> => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
         'X-Robots-Tag': 'index, follow',
+        'Vary': 'User-Agent',
       },
     });
   }
