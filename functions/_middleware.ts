@@ -317,13 +317,13 @@ function extractMaterial(id: string, name: string, desc?: string): string {
 // ─────────────────────────────────────────────────────────────
 const HOME_META = {
   title: "Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations",
-  description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, trusted by Montessori schools. Free shipping over $1000.",
+  description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, supplied to schools. Free shipping over $1000.",
   h1: 'Handmade Wooden Toys & Kitchenware from New Zealand',
   intro: 'Premium wooden toys for children, handcrafted from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Safe, sustainable, and built to last generations.',
   paragraphs: [
-    "From our Whangarei workshop, we create children's wooden toys that inspire imaginative play and develop fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.",
+    "From our Whangarei workshop, we create children's wooden toys that inspire imaginative play and develop fine motor skills. Supplied to schools and loved by eco-conscious families across New Zealand since 2015.",
     "Based in Tikipunga, on the edge of Whangarei, our workshop has been turning native New Zealand timber into heirloom-quality toys since 2015. As a small toy manufacturer and woodworker, every piece — from our wooden trucks and cars to trains, planes and kitchenware — starts as a rough length of Kauri, Rimu or Macrocarpa before it's shaped, sanded, and finished by hand.",
-    "We don't outsource or mass-produce. Each toy that leaves our Tikipunga workshop has been made and checked by us personally, which is part of why Montessori schools and eco-conscious families across New Zealand keep coming back. Wood grain, weight, and finish vary slightly from piece to piece — that's not a flaw, it's the mark of something actually handmade rather than stamped out on a factory line.",
+    "We don't outsource or mass-produce. Each toy that leaves our Tikipunga workshop has been made and checked by us personally, which is part of why schools and eco-conscious families across New Zealand keep coming back. Wood grain, weight, and finish vary slightly from piece to piece — that's not a flaw, it's the mark of something actually handmade rather than stamped out on a factory line.",
     "Whether you're after a first Montessori-style toy for a baby, a durable truck that'll survive years of rough play, or a set of kitchenware built to last, everything is designed to be safe, non-toxic, and made to be passed down rather than thrown away.",
   ],
   categories: [
@@ -366,18 +366,18 @@ const CATEGORY_META: Record<string, {
   },
   'wooden-baby-toys': {
     title: 'Wooden Baby Toys NZ | Safe Handcrafted Toys for Infants & Toddlers',
-    description: 'Safe, handcrafted wooden baby toys from New Zealand native timber. Non-toxic finish, smooth edges, Montessori-inspired designs trusted by NZ families and schools since 2015. Shop online, ships nationwide.',
+    description: 'Safe, handcrafted wooden baby toys from New Zealand native timber. Non-toxic finish, smooth edges, Montessori-inspired designs, supplied to NZ families and schools since 2015. Shop online, ships nationwide.',
     h1: 'Wooden Baby Toys NZ — Handcrafted from Native Timber',
     intro: `Our wooden baby toys are lovingly handcrafted in Whangarei, New Zealand, from native Kauri, Rimu and Macrocarpa timber. Every toy is finished with a non-toxic, baby-safe oil and designed with smooth, splinter-free edges — safe from the very first touch.
 
-We have been making wooden baby toys for New Zealand families and Montessori schools since 2015. Each piece is made by hand in our Tikipunga workshop — we are not a dropshipper or importer. When you buy a wooden baby toy from Poppa's Wooden Creations, you are getting a genuine, handcrafted NZ-made product that will outlast any plastic toy and can be passed down through generations.
+We have been making wooden baby toys for New Zealand families and schools since 2015. Each piece is made by hand in our Tikipunga workshop — we are not a dropshipper or importer. When you buy a wooden baby toy from Poppa's Wooden Creations, you are getting a genuine, handcrafted NZ-made product that will outlast any plastic toy and can be passed down through generations.
 
-Our wooden baby toys support sensory development, fine motor skills and open-ended Montessori play. The natural weight and texture of real New Zealand timber gives babies and toddlers a rich tactile experience that plastic simply cannot replicate.`,
+Our wooden baby toys support sensory development, fine motor skills and open-ended Montessori-inspired play. The natural weight and texture of real New Zealand timber gives babies and toddlers a rich tactile experience that plastic simply cannot replicate.`,
     features: [
       'Non-toxic, food-safe finish — completely safe for teething babies',
       'Smooth, splinter-free edges handcrafted for little hands',
       'Montessori-inspired open-ended play that supports development',
-      'Trusted by NZ Montessori schools and eco-conscious families since 2015',
+      'Supplied to NZ schools and families since 2015',
       'Made from native Kauri, Rimu and Macrocarpa — no two pieces identical',
       'Ships nationwide across New Zealand — rural delivery available',
       'Heirloom quality built to be passed down through generations',
@@ -395,8 +395,8 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
         <p>All edges and corners are rounded and sanded smooth by hand. We check every toy before it leaves our Whangarei workshop to make sure it meets our quality standards and is completely safe for babies and toddlers.</p>
       </section>
       <section>
-        <h2>Wooden Baby Toys for Montessori Play</h2>
-        <p>Montessori education places a strong emphasis on natural materials, open-ended play and sensory-rich environments. Our wooden baby toys are used in Montessori classrooms and playgroups across New Zealand because they fit perfectly with these principles.</p>
+        <h2>Wooden Baby Toys for Montessori-Inspired Play</h2>
+        <p>Montessori education places a strong emphasis on natural materials, open-ended play and sensory-rich environments. Our wooden baby toys are designed around exactly these principles.</p>
         <p>Simple, well-crafted wooden toys encourage babies and toddlers to use their imagination, develop fine motor skills and explore cause and effect — without flashing lights, sounds or batteries. Our toys grow with your child, remaining engaging from early infancy through toddlerhood and beyond.</p>
       </section>
       <section>
@@ -420,7 +420,7 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
       },
       {
         question: 'Are your wooden baby toys suitable for Montessori play?',
-        answer: 'Absolutely. Our wooden baby toys are used in Montessori schools and playgroups across New Zealand. They are made from natural materials, designed for open-ended play, and free from electronic components — all key principles of Montessori early childhood education.',
+        answer: 'Yes. Our wooden baby toys are made from natural materials, designed for open-ended play, and free from electronic components — all key principles of Montessori early childhood education.',
       },
       {
         question: 'Can I order a custom wooden baby toy?',
@@ -525,13 +525,13 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
   },
   'wooden-toys-nz': {
     title: "Handmade Wooden Toys NZ | Poppa's Wooden Creations",
-    description: "Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-approved. NZ's trusted wooden toy maker since 2015.",
+    description: "Premium handcrafted wooden toys made in Whangarei from native Kauri, Rimu & Macrocarpa. Safe, non-toxic, Montessori-inspired design. Supplied to schools and families since 2015.",
     h1: 'Handcrafted Wooden Toys NZ',
-    intro: "Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa's Wooden Creations — trusted by Montessori schools and eco-conscious families since 2015.",
+    intro: "Browse our full collection of handcrafted wooden toys, made in Whangarei from premium native New Zealand timber. Every piece is handmade by Adrian at Poppa's Wooden Creations — supplied to schools and eco-conscious families since 2015.",
     features: [
       'Handcrafted from native NZ timber — Kauri, Rimu, Macrocarpa',
       'Non-toxic, food-safe finish — safe for babies and toddlers',
-      'Trusted by Montessori schools across New Zealand since 2015',
+      'Supplied to schools across New Zealand since 2015',
       'Unique grain patterns — no two pieces identical',
       'Heirloom quality built to last generations',
     ],
@@ -711,8 +711,8 @@ const INFO_PAGES: Record<string, {
         <p>We use only premium native New Zealand timbers — Kauri, Rimu, and Macrocarpa — sourced responsibly from NZ suppliers. All finishes are non-toxic and food-safe, making our products safe for babies, toddlers, and use in the kitchen.</p>
       </section>
       <section>
-        <h2>Trusted by Montessori Schools</h2>
-        <p>Our wooden toys are used in Montessori schools across New Zealand. We design our toys with open-ended, imaginative play in mind — encouraging children to explore, create, and learn through play.</p>
+        <h2>Supplied to Schools</h2>
+        <p>We've supplied our wooden toys to schools across New Zealand. We design our toys with open-ended, imaginative play in mind — encouraging children to explore, create, and learn through play.</p>
       </section>
       <section>
         <h2>Contact Us</h2>
@@ -1005,10 +1005,10 @@ async function fetchBlogPosts(supabaseUrl: string, supabaseKey: string): Promise
   }
 }
 
-// NEW — fetches real, visible customer reviews so the bot-rendered
-// /reviews page shows genuine content and genuine schema instead of
-// the static placeholder paragraph. Only is_visible=true rows, newest
-// first, capped at 100 (matches the real total of 48 comfortably).
+// Fetches real, visible customer reviews so the bot-rendered /reviews
+// page shows genuine content and genuine schema instead of the static
+// placeholder paragraph. Only is_visible=true rows, newest first,
+// capped at 100 (matches the real total of 48 comfortably).
 async function fetchReviews(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
   if (!supabaseUrl || !supabaseKey) return [];
   try {
@@ -1127,7 +1127,7 @@ function buildHomeHTML(featuredProducts: any[]): string {
     </section>` : ''}
     <section>
       <h2>Handcrafted in Tikipunga, Whangarei</h2>
-      <p>Poppa's Wooden Creations is a toy manufacturer and woodworker based in Tikipunga, Whangarei. Every product is made and checked by hand in our own workshop — we don't outsource or import. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.</p>
+      <p>Poppa's Wooden Creations is a toy manufacturer and woodworker based in Tikipunga, Whangarei. Every product is made and checked by hand in our own workshop — we don't outsource or import. Supplied to schools and loved by eco-conscious families across New Zealand since 2015.</p>
     </section>
   </main>
   ${buildSharedFooter()}
@@ -1309,7 +1309,6 @@ function buildBlogListHTML(posts: any[]): string {
 </html>`;
 }
 
-// NEW — replaces the generic INFO_PAGES('/reviews') static render.
 // Renders real reviews with genuine Review + AggregateRating schema,
 // computed live from the actual fetched rows (never hardcoded), so
 // the numbers only ever reflect real data.
@@ -1322,8 +1321,8 @@ function buildReviewsHTML(reviews: any[]): string {
     : 0;
   const avgRatingStr = avgRating.toFixed(2);
   const description = count > 0
-    ? `Read ${count} genuine customer reviews of Poppa's Wooden Creations, averaging ${avgRatingStr} out of 5 stars. Trusted by NZ families and Montessori schools since 2015.`
-    : "Read genuine customer reviews of Poppa's Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families and Montessori schools since 2015.";
+    ? `Read ${count} genuine customer reviews of Poppa's Wooden Creations, averaging ${avgRatingStr} out of 5 stars. Trusted by NZ families since 2015.`
+    : "Read genuine customer reviews of Poppa's Wooden Creations handcrafted wooden toys and kitchenware. Trusted by NZ families since 2015.";
 
   const reviewCards = reviews.map(r => {
     const rating = parseFloat(r.rating) || 0;
@@ -1331,11 +1330,20 @@ function buildReviewsHTML(reviews: any[]): string {
       ? new Date(r.review_date).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' })
       : '';
     const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    // Fallback for reviews with a star rating but no written text, matching
+    // the same pattern src/components/Reviews.tsx uses for real visitors,
+    // instead of leaving a blank line.
+    const bodyText = r.review_text && r.review_text.trim() !== ''
+      ? r.review_text
+      : `${r.author_name || 'This customer'} gave ${Math.round(rating)} stars but didn't leave a written review.`;
+    const bodyStyle = r.review_text && r.review_text.trim() !== ''
+      ? ''
+      : ' font-style:italic;color:#a8a29e;';
     return `
     <article style="border:1px solid #e7e5e4;border-radius:8px;padding:16px 20px;margin-bottom:16px;">
       <p style="color:#f59e0b;font-size:1.1em;margin:0 0 6px;">${stars}</p>
       ${r.review_title ? `<h3 style="margin:0 0 6px;font-size:1.05em;color:#78350f;">${r.review_title}</h3>` : ''}
-      <p style="margin:0 0 10px;">${r.review_text || ''}</p>
+      <p style="margin:0 0 10px;${bodyStyle}">${bodyText}</p>
       <p style="font-size:0.85em;color:#78716c;margin:0;">${r.author_name || 'Customer'}${r.verified === true || r.verified === 'true' ? ' &nbsp;·&nbsp; Verified' : ''}${dateStr ? ` &nbsp;·&nbsp; ${dateStr}` : ''}${r.source ? ` &nbsp;·&nbsp; via ${r.source}` : ''}</p>
       ${r.owner_reply ? `<div style="margin-top:12px;padding:10px 14px;background:#fef3c7;border-radius:6px;"><p style="margin:0;font-size:0.9em;"><strong>Response from Poppa's Wooden Creations:</strong><br/>${r.owner_reply}</p></div>` : ''}
     </article>`;
@@ -1416,7 +1424,7 @@ function buildReviewsHTML(reviews: any[]): string {
   </nav>
   <main>
     <h1>Customer Reviews</h1>
-    ${count > 0 ? `<p>${count} genuine customer reviews, averaging ${avgRatingStr} out of 5 stars.</p>` : `<p>We are proud to be trusted by families and Montessori schools across New Zealand.</p>`}
+    ${count > 0 ? `<p>${count} genuine customer reviews, averaging ${avgRatingStr} out of 5 stars.</p>` : `<p>We are proud to be trusted by families across New Zealand.</p>`}
     <section>
       ${reviewCards || '<p>No reviews yet — check back soon.</p>'}
     </section>
@@ -1570,7 +1578,7 @@ function buildCategoryHTML(slug: string, products: any[]): string {
     <section>
       <h2>Handcrafted in Whangarei, New Zealand</h2>
       <p>Every piece in our ${meta.h1.toLowerCase()} range is handcrafted by Adrian at Poppa's Wooden Creations in Tikipunga, Whangarei. Using only native New Zealand timbers — Kauri, Rimu, and Macrocarpa — and finished with non-toxic, food-safe oils, each piece is unique and built to last generations.</p>
-      <p>We have been trusted by Montessori schools and eco-conscious families across New Zealand since 2015.</p>
+      <p>Supplied to schools and loved by eco-conscious families across New Zealand since 2015.</p>
     </section>
   </main>
   ${buildSharedFooter()}
@@ -1600,13 +1608,12 @@ function buildProductHTML(product: any, productId: string): string {
   const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
   const shippingDetails = buildShippingDetails(weightKg, lengthMm, widthMm, heightMm);
 
-  // REMOVED: fabricated aggregateRating (was a hardcoded 4.9 / 150
-  // reviews, identical across every product, with no real per-product
-  // review data behind it). Given the account's history of GMC
-  // Misrepresentation suspensions, shipping fake review counts on
-  // every product schema is a real risk, not just inaccurate. Real,
-  // genuine reviews now live at /reviews with an honestly computed
-  // AggregateRating — see buildReviewsHTML.
+  // No aggregateRating here — genuine reviews live at /reviews with an
+  // honestly computed AggregateRating (see buildReviewsHTML). None of
+  // these reviews are reliably tied to individual products, so putting
+  // a rating on every single Product schema would be fabricated data,
+  // a real risk given this account's history of GMC Misrepresentation
+  // suspensions.
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
@@ -1698,7 +1705,7 @@ function buildProductHTML(product: any, productId: string): string {
         <li>Handcrafted from native New Zealand timber (Kauri, Rimu, Macrocarpa)</li>
         <li>Non-toxic, food-safe finish — safe for babies and toddlers</li>
         <li>Built to last generations as heirloom pieces</li>
-        <li>Trusted by Montessori schools nationwide since 2015</li>
+        <li>Supplied to schools since 2015</li>
         <li>Every piece unique — natural grain variation is a feature, not a flaw</li>
       </ul>
     </section>
@@ -2044,9 +2051,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   }
 
   // ── 9.6 Reviews page (/reviews) ──────────────────────────────────────
-  // Special-cased ahead of the generic isInfoPage() branch, same reasoning
-  // as /blog: this route needs real, live data from Supabase, not the
-  // static placeholder text.
   if (pathname.replace(/\/$/, '') === '/reviews') {
     const reviews = await fetchReviews(supabaseUrl, supabaseKey);
     const html = buildReviewsHTML(reviews);
