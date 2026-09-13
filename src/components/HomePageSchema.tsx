@@ -13,7 +13,7 @@ export const HomePageSchema = () => {
       "width": 250,
       "height": 60
     },
-    "description": "Handmade wooden toys and kitchenware from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Specializing in children's wooden toys, Montessori educational toys, and premium wooden baby toys. Serving eco-conscious families across New Zealand since 2015.",
+    "description": "Handmade wooden toys and kitchenware from native New Zealand timbers including Kauri, Rimu, and Macrocarpa. Specializing in children's wooden toys, Montessori-inspired toys, and premium wooden baby toys. Serving eco-conscious families across New Zealand since 2015.",
     "foundingDate": "2015",
     "address": {
       "@type": "PostalAddress",
@@ -42,7 +42,7 @@ export const HomePageSchema = () => {
     "@id": "https://poppaswoodencreations.co.nz/#store",
     "name": "Poppa's Wooden Creations",
     "image": "https://poppaswoodencreations.co.nz/og-image.jpg",
-    "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-aligned educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Trusted supplier to Montessori schools across New Zealand.",
+    "description": "Premium handmade wooden toys NZ. Specializing in children's wooden toys, wooden baby toys, and Montessori-inspired educational toys crafted from native New Zealand timbers (Kauri, Rimu, Macrocarpa). Supplied to schools across New Zealand.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "102 Kiripaka Road, Tikipunga",
