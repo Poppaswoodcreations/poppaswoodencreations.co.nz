@@ -42,14 +42,21 @@
 // box is only 3.4kg but exceeds the XL cap by 68%) doesn't cost more within
 // the small-parcel table, it falls into an entirely different pricing
 // system ("large parcels", billed by volumetric weight rounded up to the
-// nearest 5kg at NZ Post's nationwide Courier rate). The old nzWeightTier()
-// had no size check at all — it assumed every order fit the small-parcel
-// range and priced a 3.4kg oversized item at $13.40 when NZ Post actually
-// charged $38.70 (confirmed via NZ Post's own Send It tool). Added
-// isOversizedNZ() + largeParcelPriceNZ() below to catch this case. The
-// nationwide rate is used deliberately (rather than a cheaper "within
-// island" rate) as a safety margin, consistent with this site's existing
-// practice of pricing tiers slightly above NZ Post's real cost.
+// nearest 5kg). The old nzWeightTier() had no size check at all — it
+// assumed every order fit the small-parcel range and priced a 3.4kg
+// oversized item at $13.40 when NZ Post actually charged $38.70.
+//
+// Confirmed via NZ Post's own Send It tool across two box sizes shipped
+// from Whangarei to Manurewa (both North Island):
+//   Box 4 (31.8x21.6x50.7cm, 6.97kg volumetric -> rounds to 10kg/2 brackets) = $26
+//   Box 5 (41.8x28.6x54cm,  12.91kg volumetric -> rounds to 15kg/3 brackets) = $38.70
+// Both divide out to exactly $12.90/bracket — NZ Post's "within island" large-
+// parcel Courier rate, not the pricier "nationwide" rate ($39.70/bracket) that
+// applies when origin and destination are on different islands. Since this
+// business ships from Whangarei (North Island), any North Island destination
+// uses the within-island rate; South Island destinations use nationwide.
+// Destination island is inferred from the first digit of the NZ postcode —
+// 7/8/9 = South Island, 0-6 = North Island (NZ Post's own numbering scheme).
 
 // NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
 // delivery to door, next working day). Source: NZ Post small parcel rate card.
@@ -59,12 +66,21 @@ const RURAL_SURCHARGE = 6.00;
 // 0.010 m3 / the XL bag). Anything bigger must be priced as a large parcel.
 const NZ_SMALL_PARCEL_MAX_VOLUME_M3 = 0.010;
 
-// NZ Post large-parcel Courier rate, nationwide, per 5kg bracket (chargeable
-// weight rounded UP to the nearest 5kg). Source: NZ Post "Sending in NZ" —
-// large parcels pricing table, nationwide first-5kg Courier price, which
-// also applies per additional 5kg bracket up to the 25kg/1.5m/0.125m3 cap.
-const NZ_LARGE_PARCEL_RATE_PER_5KG = 39.70;
+// NZ Post large-parcel Courier rates, per 5kg bracket (chargeable weight
+// rounded UP to the nearest 5kg), confirmed live via NZ Post's Send It tool.
+// "Within island" applies when origin and destination are on the same
+// island; "nationwide" applies when they're not. This business ships from
+// Whangarei (North Island).
+const NZ_LARGE_PARCEL_RATE_WITHIN_ISLAND_PER_5KG = 12.90;
+const NZ_LARGE_PARCEL_RATE_NATIONWIDE_PER_5KG = 39.70;
 const NZ_LARGE_PARCEL_MAX_KG = 25;
+const SENDER_ISLAND = 'NORTH'; // this business ships from Whangarei
+
+// NZ postcodes starting 7/8/9 are South Island; 0-6 are North Island.
+function nzDestinationIsland(postalCode) {
+  const firstDigit = String(postalCode || '').trim().charAt(0);
+  return ['7', '8', '9'].includes(firstDigit) ? 'SOUTH' : 'NORTH';
+}
 
 const NZ_RURAL_POSTCODES = new Set([
   // North Island
@@ -155,14 +171,18 @@ function isOversizedNZ(totalVolumeM3) {
   return totalVolumeM3 > NZ_SMALL_PARCEL_MAX_VOLUME_M3;
 }
 
-// NZ Post large-parcel Courier pricing: billed at NZ_LARGE_PARCEL_RATE_PER_5KG
-// per 5kg bracket (the greater of actual or volumetric weight), rounded UP to
-// the nearest 5kg, capped at 25kg (heavier/bigger than that needs Express —
-// call for a quote, so we cap the calculation rather than silently underquote).
-function largeParcelPriceNZ(billableWeightKg) {
+// NZ Post large-parcel Courier pricing: billed per 5kg bracket (the greater
+// of actual or volumetric weight), rounded UP to the nearest 5kg, capped at
+// 25kg (heavier/bigger than that needs Express — call for a quote, so we cap
+// the calculation rather than silently underquote). Rate depends on whether
+// destination is on the same island as the sender (Whangarei, North Island).
+function largeParcelPriceNZ(billableWeightKg, postalCode) {
   const cappedWeight = Math.min(billableWeightKg, NZ_LARGE_PARCEL_MAX_KG);
   const brackets = Math.max(1, Math.ceil(cappedWeight / 5));
-  return brackets * NZ_LARGE_PARCEL_RATE_PER_5KG;
+  const rate = nzDestinationIsland(postalCode) === SENDER_ISLAND
+    ? NZ_LARGE_PARCEL_RATE_WITHIN_ISLAND_PER_5KG
+    : NZ_LARGE_PARCEL_RATE_NATIONWIDE_PER_5KG;
+  return brackets * rate;
 }
 
 // Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
@@ -197,7 +217,7 @@ function calculateShipping({ items, dbProducts, subtotal, billableWeight, totalV
   switch (country) {
     case 'NZ':
       base = isOversizedNZ(totalVolumeM3)
-        ? largeParcelPriceNZ(billableWeight)
+        ? largeParcelPriceNZ(billableWeight, postalCode)
         : nzWeightTier(billableWeight);
       break;
     case 'AU':
