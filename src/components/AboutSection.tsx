@@ -150,7 +150,7 @@ const AboutSection: React.FC = () => {
                       All our toys are handcrafted and inspected to meet New Zealand toy safety guidelines.
                       We use only untreated native timbers finished with non-toxic, food-safe oils and waxes —
                       no heavy metals, no chemical treatments, no loose small parts. Suitable for children
-                      from 12 months and trusted by Montessori schools across New Zealand.
+                      from 12 months and supplied to schools across New Zealand.
                     </p>
                   </div>
                 </div>
