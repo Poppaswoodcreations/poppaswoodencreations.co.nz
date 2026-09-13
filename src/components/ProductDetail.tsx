@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, ShoppingCart, Star, Truck, Shield, Award } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Truck, Shield, Award } from 'lucide-react';
 import { Product } from '../types';
 import LazyImage from './LazyImage';
 import { useSEO } from '../components/SEOMetaManager';
@@ -11,89 +11,6 @@ interface ProductDetailProps {
   onAddToCart: (product: Product) => void;
   isLoading?: boolean;
 }
-
-const CUSTOMER_REVIEWS = [
-  {
-    author: "David R.",
-    rating: 5,
-    date: "2024-01-05",
-    title: "Sustainable and safe",
-    text: "Love that these toys are made from sustainable materials. They feel safe for my baby and the craftsmanship is top-notch.",
-    verified: true
-  },
-  {
-    author: "Emma L.",
-    rating: 5,
-    date: "2024-01-08",
-    title: "Great quality, fast shipping",
-    text: "Really impressed with the quality of the wooden toys. Shipping was fast and packaging was excellent. My daughter loves her new kitchen set!",
-    verified: true
-  },
-  {
-    author: "Mike T.",
-    rating: 5,
-    date: "2024-01-10",
-    title: "Perfect gift",
-    text: "Bought this as a gift for my nephew. The attention to detail is amazing and it's clearly built to last. Highly recommended!",
-    verified: true
-  },
-  {
-    author: "Sarah M.",
-    rating: 5,
-    date: "2024-01-15",
-    title: "Beautiful craftsmanship!",
-    text: "Absolutely love this wooden train set. The quality is outstanding and my 3-year-old plays with it every day. Worth every penny!",
-    verified: true
-  },
-  {
-    author: "Monika Roache",
-    rating: 5,
-    date: "2024-12-25",
-    title: "Amazing craftsmanship!",
-    text: "Amazing craftsmanship, my toddler was thrilled to open this on Christmas morning and I'm sure we'll have many years of enjoyment. Very fast postage too, thanks so much!",
-    verified: true
-  },
-  {
-    author: "Stana Moes",
-    rating: 5,
-    date: "2025-01-13",
-    title: "Perfect birthday present!",
-    text: "This is the perfect birthday present for my 2 year old who is obsessed with helicopters. I love that it's handmade from native timber. It came really fast in the post which I was especially thankful for as it was around Xmas/new year time!",
-    verified: true
-  },
-  {
-    author: "Craig Howat",
-    rating: 5,
-    date: "2025-06-12",
-    title: "Awesome trolley, very well made",
-    text: "Awesome trolley, very well made. The quality and craftsmanship is outstanding.",
-    verified: true
-  },
-  {
-    author: "Donna Bradford",
-    rating: 5,
-    date: "2025-07-29",
-    title: "Perfect baby gifts!",
-    text: "I bought 2 car carriers as baby gifts and both sets of parents were so happy with the product. I loved that is was made in NZ and was really affordable. The service was fantastic.",
-    verified: true
-  },
-  {
-    author: "Anna Cardy",
-    rating: 5,
-    date: "2024-11-22",
-    title: "Beautiful, high-quality wooden toys",
-    text: "Beautiful, high-quality wooden toys and gifts. Perfect for any occasion!",
-    verified: true
-  },
-  {
-    author: "bradley spraggen",
-    rating: 4,
-    date: "2024-11-22",
-    title: "Absolutely brilliant chopping boards",
-    text: "Absolutely brilliant chopping boards, will look good with some cheese on them!!",
-    verified: true
-  }
-];
 
 const PRODUCT_FAQS = [
   {
@@ -273,8 +190,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
   const shouldNoIndex = isTestProduct;
 
   const enhancedDescription = product?.description
-    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Trusted by Montessori schools nationwide.`
-    : `Handcrafted wooden toy made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori play and early childhood development.`;
+    ? `${product.description} Handcrafted in Whangarei, New Zealand from ${productMaterial}. Finished with non-toxic, food-safe oils. Safe for children ${ageRange}. Supplied to schools nationwide.`
+    : `Handcrafted wooden toy made from ${productMaterial} in Whangarei, New Zealand. Non-toxic finish, safe for children ${ageRange}. Perfect for Montessori-inspired play and early childhood development.`;
 
   // useSEO always called — canonical always correct regardless of loading state
   useSEO({
@@ -316,6 +233,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
     );
   }
 
+  // NOTE: aggregateRating and review were removed from this schema. They
+  // previously hardcoded a fake 4.9/150 rating and the same 10 real-but-
+  // unrelated customer reviews on every single product page, regardless of
+  // what the product actually was (e.g. an Egg Cup page showing a review
+  // about a wooden train set). Given this business's history of Google
+  // Merchant Center Misrepresentation suspensions, showing fabricated or
+  // mismatched review data to both customers and search engines is a real
+  // risk, not just an inaccuracy. Genuine reviews now live at /reviews,
+  // pulled live from the real reviews table.
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -396,26 +322,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
         "url": "https://poppaswoodencreations.co.nz"
       }
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "150",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": CUSTOMER_REVIEWS.map(review => ({
-      "@type": "Review",
-      "author": { "@type": "Person", "name": review.author },
-      "datePublished": review.date,
-      "reviewBody": review.text,
-      "name": review.title,
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": review.rating.toString(),
-        "bestRating": "5",
-        "worstRating": "1"
-      }
-    })),
     "category": product.category || "Wooden Toys",
     "material": productMaterial,
     ...(hasWeight ? { "weight": { "@type": "QuantitativeValue", "value": weightKg, "unitCode": "KGM" } } : {}),
@@ -433,7 +339,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
       { "@type": "PropertyValue", "name": "Age Suitability", "value": ageRange },
       { "@type": "PropertyValue", "name": "Finish", "value": "Non-toxic food-safe oil" },
       { "@type": "PropertyValue", "name": "Origin", "value": "Handcrafted in New Zealand" },
-      { "@type": "PropertyValue", "name": "Suitable For", "value": "Montessori education, early childhood development" },
+      { "@type": "PropertyValue", "name": "Suitable For", "value": "Montessori-inspired play, early childhood development" },
       { "@type": "PropertyValue", "name": "Sustainability", "value": "Sustainable native timber, eco-friendly alternative to plastic" }
     ]
   };
@@ -544,14 +450,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                     <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">Featured</span>
                   )}
                 </div>
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400 fill-current" />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">4.9/5 (150+ reviews)</span>
-                  </div>
-                </div>
               </div>
 
               {product.description && (
@@ -621,7 +519,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
                   </div>
                   <div>
                     <span className="text-gray-600">Suitable for:</span>
-                    <span className="font-medium text-gray-900 ml-2">Montessori</span>
+                    <span className="font-medium text-gray-900 ml-2">Montessori-inspired play</span>
                   </div>
                   {hasDimensions && (
                     <div>
@@ -682,30 +580,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ products, onAddToCart, is
             </div>
           </div>
 
-          <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Customer Reviews</h2>
-            <div className="space-y-4">
-              {CUSTOMER_REVIEWS.slice(0, 5).map((review, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-semibold text-gray-900">{review.author}</span>
-                      {review.verified && (
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified Purchase</span>
-                      )}
-                    </div>
-                    <span className="text-sm text-gray-500">{review.date}</span>
-                  </div>
-                  <div className="flex items-center space-x-1 mb-2">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} size={14} className="text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <h4 className="font-medium text-gray-900 mb-1">{review.title}</h4>
-                  <p className="text-gray-600">{review.text}</p>
-                </div>
-              ))}
-            </div>
+          <div className="mt-16 max-w-3xl mx-auto text-center">
+            <p className="text-gray-600">
+              Read genuine customer reviews on our{' '}
+              <button onClick={() => navigate('/reviews')} className="text-amber-600 font-medium hover:underline">
+                Reviews page
+              </button>.
+            </p>
           </div>
 
         </div>
