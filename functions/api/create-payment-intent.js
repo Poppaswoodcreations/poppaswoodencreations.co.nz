@@ -35,10 +35,36 @@
 // product's stock hits 1. This file never touches stock itself — it only
 // carries the IDs through so the webhook (which fires after payment
 // actually succeeds) can act on them.
+//
+// FIX (13 Sep 2026): NZ Post's small-parcel ticket range (the $10–$18.70
+// tiers below) is capped at 0.010 m3 — the max volume of their XL ticket/bag.
+// Any parcel bigger than that (long/bulky items especially — a 51x11x30cm
+// box is only 3.4kg but exceeds the XL cap by 68%) doesn't cost more within
+// the small-parcel table, it falls into an entirely different pricing
+// system ("large parcels", billed by volumetric weight rounded up to the
+// nearest 5kg at NZ Post's nationwide Courier rate). The old nzWeightTier()
+// had no size check at all — it assumed every order fit the small-parcel
+// range and priced a 3.4kg oversized item at $13.40 when NZ Post actually
+// charged $38.70 (confirmed via NZ Post's own Send It tool). Added
+// isOversizedNZ() + largeParcelPriceNZ() below to catch this case. The
+// nationwide rate is used deliberately (rather than a cheaper "within
+// island" rate) as a safety margin, consistent with this site's existing
+// practice of pricing tiers slightly above NZ Post's real cost.
 
 // NZ Post small-parcel pricing effective 1 July 2026 (Courier service tier —
 // delivery to door, next working day). Source: NZ Post small parcel rate card.
 const RURAL_SURCHARGE = 6.00;
+
+// NZ Post's own max volume for their largest small-parcel ticket (XL: fits
+// 0.010 m3 / the XL bag). Anything bigger must be priced as a large parcel.
+const NZ_SMALL_PARCEL_MAX_VOLUME_M3 = 0.010;
+
+// NZ Post large-parcel Courier rate, nationwide, per 5kg bracket (chargeable
+// weight rounded UP to the nearest 5kg). Source: NZ Post "Sending in NZ" —
+// large parcels pricing table, nationwide first-5kg Courier price, which
+// also applies per additional 5kg bracket up to the 25kg/1.5m/0.125m3 cap.
+const NZ_LARGE_PARCEL_RATE_PER_5KG = 39.70;
+const NZ_LARGE_PARCEL_MAX_KG = 25;
 
 const NZ_RURAL_POSTCODES = new Set([
   // North Island
@@ -115,17 +141,42 @@ function volumetricWeightKg(lengthMm, widthMm, heightMm) {
   return (lCm * wCm * hCm) / 5000;
 }
 
+// Volume in cubic metres, for comparing against NZ Post's small-parcel ticket
+// size cap. Returns 0 (never oversized) when dimensions are missing.
+function volumeM3(lengthMm, widthMm, heightMm) {
+  if (!lengthMm || !widthMm || !heightMm) return 0;
+  return (lengthMm / 1000) * (widthMm / 1000) * (heightMm / 1000);
+}
+
+// True once a parcel's volume exceeds NZ Post's biggest small-parcel ticket
+// (XL, 0.010 m3) — at that point it's priced as a large parcel, not a
+// bigger small-parcel tier. A parcel can trip this even at very low weight.
+function isOversizedNZ(totalVolumeM3) {
+  return totalVolumeM3 > NZ_SMALL_PARCEL_MAX_VOLUME_M3;
+}
+
+// NZ Post large-parcel Courier pricing: billed at NZ_LARGE_PARCEL_RATE_PER_5KG
+// per 5kg bracket (the greater of actual or volumetric weight), rounded UP to
+// the nearest 5kg, capped at 25kg (heavier/bigger than that needs Express —
+// call for a quote, so we cap the calculation rather than silently underquote).
+function largeParcelPriceNZ(billableWeightKg) {
+  const cappedWeight = Math.min(billableWeightKg, NZ_LARGE_PARCEL_MAX_KG);
+  const brackets = Math.max(1, Math.ceil(cappedWeight / 5));
+  return brackets * NZ_LARGE_PARCEL_RATE_PER_5KG;
+}
+
 // Approximates NZ Post's size-based Courier tiers (XS/S/M/L/XL) using
 // billable weight as a proxy, since we don't store box-size categories.
 // Prices are the Courier column from NZ Post's small-parcel rate card,
 // effective 1 July 2026: XS $9.10, S $10.40, M $12.40, L $13.40, XL $18.70.
 // Floored at $10 on the smallest tier — the last few orders showed Courier
 // coming in cheaper than our old $10 minimum, so we keep $10 as the floor.
+// ONLY valid below NZ Post's small-parcel volume cap — see isOversizedNZ().
 function nzWeightTier(weight) {
   return weight <= 1 ? 10.00 : weight <= 2 ? 10.40 : weight <= 3 ? 12.40 : weight <= 4 ? 13.40 : 18.70;
 }
 
-function calculateShipping({ items, dbProducts, subtotal, billableWeight, country, deliveryMethod, postalCode, address }) {
+function calculateShipping({ items, dbProducts, subtotal, billableWeight, totalVolumeM3, country, deliveryMethod, postalCode, address }) {
   if (deliveryMethod === 'pickup') return 0;
 
   // Same "small pine vehicle" free-shipping rule as the client, but checked
@@ -145,7 +196,9 @@ function calculateShipping({ items, dbProducts, subtotal, billableWeight, countr
   let base;
   switch (country) {
     case 'NZ':
-      base = nzWeightTier(billableWeight);
+      base = isOversizedNZ(totalVolumeM3)
+        ? largeParcelPriceNZ(billableWeight)
+        : nzWeightTier(billableWeight);
       break;
     case 'AU':
       base = billableWeight <= 1 ? 25 : 35;
@@ -223,6 +276,7 @@ export async function onRequest(context) {
     let subtotal = 0;
     let totalActualWeight = 0;
     let totalVolumetricWeight = 0;
+    let totalVolumeM3 = 0;
     for (const item of cleanItems) {
       const product = dbProducts[item.id];
       if (!product) {
@@ -231,6 +285,7 @@ export async function onRequest(context) {
       subtotal += Number(product.price || 0) * item.quantity;
       totalActualWeight += Number(product.weight || 0.5) * item.quantity;
       totalVolumetricWeight += volumetricWeightKg(product.length_mm, product.width_mm, product.height_mm) * item.quantity;
+      totalVolumeM3 += volumeM3(product.length_mm, product.width_mm, product.height_mm) * item.quantity;
     }
 
     // NZ Post bills whichever is greater: actual weight or volumetric weight.
@@ -241,6 +296,7 @@ export async function onRequest(context) {
       dbProducts,
       subtotal,
       billableWeight,
+      totalVolumeM3,
       country: country || 'NZ',
       deliveryMethod: deliveryMethod || 'shipping',
       postalCode: postalCode || '',
