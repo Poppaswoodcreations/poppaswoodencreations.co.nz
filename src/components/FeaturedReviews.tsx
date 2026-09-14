@@ -78,8 +78,8 @@ const FeaturedReviews: React.FC = () => {
                   <Star key={star} size={24} className="text-yellow-400 fill-current" />
                 ))}
               </div>
-              <span className="text-2xl font-bold text-gray-900">5.0</span>
-              <span className="text-gray-600">from 23 reviews</span>
+              <span className="text-2xl font-bold text-gray-900">4.98</span>
+              <span className="text-gray-600">from 48 reviews</span>
             </div>
             <p className="text-gray-600 max-w-2xl mx-auto">
               See why families across New Zealand trust our handcrafted wooden toys
@@ -144,9 +144,9 @@ const FeaturedReviews: React.FC = () => {
               onClick={() => navigate('/reviews')}
               className="bg-amber-700 text-white px-8 py-3 rounded-lg hover:bg-amber-800 transition-colors font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 duration-200"
             >
-              Read All 23 Reviews
+              Read All 48 Reviews
             </button>
-            <a
+            
               href="https://g.page/r/CWuTntJqt_2REBM/review"
               target="_blank"
               rel="noopener noreferrer"
@@ -160,11 +160,11 @@ const FeaturedReviews: React.FC = () => {
           {/* Trust Badges */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto">
             <div className="text-center p-4 bg-white rounded-lg shadow">
-              <div className="text-3xl font-bold text-amber-700 mb-1">5.0★</div>
+              <div className="text-3xl font-bold text-amber-700 mb-1">4.98★</div>
               <p className="text-sm text-gray-600">Average Rating</p>
             </div>
             <div className="text-center p-4 bg-white rounded-lg shadow">
-              <div className="text-3xl font-bold text-amber-700 mb-1">23</div>
+              <div className="text-3xl font-bold text-amber-700 mb-1">48</div>
               <p className="text-sm text-gray-600">Total Reviews</p>
             </div>
             <div className="text-center p-4 bg-white rounded-lg shadow">
