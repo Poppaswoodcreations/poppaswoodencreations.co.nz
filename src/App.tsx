@@ -281,7 +281,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Handmade Wooden Toys Whangarei & Tikipunga"
-                  description="Handcrafted wooden toys and kitchenware made in Tikipunga, Whangarei from native Kauri, Rimu & Macrocarpa. Trusted by Montessori schools since 2015."
+                  description="Handcrafted wooden toys and kitchenware made in Tikipunga, Whangarei from native Kauri, Rimu & Macrocarpa. Supplied to schools since 2015."
                   image="https://poppaswoodencreations.co.nz/hero-image.jpg"
                   canonicalPath="/"
                 />
@@ -344,7 +344,7 @@ const AppContent: React.FC = () => {
               <>
                 <SEOHead
                   title="Wooden Toys NZ - Native Timber"
-                  description="Premium handcrafted wooden toys made in New Zealand from native Kauri, Rimu & Macrocarpa. Trusted by Montessori schools nationwide."
+                  description="Premium handcrafted wooden toys made in New Zealand from native Kauri, Rimu & Macrocarpa. Supplied to schools nationwide."
                   canonicalPath="/wooden-toys-nz"
                   ogType="website"
                 />
