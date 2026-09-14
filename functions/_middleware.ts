@@ -43,10 +43,6 @@ const BOT_USER_AGENTS = [
   'amazonbot',
 ];
 
-// ─────────────────────────────────────────────────────────────
-// GHOST PRODUCT SLUGS — 410 Gone for ALL visitors
-// These URLs were never valid products on this site.
-// ─────────────────────────────────────────────────────────────
 const GHOST_SLUGS = new Set([
   'small-pine-train',
   'ice-cream-truck',
@@ -85,47 +81,23 @@ const GHOST_SLUGS = new Set([
   'french-rolling-pin',
 ]);
 
-// ─────────────────────────────────────────────────────────────
-// GHOST BLOG SLUGS — 410 Gone for ALL visitors
-// Fast-path blocklist; any slug not in Supabase also gets 410
-// via the Supabase lookup fallback in step 12.
-// ─────────────────────────────────────────────────────────────
 const GHOST_BLOG_SLUGS = new Set([
   'choosing-best-wooden-toy-cars',
   'sensory-toys-for-babies',
   'benefits-of-wooden-toys',
 ]);
 
-// ─────────────────────────────────────────────────────────────
-// GHOST CATEGORY SLUGS — 410 Gone for ALL visitors
-// (was handled by netlify.toml; now lives here for parity)
-// ─────────────────────────────────────────────────────────────
 const GHOST_CATEGORIES = new Set([
   'wooden-other-toys',
   'wooden-toys',
 ]);
 
-// ─────────────────────────────────────────────────────────────
-// RENAMED BLOG SLUGS — 301 to the current published slug
-// Old/truncated slugs Google still has indexed -> live post.
-// ─────────────────────────────────────────────────────────────
 const BLOG_SLUG_REDIRECTS: Record<string, string> = {
   'how-to-clean-wooden-toys-naturally': 'how-to-clean-wooden-toys-naturally-and-safely',
   'wooden-pine-trolley-and-blocks': 'poppas-wooden-creations-handmade-wooden-pine-trolley-and-blocks',
   'wooden-rubbish-truck-kauri-macrocarpa': 'best-handmade-wooden-toys-from-whangarei-new-zealand',
 };
 
-// ─────────────────────────────────────────────────────────────
-// RENAMED PRODUCT SLUGS — 301 to the current product id
-// Old slugs Google still has indexed -> live product in Supabase.
-// Recovers ranking instead of throwing it away with a 410.
-//
-// NOTE: 'small-pine-helicopter' was removed from this map — it was
-// pointing at 'pine-helicopter' (the big helicopter) from back when
-// it was a dead slug, but it's since become a real, separate product
-// in Supabase. Leaving the redirect in place was hijacking traffic
-// away from the actual Small Pine Helicopter product page.
-// ─────────────────────────────────────────────────────────────
 const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'small-pine-cars': 'small-pine-car',
   'log-truck': 'logging-truck',
@@ -139,17 +111,8 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
   'happy-go-lucky-train': 'happy-go-luck-train',
 };
 
-// Supabase credentials are read per-request from context.env inside the handler.
-// (Cloudflare Workers do not expose environment variables at module load time.)
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
-// ─────────────────────────────────────────────────────────────
-// MERCHANT RETURN POLICY & SHIPPING DEFAULTS
-// Used to fill the "hasMerchantReturnPolicy" and "shippingDetails"
-// fields on Product schema so Merchant Listings clear the
-// "non-critical issues" flag in Search Console / Rich Results.
-// Mirrors the site's actual /returns and /shipping policy pages.
-// ─────────────────────────────────────────────────────────────
 const MERCHANT_RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   "applicableCountry": "NZ",
@@ -159,18 +122,6 @@ const MERCHANT_RETURN_POLICY = {
   "returnFees": "https://schema.org/FreeReturn",
 };
 
-// ─────────────────────────────────────────────────────────────
-// REAL NZ POST SHIPPING RATE — ported from
-// functions/api/create-payment-intent.js so the price Googlebot sees
-// matches what a customer actually pays at checkout for a single unit
-// of this product, instead of a flat placeholder.
-//
-// NZ Post bills by billable weight = greater of actual weight and
-// volumetric weight (L cm x W cm x H cm / 5000). Tiers effective
-// 1 July 2026: <=1kg $10.00, <=2kg $10.40, <=3kg $12.40, <=4kg $13.40,
-// else $18.70. $10.00 is the floor — it never shows less than that,
-// matching what checkout actually charges.
-// ─────────────────────────────────────────────────────────────
 function volumetricWeightKg(lengthMm?: number, widthMm?: number, heightMm?: number): number {
   if (!lengthMm || !widthMm || !heightMm) return 0;
   const lCm = lengthMm / 10, wCm = widthMm / 10, hCm = heightMm / 10;
@@ -182,9 +133,6 @@ function nzWeightTier(weight: number): number {
 }
 
 function buildShippingDetails(weightKg?: number, lengthMm?: number, widthMm?: number, heightMm?: number) {
-  // Same 0.5kg fallback create-payment-intent.js uses for products missing
-  // a weight value, so the schema and real checkout agree even for
-  // incomplete product records.
   const actualWeight = weightKg != null ? Number(weightKg) : 0.5;
   const volWeight = volumetricWeightKg(lengthMm, widthMm, heightMm);
   const billableWeight = Math.max(actualWeight, volWeight);
@@ -219,13 +167,6 @@ function buildShippingDetails(weightKg?: number, lengthMm?: number, widthMm?: nu
   };
 }
 
-// ─────────────────────────────────────────────────────────────
-// MATERIAL OVERRIDES
-// Mirrors src/components/ProductDetail.tsx MATERIAL_OVERRIDES so the
-// bot-rendered schema and the real user-facing page agree on material.
-// Duplicated here (not imported) because functions/ and src/ are
-// separate build targets in Cloudflare Pages.
-// ─────────────────────────────────────────────────────────────
 const MATERIAL_OVERRIDES: Record<string, string> = {
   '2-by-4-car-steering-wheel': 'Pine wood',
   '2-by-4-pine-car': 'Pine wood',
@@ -312,9 +253,6 @@ function extractMaterial(id: string, name: string, desc?: string): string {
   return 'Premium New Zealand native timber';
 }
 
-// ─────────────────────────────────────────────────────────────
-// HOME PAGE META
-// ─────────────────────────────────────────────────────────────
 const HOME_META = {
   title: "Handmade Wooden Toys Whangarei & Tikipunga | Poppa's Wooden Creations",
   description: "Poppa's Wooden Creations is a handcrafted toy manufacturer based in Tikipunga, Whangarei, making premium wooden toys from native NZ timber. Safe, sustainable, supplied to schools. Free shipping over $1000.",
@@ -339,9 +277,6 @@ const HOME_META = {
   ],
 };
 
-// ─────────────────────────────────────────────────────────────
-// CATEGORY META
-// ─────────────────────────────────────────────────────────────
 const CATEGORY_META: Record<string, {
   title: string;
   description: string;
@@ -538,9 +473,6 @@ Our wooden baby toys support sensory development, fine motor skills and open-end
   },
 };
 
-// ─────────────────────────────────────────────────────────────
-// POLICY PAGES
-// ─────────────────────────────────────────────────────────────
 const POLICY_PAGES: Record<string, {
   title: string;
   description: string;
@@ -689,12 +621,23 @@ const POLICY_PAGES: Record<string, {
 
 // ─────────────────────────────────────────────────────────────
 // INFO PAGES
+// Extended to cover /custom-order, /games, /search, /write-review —
+// these fell through to context.next() (the raw SPA shell) for bots
+// because nothing in the handler recognised them, even though
+// App.tsx sets real title/description props for them. The site-audit
+// tool caught this: /custom-order showed as missing title, meta
+// description, and H1 to a Googlebot-spoofed fetch, despite having
+// all three defined client-side. /search and /write-review are
+// marked noindex — a search results page's content changes per query
+// and a review-submission form has no unique content — so indexing
+// them would only add thin/duplicate pages, not help rankings.
 // ─────────────────────────────────────────────────────────────
 const INFO_PAGES: Record<string, {
   title: string;
   description: string;
   h1: string;
   content: string;
+  noindex?: boolean;
 }> = {
   '/about': {
     title: "About Us | Poppa's Wooden Creations, Whangarei NZ",
@@ -759,11 +702,60 @@ const INFO_PAGES: Record<string, {
       </section>
     `,
   },
+  '/custom-order': {
+    title: "Custom Wooden Toy Orders NZ | Poppa's Wooden Creations",
+    description: "Order a custom handcrafted wooden toy or kitchenware item from Poppa's Wooden Creations. Choose your timber, size, and finish.",
+    h1: 'Custom Wooden Toy & Kitchenware Orders',
+    content: `
+      <section>
+        <h2>Made to Order, Just for You</h2>
+        <p>Beyond our standard range, we love working with customers on bespoke wooden pieces — a toy in a specific timber, a personalised kitchenware set, or a design you've had in mind. Every custom piece is handcrafted in our Whangarei workshop, the same way as everything else we make.</p>
+      </section>
+      <section>
+        <h2>How It Works</h2>
+        <p>Tell us what you have in mind — the item, your preferred timber (Kauri, Rimu, or Macrocarpa), size, and any personal touches like an engraved name. We'll get back to you with a quote and timeframe before any work begins.</p>
+      </section>
+      <section>
+        <h2>Get in Touch</h2>
+        <p>Email <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a> or call <a href="tel:+642102288166">+64 21 022 88166</a> to start the conversation about your custom order.</p>
+      </section>
+    `,
+  },
+  '/games': {
+    title: "Games | Poppa's Wooden Creations",
+    description: "Take a break with Poppa's Workshop Games — Hangman and Guess the Number, free to play.",
+    h1: "Poppa's Workshop Games",
+    content: `
+      <section>
+        <h2>A Little Fun From the Workshop</h2>
+        <p>While you browse, take a break with a couple of free games from Poppa's Wooden Creations — Hangman and Guess the Number. No sign-up needed, just play.</p>
+      </section>
+    `,
+  },
+  '/search': {
+    title: "Search Products | Poppa's Wooden Creations",
+    description: "Search our collection of handcrafted wooden toys and kitchenware, made from native New Zealand timber in Whangarei.",
+    h1: 'Search',
+    noindex: true,
+    content: `
+      <section>
+        <p>Search our full range of handcrafted wooden toys and kitchenware on the live site.</p>
+      </section>
+    `,
+  },
+  '/write-review': {
+    title: "Write a Review | Poppa's Wooden Creations",
+    description: "Share your experience with Poppa's Wooden Creations — we'd love to hear from you.",
+    h1: 'Write a Review',
+    noindex: true,
+    content: `
+      <section>
+        <p>Have you purchased from us? We'd love to hear your feedback — leave a review on the live site, or email us directly at <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a>.</p>
+      </section>
+    `,
+  },
 };
 
-// ─────────────────────────────────────────────────────────────
-// SHARED LAYOUT HELPERS
-// ─────────────────────────────────────────────────────────────
 function buildSharedNav(currentPath: string): string {
   return `
   <header style="background:#78350f;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
@@ -838,9 +830,6 @@ const SHARED_CSS = `
   nav.breadcrumb a { color: #92400e; text-decoration: none; }
 `;
 
-// ─────────────────────────────────────────────────────────────
-// UTILITY FUNCTIONS
-// ─────────────────────────────────────────────────────────────
 function isBot(userAgent: string): boolean {
   const ua = userAgent.toLowerCase();
   return BOT_USER_AGENTS.some(bot => ua.includes(bot.toLowerCase()));
@@ -894,9 +883,6 @@ function hasTrackingParams(searchParams: URLSearchParams): boolean {
   return false;
 }
 
-// ─────────────────────────────────────────────────────────────
-// SUPABASE FETCHERS
-// ─────────────────────────────────────────────────────────────
 async function fetchProduct(supabaseUrl: string, supabaseKey: string, productId: string): Promise<any | null> {
   if (!supabaseUrl || !supabaseKey) {
     console.error('[bot-prerender] Missing Supabase env vars');
@@ -1005,10 +991,6 @@ async function fetchBlogPosts(supabaseUrl: string, supabaseKey: string): Promise
   }
 }
 
-// Fetches real, visible customer reviews so the bot-rendered /reviews
-// page shows genuine content and genuine schema instead of the static
-// placeholder paragraph. Only is_visible=true rows, newest first,
-// capped at 100 (matches the real total of 48 comfortably).
 async function fetchReviews(supabaseUrl: string, supabaseKey: string): Promise<any[]> {
   if (!supabaseUrl || !supabaseKey) return [];
   try {
@@ -1030,9 +1012,6 @@ async function fetchReviews(supabaseUrl: string, supabaseKey: string): Promise<a
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// HTML BUILDERS
-// ─────────────────────────────────────────────────────────────
 function buildHomeHTML(featuredProducts: any[]): string {
   const canonicalUrl = BASE_URL;
 
@@ -1183,6 +1162,7 @@ function buildInfoHTML(pathname: string): string {
   const clean = pathname.replace(/\/$/, '');
   const page = INFO_PAGES[clean];
   const canonicalUrl = buildCanonicalUrl(clean);
+  const robotsContent = page.noindex ? 'noindex, nofollow' : 'index, follow';
   const breadcrumbSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -1198,7 +1178,7 @@ function buildInfoHTML(pathname: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${page.title}</title>
   <meta name="description" content="${page.description}" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="${robotsContent}" />
   <link rel="canonical" href="${canonicalUrl}" />
   <meta property="og:title" content="${page.title}" />
   <meta property="og:description" content="${page.description}" />
@@ -1309,9 +1289,6 @@ function buildBlogListHTML(posts: any[]): string {
 </html>`;
 }
 
-// Renders real reviews with genuine Review + AggregateRating schema,
-// computed live from the actual fetched rows (never hardcoded), so
-// the numbers only ever reflect real data.
 function buildReviewsHTML(reviews: any[]): string {
   const canonicalUrl = buildCanonicalUrl('/reviews');
   const title = "Customer Reviews | Poppa's Wooden Creations NZ";
@@ -1330,9 +1307,6 @@ function buildReviewsHTML(reviews: any[]): string {
       ? new Date(r.review_date).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' })
       : '';
     const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
-    // Fallback for reviews with a star rating but no written text, matching
-    // the same pattern src/components/Reviews.tsx uses for real visitors,
-    // instead of leaving a blank line.
     const bodyText = r.review_text && r.review_text.trim() !== ''
       ? r.review_text
       : `${r.author_name || 'This customer'} gave ${Math.round(rating)} stars but didn't leave a written review.`;
@@ -1608,12 +1582,6 @@ function buildProductHTML(product: any, productId: string): string {
   const hasDimensions = lengthMm != null && widthMm != null && heightMm != null;
   const shippingDetails = buildShippingDetails(weightKg, lengthMm, widthMm, heightMm);
 
-  // No aggregateRating here — genuine reviews live at /reviews with an
-  // honestly computed AggregateRating (see buildReviewsHTML). None of
-  // these reviews are reliably tied to individual products, so putting
-  // a rating on every single Product schema would be fabricated data,
-  // a real risk given this account's history of GMC Misrepresentation
-  // suspensions.
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
@@ -1839,9 +1807,6 @@ function buildBlogPostHTML(post: any, slug: string): string {
 </html>`;
 }
 
-// ─────────────────────────────────────────────────────────────
-// MAIN HANDLER
-// ─────────────────────────────────────────────────────────────
 export const onRequest = async (context: any): Promise<Response> => {
   const request: Request = context.request;
   const env: Env = context.env || {};
@@ -1852,7 +1817,6 @@ export const onRequest = async (context: any): Promise<Response> => {
   const pathname = url.pathname;
   const userAgent = request.headers.get('user-agent') || '';
 
-  // ── 1. Kill the search template URL immediately ──────────────────────
   if (hasSearchTemplatePlaceholder(url.search)) {
     return new Response('Gone', {
       status: 410,
@@ -1863,7 +1827,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 2. Strip tracking params for bots ───────────────────────────────
   if (isBot(userAgent) && hasTrackingParams(url.searchParams)) {
     return new Response(null, {
       status: 301,
@@ -1875,7 +1838,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 2.5 Renamed product slugs — 301 to the current product id ───────
   const renamedProduct = extractProductId(pathname);
   if (renamedProduct && PRODUCT_SLUG_REDIRECTS[renamedProduct]) {
     return new Response(null, {
@@ -1887,7 +1849,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 3. Ghost product slug check — 410 for ALL visitors ──────────────
   const productId = extractProductId(pathname);
   if (productId) {
     if (
@@ -1905,7 +1866,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     }
   }
 
-  // ── 3.5 Renamed blog slugs — 301 to the current published slug ──────
   const renamedBlog = extractBlogSlug(pathname);
   if (renamedBlog && BLOG_SLUG_REDIRECTS[renamedBlog]) {
     return new Response(null, {
@@ -1917,7 +1877,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 4. Ghost blog slug check — 410 for ALL visitors ─────────────────
   const blogSlugEarly = extractBlogSlug(pathname);
   if (blogSlugEarly && GHOST_BLOG_SLUGS.has(blogSlugEarly)) {
     return new Response('Gone', {
@@ -1929,7 +1888,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 4.5 Ghost category check — 410 for ALL visitors ────────────────
   const ghostCat = pathname.replace(/^\//, '').replace(/\/$/, '');
   if (GHOST_CATEGORIES.has(ghostCat)) {
     return new Response('Gone', {
@@ -1941,7 +1899,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 5. Pass real users straight through to the React SPA ────────────
   if (!isBot(userAgent)) {
     const response = await context.next();
     const looksLikeRoute = !pathname.includes('.');
@@ -1955,7 +1912,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     return response;
   }
 
-  // ── 6. Canonicalise trailing slashes + /wooden-planes shortcut ──────
   if (pathname !== '/' && pathname.endsWith('/')) {
     const pathNoSlash = pathname.slice(0, -1);
     const target = pathNoSlash === '/wooden-planes' ? '/wooden-planes-helicopters' : pathNoSlash;
@@ -1978,7 +1934,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 7.5 Homepage (bot only beyond this point) ───────────────────────
   if (pathname === '/') {
     const featured = await fetchFeaturedProducts(supabaseUrl, supabaseKey);
     const html = buildHomeHTML(featured);
@@ -1993,7 +1948,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 8. Product pages (bot only beyond this point) ───────────────────
   if (productId) {
     const product = await fetchProduct(supabaseUrl, supabaseKey, productId);
     if (!product) {
@@ -2019,7 +1973,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 9. Category pages ───────────────────────────────────────────────
   const categorySlug = extractCategorySlug(pathname);
   if (categorySlug) {
     const products = await fetchCategoryProducts(supabaseUrl, supabaseKey, categorySlug);
@@ -2035,7 +1988,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 9.5 Blog list page (/blog) ───────────────────────────────────────
   if (pathname.replace(/\/$/, '') === '/blog') {
     const posts = await fetchBlogPosts(supabaseUrl, supabaseKey);
     const html = buildBlogListHTML(posts);
@@ -2050,7 +2002,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 9.6 Reviews page (/reviews) ──────────────────────────────────────
   if (pathname.replace(/\/$/, '') === '/reviews') {
     const reviews = await fetchReviews(supabaseUrl, supabaseKey);
     const html = buildReviewsHTML(reviews);
@@ -2065,7 +2016,6 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 10. Policy pages ────────────────────────────────────────────────
   if (isPolicyPage(pathname)) {
     const clean = pathname.replace(/\/$/, '');
     const page = POLICY_PAGES[clean];
@@ -2082,21 +2032,22 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 11. Info pages ──────────────────────────────────────────────────
   if (isInfoPage(pathname)) {
+    const clean = pathname.replace(/\/$/, '');
+    const page = INFO_PAGES[clean];
     const html = buildInfoHTML(pathname);
+    const robotsTag = page.noindex ? 'noindex, nofollow' : 'index, follow';
     return new Response(html, {
       status: 200,
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=86400',
-        'X-Robots-Tag': 'index, follow',
+        'X-Robots-Tag': robotsTag,
         'Vary': 'User-Agent',
       },
     });
   }
 
-  // ── 12. Individual blog posts (/blog/:slug) ──────────────────────────
   const blogSlug = extractBlogSlug(pathname);
   if (blogSlug) {
     const post = await fetchBlogPost(supabaseUrl, supabaseKey, blogSlug);
@@ -2122,6 +2073,5 @@ export const onRequest = async (context: any): Promise<Response> => {
     });
   }
 
-  // ── 13. Anything else — pass through to React SPA ───────────────────
   return context.next();
 }
