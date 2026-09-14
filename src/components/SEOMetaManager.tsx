@@ -69,7 +69,7 @@ export const SEOMetaManager: React.FC<SEOMetaProps> = ({
       document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    const defaultDescription = description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
+    const defaultDescription = description || "Handcrafted wooden toys from native NZ timber. Supplied to schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
     
     updateMetaTag('name', 'description', defaultDescription);
     // ✅ FIXED: Never set noindex unless explicitly true AND canonical is correct
@@ -130,7 +130,7 @@ export const useSEO = (props: SEOMetaProps) => {
       document.title = "Handmade Wooden Toys NZ | Montessori Toys | Poppa's Wooden Creations";
     }
 
-    const defaultDescription = props.description || "Handcrafted wooden toys from native NZ timber. Trusted by Montessori schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
+    const defaultDescription = props.description || "Handcrafted wooden toys from native NZ timber. Supplied to schools. Shop baby toys, trucks & kitchenware. Made in Whangarei since 2015.";
 
     updateMetaTag('name', 'description', defaultDescription);
     // ✅ FIXED: Only noindex when explicitly true - never noindex loading states
