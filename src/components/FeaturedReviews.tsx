@@ -146,12 +146,7 @@ const FeaturedReviews: React.FC = () => {
             >
               Read All 48 Reviews
             </button>
-            
-              href="https://g.page/r/CWuTntJqt_2REBM/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-amber-700 border-2 border-amber-700 px-8 py-3 rounded-lg hover:bg-amber-50 transition-colors font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 duration-200 flex items-center space-x-2"
-            >
+            <a href="https://g.page/r/CWuTntJqt_2REBM/review" target="_blank" rel="noopener noreferrer" className="bg-white text-amber-700 border-2 border-amber-700 px-8 py-3 rounded-lg hover:bg-amber-50 transition-colors font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 duration-200 flex items-center space-x-2">
               <span>Leave a Review</span>
               <ExternalLink size={18} />
             </a>
