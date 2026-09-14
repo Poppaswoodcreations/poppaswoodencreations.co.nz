@@ -87,7 +87,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
 
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
               From our Whangarei workshop, we create children's wooden toys that inspire imaginative play and develop
-              fine motor skills. Trusted by Montessori schools and eco-conscious families across New Zealand since 2015.
+              fine motor skills. Supplied to schools and loved by eco-conscious families across New Zealand since 2015.
             </p>
 
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
@@ -99,7 +99,7 @@ const Hero: React.FC<HeroProps> = ({ onCategorySelect, products }) => {
 
             <p className="text-base text-gray-500 mt-4 max-w-2xl">
               We don't outsource or mass-produce. Each toy that leaves our Tikipunga workshop has been made and checked
-              by us personally, which is part of why Montessori schools and eco-conscious families across New Zealand
+              by us personally, which is part of why schools and eco-conscious families across New Zealand
               keep coming back. Wood grain, weight, and finish vary slightly from piece to piece — that's not a flaw,
               it's the mark of something actually handmade rather than stamped out on a factory line.
             </p>
