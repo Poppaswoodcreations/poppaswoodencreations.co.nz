@@ -13,9 +13,9 @@
 // IMPORTANT DEPLOYMENT NOTE: Cloudflare Pages serves a matching static
 // file before it runs a function for the same path. If public/sitemap.xml
 // still exists in the repo, IT will keep being served at /sitemap.xml and
-// this function will never run. Either delete public/sitemap.xml, or add
-// a functions/_routes.json that excludes it from static serving — see the
-// note at the bottom of this file.
+// this function will never run. Confirmed clean — no public/sitemap.xml
+// exists in this repo, so this function is the one actually serving
+// /sitemap.xml.
 
 interface Env {
   SUPABASE_URL?: string;
@@ -30,6 +30,12 @@ const BASE_URL = 'https://poppaswoodencreations.co.nz';
 // and policy/info pages. These change rarely, so keeping this one small
 // list hardcoded is fine; it's the products and blog posts (the parts
 // that actually change week to week) that were the real drift problem.
+//
+// Deliberately NOT included: /search and /write-review — a search
+// results page's content changes per query and a review-submission form
+// has no unique content, so indexing either would only add thin/duplicate
+// pages, not help rankings. Both are marked noindex in
+// functions/_middleware.ts to match.
 const STATIC_PAGES: { path: string; changefreq: string; priority: string }[] = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/wooden-toys-nz', changefreq: 'weekly', priority: '0.9' },
@@ -46,6 +52,7 @@ const STATIC_PAGES: { path: string; changefreq: string; priority: string }[] = [
   { path: '/about', changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
   { path: '/reviews', changefreq: 'weekly', priority: '0.8' },
+  { path: '/games', changefreq: 'monthly', priority: '0.3' },
   { path: '/blog', changefreq: 'weekly', priority: '0.8' },
   { path: '/shipping', changefreq: 'monthly', priority: '0.5' },
   { path: '/returns', changefreq: 'monthly', priority: '0.5' },
@@ -168,25 +175,3 @@ ${blogEntries.join('\n')}
     },
   });
 };
-
-// ─────────────────────────────────────────────────────────────
-// DEPLOYMENT: only ONE of these two steps is needed, not both.
-//
-// Option A (simplest) — delete public/sitemap.xml from the repo entirely.
-// With no static file at that path, Cloudflare Pages will fall through to
-// this function automatically.
-//
-// Option B — keep the static file as a manual fallback, but add or edit
-// functions/_routes.json so /sitemap.xml is explicitly routed to functions
-// instead of static assets:
-//
-// {
-//   "version": 1,
-//   "include": ["/sitemap.xml", "/api/*"],
-//   "exclude": []
-// }
-//
-// If a _routes.json already exists in functions/, just add "/sitemap.xml"
-// to its "include" array rather than replacing the whole file — paste me
-// its current contents and I'll merge it in.
-// ─────────────────────────────────────────────────────────────
