@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Audit — Poppa's Wooden Creations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --wood: #8B5E3C;
+    --wood-light: #C4956A;
+    --wood-pale: #F5EDE3;
+    --bark: #3D2B1F;
+    --bark-panel: #4A3626;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --red: #C0392B;
+    --amber: #E67E22;
+    --white: #FDFAF6;
+    --grey: #9B8B7E;
+    --grey-line: #5A4636;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bark);
+    color: var(--white);
+    min-height: 100vh;
+    padding: 2rem;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--wood-light);
+    margin-bottom: 0.15rem;
+  }
+
+  .subtitle { color: var(--grey); font-size: 0.8rem; margin-bottom: 1.75rem; max-width: 640px; }
+  .subtitle b { color: var(--wood-pale); font-weight: 500; }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  #startBtn { background: var(--wood); color: var(--white); }
+  #startBtn:hover:not(:disabled) { background: var(--wood-light); }
+  #startBtn:disabled { background: #55483a; color: var(--grey); cursor: not-allowed; }
+
+  #stopBtn { background: transparent; color: var(--grey); border: 1px solid var(--grey-line); }
+  #stopBtn:hover:not(:disabled) { border-color: var(--grey); color: var(--white); }
+  #stopBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .export-btns { display: flex; gap: 0.5rem; margin-left: auto; }
+  .export-btn { background: transparent; border: 1px solid var(--grey-line); color: var(--grey); font-size: 0.75rem; padding: 0.5rem 1rem; }
+  .export-btn:hover:not(:disabled) { border-color: var(--wood-light); color: var(--wood-light); }
+  .export-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .progress-wrap { margin-bottom: 1.5rem; display: none; }
+  .progress-wrap.active { display: block; }
+  .progress-label { font-size: 0.75rem; color: var(--grey); margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
+  .progress-bar-track { height: 6px; background: var(--bark-panel); border-radius: 3px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--wood-light); width: 0%; transition: width 0.2s; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+  }
+  .stat { background: var(--bark-panel); padding: 1rem 0.75rem; text-align: center; cursor: pointer; transition: background 0.15s; }
+  .stat:hover { background: #5a4636; }
+  .stat.selected { background: var(--wood); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; }
+  .stat-label { font-size: 0.68rem; color: var(--grey); margin-top: 0.2rem; text-transform: none; }
+  .stat.selected .stat-label { color: var(--wood-pale); }
+  .stat-num.ok { color: var(--green-light); }
+  .stat-num.warn { color: var(--amber); }
+  .stat-num.fail { color: var(--red); }
+  .stat-num.neutral { color: var(--wood-pale); }
+
+  .results { display: flex; flex-direction: column; gap: 0.5rem; }
+  .empty-state { color: var(--grey); font-size: 0.85rem; padding: 3rem 1rem; text-align: center; border: 1px dashed var(--grey-line); border-radius: 6px; }
+
+  .page-row {
+    background: var(--bark-panel);
+    border: 1px solid var(--grey-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .page-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    cursor: pointer;
+  }
+  .page-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .page-status-dot.ok { background: var(--green-light); }
+  .page-status-dot.warn { background: var(--amber); }
+  .page-status-dot.fail { background: var(--red); }
+  .page-status-dot.pending { background: var(--grey-line); }
+  .page-url { font-size: 0.8rem; color: var(--wood-pale); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .page-issue-count { font-size: 0.72rem; color: var(--grey); }
+  .page-issue-count.has-issues { color: var(--amber); }
+  .page-chevron { color: var(--grey); font-size: 0.7rem; transition: transform 0.15s; }
+  .page-row.expanded .page-chevron { transform: rotate(90deg); }
+
+  .page-detail { display: none; padding: 0 0.9rem 0.9rem; border-top: 1px solid var(--grey-line); }
+  .page-row.expanded .page-detail { display: block; }
+  .issue-line { font-size: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid #3a2c20; display: flex; gap: 0.6rem; }
+  .issue-line:last-child { border-bottom: none; }
+  .issue-tag { flex-shrink: 0; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 3px; height: fit-content; text-transform: uppercase; letter-spacing: 0.03em; }
+  .issue-tag.fail { background: rgba(192,57,43,0.25); color: #ff8a7a; }
+  .issue-tag.warn { background: rgba(230,126,34,0.25); color: #ffb066; }
+  .issue-text { color: var(--wood-pale); }
+  .issue-text .snippet { color: var(--grey); display: block; margin-top: 0.15rem; }
+  .no-issues { color: var(--green-light); font-size: 0.75rem; padding: 0.5rem 0; }
+
+  a.page-link { color: var(--wood-light); text-decoration: none; }
+  a.page-link:hover { text-decoration: underline; }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--grey-line); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Site Audit</h1>
+<p class="subtitle">
+  Loads every page from your sitemap in a hidden frame so it sees the <b>real rendered content</b> —
+  the same thing a visitor or Google sees — not just the raw HTML shell. Checks for broken pages,
+  missing or truncated meta tags, missing H1s, images without alt text, and known stale phrases
+  (leftover placeholder text, fabricated review counts, old wording).
+  <br><br>
+  <b>Must be opened from the live site</b> (not a downloaded file) — running locally sends no Origin
+  header and Cloudflare silently blocks it.
+</p>
+
+<div class="controls">
+  <button id="startBtn">Start Audit</button>
+  <button id="stopBtn" disabled>Stop</button>
+  <div class="export-btns">
+    <button class="export-btn" id="exportJsonBtn" disabled>Export JSON</button>
+    <button class="export-btn" id="exportCsvBtn" disabled>Export CSV</button>
+  </div>
+</div>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-label">
+    <span id="progressText">Starting…</span>
+    <span id="progressCount"></span>
+  </div>
+  <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+</div>
+
+<div class="stats" id="stats" style="display:none;">
+  <div class="stat" data-filter="all"><div class="stat-num neutral" id="statTotal">0</div><div class="stat-label">Pages checked</div></div>
+  <div class="stat" data-filter="clean"><div class="stat-num ok" id="statClean">0</div><div class="stat-label">Clean</div></div>
+  <div class="stat" data-filter="broken"><div class="stat-num fail" id="statBroken">0</div><div class="stat-label">Broken</div></div>
+  <div class="stat" data-filter="meta"><div class="stat-num warn" id="statMeta">0</div><div class="stat-label">Meta issues</div></div>
+  <div class="stat" data-filter="stale"><div class="stat-num fail" id="statStale">0</div><div class="stat-label">Stale / fabricated</div></div>
+  <div class="stat" data-filter="structure"><div class="stat-num warn" id="statStructure">0</div><div class="stat-label">Structure issues</div></div>
+</div>
+
+<div class="results" id="results">
+  <div class="empty-state">Click "Start Audit" to check every page on the site.</div>
+</div>
+
+<iframe id="checkFrame" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; left:-9999px;"></iframe>
+
+<script>
+const ORIGIN = window.location.origin;
+const CONCURRENCY = 1; // iframes must run sequentially — only one can occupy the hidden frame at a time
+const IFRAME_TIMEOUT = 9000;
+
+// Known stale / fabricated phrases from past audit passes — flag if any resurface.
+const BANNED_PHRASES = [
+  { needle: 'trusted by montessori schools', label: 'Unprovable "trusted by Montessori schools" claim (should read "supplied to schools")' },
+  { needle: '(150+)', label: 'Fabricated "(150+)" review count on a product card' },
+  { needle: '150+ reviews', label: 'Fabricated "150+ reviews" text' },
+  { needle: 'from 23 reviews', label: 'Stale review count ("23 reviews" — real total should be used)' },
+  { needle: 'spatuler', label: '"Spatuler" typo (should be "Spatula")' },
+  { needle: 'your blog post here', label: 'Leftover placeholder text in blog content' },
+];
+
+let results = [];
+let stopped = false;
+let running = false;
+let currentFilter = 'all';
+
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const exportJsonBtn = document.getElementById('exportJsonBtn');
+const exportCsvBtn = document.getElementById('exportCsvBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressText = document.getElementById('progressText');
+const progressCount = document.getElementById('progressCount');
+const progressFill = document.getElementById('progressFill');
+const statsEl = document.getElementById('stats');
+const resultsEl = document.getElementById('results');
+const frame = document.getElementById('checkFrame');
+
+startBtn.addEventListener('click', runAudit);
+stopBtn.addEventListener('click', () => { stopped = true; });
+exportJsonBtn.addEventListener('click', exportJson);
+exportCsvBtn.addEventListener('click', exportCsv);
+document.querySelectorAll('.stat').forEach(el => {
+  el.addEventListener('click', () => {
+    currentFilter = el.dataset.filter;
+    document.querySelectorAll('.stat').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    renderResults();
+  });
+});
+
+async function runAudit() {
+  running = true;
+  stopped = false;
+  results = [];
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  exportJsonBtn.disabled = true;
+  exportCsvBtn.disabled = true;
+  statsEl.style.display = 'grid';
+  progressWrap.classList.add('active');
+  progressText.textContent = 'Fetching sitemap…';
+  resultsEl.innerHTML = '';
+
+  let urls = [];
+  try {
+    urls = await fetchSitemapUrls();
+  } catch (e) {
+    resultsEl.innerHTML = '<div class="empty-state">Could not read /sitemap.xml (' + escapeHtml(String(e.message || e)) + '). Add URLs manually or check the sitemap exists.</div>';
+    finishRun();
+    return;
+  }
+
+  if (urls.length === 0) {
+    resultsEl.innerHTML = '<div class="empty-state">Sitemap returned no URLs.</div>';
+    finishRun();
+    return;
+  }
+
+  progressText.textContent = 'Checking pages…';
+
+  for (let i = 0; i < urls.length; i++) {
+    if (stopped) break;
+    const url = urls[i];
+    progressCount.textContent = (i + 1) + ' / ' + urls.length;
+    progressFill.style.width = Math.round(((i + 1) / urls.length) * 100) + '%';
+
+    const row = { url, status: 'pending', issues: [] };
+    results.push(row);
+    renderResults();
+
+    // Step 1: fast status check via fetch (same-origin, no CORS issue)
+    let httpStatus = null;
+    try {
+      const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+      httpStatus = res.status;
+    } catch (e) {
+      httpStatus = null;
+    }
+
+    if (httpStatus === null) {
+      row.status = 'broken';
+      row.issues.push({ level: 'fail', category: 'broken', text: 'Request failed entirely (network error)' });
+      renderResults();
+      continue;
+    }
+    if (httpStatus >= 400) {
+      row.status = 'broken';
+      row.issues.push({ level: 'fail', category: 'broken', text: 'HTTP ' + httpStatus });
+      renderResults();
+      continue;
+    }
+
+    // Step 2: deep render check via iframe — only for pages that loaded OK
+    try {
+      const doc = await loadInFrame(url);
+      inspectDocument(row, doc);
+    } catch (e) {
+      row.issues.push({ level: 'warn', category: 'structure', text: 'Could not fully render page to inspect it (' + escapeHtml(String(e.message || e)) + ')' });
+    }
+
+    row.status = row.issues.some(i => i.level === 'fail') ? 'fail'
+               : row.issues.some(i => i.level === 'warn') ? 'warn'
+               : 'ok';
+    renderResults();
+  }
+
+  finishRun();
+}
+
+function finishRun() {
+  running = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  exportJsonBtn.disabled = results.length === 0;
+  exportCsvBtn.disabled = results.length === 0;
+  progressText.textContent = stopped ? 'Stopped.' : 'Done.';
+  updateStats();
+}
+
+async function fetchSitemapUrls() {
+  const res = await fetch(ORIGIN + '/sitemap.xml', { cache: 'no-store' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const text = await res.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, 'application/xml');
+  const locs = Array.from(xml.getElementsByTagName('loc')).map(el => el.textContent.trim());
+  // De-dupe and keep only same-origin URLs
+  const seen = new Set();
+  const out = [];
+  for (const u of locs) {
+    if (!u.startsWith(ORIGIN)) continue;
+    if (seen.has(u)) continue;
+    seen.add(u);
+    out.push(u);
+  }
+  return out;
+}
+
+function loadInFrame(url) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reject(new Error('timed out'));
+    }, IFRAME_TIMEOUT);
+
+    frame.onload = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try {
+        resolve(frame.contentDocument);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    frame.onerror = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      reject(new Error('frame error'));
+    };
+    frame.src = url;
+  });
+}
+
+function inspectDocument(row, doc) {
+  // Give React a brief moment to finish client-side rendering after the
+  // initial iframe load event fires (load fires on the SPA shell, not
+  // necessarily after hydration completes).
+  const bodyText = (doc.body ? doc.body.innerText : '') || '';
+  const bodyTextLower = bodyText.toLowerCase();
+
+  // ── Title ──
+  const title = (doc.title || '').trim();
+  if (!title) {
+    row.issues.push({ level: 'fail', category: 'meta', text: 'Missing <title>' });
+  } else if (title.length > 65) {
+    row.issues.push({ level: 'warn', category: 'meta', text: 'Title tag is ' + title.length + ' characters (recommended 50–60)', snippet: title });
+  }
+
+  // ── Meta description ──
+  const descEl = doc.querySelector('meta[name="description"]');
+  const desc = descEl ? (descEl.getAttribute('content') || '').trim() : '';
+  if (!desc) {
+    row.issues.push({ level: 'fail', category: 'meta', text: 'Missing meta description' });
+  } else {
+    if (desc.length > 165) {
+      row.issues.push({ level: 'warn', category: 'meta', text: 'Meta description is ' + desc.length + ' characters (recommended under 160)', snippet: desc });
+    }
+    if (desc.length < 70) {
+      row.issues.push({ level: 'warn', category: 'meta', text: 'Meta description is short (' + desc.length + ' characters)', snippet: desc });
+    }
+    const lastChar = desc.trim().slice(-1);
+    if (desc.length > 40 && !'.!?"\')'.includes(lastChar)) {
+      row.issues.push({ level: 'warn', category: 'meta', text: 'Meta description may be cut off mid-sentence', snippet: desc });
+    }
+  }
+
+  // ── Canonical ──
+  const canonical = doc.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    row.issues.push({ level: 'warn', category: 'structure', text: 'No canonical link tag' });
+  }
+
+  // ── H1 ──
+  const h1s = doc.querySelectorAll('h1');
+  if (h1s.length === 0) {
+    row.issues.push({ level: 'warn', category: 'structure', text: 'No H1 on page' });
+  } else if (h1s.length > 1) {
+    row.issues.push({ level: 'warn', category: 'structure', text: h1s.length + ' H1 tags found (should be exactly 1)' });
+  }
+
+  // ── Images missing alt ──
+  const imgs = Array.from(doc.querySelectorAll('img'));
+  const missingAlt = imgs.filter(img => !img.hasAttribute('alt') || img.getAttribute('alt').trim() === '');
+  if (missingAlt.length > 0) {
+    row.issues.push({ level: 'warn', category: 'structure', text: missingAlt.length + ' of ' + imgs.length + ' images missing alt text' });
+  }
+
+  // ── JSON-LD schema sanity check ──
+  const ldScripts = Array.from(doc.querySelectorAll('script[type="application/ld+json"]'));
+  let sawFabricatedRating = false;
+  for (const script of ldScripts) {
+    try {
+      const data = JSON.parse(script.textContent);
+      const items = Array.isArray(data) ? data : [data];
+      for (const item of items) {
+        const agg = item.aggregateRating;
+        if (agg && item['@type'] === 'Product' && agg.reviewCount === '150') {
+          sawFabricatedRating = true;
+        }
+      }
+    } catch (e) {
+      row.issues.push({ level: 'warn', category: 'structure', text: 'A JSON-LD schema block on this page is not valid JSON' });
+    }
+  }
+  if (sawFabricatedRating) {
+    row.issues.push({ level: 'fail', category: 'stale', text: 'Product schema has the old fabricated "150 reviews" rating — should have been removed' });
+  }
+
+  // ── Known stale / fabricated phrases ──
+  for (const phrase of BANNED_PHRASES) {
+    if (bodyTextLower.includes(phrase.needle) || (title + ' ' + desc).toLowerCase().includes(phrase.needle)) {
+      row.issues.push({ level: 'fail', category: 'stale', text: phrase.label });
+    }
+  }
+
+  row.title = title;
+  row.description = desc;
+}
+
+function updateStats() {
+  const total = results.length;
+  const broken = results.filter(r => r.issues.some(i => i.category === 'broken')).length;
+  const clean = results.filter(r => r.issues.length === 0).length;
+  const meta = results.filter(r => r.issues.some(i => i.category === 'meta')).length;
+  const stale = results.filter(r => r.issues.some(i => i.category === 'stale')).length;
+  const structure = results.filter(r => r.issues.some(i => i.category === 'structure')).length;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statClean').textContent = clean;
+  document.getElementById('statBroken').textContent = broken;
+  document.getElementById('statMeta').textContent = meta;
+  document.getElementById('statStale').textContent = stale;
+  document.getElementById('statStructure').textContent = structure;
+}
+
+function renderResults() {
+  updateStats();
+  let filtered = results;
+  if (currentFilter === 'clean') filtered = results.filter(r => r.issues.length === 0);
+  else if (currentFilter === 'broken') filtered = results.filter(r => r.issues.some(i => i.category === 'broken'));
+  else if (currentFilter === 'meta') filtered = results.filter(r => r.issues.some(i => i.category === 'meta'));
+  else if (currentFilter === 'stale') filtered = results.filter(r => r.issues.some(i => i.category === 'stale'));
+  else if (currentFilter === 'structure') filtered = results.filter(r => r.issues.some(i => i.category === 'structure'));
+
+  if (filtered.length === 0) {
+    resultsEl.innerHTML = '<div class="empty-state">No pages match this filter yet.</div>';
+    return;
+  }
+
+  resultsEl.innerHTML = filtered.map((r, idx) => {
+    const realIdx = results.indexOf(r);
+    const dotClass = r.status === 'pending' ? 'pending'
+                    : r.status === 'broken' || r.status === 'fail' ? 'fail'
+                    : r.status === 'warn' ? 'warn'
+                    : 'ok';
+    const path = r.url.replace(ORIGIN, '') || '/';
+    const issueCountClass = r.issues.length > 0 ? 'has-issues' : '';
+    const issuesHtml = r.issues.length === 0
+      ? '<div class="no-issues">No issues found</div>'
+      : r.issues.map(i => (
+          '<div class="issue-line"><span class="issue-tag ' + i.level + '">' + i.level + '</span>' +
+          '<span class="issue-text">' + escapeHtml(i.text) +
+          (i.snippet ? '<span class="snippet">' + escapeHtml(i.snippet.slice(0, 140)) + (i.snippet.length > 140 ? '…' : '') + '</span>' : '') +
+          '</span></div>'
+        )).join('');
+
+    return (
+      '<div class="page-row" data-idx="' + realIdx + '">' +
+        '<div class="page-head" onclick="toggleRow(' + realIdx + ')">' +
+          '<span class="page-status-dot ' + dotClass + '"></span>' +
+          '<span class="page-url">' + escapeHtml(path) + '</span>' +
+          '<span class="page-issue-count ' + issueCountClass + '">' + (r.issues.length || 'clean') + (r.issues.length ? ' issue' + (r.issues.length === 1 ? '' : 's') : '') + '</span>' +
+          '<span class="page-chevron">▶</span>' +
+        '</div>' +
+        '<div class="page-detail">' +
+          '<a class="page-link" href="' + r.url + '" target="_blank" rel="noopener">Open page ↗</a><br><br>' +
+          issuesHtml +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+function toggleRow(idx) {
+  const el = resultsEl.querySelector('.page-row[data-idx="' + idx + '"]');
+  if (el) el.classList.toggle('expanded');
+}
+window.toggleRow = toggleRow;
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function exportJson() {
+  const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+  downloadBlob(blob, 'site-audit-' + dateStamp() + '.json');
+}
+
+function exportCsv() {
+  const rows = [['URL', 'Status', 'Issue Level', 'Issue Category', 'Issue']];
+  for (const r of results) {
+    if (r.issues.length === 0) {
+      rows.push([r.url, 'clean', '', '', '']);
+    } else {
+      for (const i of r.issues) {
+        rows.push([r.url, r.status, i.level, i.category, i.text]);
+      }
+    }
+  }
+  const csv = rows.map(row => row.map(cell => '"' + String(cell).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  downloadBlob(blob, 'site-audit-' + dateStamp() + '.csv');
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function dateStamp() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+</script>
+
+</body>
+</html>
