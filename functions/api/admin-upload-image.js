@@ -31,6 +31,16 @@
 // POST never even got sent. Auth is unaffected: the admin password check
 // below still gates every actual upload exactly as before, CORS only
 // controls which origins are allowed to ask.
+//
+// CACHE-CONTROL (17 Sep 2026): PageSpeed flagged product images being
+// served with only a 1-hour cache lifetime (Supabase's default), costing
+// ~50 KiB of avoidable re-download on repeat visits and dinging the
+// Performance score. Every upload now sets Cache-Control: public,
+// max-age=31536000, immutable on the object itself via the storage API,
+// so newly uploaded/replaced images get a 1-year cache lifetime. This only
+// affects images uploaded from here on — existing objects in the bucket
+// keep whatever Cache-Control they already have unless re-uploaded (same
+// filename + x-upsert) or fixed via a separate one-off metadata pass.
 
 const REQUEST_LIMIT = 250;             // max requests — raised (7 Sep 2026)
                                         // from 30 so a full bulk photo sync
@@ -48,6 +58,7 @@ const AUTH_FAIL_WINDOW_SECONDS = 900;  // per 15 minutes
 
 const BUCKET = 'product-images';
 const MAX_BYTES = 8 * 1024 * 1024; // 8MB safety ceiling per image
+const CACHE_CONTROL = 'public, max-age=31536000, immutable'; // 1 year
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -157,6 +168,7 @@ export async function onRequest(context) {
           Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
           'Content-Type': decoded.contentType,
           'x-upsert': 'true',
+          'cache-control': CACHE_CONTROL,
         },
         body: decoded.bytes,
       }
