@@ -18,15 +18,6 @@
     <!-- Google Customer Reviews Badge Script - defer until after load -->
     <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
 
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "oayd4vmux9");
-    </script>
-    
     <!-- Base Open Graph - React Helmet will override on specific pages -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Poppa's Wooden Creations - Handcrafted Wooden Toys NZ" />
@@ -58,6 +49,23 @@
             });
           });
         }
+      });
+    </script>
+
+    <!-- Microsoft Clarity — moved to after window.load (17 Sep 2026) so it stops -->
+    <!-- competing with the initial React mount for main-thread time. PageSpeed -->
+    <!-- flagged clarity.js as one of only two "long tasks" on the page, starting -->
+    <!-- ~2.7s in — right in the middle of first render. It was previously fired -->
+    <!-- synchronously in <head>, so the browser had to fetch+parse+execute it -->
+    <!-- alongside app JS before paint. Nothing about Clarity's tracking depends -->
+    <!-- on firing before load; delaying it loses no data. -->
+    <script>
+      window.addEventListener('load', function () {
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "oayd4vmux9");
       });
     </script>
     
