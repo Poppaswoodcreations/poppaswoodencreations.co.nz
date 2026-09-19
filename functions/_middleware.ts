@@ -113,6 +113,13 @@ const PRODUCT_SLUG_REDIRECTS: Record<string, string> = {
 
 const BASE_URL = 'https://poppaswoodencreations.co.nz';
 
+// Return policy — must match the Merchant Center return policies and the
+// live /returns page: faulty/damaged items only, reported within 30 days
+// of delivery, returned by mail, free return shipping (prepaid label),
+// no change-of-mind returns, no exchanges for change of mind.
+// Note: schema.org has no clean "defective only" value, so the account-level
+// Merchant Center policy (defective products only) is the source of truth;
+// this markup carries the window, method, fee and a link to the full policy.
 const MERCHANT_RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   "applicableCountry": "NZ",
@@ -120,6 +127,8 @@ const MERCHANT_RETURN_POLICY = {
   "merchantReturnDays": 30,
   "returnMethod": "https://schema.org/ReturnByMail",
   "returnFees": "https://schema.org/FreeReturn",
+  "itemDefectReturnFees": "https://schema.org/FreeReturn",
+  "merchantReturnLink": `${BASE_URL}/returns`,
 };
 
 function volumetricWeightKg(lengthMm?: number, widthMm?: number, heightMm?: number): number {
@@ -511,33 +520,68 @@ const POLICY_PAGES: Record<string, {
   },
   '/returns': {
     title: "Returns & Refunds Policy | Poppa's Wooden Creations NZ",
-    description: 'Our 30-day return policy and quality guarantee for handcrafted wooden toys. Easy returns, full refunds, and lifetime craftsmanship guarantee.',
+    description: 'Faulty or damaged handcrafted wooden toys can be returned within 30 days of delivery for a replacement or full refund. Lifetime craftsmanship guarantee.',
     h1: 'Returns & Refunds Policy',
     noindex: false,
     content: `
       <section>
-        <h2>Our 30-Day Return Policy</h2>
-        <p>We want you to be completely happy with your purchase. If you are not satisfied for any reason, you may return your item within 30 days of delivery for a full refund or exchange.</p>
-        <p>Items must be returned in their original condition and packaging. Custom or personalised orders may not be eligible for return unless faulty.</p>
+        <h2>Our Return Policy</h2>
+        <p>Every toy is inspected before it leaves our workshop. If your item arrives faulty, damaged, or with a manufacturing defect, we'll make it right — full refund or replacement, and we cover the return shipping.</p>
+        <p>As each toy is handcrafted to order from native NZ timber, we're unable to offer returns for change of mind.</p>
       </section>
       <section>
-        <h2>Faulty or Damaged Items</h2>
-        <p>In the unlikely event that your item arrives damaged or faulty, please contact us within 7 days of receipt with photos of the damage. We will arrange a replacement or full refund at no cost to you, including return shipping.</p>
+        <h2>What's Covered</h2>
+        <ul>
+          <li>Full refund or replacement for faulty or damaged items</li>
+          <li>Return shipping costs covered by us</li>
+          <li>Reported within 30 days of delivery</li>
+          <li>Refund processed within 5–7 business days once the issue is confirmed</li>
+        </ul>
       </section>
       <section>
-        <h2>How to Return an Item</h2>
-        <p>To initiate a return, please email us at <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a> with your order details and reason for return. We will provide you with return instructions within 1–2 business days.</p>
+        <h2>How to Report a Faulty or Damaged Item</h2>
+        <ol>
+          <li><strong>Contact us.</strong> Email <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a> with your order number, photos of the issue, and a brief description. We'll respond within 24 hours.</li>
+          <li><strong>We assess it.</strong> Most of the time you don't need to send the item back — photos are enough for us to confirm a manufacturing issue.</li>
+          <li><strong>We make it right.</strong> We'll send a replacement or process a full refund, whichever you prefer.</li>
+          <li><strong>If a return is needed.</strong> For the rare cases we do need the item back, we'll email a prepaid return label. No cost to you.</li>
+        </ol>
       </section>
       <section>
-        <h2>Refunds</h2>
-        <p>Once we receive and inspect your return, refunds are processed within 5 business days back to your original payment method.</p>
+        <h2>Return Conditions</h2>
+        <p><strong>Covered:</strong></p>
+        <ul>
+          <li>Manufacturing defects or workmanship issues</li>
+          <li>Items damaged in transit</li>
+          <li>Reported within 30 days of delivery (no time limit for craftsmanship defects — see the Lifetime Craftsmanship Guarantee below)</li>
+        </ul>
+        <p><strong>Not covered:</strong></p>
+        <ul>
+          <li>Change of mind</li>
+          <li>Custom or personalised items (unless defective)</li>
+          <li>Damage from misuse, neglect, or normal wear and tear</li>
+          <li>Items showing signs of play or use unrelated to a manufacturing fault</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Lifetime Craftsmanship Guarantee</h2>
+        <p>Every toy is built to last generations. If your toy develops a defect due to workmanship or materials (not normal wear and tear), we'll repair or replace it free of charge, no matter how long you've owned it. We cover return shipping for warranty repairs.</p>
+        <p>This guarantee covers defects in materials and workmanship only. It does not cover damage from accidents, misuse, normal wear and tear, or modifications.</p>
+      </section>
+      <section>
+        <h2>Exchanges</h2>
+        <p>Since we don't accept change-of-mind returns, we're unable to offer exchanges for that reason. If your item is faulty, we're happy to send a replacement of the same product, or a different item of equal value — just let us know when you contact us.</p>
+      </section>
+      <section>
+        <h2>Refund Processing Time</h2>
+        <p>Once a faulty item is confirmed, we assess it within 1–2 business days and process your refund within 5–7 business days. Your bank may take a little longer to show the refund. You'll receive an email confirmation once your refund has been processed.</p>
       </section>
       <section>
         <h2>Consumer Guarantees Act</h2>
         <p>All purchases are covered by the New Zealand Consumer Guarantees Act 1993. If a product is faulty, not fit for purpose, or does not match its description, you are entitled to a repair, replacement, or refund.</p>
       </section>
       <section>
-        <h2>Contact Us</h2>
+        <h2>Questions About Returns?</h2>
         <p>Phone: <a href="tel:+642102288166">+64 21 022 88166</a><br/>
         Email: <a href="mailto:poppas.wooden.creations@gmail.com">poppas.wooden.creations@gmail.com</a><br/>
         Address: 102 Kiripaka Road, Tikipunga, Whangarei 0112, New Zealand</p>
